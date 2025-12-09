@@ -1,0 +1,134 @@
+
+
+\section{When can sign reversals occur?} % All headings should be lower case (except for first word and proper nouns)
+\label{sec:signflips}
+
+Building on this example, a natural next step is to ask under what conditions the explained and unexplained components flip sign, as the policy implications may hinge critically on their sign. 
+\cref{eq:OB_H_decomp,eq:OB_K_decomp} make clear that the value can vary with the choice of reference group, but it is less obvious when a sign flip can occur, prompting the question: under what conditions do these components flip sign? For brevity, we focus on the unexplained component.
+%
+\begin{definition}
+	Let $\Delta\beta := \beta_H - \beta_K$ and $\Delta\alpha := \alpha_H - \alpha_K$. The OBD \emph{sign flips the unexplained component} if the sign of the unexplained term, $\mu_{g'}^T \Delta\beta + \Delta\alpha$, depends on the reference group. That is
+	\begin{equation}
+		\sign\left( \mu_K^T \Delta\beta + \Delta\alpha \right) \neq \sign\left( \mu_H^T \Delta\beta + \Delta\alpha \right).
+	\end{equation}
+\end{definition}
+%
+We now demonstrate that sign flipping in the OBD is not an isolated phenomenon.
+\begin{restatable}[OBD sign flips]{theorem}{OBSignFlips}
+    \label{thm:ordering_sensitivity}
+    The OBD \emph{sign flips the unexplained component} if and only if $\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$, and
+    \begin{equation}
+    \label{eq:sign_flip_condition}
+    \min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\} < -\Delta\alpha < \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
+    \end{equation}
+\end{restatable}    
+
+\begin{remark}
+    If $-\Delta\alpha \in \{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}$, then one unexplained term equals zero.
+\end{remark}
+% \begin{restatable}[When does OBD sign flip?]{theorem}{OBSignFlips}
+%     \label{thm:ordering_sensitivity_legacy}
+%     We break down when sign flipping can occur depending on whether the signs of $\mu_H^T \Delta\beta$ and $\mu_K^T \Delta\beta$ match. First, suppose $\sign{\mu_H^T \Delta\beta} = \sign{\mu_K^T \Delta\beta}$ and assume without loss of generality $\abs{\mu_H^T \Delta\beta} \mqedit{<} \abs{\mu_K^T \Delta\beta}$. Then a sign flip between the unexplained components will occur if and only if
+%     \mqedit{$\sign(\Delta\alpha) \neq \sign{\mu_H^T \Delta\beta}$} and:
+%     \begin{equation}
+%      \abs{\mu_H^T \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K^T \Delta\beta}. \label{eq:sign_eq_condition}
+%     \end{equation}
+%     Next, suppose $\sign{\mu_H^T \Delta\beta} \neq \sign{\mu_K^T \Delta\beta}$ and that without loss of generality, $\sign{\mu_H^T\Delta \beta} \neq \sign{\Delta\alpha}$. Then a sign flip between the unexplained components will occur if and only if:
+%     \begin{equation}
+%     	\abs{\mu_H^T \Delta\beta} > \abs{\Delta\alpha}
+%     \end{equation}
+%     \mqcomment{ Maybe for completeness add the case where $\sign{\Delta\alpha} = \sign{\mu_H^T \Delta\beta}$ which implies that we need $\abs{\mu_K^T \Delta\beta} > \abs{\Delta\alpha}$?}
+% \end{restatable}
+
+In \cref{sec:sign_flip_proof}, we provide the proof of \cref{thm:ordering_sensitivity}. 
+
+To shed more light on the utility of \cref{thm:ordering_sensitivity}, we present the condition in \cref{eq:sign_flip_condition} as a ``decision tree'' of when a sign flip can occur: 
+
+\begin{algorithm}[H]
+    \caption{Unexplained component sign-flip}
+    \label{alg:decision_tree}
+\begin{algorithmic}  
+    \If{$\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$}
+        \If{$\sign(\mu_H^T \Delta\beta) = \sign(\mu_K^T \Delta\beta)$}
+            \If{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$}
+                \If{$|\mu_H^T \Delta\beta| < |\Delta\alpha| < |\mu_K^T \Delta\beta|$ \textbf{or} $|\mu_K^T \Delta\beta| < |\Delta\alpha| < |\mu_H^T \Delta\beta|$}
+                    \State A sign flip occurs.
+                \EndIf
+            \EndIf
+        \ElsIf{$\sign(\mu_H^T \Delta\beta) \neq \sign(\mu_K^T \Delta\beta)$}
+            \If{$\sign(\Delta\alpha) = \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_K^T \Delta\beta| > |\Delta\alpha|$}
+                \State A sign flip occurs.
+            \ElsIf{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_H^T \Delta\beta| > |\Delta\alpha|$}
+                \State A sign flip occurs.
+            \EndIf
+        \EndIf
+    \Else
+        \State There is no sign flip.
+    \EndIf
+\end{algorithmic}
+\end{algorithm}
+
+To illustrate how we can make use of \cref{alg:decision_tree}, we return to the healthcare example in \cref{sec:example}.
+In this example, $\mu_H$ and $\mu_K$ denote mean BMIs, both of which are positive by definition and thus $\sign{(\mu_H \Delta\beta)} = \sign{(\mu_K \Delta\beta)} = \sign{(\Delta\beta)}$. Therefore, following \Cref{alg:decision_tree}, a sign flip will occur only if $\sign{(\Delta\alpha)} \neq \sign{(\mu_H \Delta\beta)} = \sign{(\Delta\beta)}$; equivalently, it must hold that one group has a larger $\beta_g$ (more sensitive to higher BMI) but lower $\alpha_g$ (lower SBP on average).
+This might occur if one group has better access to treatment but worse genetic factors, as in \cref{sec:example}.
+Furthermore, a sign-flip will occur if either $\abs{\mu_H \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K \Delta\beta}$ or $\abs{\mu_K \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_H \Delta\beta}$. This condition implies a range of values over which sign flips will occur; that is, there will be at least one choice of reference group under which improved healthcare appears to help in lowering mean SBP and another ordering under which improved healthcare appears to \emph{hurt} mean SBP.
+
+
+Even though \cref{thm:ordering_sensitivity} does not restrict the magnitude of the parts of the unexplained components, in \cref{ex:unbounded} we provide an example to illustrate that these sign flips are not relegated to settings in which $\mu_g^T\Delta\beta$ are small in magnitude; in fact, we show that they can be arbitrarily large in magnitude.
+
+
+%    \Cref{thm:ordering_sensitivity} shows that sign reversals in the unexplained component are not edge cases. Equation \(U^{(K)} - U^{(H)} = -B\) implies that switching the reference group shifts the unexplained term by exactly \(B\), and the explained part by \(-B\). When \(B \neq 0\), this shift can flip the diagnosis—from structural underpayment to overpayment—even with a correctly specified model. The disagreement region \(S \in (-B, 0)\) for \(B > 0\) (and its mirror for \(B < 0\)) is tight: outside this interval, both orderings agree in sign; inside it, they disagree (see \cref{imageTODO}). This window has width \(|B|\), which grows with larger covariate shifts or slope differences—both common in practice. So sign flips are not rare or pathological; they’re a general sensitivity that arises whenever \(B\) is materially different from zero. This motivates the next result.
+%
+%    The next corollary formalizes that the explained parts across orderings move in perfect opposition to the unexplained parts. Hence, any instability in the structural attribution is mirrored one-for-one by instability in the endowment attribution. This zero-sum coupling is central: it shows that ``credit” assigned to covariate differences depends on the arbitrary choice of reference.
+%    
+%
+%    \begin{restatable}[]{corollary}{explainablepart}
+%        \label{cor:explained_flip}
+%        With \(B\) as above,
+%        \(
+%        E^{(K)} = E^{(H)} - B
+%        \).
+%        Thus the explained components flip sign iff \(E^{(H)}(E^{(H)}-B)<0\); any flip window has width \(|B|\), and
+%        \(
+%        (E^{(K)}-E^{(H)}) = -(U^{(K)}-U^{(H)})
+%        \).
+%    \end{restatable}
+%
+%
+%It may be tempting to wonder whether this sensitivity is somehow bounded by the observed outcome gap \(\Delta_Y\). \Cref{cor:unbounded_sensitivity} in the Appendix addresses this question directly: even when \(\Delta_Y\) is held fixed, the ordering-induced swing in the structural component can be made arbitrarily large. That is, no a priori bound ties the magnitude of ordering sensitivity to the magnitude of the empirical gap itself.
+
+
+\section{When do sign reversals not occur?}
+\label{sec:no_sign_flips}
+While \cref{thm:ordering_sensitivity} characterizes when sign reversals can arise, it is also useful to understand when they do \emph{not} occur. 
+Intuitively, a sign flip requires the intercept and slope effects to pull in opposite directions across groups. 
+When both move in the same direction, so that the group with higher baseline outcomes also has higher returns to covariates, the unexplained component preserves its sign regardless of the chosen reference group.
+
+We formalize this idea in the following assumption. 
+
+\begin{assumption}[Aligned intercept--slope effects]
+\label{ass:no_sign_flip}
+\[
+    (\mu_H^T \Delta\beta)(\mu_K^T \Delta\beta) > 0 
+\quad \text{and}  
+\]
+\[
+    \sign(\Delta\alpha) = \sign(\mu_H^T \Delta\beta) = \sign(\mu_K^T \Delta\beta),
+\]
+\end{assumption}
+
+\begin{proposition}
+    \label{prop:no_sign_flip}
+    Under \cref{ass:no_sign_flip}, the unexplained components 
+    \( U^{(H)}\) and  \(U^{(K)}\) share the same sign.
+    \end{proposition}
+
+Under \Cref{ass:no_sign_flip} both unexplained components share the same sign and the OBD cannot exhibit a sign reversal. 
+This assumption requires that the group with higher baseline outcomes ($\alpha_g$) also benefits more from the covariates ($\beta_g$) for \(g \in \{H,K\}\).
+
+For example, in terms of the gender wage example introduced in \cref{sec:counterfactual_example}, \cref{ass:no_sign_flip} corresponds to settings where the group earning higher baseline wages ($\alpha_g$) also experiences higher returns to skills and education ($\beta_g$). 
+Here, both intercept and slope advantages move in the same direction, so the unexplained component, presents consistent sign between reference groups. 
+
+Similarly, for the SBP--BMI example in \cref{sec:example}, \cref{ass:no_sign_flip} would correspond to a case where the higher-resource group exhibits both a higher baseline SBP and a stronger SBP--BMI relationship than the lower-resource group. However, in the simulated data, the lower-resource group shows a steeper SBP--BMI slope while having a lower baseline, violating \cref{ass:no_sign_flip}.
+
+

@@ -1,0 +1,61 @@
+\section{Introduction}
+As a motivating example, suppose a public health worker in City $K$ notices that the mean systolic blood pressure (SBP) is concerningly higher than in a neighboring city, City $H$.
+She notices that the medical literature shows a relation between body mass index (BMI, $X$) and SBP ($Y$).
+The observed differences in mean SBP could be due to differences in the populations of the cities (distribution of $X$) or to differences in medical care access that determine how SBP is affected by BMI (distribution of $Y|X$).
+If she can figure out how much each of these factors is driving her city's increased SBP, she could propose policy changes to improve the health of her city.
+Before committing to a potentially costly causal analysis, can she use the available information to develop hypotheses for what drives the difference in SBP?
+
+%Many scientific questions reduce to comparisons between two populations. A common follow-up question to observing differences is why they occur. One reason might be that the populations differ on meaningful traits. In our example, perhaps the distribution of \(X\) is unequal: say, both training programs are best for people who have never been employed, but city K's program enrolled more trainees with past jobs than city H's program. In this case, covariates \(X\) drive the difference. Or, perhaps jobs in city \(K\) may pay less than those in city \(H\)'s for trainees without a high school diploma. In this case, outcomes given covariates \(Y \mid X\) drive the difference. A useful explanation for mean differences between populations would distinguish between these possibilities, as well as describe which aspects of the covariates or outcomes given covariates explain the difference.
+
+The Oaxaca--Blinder decomposition (OBD)\footnote{Sometimes referred to as the Kitagawa--Oaxaca--Blinder (KOB) decomposition \citealp{kitagawa1955})} \citep{oaxaca1973,blinder1973} is widely used in the econometrics literature to analyze disparities between groups as in the motivating example. 
+Studied disparities include gender wage gaps \citep{paradaContzen2025}, educational attainment differences \citep{barhaim2023}, and diabetes health disparities \citep{cartwright2021}.
+In particular, the OBD decomposes the difference in outcome (\(Y\)) means between two populations into a component that captures the differences in covariates (\(X\)) and a component that captures the differences in outcomes-given-covariates (\(Y \mid X\)). 
+In the economics literature, the former is known as the ``explained component'' and the latter as the ``unexplained component'' (also referred to as the discrimination or structural component) \citep[p.~5]{fortinLemieuxFirpo2011}.
+
+% \textcolor{red}{TB: right now i think the paragraph below isn't clear that the asymmetry we care about is the asymmetry in the populations. would be super to make that more clear. also i think we can be more clear about the steelman argument about counterfactuals and to what extent it is already made in the literature and to what extent it is not}
+% \textcolor{blue}{AS: I tried to clarify both. For the counterfactual ordering, the cited paper is studying the effects of unionization and the minimum wage (among other things) on wage inequality. They're most interested in unionization and the minimum wage, so they make them the first elements of the decomposition.}
+
+Since the original paper, \citet{oaxaca1973} noted that the numerical values of the OBD components depend on the choice of reference group, known classically as the \textit{index-number problem}.
+This asymmetry arises because the OBD involves computing differences in covariate means and differences in regression coefficients between the two populations; the choice of which direction to do the subtraction---implicitly setting a reference group---typically yields different results.
+
+Several responses to this asymmetry dominate the literature. 
+One line of work chooses a reference based on the substantive question at hand \citep{fortinLemieuxFirpo2011,jann2008}. 
+In some cases, this involves couching the computed differences as comparing counterfactual worlds, and appealing to contextual arguments to justify the choice of reference groups.
+For instance, \citet{dinardoFortinLemieux1996} study the effects of unionization and the minimum wage on economic inequality, and choose reference groups that emphasize the contributions of these factors.
+In other cases, this can involves setting a benchmark by pooling the groups to approximate a competitive wage structure \citep{neumark1988,oaxacaRansom1994}.
+However, in many applications there will be no obvious or preferred choice of reference group.
+A second line of work handles such cases by either treating both choices of reference group as equally 
+and reporting two decompositions that bracket a plausible range for the true component value \citep{oaxaca1973,blinder1973}, choosing a symmetric average and reporting a point estimate \citep{reimers1983}, or weighting by group shares to emphasize the disadvantaged group \citep{cotton1988}. 
+
+
+Despite the longstanding awareness of the index-number problem and the many proposed responses to it, there is no consensus on a single best approach across domains. 
+Even more concerningly, many applied papers in health and social sciences still fall short or completely fail to acknowledge the problem, reporting only one direction of the decomposition \citep{zhang_2019, ayubiShahbaziKhazaei2024,paradaContzen2025}. 
+Others acknowledge the problem but report only one reference without proper justification \citep{singleton2016,lamJamiesonMittinty2021, alHanawiNjagi2022}. 
+Finally, some studies, which we believe follow best practices for validating the robustness of the OBD to reference changes, acknowledge the problem and present the decomposition for at least two references or some form of aggregation \citep{sharafRashad2016,rahimiNazari2021}.
+
+We further believe that, at a minimum, both natural directions should be presented, particularly when there is no pre-established consensus on which direction to take.  
+For instance, labor economists often agree on the conception that either men or a benchmark wage between women and men represents the non-discriminatory wage in the gender wage gap problem; yet some studies report women as the reference group \citep{paradaContzen2025}. 
+Because of the lack of clarity and consensus on which direction to take, we argue that both references should be reported in order to validate conclusions against changes in the reference group and to assess whether substantial differences in interpretation arise.
+
+% The OB decomposition swaps components of each population in a particular order: first the distribution of $X$ and then the distribution of $Y\mid X$ or vice versa. 
+% Previous authors have noted that results depend on the chosen order of swaps \citep{blinder1973,oaxaca1973}.
+% There are two possible methods for dealing with this issue.
+% First, considering the intermediate populations (i.e., $K$'s distribution of $X$ with $H$'s $Y|X$ or $H$'s distribution of $X$ with $K$'s $Y|X$) as possible counterfactual worlds that could have occurred, one could argue that only certain counterfactuals are reasonable \citep{jann2008,fortinLemieuxFirpo2011}.
+% For example, \citet{fortinLemieuxFirpo2011} consider a labor economics problem and argue that only one ordering is plausible.
+% A second approach is to simply treat the two orders as equally valid and report both to bracket a range \citep{oaxaca1973,blinder1973} or compute a (weighted) average over different orderings \citep{sloczynski2015,firpoWoL2017}.
+
+Our major contribution is to demonstrate that the choice of reference group is not a mere technical detail; it can flip the substantive conclusion and thus failing to account for such sensitivity can lead to misleading interpretations.
+We show that there are realistic scenarios in which different choices of reference groups yield substantively different conclusions.
+As an extreme example, the sign of the unexplained ($Y|X$) ---or explained--- component can flip from negative to positive depending on the reference population.
+Taking a weighted average in such scenarios can return contradictory conclusions based on the arbitrary choice of weights in the average.
+% \textcolor{red}{TB: I think the argument about weighted averages not being meaningful can be made more clear}. \textcolor{blue}{AS: Gave it a shot!}
+We illustrate these findings with a synthetic healthcare example inspired by real data analyses and provide a complete set of interpretable conditions under which such sign flipping --- and subsequent ambiguity of the OBD --- will occur.
+
+% First Version (Manuel)
+% The Oaxaca–Blinder (OB) \citep{oaxaca1973,blinder1973} decomposition, sometimes referred to as Kitagawa–Oaxaca–Blinder (KOB; \citealp{kitagawa1955}), decomposes the difference in outcome (\(Y\)) means between two groups into a part that can be explained by differences in the covariates (\(X\)), usually known as the explained part, and a component attributable to differences in \(Y \mid X\), usually referred to as the unexplained part (also called the discrimination or structural part). The OB decomposition is a widely used method in economics and social sciences to analyze disparities between groups, such as wage gaps or educational attainment differences. It provides insights into how much of the difference can be attributed to observable characteristics versus structural differences between groups.  
+
+% From the very beginning, authors warned that results depend on the chosen reference coefficients—the classic \textit{index-number problem} \citep{blinder1973,oaxaca1973}. Since then, two justifications dominate the literature: first, treat the two orders as ``equally valid'' and report both to bracket a range \citep{oaxaca1973,blinder1973}; second, choose a reference based on a nondiscriminatory counterfactual or depending on the question one seeks to answer \citep{fortinLemieuxFirpo2011,jann2008}. In health services research, recent papers acknowledge that even the ratio of explained to unexplained components hinges on this counterfactual choice \citep{rahimiNazari2021,meulman2025}. At the same time, classic work in sociology cautions that selecting a comparison group can be ``inherently arbitrary,'' inviting arbitrary decompositions of the residual gap \citep{jonesKelley1984}.
+
+% To alleviate this seemingly arbitrary choice of reference group, several solutions have been proposed: symmetric averages \citep{reimers1983}, group-share weighting for the disadvantaged \citep{cotton1988}, and pooled regressions intended to approximate a competitive structure \citep{neumark1988,oaxacaRansom1994}. These approaches aim to mitigate arbitrariness in choosing a reference and provide more stable estimates of the explained and unexplained components. However, the choice of reference remains contentious, with no consensus on a single best approach. Some argue it should be grounded in theoretical or policy relevance \citep{jann2008,fortinLemieuxFirpo2011}, while others emphasize pooled or averaged structures for stability and comparability \citep{sloczynski2015,firpoWoL2017}.
+
+% We argue that the choice of reference group is not a technical detail; it can flip the substantive conclusion. This is especially concerning in policy settings where OB guides decisions on how to address disparities. We show that \emph{sign reversals} of the unexplained (structural) component—and of the explained component—are not edge cases: they arise under realistic conditions, even with a correctly specified linear model and the same data. This challenges the robustness of conclusions drawn from OB decompositions and calls for careful consideration of reference group selection. We illustrate with a health example and a short theorem that characterizes the flip region where these shifts can occur.

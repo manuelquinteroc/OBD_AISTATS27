@@ -1,0 +1,165 @@
+%%%%%%%% ICML 2026 SUBMISSION FILE - Oaxaca-Blinder Decomposition %%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % for professional tables
+
+% hyperref makes hyperlinks in the resulting PDF.
+\usepackage{hyperref}
+
+% Attempt to make hyperref and algorithmic work together better:
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Use the following line for the initial blind version submitted for review:
+\usepackage{icml2026}
+
+% For preprint, use
+% \usepackage[preprint]{icml2026}
+
+% If accepted, instead use the following line for the camera-ready submission:
+% \usepackage[accepted]{icml2026}
+
+% Load algpseudocode after icml2026 to provide additional algorithm commands
+\usepackage{algpseudocode}
+
+% Math packages
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\input{mathnotation}
+
+% Additional packages
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{url}            % simple URL typesetting
+\usepackage{float}          % tables and figures
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{xcolor}         % colors
+\usepackage{thmtools}
+\usepackage{thm-restate}
+
+% Algorithm packages
+\usepackage{algorithm}
+\floatname{algorithm}{Decision tree}
+% Note: icml2026 already loads algorithmic.sty, so we use that instead of algpseudocode
+% If your sections use algpseudocode syntax, you may need to adjust the algorithm code
+% or load algpseudocode after icml2026 (may cause conflicts)
+
+% List and table packages
+\usepackage{enumitem}   % for nested and customized enumerate labels
+\usepackage{makecell}
+\usepackage{multirow}
+
+% Note: natbib is already loaded by icml2026.sty, no need to load it again
+
+% Cleveref for cross-references
+\usepackage[capitalise]{cleveref}
+\crefname{equation}{Equation}{Equations}
+\crefformat{equation}{Equation~#2#1#3}   % Only the number is hyperlinked
+\Crefformat{equation}{Equation~#2#1#3}   % Only the number is hyperlinked (capitalized)
+\crefname{figure}{Figure}{Figures}
+\Crefname{figure}{Figure}{Figures}
+\crefname{table}{Table}{Tables}
+\Crefname{table}{Table}{Tables}
+
+% Theorem styles
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}[section]
+\crefname{assumption}{Assumption}{Assumptions}
+\Crefname{assumption}{Assumption}{Assumptions}
+
+% Color edits for collaboration (optional - comment out for final submission)
+% \usepackage{color-edits}
+% \addauthor{mq}{orange}
+% \addauthor{tb}{red}
+% \addauthor{as}{blue}
+% \addauthor{ws}{green}
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Oaxaca-Blinder Decomposition}
+
+\begin{document}
+
+\twocolumn[
+  \icmltitle{Oaxaca-Blinder decomposition: }
+
+  % It is OKAY to include author information, even for blind submissions: the
+  % style file will automatically remove it for you unless you've provided
+  % the [accepted] option to the icml2026 package.
+
+  % List of affiliations: The first argument should be a (short) identifier you
+  % will use later to specify author affiliations
+  \icmlsetsymbol{equal}{*}
+
+  \begin{icmlauthorlist}
+    \icmlauthor{Author 1}{inst1}
+    \icmlauthor{Author 2}{inst2}
+    \icmlauthor{Author 3}{inst3}
+  \end{icmlauthorlist}
+
+  \icmlaffiliation{inst1}{Institution 1, Location, Country}
+  \icmlaffiliation{inst2}{Institution 2, Location, Country}
+  \icmlaffiliation{inst3}{Institution 3, Location, Country}
+
+  \icmlcorrespondingauthor{Author 1}{author1@institution1.edu}
+  \icmlcorrespondingauthor{Author 2}{author2@institution2.edu}
+
+  % You may provide any keywords that you find helpful for describing your
+  % paper; these are used to populate the "keywords" metadata in the PDF but
+  % will not be shown in the document
+  \icmlkeywords{Machine Learning, ICML}
+
+  \vskip 0.3in
+]
+
+% this must go after the closing bracket ] following \twocolumn[ ...
+
+% This command actually creates the footnote in the first column listing the
+% affiliations and the copyright notice.
+\printAffiliationsAndNotice{}  % leave empty for no special notice
+
+% Abstract
+\input{Sections/abstract}
+
+% Main sections
+\input{Sections/introduction}
+\input{Sections/counterfactual_explanation.tex}
+\input{Sections/setup}
+\input{Sections/illustrative_example}
+\input{Sections/real_healthcare_example}
+\input{Sections/sign_reversal}
+\input{Sections/conclusion}
+
+
+% ===============================================================
+% Acknowledgements (only for camera-ready version)
+% \section*{Acknowledgements}
+% All acknowledgments go at the end of the paper, including thanks to reviewers
+% who gave useful comments, to colleagues who contributed to the ideas, and to
+% funding agencies and corporate sponsors that provided financial support.
+
+
+% Bibliography
+\bibliographystyle{icml2026}
+\bibliography{OBD_signflip}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\appendix
+\onecolumn
+
+% Supplementary material
+\section*{Supplementary Materials}
+
+\input{Sections/Appendix_theory}
+\input{Sections/Appendix_example}
+\input{Sections/icu_details}
+
+\end{document}

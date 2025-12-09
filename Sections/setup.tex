@@ -1,0 +1,49 @@
+\section{Oaxaca--Blinder decomposition (OBD)} 
+\label{sec:ob}
+
+We now formalize the discussion above tailored to the OBD.
+Let \( X \in \mathbb{R}^d \) be a vector of covariates and \( Y \in \mathbb{R} \) the outcome of interest. 
+The OBD assumes the outcome-generating mechanism is linear in the covariates, with conditional expectation \( \mathbb{E}_g[Y \mid X] = \alpha_g + X^\top \beta_g,\) where \( \alpha_g \in \mathbb{R} \) is the intercept and \( \beta_g \in \mathbb{R}^d \) the slope vector for group \( g \in \{H, K\} \). 
+
+The OBD can be interpreted as a specific implementation of the two counterfactual decompositions in \cref{sec:counterfactual_example}.
+Under the linear model assumption, the counterfactual means can be expressed as:
+\[
+    \E\big[Y_{g}^{C(g')}\big] = \E_{g}[X]^\top \beta_{g'} + \alpha_{g'}, \quad \{g, g'\} = \{H, K\}, g \ne g'.
+\]
+
+Hence, OBD is the rewriting of \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} as
+\begin{align}
+    \Delta_Y &:= \E_H[Y] - \E_K[Y] \nonumber \\[2pt]
+    \label{eq:OB_H_decomp}
+    &= \underbrace{(\mu_H - \mu_K)^\top \beta_H}_{E^{(H)}} 
+     + \underbrace{\mu_K^\top(\beta_H - \beta_K) + (\alpha_H - \alpha_K)}_{U^{(H)}} \\[2pt]
+    \label{eq:OB_K_decomp}
+    &= \underbrace{\mu_H^\top(\beta_H - \beta_K) + (\alpha_H - \alpha_K)}_{U^{(K)}} 
+     + \underbrace{(\mu_H - \mu_K)^\top \beta_K}_{E^{(K)}}.
+\end{align}
+
+% % the equation below is the general formula
+% \begin{align}
+%     \label{eq:KOB}
+%     \Delta_Y &:= \mathbb{E}_H[Y] - \mathbb{E}_K[Y] \nonumber \\
+%     &= (\mu_H - \mu_K)^\top \beta_g + \mu_{g'}^\top (\beta_H - \beta_K) + (\alpha_H - \alpha_K),
+% \end{align}
+Where \( \mu_g := \mathbb{E}_g[X] \) is the mean covariate vector in group \( g \). 
+%and \( g' \) denotes the group not used as reference (i.e., \( \{g, g'\} = \{H, K\} \) with \( g \ne g' \)).
+The OBD attributes the mean outcome gap \( \Delta_Y \) to the explained component (\(E^{(K)}\) or \(E^{(H)}\)), reflecting differences in the distribution of \( X \), and to the unexplained component (\(U^{(K)}\) or \(U^{(H)}\)), reflecting differences in the conditional distribution of \( Y \mid X \).
+As can be clearly seen from \cref{eq:OB_H_decomp,eq:OB_K_decomp}, \(E^{(H)}\) is generally different from \(E^{(K)}\), unless \(\beta_H = \beta_K\), and similarly for \(U^{(H)}\) and \(U^{(K)}\).
+As noted in \cref{sec:counterfactual_example}, the decomposition clearly depends on the chosen counterfactual distribution.
+Letting
+\[
+    \Delta \mu := \mu_H - \mu_K, \quad
+    \Delta \beta := \beta_H - \beta_K, \quad
+    \Delta \alpha := \alpha_H - \alpha_K,
+\]
+we can write the two possible decompositions, one for each choice of reference group, as:
+\begin{align}
+    \label{eq:ob_decomp_ref_group}
+    \Delta_Y &= \underbrace{\Delta \mu^\top \beta_H}_{=:\EHOB} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{=:\UH} \nonumber \\
+             &= \underbrace{\Delta \mu^\top \beta_K}_{=:\EKOB} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{=:\UK}.
+\end{align}
+Our contribution is to show that the differences between the two decompositions can be so substantial that it is not clear either one is meaningful in real-world applications.
+

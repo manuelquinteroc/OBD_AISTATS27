@@ -1,0 +1,91 @@
+\section{A simulated example from healthcare}
+\label{sec:example}
+
+To illustrate why \cref{eq:ob_decomp_ref_group} can lead a practitioner to draw substantially different conclusions depending on the reference group used in the OBD, we turn to a simple simulated healthcare example inspired by real-life data.
+
+Body mass index (BMI) is a widely recognized and routinely measured marker of wellness \cite{heymsfield2016} and is strongly linked to cardiometabolic outcomes, such as elevated blood pressure. 
+An important public health question is whether differences in blood pressure between two populations are due mainly to differences in underlying BMI distributions or to differences in how BMI impacts blood pressure. While OBD cannot establish causality without further assumptions, it can suggest where one might look for potential drivers of observed disparities.
+If the unexplained component is larger, it may highlight the need to investigate differences in medical care, such as medication titration practices, adherence support, or access to antihypertensives. 
+In either case, OBD serves only as a descriptive tool that helps formulate hypotheses about where meaningful differences may arise, not as a causal model.
+The answer can inform where to direct limited resources. 
+If most of the gap is explained by BMI distribution differences, targeted interventions on weight management, nutrition, and physical activity may be most impactful. 
+If the unexplained component dominates, changes to care delivery, such as earlier medication titration, improved medication adherence support, or broader access to antihypertensives, may be more effective. 
+
+Our example considers two populations of adults in primary care being followed for elevated blood pressure, using systolic blood pressure (SBP) at a standardized follow-up visit as the outcome.
+The first population, Group $H$, comes from a higher resource setting, such as an urban neighborhood with structured care pathways, frequent follow up, and better access to healthy food and physical activity options. 
+The second population, Group $K$, comes from lower resource setting, where patients face barriers such as longer travel distances to clinics, infrequent follow up, delayed medication titration, and limited access to nutritious food. 
+These factors shape both the composition of each group (including average BMI) and the structure of the BMI–SBP relationship.
+
+Following a clinical literature finding an approximately linear relationship between BMP and SBP \cite{kaufman1997, cappuccio2008, chen2023}, we model the SBP in group \( g \) as
+\begin{equation}
+    \label{eq:linear_model}
+    \text{SBP}_g = \alpha_g + \beta_g \times \text{BMI} + \varepsilon,
+\end{equation}
+where $\alpha_g \in \mathbb{R}$ is the group-specific intercept, $\beta_g \in \mathbb{R}$ is the group-specific slope, representing the average change in SBP (mmHg) per unit increase in BMI for $g \in \{H, K\}$, and $\varepsilon$ reflects individual variability in SBP that is uncorrelated with BMI.
+We present key parameters in \cref{tab:dgp_short} and provide further details about the data-generating process in Supplementary Material \ref{appendix:dgp}.
+
+\begin{table}[h!]
+\caption{True model parameters by group}
+\label{tab:dgp_short}
+\begin{center}
+\small
+\begin{tabular}{lcccc}
+\textbf{Group} & \textbf{Mean BMI} & \textbf{$\alpha$} & \textbf{$\beta$} & \textbf{Mean SBP} \\
+\hline \\
+H & 25.0 & 110.4 & 1.0 & 135.4 \\
+K & 27.0 & 100.0 & 1.4 & 137.8 \\
+\end{tabular}
+\end{center}
+\footnotesize{Note: H = Higher-resource group, K = Lower-resource group. BMI and SBP in $kg/m^2$ and mmHg respectively. $\alpha$ in mmHg, $\beta$ in mmHg per $kg/m^2$.}
+\end{table}
+
+\cref{fig:bmi_sbp} shows the fitted BMI–SBP relationships for both groups, showing how differences in intercepts, slopes, and BMI distributions interact.
+
+\begin{figure}[h]
+\centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/bmi_sbp_comparison.pdf}}
+\caption{Fitted linear models of SBP on BMI by group.}
+\label{fig:bmi_sbp}
+\end{figure}
+
+Overall, Group $H$ has lower average SBP than Group $K$, owing both to lower average BMI and a shallower slope relating BMI to SBP, perhaps reflecting improved access and adherence to treatment, or availability of non-pharmacological support.
+However, Group $H$ has a higher baseline SBP ($\alpha_H$), perhaps reflecting genetic factors in Group $H$.
+
+In principle, the OBD should provide a transparent framework to separate the difference in mean SBP into an explained component (differences in BMI distribution, $X$) and an unexplained component (differences in SBP given BMI, $Y|X$)
+\cref{tab:ob_decomp} summarizes the OBD results, taking $H$ and $K$ as the reference groups in turn.
+
+\begin{table}[H]
+\caption{Estimated Oaxaca–Blinder decomposition of mean SBP differences}
+\label{tab:ob_decomp}
+\begin{center}
+\small
+\begin{tabular}{lrrr}
+\textbf{Group} & \textbf{Explained} & \textbf{Unexplained} & \textbf{Total gap} \\
+\hline \\
+H & $-1.91$ & $\textbf{-0.14}$ & $-2.05$ \\
+K & $-2.61$ & $\textbf{0.57}$  & $-2.05$ \\
+\end{tabular}
+\end{center}
+\footnotesize{Note: H = Higher-resource group, K = Lower-resource group. All values in mmHg.}
+\end{table}
+
+\begin{figure*}[t]
+\vspace{.3in}
+\centerline{\includegraphics[width=0.8\textwidth]{Sections/Figures/counterfactual.pdf}}
+\vspace{.3in}
+\caption{Counterfactual analysis visualization showing the decomposition results for both reference groups.}
+\label{fig:counterfactual}
+\end{figure*}
+
+\cref{fig:counterfactual} visualizes the OBD as the mere difference between the counterfactual question posed by each choice of reference group and the observed mean SBP for each group. It also illustrates the sign flip in the unexplained component.
+
+For both choices of reference group, the explained components are negative, so both choices of reference dsitribution attribute Group $H$'s lower average SBP in part to its lower average BMI.
+However, the sign of the unexplained OB component flips depending on the choice of the reference group.
+When Group $H$ is the reference, the negative unexplained component implies that institutional factors further reduce Group H's blood pressure.
+However, when Group $K$ is the reference, institutional factors appear to \emph{increase} Group $H$'s average blood pressure!
+Intuitively, because blood pressure in Group $K$ is so much more responsive to BMI, Group $H$'s lower average BMI appears so good as to ``over-explain'' the difference in SBP; the unexplained component is then forced to be positive to compensate.
+Given that the choice of reference distribution is arbitrary here, we conclude that the OBD is not reliable for decomposing differences in this example.
+
+% \textcolor{red}{mega double check conclusion:}
+% Some authors might argue that the choice of reference group simply reflects a different counterfactual question, for example, ``What would the SBP gap be if the lower resource group had the BMI--SBP relationship of the higher resource group?'' versus ``What would the gap be if the higher resource group had the BMI--SBP relationship of the lower resource group?'' 
+% Others might claim that the true effect lies somewhere between these two extremes, and that averaging across reference groups provides a balanced view. 
+% However, in our setting we argue that such sensitivity is problematic: when the sign of the unexplained component reverses, the qualitative policy message changes, creating a real risk of misinterpretation rather than a benign difference in framing.

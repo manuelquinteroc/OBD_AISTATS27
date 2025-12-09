@@ -1,0 +1,85 @@
+\section{Theory}
+\label{app:theory}
+
+In this section, we present the proof of \cref{thm:ordering_sensitivity} and an example showing that the difference between the two decompositions can be made arbitrarily large even when the mean gap is fixed.
+
+
+\subsection{Proof of \cref{thm:ordering_sensitivity}}
+\label{sec:sign_flip_proof}
+\begin{proof}
+For a sign flip to occur, it must be that the unexplained components have different signs. That is:
+\begin{equation}
+	\sign( \mu_H^T \Delta\beta + \Delta\alpha) \neq \sign( \mu_K^T \Delta\beta + \Delta\alpha)\end{equation}
+First, consider the case where $\sign \mu_K^T \Delta\beta = \sign \mu_H^T \Delta\beta$.
+In this case, the addition of $\Delta\alpha$ must be small enough to flip one of the signs of the $\mu_g^T \Delta\beta$ but so large that it flips the other.
+As we have assumed $\mu_K^T \Delta\beta \neq \mu_H^T \Delta\beta$, one of the $\mu_g^T \Delta\beta$ will be lesser in magnitude; without loss of generality, suppose this is $g = H$.
+That is, $\abs{\mu_H^T \Delta\beta} < \abs{\mu_K^T \Delta\beta}$.
+Now, we have also assumed that $\sign \Delta\alpha \neq \sign \mu_K^T \Delta\beta$ and $\abs{\mu_H^T \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K^T \Delta\beta}$.
+We conclude that $\sign( \mu_H^T \Delta\beta + \Delta\alpha) \neq \sign( \mu_K^T \Delta\beta + \Delta\alpha)$.
+
+Next, consider the case where $\sign \mu_K^T \Delta\beta \neq \sign \mu_H^T \Delta\beta$.
+In this case, the addition of $\Delta\alpha$ to the $\mu_g^T \Delta\beta$ must be small enough such that it does not change the sign of either one.
+Without loss of generality, suppose that $\sign \Delta\alpha \neq \sign \mu_H^T \Delta\beta$.
+Then the assumed condition $\abs{\mu_H^T \Delta\beta} > \abs{\Delta\alpha}$ is enough to ensure that $\sign(\mu_H^T \Delta\beta) = \sign(\mu_H^T \Delta\beta + \Delta\alpha) \neq \sign(\mu_K^T \Delta\beta + \Delta\alpha)$.
+\end{proof}
+
+% ---------------------------------------------------------
+% \mqedit{
+% \subsection{Decision tree for sign flips}
+% \label{sec:decision_tree}
+
+% To shed more light on \cref{thm:ordering_sensitivity}, we disentangle the condition in \cref{eq:sign_flip_condition} into a decision tree of when a sign flip can occur: 
+
+% \begin{algorithm}[H]
+%     \caption{Unexplained component sign-flip}
+%     \label{alg:decision_tree}
+% \begin{algorithmic}  
+%     \If{$\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$}
+%         \If{$\sign(\mu_H^T \Delta\beta) = \sign(\mu_K^T \Delta\beta)$}
+%             \If{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$}
+%                 \If{$|\mu_H^T \Delta\beta| < |\Delta\alpha| < |\mu_K^T \Delta\beta|$ \textbf{or} $|\mu_K^T \Delta\beta| < |\Delta\alpha| < |\mu_H^T \Delta\beta|$}
+%                     \State A sign flip occurs.
+%                 \EndIf
+%             \EndIf
+%         \ElsIf{$\sign(\mu_H^T \Delta\beta) \neq \sign(\mu_K^T \Delta\beta)$}
+%             \If{$\sign(\Delta\alpha) = \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_K^T \Delta\beta| > |\Delta\alpha|$}
+%                 \State A sign flip occurs.
+%             \ElsIf{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_H^T \Delta\beta| > |\Delta\alpha|$}
+%                 \State A sign flip occurs.
+%             \EndIf
+%         \EndIf
+%     \Else
+%         \State There is no sign flip.
+%     \EndIf
+% \end{algorithmic}
+% \end{algorithm}
+
+% }
+
+
+\subsection{Unbounded sensitivity at fixed mean gap}
+ \label{ex:unbounded}
+In this section we present a toy example where we can have arbitrarily large flip magnitudes. Consider the following example in dimension \( 1 \), where we assume we have a parameter \( L > 0 \) which controls the magnitude of the covariate shift, and \( \varepsilon > 0 \) which controls the deviation in slope coefficients. We assume the mean vector is given by \( (\mu_K, \mu_H) = (0, L) \), and the slope parameters deviate symmetrically from \( \frac{1}{L} \), so that \( \beta_H = \frac{1}{L} + \frac{\varepsilon}{2} \), \( \beta_K = \frac{1}{L} - \frac{\varepsilon}{2} \). Then, the explained and unexplained components under both reference groups are:
+\begin{align*}
+    \EHOB &= \Delta\mu \cdot \beta_H = L\left(\frac{1}{L} + \frac{\varepsilon}{2}\right) = 1 + \frac{L\varepsilon}{2}, \quad \UH = \mu_K \cdot \Delta\beta = -\frac{L\varepsilon}{2}, \\
+    \EKOB &= \Delta\mu \cdot \beta_K = L\left(\frac{1}{L} - \frac{\varepsilon}{2}\right) = 1 - \frac{L\varepsilon}{2}, \quad \UK = \mu_H \cdot \Delta\beta = +\frac{L\varepsilon}{2}.
+\end{align*}
+
+Hence, the difference between the two decompositions is \( \EHOB - \EKOB = L\varepsilon \), which can be made arbitrarily large as \( L \to \infty \), even though the total mean gap is always fixed at \( \Delta_Y = 1 \). Similarly, the unexplained components differ by \( \UK - \UH = L\varepsilon \).
+
+\begin{center}
+\begin{tabular}{ccccccc}
+\toprule
+\(L\) & \(\varepsilon\) 
+& \(\EHOB\) & \(\EKOB\) 
+& \(\UH\) & \(\UK\) 
+& Flip? \\
+\midrule
+20    & 0.1  & \(2\)     & \(0\)      & \(-1\)    & \(1\)     & \checkmark \\
+200   & 0.1  & \(11\)    & \(-9\)     & \(-10\)   & \(10\)    & \checkmark \\
+1000  & 0.1  & \(51\)    & \(-49\)    & \(-50\)   & \(50\)    & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Note that the sign flip is symmetric by construction, but the magnitude of the discrepancy grows linearly in \( L \), highlighting that the attribution gap between reference groups can be stretched arbitrarily far.

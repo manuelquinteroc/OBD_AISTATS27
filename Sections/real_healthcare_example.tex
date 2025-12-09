@@ -1,0 +1,51 @@
+\section{A Real Example: Gender Gap in ICU Mortality in Moderate Tachycardia}
+\label{sec:real_example}
+
+To further support our claim, we now present a real case example drawn from clinical data in which the Oaxaca Blinder decomposition shows sign reversals. We use data from the PhysioNet cohort of ICU patients collected for the study of in hospital mortality \citep{goldberger2000physiobank}. The dataset contains routine measurements taken at admission, including heart rate (HR), mean arterial pressure (MAP), temperature, and urine output. These values are recorded for every patient at the time of entry into the unit and provide a simple description of their initial physiological state. Within this setting, we study whether the difference in mortality rates between men and women can be attributed to differences in these observed covariates or to differences in how mortality relates to these covariates. A detailed description on the data analysis and the sign-flip search procedure is provided in Appendix~\ref{appendix:icu_details}.
+
+
+
+
+
+Practitioners often look at moderate elevations in heart rate as a first indication of stress, infection, or early hemodynamic change, so it is natural to analyze mortality rates within such groups. For this reason, we consider patients whose admission heart rate lies between the $50$ and $75$ percentiles, which we refer to as HR quartile two. This group reflects a familiar clinical presentation in which the heart rate is elevated but not extreme. Within this group, the mortality rate for men exceeds the mortality rate for women by approximately $3.5$ percentage points (see \cref{tab:hr_q2_decomposition}).
+
+We estimate a separate linear model for each group $g \in \{\text{men}, \text{women}\}$ and we model the conditional expectation of in hospital mortality as
+\[
+    \E[Y \mid X, g] \;=\; \alpha_{g} \;+\; X^{\top}\beta_{g},
+\]
+where $Y$ is the indicator for in hospital mortality, $X$ is the vector of admission covariates (heart rate, mean arterial pressure, temperature, urine output, age, and ICU type), $\alpha_{g}$ is the group specific intercept, and $\beta_{g}$ is the group specific vector of slopes. 
+
+Table~\ref{tab:hr_q2_decomposition} reports the resulting decomposition. When the coefficients for women are used as the reference rule, the explained component is positive and statistically significant, $0.021$, which suggests that differences in the observed covariates move the decomposition toward a higher mortality rate for men. When the coefficients for men are used as the reference rule, the explained component flips sign, $-0.007$. The direction therefore changes even though the underlying sample is the same.
+\begin{table}[H]
+\caption{Oaxaca Blinder Decomposition for HR Quartile Two}
+\label{tab:hr_q2_decomposition}
+    \begin{center}
+    \small
+    \begin{tabular}{lccc}
+    \textbf{Group} & \textbf{Explained} & \textbf{Unexplained} & \textbf{Total gap} \\
+    \hline \\[-6pt]
+    Women 
+    & \makecell{$0.021^{***}$ \\ $(0.007)$}
+    & \makecell{$0.014$ \\ $(0.025)$}
+    & \makecell{$0.035$ \\ $(0.023)$}
+    \\[4pt]
+    Men 
+    & \makecell{$-0.007$ \\ $(0.011)$}
+    & \makecell{$0.042^{*}$ \\ $(0.025)$}
+    & \makecell{$0.035$ \\ $(0.023)$}
+    \\
+    \hline
+    \end{tabular}
+    \end{center}
+
+    \tiny{
+    \textit{Note:} Standard errors in parentheses computed via bootstrap resampling with $1{,}000$ replications. 
+    P-values are calculated using a normal approximation (Wald test), where the test statistic is the coefficient divided by its bootstrap standard error. 
+    Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$. 
+    The decomposition separates the gender mortality gap (men minus women) into explained and unexplained components using the Oaxaca Blinder decomposition. 
+    Women uses the mortality model for women as the reference structure; Men uses the mortality model for men.
+    }
+\end{table}
+    
+
+The fact that the explained component points in opposite directions can lead to substantially different descriptive conclusions. When the coefficients for women are used, the positive explained term suggests that differences in admission covariates place men at higher mortality risk, which might prompt a practitioner to examine whether factors such as early hemodynamic status, comorbidity burden, or baseline acuity differ across gender. When the coefficients for men are used, the explained term becomes negative, implying instead that these same covariates would predict a slight advantage for men. This would shift attention away from covariate differences and toward other features of care delivery or clinical management. While OBD cannot establish causality without further assumptions, such sensitivity of the explained component to the choice of reference rule raises concerns: a purely descriptive tool that produces contradictory interpretations under equally valid specifications may not offer a reliable basis for guiding clinical inquiry or prioritizing follow-up analyses in this setting.

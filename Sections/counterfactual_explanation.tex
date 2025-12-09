@@ -1,0 +1,41 @@
+\section{Difference in means problem: A counterfactual exercise} 
+\label{sec:counterfactual_example}
+
+Before introducing the OBD, we first illustrate the index-number problem by framing it as a counterfactual exercise as in \citet{fortinLemieuxFirpo2011}. 
+We consider two groups, $H$ and $K$, and an outcome $Y$ we wish to compare across groups, together with observed characteristics $X$ (e.g., covariates that are relevant predictors of $Y$). 
+Although many counterfactuals can be constructed, a simple and intuitive pair arises by using the other group's outcome--covariate relationship as a bridge. In particular, one could ask one of the following two questions:
+
+\begin{center}
+\emph{“What would Group $K$’s mean outcome ($Y$) be if its observed characteristics ($X$) were evaluated under Group $H$’s outcome–covariate relationship?”}
+
+\emph{“What would Group $H$’s mean outcome ($Y$) be if its observed characteristics ($X$) were evaluated under Group $K$’s outcome–covariate relationship?”}
+\end{center}
+
+Although both questions are sensible, they may not lead to the same answer. 
+Which one to ask is rarely obvious and depends on the goal of the analysis.
+For instance, drawing from the classical gender wage-gap example \citep{oaxaca1973, blinder1973}, if $Y$ denotes wages and $X$ education, experience, occupation, etc., these questions ask \emph{What would women’s ($K$) mean wage be if their observed characteristics were remunerated at men’s ($H$) returns?} And \emph{What would men’s ($H$) mean wage be if their observed characteristics were remunerated at women’s ($K$) returns?}
+
+In a similar spirit, from our motivating health example, if $Y$ is systolic blood pressure (SBP) and $X$ is body mass index (BMI), this question asks: \emph{What would City $K$’s mean SBP be if its observed BMI were evaluated under City $H$’s SBP–BMI relationship?} And \emph{What would City $H$’s mean SBP be if its observed BMI were evaluated under City $K$’s SBP–BMI relationship?} 
+
+Which counterfactual is more appropriate depends on the question of interest and carries distinct interpretations and policy implications.
+
+All the above questions define at least two counterfactual means \(\E\!\big[Y_{K}^{C(H)}\big],\) and \(\E\!\big[Y_{H}^{C(K)}\big],\) where \(Y_{K}^{C(H)}\) denotes the counterfactual outcome for Group $K$ if its observed characteristics were mapped through Group $H$’s conditional outcome rule and $Y_{H}^{C(K)}$ denotes the counterfactual outcome for Group $H$ if its observed characteristics $X_H$ were mapped through Group $K$’s conditional outcome rule. Note that we use the superscript \(C(\cdot)\) to indicate counterfactual outcomes. 
+
+Using these counterfactuals, the difference in mean outcomes between groups can be expressed as the distance between each observed mean and its corresponding counterfactual:
+\begin{align}
+    \label{eq:OB_H_Counterfactual}
+    \E_H[Y] &- \E_K[Y] = \\ 
+    &\underbrace{\Big(\E_H[Y] - \E[Y_{K}^{C(H)}]\Big)}_{\text{Explained}:= E^{(H)}} \nonumber 
+     + \underbrace{\Big(\E[Y_{K}^{C(H)}] - \E_K[Y]\Big)}_{\text{Unexplained} := U^{(H)} }.
+\end{align}
+
+Alternatively, 
+\begin{align}
+    \label{eq:OB_K_Counterfactual}
+    \E_H[Y] & - \E_K[Y]= \\
+    & \underbrace{\Big(\E_H[Y] - \E[Y_{H}^{C(K)}]\Big)}_{\text{Unexplained}:= U^{(K)}} \nonumber 
+     + \underbrace{\Big(\E[Y_{H}^{C(K)}] - \E_K[Y]\Big)}_{\text{Explained}:= E^{(K)}}.
+\end{align}
+
+Certainly, the choice of the counterfactual is not unique or canonical, and the two decompositions in \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} are mathematically equivalent, as they both sum to the same total difference in means.
+OBD is nothing more than a specific implementation of these two counterfactual decompositions under the assumption of a linear model for the outcome-generating process.

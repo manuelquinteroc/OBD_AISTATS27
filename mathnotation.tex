@@ -1,0 +1,84 @@
+% ===========================
+% File: mathnotation.tex
+% Usage: \input{mathnotation} in the preamble of your main .tex file
+% Requires in main preamble: \usepackage{amsmath,amssymb,mathtools}
+% ===========================
+
+% --- Sets and spaces ---
+\providecommand{\R}{\mathbb{R}}     % Real numbers
+\providecommand{\N}{\mathbb{N}}     % Natural numbers
+\providecommand{\cX}{\mathcal{X}}   % Script X
+\providecommand{\cY}{\mathcal{Y}}   % Script Y
+\providecommand{\cP}{\mathcal{P}}   % Script P (e.g., probability distributions)
+
+% --- Probability & statistics ---
+\providecommand{\E}{\mathbb{E}}     % Expectation
+\DeclareMathOperator{\Var}{Var}     % Variance
+\DeclareMathOperator{\Cov}{Cov}     % Covariance
+\DeclareMathOperator{\supp}{supp}   % Support
+\DeclareMathOperator{\rank}{rank}   % Rank
+\DeclareMathOperator{\diag}{diag}   % Diagonal
+\DeclareMathOperator{\sign}{sign}   % Sign
+\DeclareMathOperator{\Tr}{Tr}       % Trace
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% --- Independence symbol ---
+\newcommand{\indep}{\mathrel{\perp\!\!\!\perp}}
+
+% --- Delimiters and inner product ---
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\paren}{\lparen}{\rparen}
+\DeclarePairedDelimiter{\braces}{\lbrace}{\rbrace}
+\DeclarePairedDelimiter{\brackets}{\lbrack}{\rbrack}
+\DeclarePairedDelimiterX{\inner}[2]{\langle}{\rangle}{#1,\,#2}
+
+% --- Indicator function ---
+\newcommand{\1}{\mathbf{1}} % Basic indicator
+\newcommand{\Ind}[1]{\mathbf{1}\!\braces*{#1}} % With condition
+
+% --- OB decomposition notation ---
+\providecommand{\DeltaY}{\Delta Y}
+\providecommand{\DeltaMu}{\Delta \mu}
+\providecommand{\DeltaBeta}{\Delta \beta}
+\providecommand{\DeltaAlpha}{\Delta \alpha}
+
+% Explained/unexplained terms under H/K reference
+\newcommand{\EHOB}{E^{(H)}}
+\newcommand{\EKOB}{E^{(K)}}
+\newcommand{\UH}{U^{(H)}}
+\newcommand{\UK}{U^{(K)}}
+
+% Alignment term and score (used in flip region analysis)
+\providecommand{\Bterm}{B}          % Alignment: \Delta\mu^\top \Delta\beta
+\providecommand{\Score}{S}          % Score: \mu_K^\top \Delta\beta + \Delta\alpha
+
+% --- Transpose and expectations with subscript ---
+\newcommand{\T}{\mathsf{T}}         % Transpose symbol
+\newcommand{\EE}[1][]{\E_{#1}}      % Subscripted expectation: \EE[X], \EE[g]
+
+% --- Defined as symbol ---
+\newcommand{\defeq}{\vcentcolon=}   % Use: f \defeq ...
+\newcommand{\eqdef}{=\vcentcolon}   % Use: ... =: f
+
+% --- Vectors and matrices (optional) ---
+\newcommand{\vecb}[1]{\boldsymbol{#1}} % Bold vector
+\newcommand{\matb}[1]{\boldsymbol{#1}} % Bold matrix
+
+
+% --- Theorems ---
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section] % [section] resets numbering per section
+
+% Optional: define other environments if needed
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}

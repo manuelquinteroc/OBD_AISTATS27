@@ -1,7 +1,9 @@
 \section{A simulated example from healthcare}
 \label{sec:example}
 
-To illustrate why \cref{eq:ob_decomp_ref_group} can lead a practitioner to draw substantially different conclusions depending on the reference group used in the OBD, we turn to a simple simulated healthcare example inspired by real-life data.
+Given the results in \cref{sec:real_example}, a natural question to ask is whether such sign reversals can arise in more stylized settings could be due to model mispecification or sampling variability. Here, we present a simple simulated example inspired by real-life healthcare data that exhibits sign reversals in the OBD under correct model specification and large sample sizes, demonstrating that these issues are not merely artifacts of small samples or model misspecification.
+
+% To illustrate why \cref{eq:ob_decomp_ref_group} can lead a practitioner to draw substantially different conclusions depending on the reference group used in the OBD, we turn to a simple simulated healthcare example inspired by real-life data.
 
 Body mass index (BMI) is a widely recognized and routinely measured marker of wellness \cite{heymsfield2016} and is strongly linked to cardiometabolic outcomes, such as elevated blood pressure. 
 An important public health question is whether differences in blood pressure between two populations are due mainly to differences in underlying BMI distributions or to differences in how BMI impacts blood pressure. While OBD cannot establish causality without further assumptions, it can suggest where one might look for potential drivers of observed disparities.
@@ -24,7 +26,7 @@ Following a clinical literature finding an approximately linear relationship bet
 where $\alpha_g \in \mathbb{R}$ is the group-specific intercept, $\beta_g \in \mathbb{R}$ is the group-specific slope, representing the average change in SBP (mmHg) per unit increase in BMI for $g \in \{H, K\}$, and $\varepsilon$ reflects individual variability in SBP that is uncorrelated with BMI.
 We present key parameters in \cref{tab:dgp_short} and provide further details about the data-generating process in Supplementary Material \ref{appendix:dgp}.
 
-\begin{table}[h!]
+\begin{table}[h]
 \caption{True model parameters by group}
 \label{tab:dgp_short}
 \begin{center}
@@ -47,7 +49,7 @@ K & 27.0 & 100.0 & 1.4 & 137.8 \\
 \label{fig:bmi_sbp}
 \end{figure}
 
-Overall, Group $H$ has lower average SBP than Group $K$, owing both to lower average BMI and a shallower slope relating BMI to SBP, perhaps reflecting improved access and adherence to treatment, or availability of non-pharmacological support.
+Analogous to the real-case study in \cref{sec:real_example}, the two fitted lines display a similar qualitative pattern. Overall, Group $H$ has lower average SBP than Group $K$, owing both to lower average BMI and a shallower slope relating BMI to SBP, perhaps reflecting improved access and adherence to treatment, or availability of non-pharmacological support.
 However, Group $H$ has a higher baseline SBP ($\alpha_H$), perhaps reflecting genetic factors in Group $H$.
 
 In principle, the OBD should provide a transparent framework to separate the difference in mean SBP into an explained component (differences in BMI distribution, $X$) and an unexplained component (differences in SBP given BMI, $Y|X$)
@@ -72,7 +74,7 @@ K & $-2.61$ & $\textbf{0.57}$  & $-2.05$ \\
 \vspace{.3in}
 \centerline{\includegraphics[width=0.8\textwidth]{Sections/Figures/counterfactual.pdf}}
 \vspace{.3in}
-\caption{Counterfactual analysis visualization showing the decomposition results for both reference groups.}
+\caption{Counterfactual analysis visualization showing the decomposition results for both reference groups in our simulated example.}
 \label{fig:counterfactual}
 \end{figure*}
 

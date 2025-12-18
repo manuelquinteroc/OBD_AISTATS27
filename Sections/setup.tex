@@ -1,8 +1,8 @@
-\section{Oaxaca--Blinder decomposition (OBD)} 
+\subsection{Oaxaca--Blinder decomposition (OBD)} 
 \label{sec:ob}
 
-We now formalize the discussion above tailored to the OBD.
-Let \( X \in \mathbb{R}^d \) be a vector of covariates and \( Y \in \mathbb{R} \) the outcome of interest. 
+% \textcolor{red}{One line to connect to the above, ``what we did above is just the OBD and we now formalize it...''}
+The prior discussion illustrates the index-number problem in the context of counterfactual decompositions of mean differences and, in fact, \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} are the general forms of the OBD. We now formalize the OBD under the standard linear model assumption. Let \( X \in \mathbb{R}^d \) be a vector of covariates and \( Y \in \mathbb{R} \) the outcome of interest. 
 The OBD assumes the outcome-generating mechanism is linear in the covariates, with conditional expectation \( \mathbb{E}_g[Y \mid X] = \alpha_g + X^\top \beta_g,\) where \( \alpha_g \in \mathbb{R} \) is the intercept and \( \beta_g \in \mathbb{R}^d \) the slope vector for group \( g \in \{H, K\} \). 
 
 The OBD can be interpreted as a specific implementation of the two counterfactual decompositions in \cref{sec:counterfactual_example}.

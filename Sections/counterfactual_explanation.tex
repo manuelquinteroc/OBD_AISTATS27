@@ -1,4 +1,4 @@
-\section{Difference in means problem: A counterfactual exercise} 
+\subsection{Difference in means problem: A counterfactual exercise} 
 \label{sec:counterfactual_example}
 
 Before introducing the OBD, we first illustrate the index-number problem by framing it as a counterfactual exercise as in \citet{fortinLemieuxFirpo2011}. 
@@ -17,7 +17,13 @@ For instance, drawing from the classical gender wage-gap example \citep{oaxaca19
 
 In a similar spirit, from our motivating health example, if $Y$ is systolic blood pressure (SBP) and $X$ is body mass index (BMI), this question asks: \emph{What would City $K$’s mean SBP be if its observed BMI were evaluated under City $H$’s SBP–BMI relationship?} And \emph{What would City $H$’s mean SBP be if its observed BMI were evaluated under City $K$’s SBP–BMI relationship?} 
 
-Which counterfactual is more appropriate depends on the question of interest and carries distinct interpretations and policy implications.
+% Which counterfactual is more appropriate depends on the question of interest and carries distinct interpretations and policy implications.
+
+Which counterfactual is more appropriate can depend on the question of interest and carries distinct interpretations and policy implications, sometimes the counterfactual choice is driven by domain knowledge such as in labor economics where there seems to be a consensus for the gender wage gap problem \citep{}. However, in many cases, the choice of the reference group is usually not clear, such as in the SBP--BMI example.
+
+
+% \textcolor{red}{Write that it is not clear which counterfactual to use, although in some cases it is clear, as in these examples it is not.}
+
 
 All the above questions define at least two counterfactual means \(\E\!\big[Y_{K}^{C(H)}\big],\) and \(\E\!\big[Y_{H}^{C(K)}\big],\) where \(Y_{K}^{C(H)}\) denotes the counterfactual outcome for Group $K$ if its observed characteristics were mapped through Group $H$’s conditional outcome rule and $Y_{H}^{C(K)}$ denotes the counterfactual outcome for Group $H$ if its observed characteristics $X_H$ were mapped through Group $K$’s conditional outcome rule. Note that we use the superscript \(C(\cdot)\) to indicate counterfactual outcomes. 
 

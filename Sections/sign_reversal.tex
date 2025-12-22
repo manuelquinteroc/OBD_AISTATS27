@@ -1,13 +1,42 @@
-
-
-\section{When can sign reversals occur?} % All headings should be lower case (except for first word and proper nouns)
+\section{When can sign reversals occur?} 
 \label{sec:signflips}
 
-\textcolor{red}{add theory for explained part too - it fits here and it is way simpler.}
+Building on the real clinical case study and our simulated example, a natural next step is to ask under what conditions the explained and unexplained components flip sign, as the policy implications may hinge critically on their direction. 
+\cref{eq:OB_H_decomp,eq:OB_K_decomp} make clear that the value can vary with the choice of reference group, but it is less obvious when a sign flip can occur, prompting the question: under what conditions do these components flip sign?
 
-Building on the real clinical case study and our simulated example, a natural next step is to ask under what conditions the explained and unexplained components flip sign, as the policy implications may hinge critically on their sign. 
-\cref{eq:OB_H_decomp,eq:OB_K_decomp} make clear that the value can vary with the choice of reference group, but it is less obvious when a sign flip can occur, prompting the question: under what conditions do these components flip sign? For brevity, we focus on the unexplained component.
-%
+\paragraph{Explained component.}
+We begin with the explained component. Recall from \cref{eq:OB_H_decomp,eq:OB_K_decomp} that the explained term takes the form $\Delta\mu^T\beta_g$, where $\Delta\mu := \mu_H - \mu_K$ is the common covariate mean difference and $g \in \{H,K\}$ denotes the reference group. Because $\Delta\mu$ is fixed across references, any change in sign of the explained component is entirely driven by the inner product of $\Delta\mu$ with the coefficient vectors $\beta_g$.
+
+\begin{definition}
+	Let $\Delta\mu := \mu_H - \mu_K$. The OBD \emph{sign flips the explained component} if the sign of the explained term, $\Delta\mu^T \beta_g$, depends on the reference group. That is
+	\begin{equation}
+		\sign\!\left(\Delta\mu^T \beta_H\right) \neq \sign\!\left(\Delta\mu^T \beta_K\right).
+	\end{equation}
+\end{definition}
+
+The condition and its proof under which such a sign flip occurs follows immediately from this definition.
+
+\begin{restatable}[OBD explained sign flips]{theorem}{OBSignFlipsExplained}
+    \label{thm:explained_ordering_sensitivity}
+    The OBD \emph{sign flips the explained component} if and only if $\Delta\mu^T \beta_H \neq \Delta\mu^T \beta_K$, and
+    \begin{equation}
+    \label{eq:sign_flip_condition_explained}
+        \min\{\Delta\mu^T \beta_H,\ \Delta\mu^T \beta_K\}
+        < 0 <
+        \max\{\Delta\mu^T \beta_H,\ \Delta\mu^T \beta_K\}.
+    \end{equation}
+\end{restatable}
+
+\begin{remark}
+    If either $\Delta\mu^T \beta_H = 0$ or  $\Delta\mu^T \beta_K = 0$, then one explained term equals zero.
+\end{remark}
+
+To see how this characterization applies in practice, we return to the ICU mortality and heart rate example presented in \cref{sec:real_example}. In that example, we observed a sign flip in the explained component of the OBD when using men or women as the reference group. Within HR quartile two, the covariate mean difference $\Delta\mu$ between men and women is fixed by the sample, but the coefficients governing how mortality loads on these covariate differences differ in sign across groups. In particular, the opposite directions of the heart rate coefficients for men and women shown in \cref{fig:hr_quartile2} suggest that a sign flip can occur. As a result, $\Delta\mu^T\beta_{\text{women}}$ and $\Delta\mu^T\beta_{\text{men}}$ have opposite signs, leading to a sign reversal in the explained component. A numerical breakdown of $\Delta\mu$ and the group-specific coefficients is reported in Appendix~\cref{tab:delta_mu_betas}.
+
+\paragraph{Unexplained component.}
+
+Unlike the explained component, sign reversals in the unexplained component arise from the interaction between slope and intercept differences, leading to a richer set of conditions.
+
 \begin{definition}
 	Let $\Delta\beta := \beta_H - \beta_K$ and $\Delta\alpha := \alpha_H - \alpha_K$. The OBD \emph{sign flips the unexplained component} if the sign of the unexplained term, $\mu_{g'}^T \Delta\beta + \Delta\alpha$, depends on the reference group. That is
 	\begin{equation}
@@ -15,8 +44,9 @@ Building on the real clinical case study and our simulated example, a natural ne
 	\end{equation}
 \end{definition}
 %
-We now demonstrate that sign flipping in the OBD is not an isolated phenomenon.
-\begin{restatable}[OBD sign flips]{theorem}{OBSignFlips}
+We now demonstrate that sign flipping in the unexplained component of the OBD is not an isolated phenomenon.
+
+\begin{restatable}[OBD unexplained sign flips]{theorem}{OBSignFlips}
     \label{thm:ordering_sensitivity}
     The OBD \emph{sign flips the unexplained component} if and only if $\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$, and
     \begin{equation}
@@ -28,19 +58,6 @@ We now demonstrate that sign flipping in the OBD is not an isolated phenomenon.
 \begin{remark}
     If $-\Delta\alpha \in \{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}$, then one unexplained term equals zero.
 \end{remark}
-% \begin{restatable}[When does OBD sign flip?]{theorem}{OBSignFlips}
-%     \label{thm:ordering_sensitivity_legacy}
-%     We break down when sign flipping can occur depending on whether the signs of $\mu_H^T \Delta\beta$ and $\mu_K^T \Delta\beta$ match. First, suppose $\sign{\mu_H^T \Delta\beta} = \sign{\mu_K^T \Delta\beta}$ and assume without loss of generality $\abs{\mu_H^T \Delta\beta} \mqedit{<} \abs{\mu_K^T \Delta\beta}$. Then a sign flip between the unexplained components will occur if and only if
-%     \mqedit{$\sign(\Delta\alpha) \neq \sign{\mu_H^T \Delta\beta}$} and:
-%     \begin{equation}
-%      \abs{\mu_H^T \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K^T \Delta\beta}. \label{eq:sign_eq_condition}
-%     \end{equation}
-%     Next, suppose $\sign{\mu_H^T \Delta\beta} \neq \sign{\mu_K^T \Delta\beta}$ and that without loss of generality, $\sign{\mu_H^T\Delta \beta} \neq \sign{\Delta\alpha}$. Then a sign flip between the unexplained components will occur if and only if:
-%     \begin{equation}
-%     	\abs{\mu_H^T \Delta\beta} > \abs{\Delta\alpha}
-%     \end{equation}
-%     \mqcomment{ Maybe for completeness add the case where $\sign{\Delta\alpha} = \sign{\mu_H^T \Delta\beta}$ which implies that we need $\abs{\mu_K^T \Delta\beta} > \abs{\Delta\alpha}$?}
-% \end{restatable}
 
 In \cref{sec:sign_flip_proof}, we provide the proof of \cref{thm:ordering_sensitivity}. 
 
@@ -78,6 +95,8 @@ Furthermore, a sign-flip will occur if either $\abs{\mu_H \Delta\beta} < \abs{\D
 
 Even though \cref{thm:ordering_sensitivity} does not restrict the magnitude of the parts of the unexplained components, in \cref{ex:unbounded} we provide an example to illustrate that these sign flips are not relegated to settings in which $\mu_g^T\Delta\beta$ are small in magnitude; in fact, we show that they can be arbitrarily large in magnitude.
 
+While our focus above is on the unexplained component, the explained component can also exhibit sign reversals across reference groups. Recall from \cref{eq:OB_H_decomp,eq:OB_K_decomp} that the explained component takes the form $\Delta\mu^T \beta_{g}$, where $\Delta\mu := \mu_H - \mu_K$ and $g \in \{H,K\}$ denotes the reference group. We formalize the corresponding notion of a sign flip and give the analogous characterization.
+
 
 %    \Cref{thm:ordering_sensitivity} shows that sign reversals in the unexplained component are not edge cases. Equation \(U^{(K)} - U^{(H)} = -B\) implies that switching the reference group shifts the unexplained term by exactly \(B\), and the explained part by \(-B\). When \(B \neq 0\), this shift can flip the diagnosis—from structural underpayment to overpayment—even with a correctly specified model. The disagreement region \(S \in (-B, 0)\) for \(B > 0\) (and its mirror for \(B < 0\)) is tight: outside this interval, both orderings agree in sign; inside it, they disagree (see \cref{imageTODO}). This window has width \(|B|\), which grows with larger covariate shifts or slope differences—both common in practice. So sign flips are not rare or pathological; they’re a general sensitivity that arises whenever \(B\) is materially different from zero. This motivates the next result.
 %
@@ -102,9 +121,10 @@ Even though \cref{thm:ordering_sensitivity} does not restrict the magnitude of t
 
 \section{When do sign reversals not occur?}
 \label{sec:no_sign_flips}
-While \cref{thm:ordering_sensitivity} characterizes when sign reversals can arise, it is also useful to understand when they do \emph{not} occur. 
-Intuitively, a sign flip requires the intercept and slope effects to pull in opposite directions across groups. 
-When both move in the same direction, so that the group with higher baseline outcomes also has higher returns to covariates, the unexplained component preserves its sign regardless of the chosen reference group.
+While \cref{thm:explained_ordering_sensitivity,thm:ordering_sensitivity} characterizes when sign reversals can arise, it is also useful to understand when they do \emph{not} occur. 
+For the explained component, although differences in coefficients can in principle offset differences in covariate means, the most immediate condition under which no sign reversal occurs is when the covariate mean difference loads in the same direction under both reference models.
+
+For the unexplained component, a sign flip intuitively requires the intercept and slope effects to pull in opposite directions across groups. When both move in the same direction, so that the group with higher baseline outcomes also has higher returns to covariates, the unexplained component preserves its sign regardless of the chosen reference group.
 
 We formalize this idea in the following assumption. 
 

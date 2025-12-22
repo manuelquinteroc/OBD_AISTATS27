@@ -197,10 +197,40 @@ These complete results appear in Table~\ref{tab:icu_mortality}. The persistence 
     Female Reference uses the model for women as the reference outcome structure; Male Reference uses the model for men.
     \end{table}
     
-\cref{fig:hr_quartile2_hist} presents the histogram for the $816$ patients in HR quartile two, showing the distribution of mortality outcomes used in the linear probability models displayed in \cref{fig:hr_quartile2}.
+\cref{fig:hr_quartile2_hist} presents the histogram for the $816$ patients in HR quartile two, showing the distribution of mortality outcomes used in the linear probability models displayed in \cref{fig:hr_quartile2}. \cref{tab:delta_mu_betas} shows the covariate mean differences and group-specific coefficients for HR quartile two that underlie the sign reversal documented in Section~\ref{sec:real_example}.
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=0.4\linewidth]{Sections/Figures/hr_quartile2_mortality_y_hist.pdf}}
     \caption{Mortality outcome histogram for HR quartile two subgroup.}
     \label{fig:hr_quartile2_hist}
 \end{figure}
+
+\begin{table}[h]
+    \centering
+    \small
+    \caption{Covariate mean differences and group-specific coefficients in HR quartile two}
+    \label{tab:delta_mu_betas}
+    \begin{tabular}{lrrr}
+    \hline
+    \textbf{Covariate} 
+    & $\boldsymbol{\Delta\mu}$ 
+    & $\boldsymbol{\beta_{\text{Men}}}$ 
+    & $\boldsymbol{\beta_{\text{Women}}}$ \\
+    \hline \\[-6pt]
+    Intercept & $0.0000$   & $1.1813$  & $-0.8515$ \\
+    Age       & $3.8938$   & $-0.0000$ & $0.0039$ \\
+    ICU Type  & $0.0095$   & $0.0173$  & $0.0116$ \\
+    HR        & $0.4982$   & $-0.0026$ & $0.0056$ \\
+    MAP       & $-0.6669$  & $0.0004$  & $0.0010$ \\
+    Temp      & $0.3604$   & $-0.0230$ & $0.0028$ \\
+    Urine     & $-39.8976$ & $-0.0001$ & $-0.0001$ \\
+    \hline
+    \end{tabular}
+    
+    \vspace{0.5em}
+    \footnotesize{
+    \textit{Note:} $\Delta\mu$ denotes the difference in covariate means between men and women within HR quartile two (men minus women). 
+    $\beta_{\text{Men}}$ and $\beta_{\text{Women}}$ are coefficients from group-specific linear probability models for in-hospital mortality.
+    }
+    \end{table}
+    

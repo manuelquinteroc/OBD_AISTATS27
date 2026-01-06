@@ -10,6 +10,7 @@ We begin with the explained component. Recall from \cref{eq:OB_H_decomp,eq:OB_K_
 \begin{definition}
 	Let $\Delta\mu := \mu_H - \mu_K$. The OBD \emph{sign flips the explained component} if the sign of the explained term, $\Delta\mu^T \beta_g$, depends on the reference group. That is
 	\begin{equation}
+        \label{eq:sign_flip_condition_explained_neq}
 		\sign\!\left(\Delta\mu^T \beta_H\right) \neq \sign\!\left(\Delta\mu^T \beta_K\right).
 	\end{equation}
 \end{definition}
@@ -32,6 +33,14 @@ The condition and its proof under which such a sign flip occurs follows immediat
 \end{remark}
 
 To see how this characterization applies in practice, we return to the ICU mortality and heart rate example presented in \cref{sec:real_example}. In that example, we observed a sign flip in the explained component of the OBD when using men or women as the reference group. Within HR quartile two, the covariate mean difference $\Delta\mu$ between men and women is fixed by the sample, but the coefficients governing how mortality loads on these covariate differences differ in sign across groups. In particular, the opposite directions of the heart rate coefficients for men and women shown in \cref{fig:hr_quartile2} suggest that a sign flip can occur. As a result, $\Delta\mu^T\beta_{\text{women}}$ and $\Delta\mu^T\beta_{\text{men}}$ have opposite signs, leading to a sign reversal in the explained component. A numerical breakdown of $\Delta\mu$ and the group-specific coefficients is reported in Appendix~\cref{tab:delta_mu_betas}.
+
+What fraction of the parameter space does this represent?
+The answer depends on the measure we assign to the regression coefficients.
+To establish a baseline, suppose we assign a uniform distribution to \( \beta_H \) and \( \beta_K \) over some interval \( [-M, M] \).
+Under the assumption that \( \mu_H \neq \mu_K \) elementwise (which holds almost surely for atomless measures), we can simplify the analysis by rescaling the covariates via \( \tilde{X} = (X - \mu_K) / (\mu_H - \mu_K) \), where the division is elementwise.%
+\footnote{\textcolor{red}{Advik: we can do better than my first attempt at introducing this paragraph.}}
+For the rescaled covariates, \( \Delta \mu \) is a vector of ones, so \cref{eq:sign_flip_condition_explained_neq} simplifies to \( \sign\!\left(\sum_{i} \beta_{H,i}\right) \neq \sign\!\left(\sum_{i} \beta_{K,i}\right) \).
+The Uniform distributions on the regression coefficients translate to distributions on \( \sum_i \tilde{\beta}_{H,i} \) and \( \sum_i \tilde{\beta}_{K,i} \) that are symmetric around zero, so that \cref{eq:sign_flip_condition_explained_neq} corresponds to 50\% of the parameter space.
 
 \paragraph{Unexplained component.}
 
@@ -92,10 +101,33 @@ In this example, $\mu_H$ and $\mu_K$ denote mean BMIs, both of which are positiv
 This might occur if one group has better access to treatment but worse genetic factors, as in \cref{sec:example}.
 Furthermore, a sign-flip will occur if either $\abs{\mu_H \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K \Delta\beta}$ or $\abs{\mu_K \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_H \Delta\beta}$. This condition implies a range of values over which sign flips will occur; that is, there will be at least one choice of reference group under which improved healthcare appears to help in lowering mean SBP and another ordering under which improved healthcare appears to \emph{hurt} mean SBP.
 
-
 Even though \cref{thm:ordering_sensitivity} does not restrict the magnitude of the parts of the unexplained components, in \cref{ex:unbounded} we provide an example to illustrate that these sign flips are not relegated to settings in which $\mu_g^T\Delta\beta$ are small in magnitude; in fact, we show that they can be arbitrarily large in magnitude.
 
-While our focus above is on the unexplained component, the explained component can also exhibit sign reversals across reference groups. Recall from \cref{eq:OB_H_decomp,eq:OB_K_decomp} that the explained component takes the form $\Delta\mu^T \beta_{g}$, where $\Delta\mu := \mu_H - \mu_K$ and $g \in \{H,K\}$ denotes the reference group. We formalize the corresponding notion of a sign flip and give the analogous characterization.
+Moreover, as with the explained component, sign flips corresponds to a nontrivial region of the parameter space.
+We argue similarly as before, rescaling variables to simplify the analysis.
+Let \( \tilde{X} = (X - \mu_K) / (\mu_H - \mu_K) \), where the division is elementwise, and let \( \tilde{Y} = Y - E_K[Y] \).
+For the rescaled covariates, \( \mu_K = 0\), \( \alpha_K = 0 \), and \( \mu_H \) = 1.
+The conditions in \cref{alg:decision_tree} then simplify, so that the unexplained component flips sign iff \( 1^T \Delta \beta \neq 0 \), \( \sign (\alpha_H) \neq \sign (1^T \Delta \beta) \), and \( | 1^T \Delta \beta | > |\alpha_H| \), where \( 1 \) represents a vector of ones.
+
+To determine what fraction of the parameter space this corresponds to, we assign a uniform distribution over the interval \( [-M, M] \) to each of the regression coefficients.
+Then \( 1^T \Delta \beta \neq 0 \) almost surely, and we can focus on the remaining condition.
+As each entry of \( \beta_H \) and \( \beta_K \) has a uniform distribution, the quantity \( 1^T \Delta \beta \) follows an Irwin-Hall(2d) distribution rescaled to the interval \( [-2dM, 2dM] \); it is the sum of \(2d\) Uniform(-M, M) variables.
+
+We can use this observation to compute the probability of a sign flip in the unexplained component.
+Let \( I \sim \text{Irwin-Hall}(2d) \).
+Then the event \( | 1^T \Delta \beta | > |\alpha_H| \cup \sign (\alpha_H) \neq \sign (1^T \Delta \beta) \) is equivalent to the union \( (\alpha_H > 0 \cap I \in [-2d, \frac{2dM - \alpha_H}{2M}]) \cup (\alpha_H < 0 \cap I \in [\frac{\alpha_H + 2dM}{2M}, 2d] ) \); that is, when the Irwin-Hall variable takes a value in its tail with the opposite sign of \( \alpha_H \).
+By symmetry, this is twice the probability that \( \alpha_H \) is positive and the Irwin-Hall variable is large and negative.
+That is:
+\[ Pr(| 1^T \Delta \beta | > |\alpha_H|) = 2 Pr(\alpha_H > 0 \cap I < \frac{2dM - \alpha_H}{2M}). \] 
+We can calculate this exactly for small \( d \), after which point the Irwin-Hall CDF becomes difficult to evaluate due to combinatorial terms.
+For large \( d \), the central limit theorem allows us to approximate an Irwin-Hall(2d) distribution with a \( N(d, \frac{d}{6})\) distribution.
+\cref{fig:prob_unexplained} shows how this probability grows in the dimension of the covariates, \( d \), for various choices of \( M \).
+
+\begin{figure}[h]
+    \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/prob_unexplained.pdf}}
+    \caption{Probability of unexplained component sign flip under uniform measure.}
+    \label{fig:prob_unexplained}
+\end{figure}
 
 
 %    \Cref{thm:ordering_sensitivity} shows that sign reversals in the unexplained component are not edge cases. Equation \(U^{(K)} - U^{(H)} = -B\) implies that switching the reference group shifts the unexplained term by exactly \(B\), and the explained part by \(-B\). When \(B \neq 0\), this shift can flip the diagnosis—from structural underpayment to overpayment—even with a correctly specified model. The disagreement region \(S \in (-B, 0)\) for \(B > 0\) (and its mirror for \(B < 0\)) is tight: outside this interval, both orderings agree in sign; inside it, they disagree (see \cref{imageTODO}). This window has width \(|B|\), which grows with larger covariate shifts or slope differences—both common in practice. So sign flips are not rare or pathological; they’re a general sensitivity that arises whenever \(B\) is materially different from zero. This motivates the next result.

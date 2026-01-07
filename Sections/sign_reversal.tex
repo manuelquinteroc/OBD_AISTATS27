@@ -123,12 +123,49 @@ We can calculate this exactly for small \( d \), after which point the Irwin-Hal
 For large \( d \), the central limit theorem allows us to approximate an Irwin-Hall(2d) distribution with a \( N(d, \frac{d}{6})\) distribution.
 \cref{fig:prob_unexplained} shows how this probability grows in the dimension of the covariates, \( d \), for various choices of \( M \).
 
-\begin{figure}[h]
-    \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/prob_unexplained.pdf}}
-    \caption{Probability of unexplained component sign flip under uniform measure.}
-    \label{fig:prob_unexplained}
-\end{figure}
+% \begin{figure}[h]
+%     \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/prob_unexplained.pdf}}
+%     \caption{Probability of unexplained component sign flip under uniform measure.}
+%     \label{fig:prob_unexplained}
+% \end{figure}
 
+An attentive reader may note that unexplained component sign flips are rare in practice in both of our empirical investigations, despite accounting for a large proportion of the parameter space.
+While we cannot provide a definitive answer, we can offer one possible explanation.
+The explanation hinges on the condition \( | 1^T \Delta \beta | > |\alpha_H| \) and the nature of the intercept term in linear regression.
+First, note that the condition \( | 1^T \Delta \beta | > |\alpha_H| \) obtains most easily when many of the components of \( \Delta \beta \) are the same sign.
+That is, when \( \beta_H > \beta_K \) across many coordinates; or else \( \beta_H < \beta_K \) across many coordinates.
+In either cases, the differences \( \beta_H - \beta_K \) accumulate and produce a large magnitude when summed.
+
+For sign flips to be unlikely, it should be the case that data-generating processes that produce large \( | 1^T \Delta \beta | \) also produce large \( \delta \alpha \).
+One possibility is based on the fact that intercepts \( \alpha_H \) reflects the influence of variables not recorded in a researcher's data.
+Suppose that there exist variables \( Z \in \mathbb{R}^{d'} \) that are distinct from \( X \).
+We can show that the intercept \( \alpha_H \) depends on the relationship between \( Z \) and \( Y \).
+
+% Show that the regression coefficient \alpha depends on the coefficients on Z
+Using the relations
+\begin{align*}
+   \E_g[Y] &= \omega_g + \E_g[X]^\top \theta_g + \E_g[Z]^\top \gamma_g, \\    
+   \E_g[Z] &= \zeta_g + \E_g[X]^\top \psi_g 
+\end{align*}
+we can observe that in 
+\[ \E_g[Y] = \alpha_g + \E_g[X]^\top \beta_g \]
+the coefficients can be written
+\begin{align*}    
+   &\alpha_g = \omega_g + \zeta_g^\top \gamma_g,
+   &\beta_g  = \theta_g +\psi_g^\top \gamma_g
+\end{align*}
+and therefore 
+\begin{align*}
+  &\Delta \alpha = \Delta \omega + \Delta \zeta^\top \Delta \gamma,
+  &\Delta \beta  = \Delta \theta + \Delta \psi^\top \Delta \gamma.
+\end{align*}
+Note the common component, \( \Delta \gamma \).
+So when \( \Delta \beta \) is large is this because X has bona fide predictive power of its own (large \( \Delta \theta  \)) or because it's correlated with unobserved variables that truly have the predictive power (large \( \Delta \gamma \))?
+If it's the second case, then both \( \Delta \alpha \) and \( \Delta \beta \) will tend to be jointly large, making it more difficult for the sign-flip condition to obtain.
+
+This suggests a simple heuristic: measure the predictive power of the regression of \( Y \) on \( X \).
+WHen this regression has a larger \( R^2 \), there is less room for unobserved covariates 
+In Figures TODO we plot the distribution of \( R^2 \) in our empirical exercises and find that TODO.
 
 %    \Cref{thm:ordering_sensitivity} shows that sign reversals in the unexplained component are not edge cases. Equation \(U^{(K)} - U^{(H)} = -B\) implies that switching the reference group shifts the unexplained term by exactly \(B\), and the explained part by \(-B\). When \(B \neq 0\), this shift can flip the diagnosis—from structural underpayment to overpayment—even with a correctly specified model. The disagreement region \(S \in (-B, 0)\) for \(B > 0\) (and its mirror for \(B < 0\)) is tight: outside this interval, both orderings agree in sign; inside it, they disagree (see \cref{imageTODO}). This window has width \(|B|\), which grows with larger covariate shifts or slope differences—both common in practice. So sign flips are not rare or pathological; they’re a general sensitivity that arises whenever \(B\) is materially different from zero. This motivates the next result.
 %

@@ -27,16 +27,38 @@ pirwinhall_approx = function(x, n) {
   pnorm(x, mean = n / 2, sd = sqrt(n / 12))
 }
 
+dirwinhall = function(x, n) {
+  if (n > 50) {
+    dirwinhall_approx(x, n)
+  } else {
+    dirwinhall_exact(x, n)
+  }
+}
+
+dirwinhall_exact = function(x, n) {
+  
+  sapply(x, 
+         \(xx) {
+           k = seq(0, floor(xx))
+           sum((-1)**k * choose(n, k) * (xx - k)**{n-1}) / factorial(n-1)
+         })
+}
+
+dirwinhall_approx = function(x, n) {
+  dnorm(x, mean = n / 2, sd = sqrt(n / 12))
+}
+
+
 pr_signflip = function(d, m) {
-  integrate(\(a) 2 * pirwinhall(x = (2*d*m - a) / (2*m), n = 2*d) / (2 * m),
-            lower = 0,
-            upper = m)$value
+  integrate(\(i) 2 * pirwinhall(x = (2*d*m - i) / (2*m), n = 2*d) * dirwinhall(x = i, n = 2),
+            lower = 1,
+            upper = 2)$value
 }
 
 
 # Setup --------------------------------------------------------------------
 design = tidyr::crossing(d = 1:50,
-                         m = c(5,10,20,50))
+                         m = c(10,100,1000))
 tb = dplyr::mutate(design,
                    p = purrr::pmap_dbl(design, pr_signflip),
                    m = factor(m))
@@ -48,6 +70,7 @@ gg = ggplot(tb,
   labs(y = "Probability of Unexplained Component Sign Flip",
        color = "M") +
   theme_bw(base_size = 18) +
+  scale_color_viridis_d(end = 0.9) +
   geom_line()
 
 ggsave(here('Sections', 'Figures', 'prob_unexplained.pdf'),

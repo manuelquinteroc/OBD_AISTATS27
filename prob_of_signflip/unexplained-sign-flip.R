@@ -3,6 +3,7 @@ library(here)
 library(tidyr)
 library(dplyr)
 library(purrr)
+library(glue)
 library(ggplot2)
 
 # Helpers -----------------------------------------------------------------
@@ -61,17 +62,23 @@ design = tidyr::crossing(d = 1:50,
                          m = c(10,100,1000))
 tb = dplyr::mutate(design,
                    p = purrr::pmap_dbl(design, pr_signflip),
-                   m = factor(m))
+                   m = glue("Unif(-{m},{m})"))
 
 
 # Plot ---------------------------------------------------------------------
 gg = ggplot(tb,
             aes(x = d, y = p, color = m)) +
-  labs(y = "Probability of Unexplained Component Sign Flip",
-       color = "M") +
-  theme_bw(base_size = 18) +
+  labs(x     = "Dimensionality of Covariates (d)",
+       y     = "Percentage of Parameter Space with\nUnexplained Component Sign Flip",
+       color = "Measure on Each\nRegression Parameter") +
+  theme_bw(base_size = 22) +
+  theme(axis.text       = element_text(color = 'black'),
+        legend.position = "inside",
+        legend.position.inside = c(0.775, 0.15),
+        legend.background = element_rect(colour = "black")) +
   scale_color_viridis_d(end = 0.9) +
-  geom_line()
+  scale_y_continuous(labels = scales::percent) +
+  geom_line(linewidth = 2)
 
 ggsave(here('Sections', 'Figures', 'prob_unexplained.pdf'),
        gg, 

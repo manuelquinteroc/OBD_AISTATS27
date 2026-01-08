@@ -83,3 +83,86 @@ Hence, the difference between the two decompositions is \( \EHOB - \EKOB = L\var
 \end{center}
 
 Note that the sign flip is symmetric by construction, but the magnitude of the discrepancy grows linearly in \( L \), highlighting that the attribution gap between reference groups can be stretched arbitrarily far.
+
+\subsection{Proportion of Parameter Space that Produces Sign Flips}
+\label{app:sign_flip_volume}
+
+We now compute the volume of the parameter space that can produce sign flips in the explained and unexplained components of the OBD.
+To simplify calculations, we assume the variables are scaled so that \( \E_K[X] = 0 \) and \( \E_H[X] = 1 \).
+We can achieve this by transforming the covariates via \( \tilde{X} = (X - \mu_K) / (\mu_H - \mu_K) \), which is permissible as long as \( \mu_H \neq \mu_K \) elementwise. 
+We view this without loss of generality since \( \mu_H \neq \mu_K \) elementwise holds almost surely when the covariates are drawn from an atomless distributions.
+With this rescaling \( \Delta \mu = \mathbf{1} \), where \( \mathbf{1} \) is a vector of ones.
+
+We start with the explained component.
+Recall that the covariates, \( X \), are $d$-dimensional.
+After rescaling, \cref{eq:sign_flip_condition_explained_neq} simplifies to 
+\[ \sign\!\left(\mathbf{1}^\top \beta_{H}\right) \neq \sign\!\left(\mathbf{1}^\top \beta_{K}\right). \]
+A Uniform(-M, M) distribution on \( \beta_H \) and \( \beta_K \) translates to distributions on \( \mathbf{1}^\top \beta_{H} \) and \( \mathbf{1}^\top \beta_{K} \) that are identical and symmetric around zero.
+As such, the signs of \( \mathbf{1}^\top \beta_{H} \) and \( \mathbf{1}^\top \beta_{H} \) will disagree in 50\% of the parameter space.
+
+Now we turn to the unexplained component.
+For the rescaled covariates, the conditions in \cref{alg:decision_tree} simplify, eliminating several of its branches.
+In particular, the unexplained component flips sign if and only if \( \mathbf{1}^T \Delta \beta \neq 0 \), \( \sign (\Delta \alpha) \neq \sign (\mathbf{1}^\top \Delta \beta) \), and \( | \mathbf{1}^T \Delta \beta | > |\Delta \alpha| \).
+The first condition holds almost surely, so we can focus on the latter two.
+To do so, we will determine the distributions of  \( \Delta \alpha \) and \( \mathbf{1}^\top \Delta \beta \).
+
+The sum of \( n \) Uniform(0,1) random variables is sometimes called the Irwin-Hall(\(n\)) distribution.%
+\footnote{For \(n = 2\) this is a familiar triangular distribution.}
+When we place a Uniform(-M, M) measure on the \( \alpha \)s and \( \beta \)s, there is a straightforward relationship between \( \Delta \alpha \), \( \mathbf{1}^\top \Delta \beta \), and appropriately defined Irwin-Hall random variables.
+The difference \( \Delta \alpha \) is the sum of two Uniform(-M, M) variables, which is equivalent to an Irwin-Hall($2$) distribution, rescaled to the interval $[-2M, 2M]$.
+Similarly, \( \mathbf{1}^T \Delta \beta \) is the sum of \( 2 d \) Uniform(-M, M) variables, and its distribution is an Irwin-Hall($2 d$) distribution, rescaled to the domain \( -2dM, 2dM \).
+
+We can use this correspondence to translate the event 
+\[ | 1^T \Delta \beta | > |\Delta \alpha| \cup \sign (\Delta \alpha) \neq \sign (1^T \Delta \beta) \]
+into an equivalent event in terms of two independent Irwin-Hall random variables.
+In particular, let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent random variables.
+The above event is equivalent to 
+\[ (I_2 > 1 \cap J_{2d} \in [-2d, \frac{2dM - I_2}{2M}]) \cup (I_2 < 1 \cap J_{2d} \in [\frac{I_2 + 2dM}{2M}, 2d]).  \]
+That is, unexplained component sign flips have the same volume as the region where \( I_2 \) falls above its median and \( J_{2d} \) falls far in its left tail, or vice versa.
+Because both \( I_2 \) and \( J_{2d} \) are symmetric, this volume is equal to twice the probability that \( I_2 \) is above its median and \( J_{2d} \) is sufficiently small.
+That is:
+\[ Pr(| 1^T \Delta \beta | > |\Delta \alpha|) = 2 Pr(I_2 > 1 \cap J_{2d} < \frac{2dM - I_2}{2M}). \] 
+
+We can calculate this exactly for small \( d \) by using the Irwin-Hall(n) cumulative distribution function,
+\[ F(x) = \frac{1}{n!} \sum_{k=0}^{\lfloor x \rfloor} (-1)^k {n \choose k} (x - k)^n. \]
+For larger \( d \), the combinatorial terms in the CDF become difficult to evaluate.
+In those cases the central limit theorem allows us to approximate an Irwin-Hall(2d) distribution with a \( N(d, \frac{d}{6})\) distribution.
+Finally, as \( d \to \infty \), sign flips have a volume equal to
+\[ 2 Pr(I_2 > 1) Pr(J_{2d} < d | I_2 > 1).  \] 
+Since the median of \( I_2 \) is 1 and the median of \( J_{2d} \) is 2, both probabilities are equal to \( \frac{1}{2} \), and the corresponding volume is therefore \( 0.5 \).
+
+\subsection{Relationship Between Regression Parameters and Omitted Variables}
+\label{app:omitted_variables}
+
+We start by noting that the OBD is based on a linear model for the expected value of the outcome in terms of the covariates:
+\begin{align}
+    \label{eq:y_on_x}    
+    \E_g[Y] = \alpha_g + \E_g[X]^\top \beta_g.
+\end{align}
+Let \( Z \in \mathbb{R}^{d'} \) be a vector of \textit{omitted covariates} that are not recorded in an analyst's dataset.
+
+We can rewrite the expected value of the outcome using both \( X \) and \( Z \) as
+\begin{align}
+    \label{eq:y_on_x_z}
+    \E_g[Y] = \omega_g + \E_g[X]^\top \theta_g + \E_g[Z]^\top \gamma_g.
+\end{align}
+We can also express the relationship between the omitted and observed covariates as 
+\begin{align}
+   \label{eq:z_on_x}
+   \E_g[Z] &= \zeta_g + \Psi_g \E_g[X],
+\end{align}
+where \( \Psi_g \in \mathbb{R}^{d' \times d} \).
+Plugging \cref{eq:z_on_x} into \cref{eq:y_on_x_z} and rearranging terms gives
+\[ \E_g[Y] = \omega_g + \zeta_g^\top \gamma_g + \E_g[X]^\top (\theta_g + \Psi_g^\top \gamma_g).\]
+By comparing this to \cref{eq:y_on_x}, we obtain
+\begin{align*}    
+   &\alpha_g = \omega_g + \zeta_g^\top \gamma_g,
+   &\beta_g  = \theta_g + \Psi_g^\top \gamma_g.
+\end{align*}
+Similarly,
+\begin{align*}
+  &\Delta \alpha = \Delta \omega + \Delta \zeta^\top \Delta \gamma,
+  &\Delta \beta  = \Delta \theta + \Delta \Psi^\top \Delta \gamma,
+\end{align*}
+where \( \Delta \) takes the \( H - K \) difference in the corresponding parameter. 
+For example \( \Delta \omega = \omega_H - \omega_K \).

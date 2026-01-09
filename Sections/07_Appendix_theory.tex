@@ -87,6 +87,47 @@ Note that the sign flip is symmetric by construction, but the magnitude of the d
 \subsection{Proportion of Parameter Space that Produces Sign Flips}
 \label{app:sign_flip_volume}
 
+\subsection{TODO: this is just copy-pasted from the main text}
+
+Moreover, as with the explained component, sign flips corresponds to a nontrivial region of the parameter space.
+We argue similarly as before, placing a Uniform(-M, M) measure on all intercepts and regression coefficients, and then computing the volume of the region in \cref{thm:ordering_sensitivity}.
+The resulting volume depends on the dimension of the covariates, \( d \), and the bounds on the Uniform measure, but quickly approaches an asymptotic value of 50\% for larger \( d \) or \( M \).
+\cref{fig:prob_unexplained} depicts this probability for various \( d \) at several choices of \( M \); detailed derivations are in \cref{app:sign_flip_volume}.
+
+
+An attentive reader may note that unexplained component sign flips are rare in practice in our empirical investigation, despite accounting for a large proportion of the parameter space.
+We offer a possible explanation for why such sign flips are rare.
+For sign flips to be unlikely, it should be the case that data-generating processes that produce large \( | 1^T \Delta \beta | \) also produce large \( \Delta \alpha \).
+This can happen when the analyst's dataset omits important explanatory covariates.
+For example, hospital records only record measurements that doctors have ordered (not the results of important tests a doctor may have skipped).
+Similarly, census data used for studying wage gaps typically lack detailed information about skills and experience from a worker's resume and work history.
+Let \( Z \in \mathbb{R}^{d'} \) be a vector of such \textit{omitted covariates}.
+We will establish that both \( \Delta \beta \) and \( \Delta \alpha \) depend on these omitted covariates.
+
+The OBD is based on regressing the outcome against the observed covariates via
+\[ \E_g[Y] = \alpha_g + \E_g[X]^\top \beta_g. \]
+However, we can also write the regressions
+\begin{align*}
+   \E_g[Y] &= \omega_g + \E_g[X]^\top \theta_g + \E_g[Z]^\top \gamma_g, \\    
+   \E_g[Z] &= \zeta_g + \Psi_g \E_g[X].
+\end{align*}
+In the first regression, \( \theta_g \) reflects the predictive power of \( X \), \( \gamma_g \) reflects the predictive power of \( Z \), and \( \Psi_g \) projects \( X \) onto \( Z \).
+\textcolor{red}{Advik: is ``project'' too technically loaded as a term here?}
+In \cref{app:omitted_variables} we show that
+\begin{align*}
+  &\Delta \alpha = \Delta \omega + \Delta \zeta^\top \Delta \gamma,
+  &\Delta \beta  = \Delta \theta + \Delta \Psi^\top \Delta \gamma,
+\end{align*}
+where \( \Delta \) takes the \( H - K \) difference in the corresponding parameter; for example \( \Delta \omega := \omega_H - \omega_K \).
+
+Now, note that there are several ways for \( \mathbf{1}^\top \Delta \beta \) to be large.
+First, \(\mathbf{1}^\top \Delta \theta \) can be large, meaning X has bona fide predictive power separate from Z.
+Second, \(\mathbf{1}^\top \Delta \Psi^\top \Delta \gamma \) can be large, meaning the omitted Z has predictive power which X is ``borrowing'' via \( \Psi \).
+In the latter case, \( \Delta \alpha \) will tend to be large as well, making it more difficult for the sign-flip condition to obtain.
+As such, sign flips may be unlikely in domains where observed covariates have limited predictive power compared to omitted covariates; roughly, in settings where regressions have low \( R^2 \).
+
+\subsection{TODO: this is the original text of the appendix}
+
 We now compute the volume of the parameter space that can produce sign flips in the explained and unexplained components of the OBD.
 To simplify calculations, we assume the variables are scaled so that \( \E_K[X] = 0 \) and \( \E_H[X] = 1 \).
 We can achieve this by transforming the covariates via \( \tilde{X} = (X - \mu_K) / (\mu_H - \mu_K) \), which is permissible as long as \( \mu_H \neq \mu_K \) elementwise. 

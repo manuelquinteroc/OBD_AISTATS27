@@ -1,17 +1,17 @@
 \section{A simulated example from healthcare}
 \label{sec:example}
 
-Given the results in \cref{sec:real_example}, a natural question to ask is whether such sign reversals are specific to the explained component, or whether they can arise in more stylized settings due to model misspecification or sampling variability. Here, we present a simple simulated example inspired by real-life healthcare data that exhibits sign reversals in the \emph{unexplained} component of the OBD under correct model specification and large sample sizes, demonstrating that these issues are not isolated to the explained component and are not merely artifacts of small samples or model misspecification.
+Given the results in \cref{sec:real_example}, a natural question to ask is whether such sign reversals are specific to the explained component, or whether they are simple consequences of model misspecification or sampling variability. Here, we present a simple simulated example inspired by real-life healthcare data that exhibits sign reversals in the \emph{unexplained} component of the OBD under correct model specification and large sample sizes, demonstrating that these issues are not isolated to the explained component and are not merely artifacts of small samples or model misspecification.
 
 % To illustrate why \cref{eq:ob_decomp_ref_group} can lead a practitioner to draw substantially different conclusions depending on the reference group used in the OBD, we turn to a simple simulated healthcare example inspired by real-life data.
 
 Body mass index (BMI) is a widely recognized and routinely measured marker of wellness \cite{heymsfield2016} and is strongly linked to cardiometabolic outcomes, such as elevated blood pressure. 
 An important public health question is whether differences in blood pressure between two populations are due mainly to differences in underlying BMI distributions or to differences in how BMI impacts blood pressure. While OBD cannot establish causality without further assumptions, it can suggest where one might look for potential drivers of observed disparities.
-If the unexplained component is larger, it may highlight the need to investigate differences in medical care, such as medication titration practices, adherence support, or access to antihypertensives. 
-In either case, OBD serves only as a descriptive tool that helps formulate hypotheses about where meaningful differences may arise, not as a causal model.
-The answer can inform where to direct limited resources. 
-If most of the gap is explained by BMI distribution differences, targeted interventions on weight management, nutrition, and physical activity may be most impactful. 
-If the unexplained component dominates, changes to care delivery, such as earlier medication titration, improved medication adherence support, or broader access to antihypertensives, may be more effective. 
+If the unexplained component is larger (differences in $Y|X$ dominate), it may highlight the need to investigate differences in medical care, such as medication titration practices, adherence support, or access to antihypertensives. 
+%In either case, OBD serves only as a descriptive tool that helps formulate hypotheses about where meaningful differences may arise, not as a causal model.
+%The answer can inform where to direct limited resources. 
+If most of the explained component is larger (differences in $X$ dominate), targeted interventions on weight management, nutrition, and physical activity may be most impactful. 
+%If the unexplained component dominates, changes to care delivery, such as earlier medication titration, improved medication adherence support, or broader access to antihypertensives, may be more effective. 
 
 Our example considers two populations of adults in primary care being followed for elevated blood pressure, using systolic blood pressure (SBP) at a standardized follow-up visit as the outcome.
 The first population, Group $H$, comes from a higher resource setting, such as an urban neighborhood with structured care pathways, frequent follow up, and better access to healthy food and physical activity options. 
@@ -91,3 +91,5 @@ Given that the choice of reference distribution is arbitrary here, we conclude t
 % Some authors might argue that the choice of reference group simply reflects a different counterfactual question, for example, ``What would the SBP gap be if the lower resource group had the BMI--SBP relationship of the higher resource group?'' versus ``What would the gap be if the higher resource group had the BMI--SBP relationship of the lower resource group?'' 
 % Others might claim that the true effect lies somewhere between these two extremes, and that averaging across reference groups provides a balanced view. 
 % However, in our setting we argue that such sensitivity is problematic: when the sign of the unexplained component reverses, the qualitative policy message changes, creating a real risk of misinterpretation rather than a benign difference in framing.
+
+

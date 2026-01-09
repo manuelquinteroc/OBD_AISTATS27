@@ -3,7 +3,7 @@
 
 Before introducing the OBD, we first illustrate the index-number problem by framing it as a counterfactual exercise as in \citet{fortinLemieuxFirpo2011}. 
 We consider two groups, $H$ and $K$, and an outcome $Y$ we wish to compare across groups, together with observed characteristics $X$ (i.e., covariates that are relevant predictors of $Y$). 
-Although many counterfactuals can be constructed, a simple and intuitive pair arises by using the other group's outcome--covariate relationship as a bridge. In particular, one could ask one of the following two questions:
+Although many counterfactuals can be constructed, a simple and intuitive pair arises by using the other group's outcome--covariate relationship as a bridge. In particular, one could ask the following:
 
 \begin{center}
 \emph{“What would Group $K$’s mean outcome ($Y$) be if its observed characteristics ($X$) were evaluated under Group $H$’s outcome–covariate relationship ($Y|X$)?”}
@@ -19,15 +19,14 @@ In a similar spirit, from our motivating health example, if $Y$ is systolic bloo
 
 % Which counterfactual is more appropriate depends on the question of interest and carries distinct interpretations and policy implications.
 
-Which counterfactual is more appropriate can depend on the question of interest and carries distinct interpretations and policy implications, sometimes the counterfactual choice is driven by domain knowledge such as in labor economics where there seems to be a consensus for the gender wage gap problem \citep{}. However, in many cases, the choice of the reference group is usually not clear, such as in the SBP--BMI example.
-
-
-% \textcolor{red}{Write that it is not clear which counterfactual to use, although in some cases it is clear, as in these examples it is not.}
-
+Which counterfactual is more appropriate can depend on the question of interest and carries distinct interpretations and policy implications, sometimes the counterfactual choice is driven by domain knowledge such as in labor economics where there seems to be a consensus for the gender wage gap problem \citep{}. 
+However, we argue that in many cases, the choice of the reference group is not clear. For example, it is not clear that different choices of reference in the SBP-BMI example correspond to substantively different policy questions.
+And we note that even in cases where the reference group seems standard, such as the gender wage-gap, some authors still make a different choice without commentary \citep{paradaContzen2025}.
 
 All the above questions define at least two counterfactual means \(\E\!\big[Y_{K}^{C(H)}\big],\) and \(\E\!\big[Y_{H}^{C(K)}\big],\) where \(Y_{K}^{C(H)}\) denotes the counterfactual outcome for Group $K$ if its observed characteristics were mapped through Group $H$’s conditional outcome rule and $Y_{H}^{C(K)}$ denotes the counterfactual outcome for Group $H$ if its observed characteristics $X_H$ were mapped through Group $K$’s conditional outcome rule. Note that we use the superscript \(C(\cdot)\) to indicate counterfactual outcomes. 
 
-Using these counterfactuals, the difference in mean outcomes between groups can be expressed as the distance between each observed mean and its corresponding counterfactual:
+Using these counterfactuals, the difference in mean outcomes between groups can be expressed as the distance between each observed mean and its corresponding counterfactual\footnote{Note we use the economics terms ``explained'' and ``unexplained'' in \cref{eq:OB_H_Counterfactual}, as the differences due to changes in distribution of covariates are ``explained'' away}:
+%
 \begin{align}
     \label{eq:OB_H_Counterfactual}
     \E_H[Y] &- \E_K[Y] = \\ 

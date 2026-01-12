@@ -16,63 +16,71 @@ The second population, Group $K$, comes from lower-resource setting, where patie
 These factors shape both the composition of each group (including average BMI) and the structure of the SBP--BMI relationship. We follow a clinical literature finding an approximately linear relationship between BMI and SBP \cite{kaufman1997, cappuccio2008, chen2023}; in particular, we assume a separate linear relationship in each group.
 
 While an OBD cannot establish causality without further assumptions, it can suggest where one might look for potential drivers of observed disparities between the two groups.
-If the unexplained component is larger (differences in $Y|X$ dominate), it may highlight the need to investigate differences in medical care, such as medication titration practices, adherence support, or access to antihypertensives. \textcolor{red}{right now we're highlighting a decision that is not a sign-based decision, so that choice clashes with the rest of the narrative}
-%In either case, OBD serves only as a descriptive tool that helps formulate hypotheses about where meaningful differences may arise, not as a causal model.
-%The answer can inform where to direct limited resources. 
-If the explained component is larger (differences in $X$ dominate), targeted interventions on weight management, nutrition, and physical activity may be most impactful. 
-%If the unexplained component dominates, changes to care delivery, such as earlier medication titration, improved medication adherence support, or broader access to antihypertensives, may be more effective. 
+If the explained component is effectively zero and the unexplained component (differences in $Y|X$) dominates (with a sign in the direction of the observed outcome difference), it may highlight the need to investigate differences in medical care, such as medication titration practices, adherence support, or access to antihypertensives.
+If the unexplained component is effectively zero and the explained component (differences in $X$) dominates (with a sign in the direction of the observed outcome difference), it may be most impactful to target interventions on weight management, nutrition, and physical activity. 
 
 \textbf{Simulated data.}
 We generate the BMI ($X$, in kg/m$^2$) of an individual in group \( g \) from a group-specific normal distribution.
 We generate the SBP ($Y$, in mmHg) of an individual in group \( g \) as a noisy function of their BMI:
 \begin{equation}
     \label{eq:linear_model}
-   Y = \alpha_g + \beta_g \times X + \varepsilon.
+   Y = \alpha_g + X \beta_g + \varepsilon.
 \end{equation}
 Here $\alpha_g \in \mathbb{R}$ is the group-specific intercept (in units of mmHg); $\beta_g \in \mathbb{R}$ is the group-specific slope, representing the average change in SBP (mmHg) per unit increase in BMI (kg/m$^2$); and $\varepsilon$ reflects individual variability in SBP that is uncorrelated with BMI. We take $\varepsilon$ independent and identically distributed across adult patients, with the same (mean-zero Gaussian) distribution in each group.
 We present key parameters in \cref{tab:dgp_short} and provide further details about the data-generating process in \cref{appendix:dgp}.
 
 \begin{table}[h]
-\caption{Key chosen and derived parameters by group.}
+\caption{Key chosen and derived parameters by group. BMI and SBP are in kg/m$^2$ and mmHg respectively. $\alpha$ is in mmHg; $\beta$ is in mmHg per kg/m$^2$.}
 \label{tab:dgp_short}
 \begin{center}
 \small
 \begin{tabular}{lcccc}
 \textbf{Group} & \textbf{Mean BMI} & \textbf{$\alpha$} & \textbf{$\beta$} & \textbf{Mean SBP} \\
-\hline \\
+\hline \\[-6pt]
 H & 25.0 & 110.4 & 1.0 & 135.4 \\
 K & 27.0 & 100.0 & 1.4 & 137.8 \\
 \end{tabular}
 \end{center}
-\footnotesize{Note: H = Higher-resource group, K = Lower-resource group. BMI and SBP in kg/m$^2$ and mmHg respectively. $\alpha$ in mmHg, $\beta$ in mmHg per kg/m$^2$.}
 \end{table}
 
-\cref{fig:bmi_sbp} shows the population BMI–SBP relationships for both groups, showing how differences in intercepts, slopes, and BMI distributions interact.
+\cref{fig:bmi_sbp} shows the population SBP--BMI relationships for both groups (two lines). The figure also shows data samples
+to illustrate the BMI distribution in each group --- as well as how the intercepts, slopes, and BMI distributions interact.
+%
+Analogous to the real-data study in \cref{sec:real_example}, the two population lines display a similar qualitative pattern. Overall, Group $H$ has lower average SBP than Group $K$, owing both to lower average BMI and a shallower slope relating BMI to SBP, perhaps reflecting improved access and adherence to treatment, or availability of non-pharmacological support.
+However, Group $H$ has a higher baseline SBP ($\alpha_H$), perhaps reflecting genetic factors in Group $H$.
 
 \begin{figure}[h]
 \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/bmi_sbp_comparison_population.pdf}}
-\caption{Population linear models of SBP on BMI by group.}
+\caption{Population linear models of SBP on BMI by group and data samples.}
 \label{fig:bmi_sbp}
 \end{figure}
 
-Analogous to the real-case study in \cref{sec:real_example}, the two population lines display a similar qualitative pattern. Overall, Group $H$ has lower average SBP than Group $K$, owing both to lower average BMI and a shallower slope relating BMI to SBP, perhaps reflecting improved access and adherence to treatment, or availability of non-pharmacological support.
-However, Group $H$ has a higher baseline SBP ($\alpha_H$), perhaps reflecting genetic factors in Group $H$.
+\textbf{Analysis.} Since we have access to all population quantities in this example, there is no need to fit models or check statistical significance.
+We can compute the OBD directly from the known population distributions.
+%In principle, the OBD should provide a transparent framework to separate the difference in mean SBP into an explained component (differences in BMI distribution, $X$) and an unexplained component (differences in SBP given BMI, $Y|X$)
 
-In principle, the OBD should provide a transparent framework to separate the difference in mean SBP into an explained component (differences in BMI distribution, $X$) and an unexplained component (differences in SBP given BMI, $Y|X$)
-\cref{tab:ob_decomp} summarizes the OBD results, taking $H$ and $K$ as the reference groups in turn.
+\textbf{Two different conclusions.}
+\cref{tab:ob_decomp} summarizes the OBD results under each reference group.
+For both choices of reference group, the explained components are negative, so both choices of reference distribution attribute group $H$'s lower average SBP in part to its lower average BMI.
+However, the sign of the unexplained OB component flips depending on the choice of the reference group.
+When group $H$ is the reference, the negative unexplained component implies that institutional factors further reduce group $H$'s blood pressure relative to group $K$.
+However, when group $K$ is the reference, institutional factors appear to actually \emph{increase} group $H$'s average blood pressure relative to group $K$.
+Intuitively, because blood pressure in group $K$ is so much more responsive to BMI, group $H$'s lower average BMI appears so good as to ``over-explain'' the difference in SBP; the unexplained component is then forced to be positive to compensate.
+
+In this example, the sign change is in the unexplained component rather than the explained component (cf.\ \cref{sec:real_example}). Since we simulate the data according to group-specific linear models, there is no specification. And since we have access to (and work directly with) population quantities, the difference in OBD conclusions is not a product of sampling error.
+
 \begin{table}[H]
-\caption{Population Oaxaca–Blinder decomposition of mean SBP differences}
+\caption{Population Oaxaca–Blinder decomposition of mean SBP differences. All values are in mmHg.}
 \label{tab:ob_decomp}
 \begin{center}
 \small
 \begin{tabular}{lrrr}
-\textbf{Group} & \textbf{Explained} & \textbf{Unexplained} & \textbf{Total gap} \\
-\hline \\
+\textbf{Reference} & \textbf{Explained} & \textbf{Unexplained} & \textbf{Total gap} \\
+\hline \\[-6pt]
 H & $-2.0$ & $\textbf{-0.4}$ & $-2.4$ \\
 K & $-2.8$ & $\textbf{0.4}$  & $-2.4$ \\
 \end{tabular}
 \end{center}
-\footnotesize{Note: H = Higher-resource group, K = Lower-resource group. All values in mmHg.}
 \end{table}
 
 % \begin{table}[H]
@@ -90,22 +98,15 @@ K & $-2.8$ & $\textbf{0.4}$  & $-2.4$ \\
 % \footnotesize{Note: H = Higher-resource group, K = Lower-resource group. All values in mmHg.}
 % \end{table}
 
-\begin{figure*}[t]
-\vspace{.3in}
-\centerline{\includegraphics[width=0.7\textwidth]{Sections/Figures/counterfactual.pdf}}
-\vspace{.3in}
-\caption{Counterfactual analysis visualization showing the decomposition results for both reference groups in our simulated example.}
-\label{fig:counterfactual}
-\end{figure*}
+%\begin{figure*}[t]
+%\vspace{.3in}
+%\centerline{\includegraphics[width=0.7\textwidth]{Sections/Figures/counterfactual.pdf}}
+%\vspace{.3in}
+%\caption{Counterfactual analysis visualization showing the decomposition results for both reference groups in our simulated example.}
+%\label{fig:counterfactual}
+%\end{figure*}
 
-\cref{fig:counterfactual} visualizes the OBD as the mere difference between the counterfactual question posed by each choice of reference group and the observed mean SBP for each group. It also illustrates the sign flip in the unexplained component.
-
-For both choices of reference group, the explained components are negative, so both choices of reference dsitribution attribute Group $H$'s lower average SBP in part to its lower average BMI.
-However, the sign of the unexplained OB component flips depending on the choice of the reference group.
-When Group $H$ is the reference, the negative unexplained component implies that institutional factors further reduce Group H's blood pressure.
-However, when Group $K$ is the reference, institutional factors appear to \emph{increase} Group $H$'s average blood pressure!
-Intuitively, because blood pressure in Group $K$ is so much more responsive to BMI, Group $H$'s lower average BMI appears so good as to ``over-explain'' the difference in SBP; the unexplained component is then forced to be positive to compensate.
-Given that the choice of reference distribution is arbitrary here, we conclude that the OBD is not reliable for decomposing differences in this example.
+%\cref{fig:counterfactual} visualizes the OBD as the mere difference between the counterfactual question posed by each choice of reference group and the observed mean SBP for each group. It also illustrates the sign flip in the unexplained component.
 
 % \textcolor{red}{mega double check conclusion:}
 % Some authors might argue that the choice of reference group simply reflects a different counterfactual question, for example, ``What would the SBP gap be if the lower resource group had the BMI--SBP relationship of the higher resource group?'' versus ``What would the gap be if the higher resource group had the BMI--SBP relationship of the lower resource group?'' 

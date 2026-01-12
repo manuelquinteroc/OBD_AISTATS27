@@ -65,3 +65,47 @@ os.makedirs("Figures", exist_ok=True)
 
 # Save as PDF
 plt.savefig("Figures/bmi_sbp_comparison.pdf", format='pdf', bbox_inches='tight', dpi=300)
+
+# Create same plot with population values rather than estimated values ----
+
+# ----------------------------
+# Population (true) lines version
+# ----------------------------
+
+# True model parameters from simulate_bmi_sbp.py
+alpha_H_pop = 110.4
+beta_H_pop  = 1.0
+alpha_K_pop = 100.0
+beta_K_pop  = 1.4
+
+# Create fitted line range (same x grid as before)
+y_H_pop = alpha_H_pop + beta_H_pop * x_fit
+y_K_pop = alpha_K_pop + beta_K_pop * x_fit
+
+# Create single panel figure (same styling)
+fig, ax = plt.subplots(figsize=(8, 6))
+
+# Scatter points (same)
+ax.scatter(group_H["BMI"], group_H["SBP"], alpha=0.25, color=color_H, s=20, edgecolor="none",
+           label="Group H data")
+ax.scatter(group_K["BMI"], group_K["SBP"], alpha=0.25, color=color_K, s=20, edgecolor="none",
+           label="Group K data")
+
+# Population fitted lines (true)
+ax.plot(x_fit, y_H_pop, color=color_H, linewidth=2.5, label=f"Group H (β={beta_H_pop:.2f})")
+ax.plot(x_fit, y_K_pop, color=color_K, linewidth=2.5, label=f"Group K (β={beta_K_pop:.2f})")
+
+# Axis labels and limits (same)
+ax.set_xlabel("BMI (kg/m²)", fontsize=20)
+ax.set_ylabel("SBP (mmHg)", fontsize=20)
+ax.set_xlim(bmi_min, bmi_max)
+ax.set_ylim(sbp_min, sbp_max)
+
+# Grid + legend + ticks (same)
+ax.grid(True, alpha=0.2)
+ax.legend(fontsize=20, loc="upper left", frameon=False)
+ax.tick_params(axis="both", which="major", labelsize=20)
+plt.tight_layout()
+
+# Save as PDF (new filename)
+plt.savefig("Figures/bmi_sbp_comparison_population.pdf", format="pdf", bbox_inches="tight", dpi=300)

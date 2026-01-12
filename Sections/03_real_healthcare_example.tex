@@ -1,24 +1,28 @@
-\section{A Real Example: Gender Gap in ICU Mortality in Moderate Tachycardia}
+\section{Real-data example: Gender gap in ICU mortality in moderate tachycardia}
 \label{sec:real_example}
 
-To illustrate why \cref{eq:ob_decomp_ref_group} can lead a practitioner to draw substantially different conclusions depending on the reference group used in the OBD, we present a real case example drawn from clinical data in which the OBD shows sign reversals. We use data from the PhysioNet cohort of ICU patients collected for a study of in hospital mortality \citep{goldberger2000physiobank}. The dataset contains routine measurements taken at admission, including heart rate (HR), mean arterial pressure, temperature, urine output, etc. These values are recorded for every patient at the time of entry into the unit and provide a simple description of their initial physiological state. Within this setting, we study whether the difference in mortality rates between men and women can be attributed to differences in these observed covariates or to differences in how mortality relates to these covariates. Following common practice in applied health and policy research, we model mortality using a linear probability model (LPM) and apply the OBD \citep{jann2008, edokaChangesCatastrophicHealth2017, sujin_LPM_OB, mweembaGapSelfRatedHealth2023}. A detailed description on the data analysis and the sign-flip search procedure is provided in \cref{appendix:icu_details}.
+The index number problem reflects that the two reference choices for the OBD could yield two different sets of values for the explained and unexplained components. We are not aware of an illustration that the two OBD directions can lead to substantively different conclusions. We supply such an illustration next for a real-data analysis.
 
-Practitioners often look at moderate elevations in heart rate as a first indication of stress, infection, or early hemodynamic change (early changes in blood flow and circulation), so it is natural to analyze mortality rates within such groups. For this reason, we consider patients whose admission heart rate lies between the $50$ and $75$ percentiles, which we refer to as HR quartile two. This group reflects a familiar clinical presentation in which the heart rate is elevated but not extreme. Within this group, the mortality rate for men exceeds the mortality rate for women by approximately $3.5$ percentage points (see \cref{tab:hr_q2_decomposition}).
+\textbf{Data.} To construct our example, we examine data from the PhysioNet cohort of ICU patients collected for a study of in hospital mortality \citep{goldberger2000physiobank}. The dataset contains routine measurements taken at admission, including heart rate (HR), mean arterial pressure, temperature, and urine output. These values are recorded for every patient at the time of entry into the unit and provide a description of their initial physiological state.
 
-We estimate a separate LPM for each group $g \in \{\text{men}, \text{women}\}$ and we model the conditional expectation of in hospital mortality as
-\[
-    \E[Y \mid X, g] \;=\; \alpha_{g} \;+\; X^{\top}\beta_{g},
-\]
-where $Y$ is the indicator for in hospital mortality, $X$ is the vector of admission covariates (heart rate, mean arterial pressure, temperature, urine output, age, and ICU type), $\alpha_{g}$ is the group specific intercept, and $\beta_{g}$ is the group specific vector of slopes. 
+Medical practitioners often look at moderate elevations in heart rate as a first indication of stress, infection, or early hemodynamic change (early changes in blood flow and circulation). In the present example, we restrict our analysis to patients whose admission heart rate lies between the $50$ and $75$ percentiles, which we refer to as HR quartile two. These patients reflects a familiar clinical presentation in which the heart rate is elevated but not extreme. Within this group, the mortality rate for men exceeds the mortality rate for women by approximately $3.5$ percentage points (see \cref{tab:hr_q2_decomposition}).
 
-Table~\ref{tab:hr_q2_decomposition} reports the resulting decomposition. When the coefficients for women are used as the reference rule, the explained component is positive and statistically significant, $0.021$, which suggests that differences in the observed covariates move the decomposition toward a higher mortality rate for men. When the coefficients for men are used as the reference rule, the explained component flips sign, $-0.007$. The direction therefore changes even though the underlying sample is the same.
+\textbf{Analysis.} We would like to understand to what extent the observed mortality difference between men and women in HR quartile two might be attributable to observed characteristics upon admission (i.e.\ the covariates) vs.\ medical care. To that end, we let $Y$ be an indicator for in-hospital mortality; $X$ is the vector of admission covariates comprising heart rate, mean arterial pressure, temperature, urine output, age, and ICU type. We let the groups be $g \in \{\text{men}, \text{women}\}$. Despite the indicator outcome, we observe that it remains common practice in applied health and policy research to fit separate linear models (via OLS) for the relationship between an indicator outcome and covariates in each group, and then apply the OBD \citep{jann2008, edokaChangesCatastrophicHealth2017, sujin_LPM_OB, mweembaGapSelfRatedHealth2023}. \textcolor{red}{note: i changed the previous sentence to emphasize the indicator outcome. double check: are these citations for the indicator outcome and everything else stated?} We provide a detailed description of our data analysis --- and our search procedure for a data analysis exhibiting a substantive conclusion change --- in \cref{appendix:icu_details}. \textcolor{red}{as long as note cherry-picking later in main text, i think ok not to here}
+
+\textbf{Two different conclusions.} 
+We report the OBD decomposition for each reference group in \cref{tab:hr_q2_decomposition}. We next interpret the substantive conclusions
+we might draw from each direction. First, consider the case with women as the reference. The explained component is positive ($0.021$), with a statistically significant difference from 0.
+This result suggests that differences in admission covariates place men at higher mortality risk. A medical practitioner might therefore examine whether various factors before admission differ across gender; these factors include early differences in blood flow and circulation, underlying disease burden, or overall severity at admission.
+
+Second, consider the case with men as the reference. The explained component is negative ($-0.007$), though the difference from 0 is not statistically significant. In this case, the observed covariate differences seem to predict lower (or equal) mortality for men relative to women rather than higher. In other words, the same covariates would now be interpreted as offering men a slight mortality advantage. This interpretation is substantively different than the interpretation that results from using women as the reference.
+
 \begin{table}[h]
-\caption{Oaxaca Blinder Decomposition for HR Quartile Two}
+\caption{Oaxaca--Blinder decompositions for HR quartile two.}
 \label{tab:hr_q2_decomposition}
     \begin{center}
     \small
     \begin{tabular}{lccc}
-    \textbf{Group} & \textbf{Explained} & \textbf{Unexplained} & \textbf{Total gap} \\
+    \textbf{Reference} & \textbf{Explained} & \textbf{Unexplained} & \textbf{Total gap} \\
     \hline \\[-6pt]
     Women 
     & \makecell{$0.021^{***}$ \\ $(0.007)$}
@@ -43,12 +47,15 @@ Table~\ref{tab:hr_q2_decomposition} reports the resulting decomposition. When th
     }
 \end{table}
 
-\cref{fig:hr_quartile2} shows the fitted linear probability models of in-hospital mortality on admission heart rate for men and women within HR quartile two (see Appendix \cref{fig:hr_quartile2_hist} for the distribution of mortality outcomes within HR quartile two by gender), holding all other covariates fixed at their subgroup means. Men have a higher baseline probability of in-hospital mortality ($\alpha_{\text{Men}}$) than women, but women have a steeper slope. In fact, men exhibit a negative coefficient on heart rate, whereas mortality increases with heart rate among women. Thus, mortality is much more responsive to heart rate for women than for men, and in the opposite direction.
+\textbf{How does the difference arise?}
+To help illustrate why we might see these substantive differences in the two OBD directions, we plot linear fits while now restricting to a single covariate for ease of visualization.
+\cref{fig:hr_quartile2} shows the fitted linear models of in-hospital mortality on admission heart rate for men and women within HR quartile two, holding all other covariates fixed at their subgroup means. See Appendix \cref{fig:hr_quartile2_hist} for the counts of mortality outcomes within HR quartile two by gender. Men have a higher baseline rate of in-hospital mortality ($\alpha_{\text{Men}}$) than women, but women have a steeper slope. In fact, men exhibit a negative coefficient on heart rate, whereas mortality increases with heart rate among women. Thus, mortality is much more responsive to heart rate for women than for men, and in the opposite direction. \textcolor{red}{a bit more discussion of relation to the OBD results/interpretations}
 
 \begin{figure}[h]
     \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/hr_quartile2_mortality_lines.pdf}}
-    \caption{Linear probability models of mortality on admission heart rate.}
+    \caption{Linear fits of mortality on admission heart rate.}
     \label{fig:hr_quartile2}
 \end{figure}
 
-The fact that the explained component points in opposite directions can lead to substantially different descriptive conclusions. When the coefficients for women are used, the positive explained term suggests that differences in admission covariates place men at higher mortality risk, which might prompt a practitioner to examine whether factors such as early differences in blood flow and circulation, underlying disease burden, or overall severity at admission differ across gender. When the coefficients for men are used, the explained component becomes negative. This means that, under men’s own mortality model, the observed covariate differences would predict lower mortality for men relative to women rather than higher. In other words, the same covariates would now be interpreted as offering men a slight mortality advantage. Such sensitivity to the choice of reference rule raises concerns: a descriptive tool that produces contradictory interpretations under equally valid specifications may not offer a stable basis for guiding clinical inquiry.
+
+

@@ -1,10 +1,35 @@
-\section{A Counterfactual Explanation for Oaxaca Blinder Decomposition}
+\section{Setup and review of the Oaxaca-Blinder decomposition}
 \label{sec:counterfactual_OBD}
 
-In this section, we revisit the OBD from a counterfactual perspective. 
-We show how this view naturally leads to index-number problem; i.e., that the choice of reference group in the OBD is arbitrary. 
+We first review the index-number problem and Oaxaca-Blinder Decomposition (OBD).
+We start by considering the case where we have perfect population information about 
+all variables of interest. Then we describe how to proceed with real data.
+
+
+%In this section, we revisit the OBD from a counterfactual perspective. 
+%We show how this view naturally leads to index-number problem; i.e., that the choice of reference group in the OBD is arbitrary. 
 %We first show how the index-number problem arises at the level of counterfactual mean comparisons, before introducing the standard linear formulation of the OBD.
 
 \input{Sections/counterfactual_explanation.tex}
 
 \input{Sections/setup}
+
+\subsection{Real-data Oaxaca--Blinder decomposition and drawing conclusions} 
+\label{sec:ob_real}
+
+In general, data analysts will have access to real data for each of the two groups. We assume they fit a linear model
+to data in each group separately. Then they can apply \cref{eq:OB_H_decomp,eq:OB_K_decomp} with the fitted intercept and 
+slope values for each $\alpha, \beta$ and the empirical mean covariate vectors for each $\mu$.
+In our own experiments below, we use ordinary least squares (OLS) linear regression in each group.
+\textcolor{red}{double check since i didnt see it in the main text: it is OLS, right?}
+
+It is common to draw substantive conclusions based on the signs of the empirical explained and unexplained components, often coupled with
+statistical significance \textcolor{red}{cite}. For instance, consider the example with covariate BMI and outcome SBP. 
+Suppose city $H$ has lower SBP ($\Delta_Y < 0$), and suppose we take $H$ as the reference. 
+If the OBD explained component has a negative sign, we might conclude that city $H$ can attribute
+its lower SBP in part to its lower average BMI. In real data, we might additionally require that the observed sign be statistically significant in order to form a conclusion;
+without significance, we might
+instead hesitate to conclude BMI is driving any difference in SBP.
+Analogous to the explained component, if the OBD unexplained component has a negative sign, we might attribute city $H$'s lower
+SBP in part to institutional factors.
+

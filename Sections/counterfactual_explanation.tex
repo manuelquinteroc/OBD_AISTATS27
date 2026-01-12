@@ -1,45 +1,65 @@
 \subsection{Difference in means problem: A counterfactual exercise} 
 \label{sec:counterfactual_example}
 
-Before introducing the OBD, we first illustrate the index-number problem by framing it as a counterfactual exercise as in \citet{fortinLemieuxFirpo2011}. 
-We consider two groups, $H$ and $K$, and an outcome $Y$ we wish to compare across groups, together with observed characteristics $X$ (i.e., covariates that are relevant predictors of $Y$). 
-Although many counterfactuals can be constructed, a simple and intuitive pair arises by using the other group's outcome--covariate relationship as a bridge. In particular, one could ask the following:
+As a first step toward describing the OBD, we start by illustrating the index-number problem by framing it as a counterfactual exercise as in \citet{fortinLemieuxFirpo2011}. 
 
-\begin{center}
-\emph{“What would Group $K$’s mean outcome ($Y$) be if its observed characteristics ($X$) were evaluated under Group $H$’s outcome–covariate relationship ($Y|X$)?”}
+We consider an observed outcome $Y \in \mathbb{R}$ and covariates $X$ in some space $\mathcal{X}$. We consider two groups, $H$ and $K$. We let $\mathbb{P}_g$ denote the distribution of $(X,Y)$ for members of group $g$. We suppose we observe a gap in the mean outcomes, $\E_H[Y]$ and $\E_K[Y]$, and would like to understand to what extent the gap is due to differences in covariates between the two groups. 
+For the moment, we assume we have access to population-level quantities, including all expectations of interest.
 
-\emph{“What would Group $H$’s mean outcome ($Y$) be if its observed characteristics ($X$) were evaluated under Group $K$’s outcome–covariate relationship ($Y|X$)?”}
-\end{center}
+To analyze this gap, we might construct a counterfactual world driven only by differences in covariates.
+Consider again our example, where $Y$ represents systolic blood pressure, and $X$ represents body mass index. Suppose we think the conditional distribution $Y|X$ is attributable to city-specific public health and medical care at each BMI level.
+Then we might ask:
+(A) \emph{How much would city $H$'s mean SBP change if city $H$ kept its current health care but had the BMI distribution of city $K$?}
+But we notice this question starts from City $H$ as a reference. We could instead start from City $K$ and ask:
+(B) \emph{How much would city $K$'s mean SBP change if city $K$ kept its current health care but had the BMI distribution of city $H$?}
 
-Although both questions are sensible, they may not lead to the same answer. 
-Which one to ask is rarely obvious and depends on the goal of the analysis.
-For instance, drawing from the classical gender wage-gap example \citep{oaxaca1973, blinder1973}, if $Y$ denotes wages and $X$ education, experience, occupation, etc., these questions ask \emph{What would women’s ($K$) mean wage be if their observed characteristics were remunerated at men’s ($H$) returns?} And \emph{What would men’s ($H$) mean wage be if their observed characteristics were remunerated at women’s ($K$) returns?}
+Analogously, the gender wage gap forms a classic example \citep{oaxaca1973, blinder1973} with $Y$ as wages and $X$ as education. We might ask:
+(A) \emph{How much would women's ($H$) mean wages change if women kept their current remuneration relationship with education but had the educational distribution of men ($K$)?}
+or instead 
+(B) \emph{How much would men's ($K$) mean wages change if men kept their current remuneration relationship with education but had the educational distribution of women ($H$)?}
 
-In a similar spirit, from our motivating health example, if $Y$ is systolic blood pressure (SBP) and $X$ is body mass index (BMI), this question asks: \emph{What would City $K$’s mean SBP be if its observed BMI were evaluated under City $H$’s SBP–BMI relationship?} And \emph{What would City $H$’s mean SBP be if its observed BMI were evaluated under City $K$’s SBP–BMI relationship?} 
+More generally, we might ask:
+(A) \emph{How much would Group $H$'s mean outcome ($Y$) change if group $H$ kept its outcome--covariate relationship ($Y|X$) but had the covariate ($X$) distribution of group $K$?}
+or 
+(B) \emph{How much would Group $K$'s mean outcome ($Y$) change if group $K$ kept its outcome--covariate relationship ($Y|X$) but had the covariate ($X$) distribution of group $H$?}
 
-% Which counterfactual is more appropriate depends on the question of interest and carries distinct interpretations and policy implications.
+In the general case, we can compute the mean of a counterfactual $Y$ that has group $H$'s outcome--covariate relationship ($Y|X$) and group $K$'s covariate ($X$) distribution as follows. In particular, by using
+the law of total expectation, we have
+$\E_K [ \E_H  [ Y | X ] ]$, with an analogous formula when the groups are reversed.
 
-Which counterfactual is more appropriate can depend on the question of interest and carries distinct interpretations and policy implications, sometimes the counterfactual choice is driven by domain knowledge such as in labor economics where there seems to be a consensus for the gender wage gap problem \citep{}. 
-However, we argue that in many cases, the choice of the reference group is not clear. For example, it is not clear that different choices of reference in the SBP-BMI example correspond to substantively different policy questions.
-And we note that even in cases where the reference group seems standard, such as the gender wage-gap, some authors still make a different choice without commentary \citep{paradaContzen2025}.
-
-All the above questions define at least two counterfactual means \(\E\!\big[Y_{K}^{C(H)}\big],\) and \(\E\!\big[Y_{H}^{C(K)}\big],\) where \(Y_{K}^{C(H)}\) denotes the counterfactual outcome for Group $K$ if its observed characteristics were mapped through Group $H$’s conditional outcome rule and $Y_{H}^{C(K)}$ denotes the counterfactual outcome for Group $H$ if its observed characteristics $X_H$ were mapped through Group $K$’s conditional outcome rule. Note that we use the superscript \(C(\cdot)\) to indicate counterfactual outcomes. 
-
-Using these counterfactuals, the difference in mean outcomes between groups can be expressed as the distance between each observed mean and its corresponding counterfactual\footnote{Note we use the economics terms ``explained'' and ``unexplained'' in \cref{eq:OB_H_Counterfactual}, as the differences due to changes in distribution of covariates are ``explained'' away}:
+Then the difference in mean outcomes between the two groups can be expressed as the distance between each group's mean
+and the chosen counterfactual mean. The decomposition corresponding to question (A) above is:
 %
 \begin{align}
     \label{eq:OB_H_Counterfactual}
-    \E_H[Y] &- \E_K[Y] = \\ 
-    &\underbrace{\Big(\E_H[Y] - \E[Y_{K}^{C(H)}]\Big)}_{\text{Explained}:= E^{(H)}} \nonumber 
-     + \underbrace{\Big(\E[Y_{K}^{C(H)}] - \E_K[Y]\Big)}_{\text{Unexplained} := U^{(H)} }.
+    &\E_H[Y] - \E_K[Y] = \\ 
+    &\underbrace{\Big(\E_H[Y] - \E_K [ \E_H  [ Y | X ] ] \Big)}_{E^{(H)}} \nonumber 
+     + \underbrace{\Big(\E_K [ \E_H  [ Y | X ] ] - \E_K[Y]\Big)}_{U^{(H)} }.
 \end{align} 
-Alternatively, 
+Alternatively, the decomposition corresponding to question (B) above is:
 \begin{align}
     \label{eq:OB_K_Counterfactual}
-    \E_H[Y] & - \E_K[Y]= \\
-    & \underbrace{\Big(\E_H[Y] - \E[Y_{H}^{C(K)}]\Big)}_{\text{Unexplained}:= U^{(K)}} \nonumber 
-     + \underbrace{\Big(\E[Y_{H}^{C(K)}] - \E_K[Y]\Big)}_{\text{Explained}:= E^{(K)}}.
+    &\E_H[Y] - \E_K[Y]= \\
+    &\underbrace{\Big(\E_H[Y] - \E_H [ \E_K  [ Y | X ] ] \Big)}_{U^{(K)}} \nonumber 
+     + \underbrace{\Big(\E_H [ \E_K  [ Y | X ] ] - \E_K[Y]\Big)}_{E^{(K)}}.
 \end{align}
+%
+Traditionally the term corresponding to changing the covariate distribution is called the
+``explained component'' since this part of the difference is explained by the observed
+covariates \textcolor{red}{cite}. The remaining term, corresponding to changing the conditional $Y|X$ distribution,
+is called the ``unexplained component'' since it is not explained by the observed covariates. We use the 
+notation $E$ and $U$ to correspond to these components, respectively, with superscript denoting 
+the reference group choice.\textcolor{red}{check: is our use of the word reference here consistent with any established usage? in particular, does it get used in the symmetric way?}
 
-Certainly, the choice of the counterfactual is not unique or canonical, and the two decompositions in \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} are mathematically equivalent, as they both sum to the same total difference in means.
-OBD is nothing more than a specific implementation of these two counterfactual decompositions under the assumption of a linear model for the outcome-generating process.
+We might interpret $E$ and $U$ as the respective contributions of the covariates and outcome--covariate relationship to the 
+difference in outcome means between groups $H$ and $K$. The \textbf{index number problem}, then, represents the observation
+that in general we might obtain different results by starting from $H$ or $K$ as the reference.
+
+\textbf{A conceptual resolution?}
+Before proceeding, we observe that there is not an immediate and general conceptual resolution of the index number problem.
+It is not clear to us in the SBP--BMI example above that one direction is more natural --- or even that the two
+directions represent clearly distinguishable policy questions.
+There may be resolutions in particular areas of study.
+Many papers on the gender wage gap seem to favor taking men as the reference \textcolor{red}{cite}; this tendency might suggest a consensus.
+However, we also observe the existence of published work that takes women as the reference \textcolor{red}{cite}.
+

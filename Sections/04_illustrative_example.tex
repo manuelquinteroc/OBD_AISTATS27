@@ -1,33 +1,39 @@
 \section{A simulated example from healthcare}
 \label{sec:example}
 
-Given the results in \cref{sec:real_example}, a natural question to ask is whether such sign reversals are specific to the explained component, or whether they are simple consequences of model misspecification or sampling variability. Here, we present a simple simulated example inspired by real-life healthcare data that exhibits sign reversals in the \emph{unexplained} component of the OBD under correct model specification and large sample sizes, demonstrating that these issues are not isolated to the explained component and are not merely artifacts of small samples or model misspecification.
+Given the results in \cref{sec:real_example}, natural questions arise. For example, are such conclusion reversals specific to the explained component? Are these reversals always consequences of model misspecification or sampling variability? Here, we present a simulated example inspired by real-life healthcare data. Our example exhibits sign reversals in the \emph{unexplained} component of the OBD under correct model specification and large sample sizes.
 
 % To illustrate why \cref{eq:ob_decomp_ref_group} can lead a practitioner to draw substantially different conclusions depending on the reference group used in the OBD, we turn to a simple simulated healthcare example inspired by real-life data.
 
+\textbf{Motivation.}
+While our example is purely simulated, it is motivated by the following real-life concerns and observations.
 Body mass index (BMI) is a widely recognized and routinely measured marker of wellness \cite{heymsfield2016} and is strongly linked to cardiometabolic outcomes, such as elevated blood pressure. 
-An important public health question is whether differences in blood pressure between two populations are due mainly to differences in underlying BMI distributions or to differences in how BMI impacts blood pressure. While OBD cannot establish causality without further assumptions, it can suggest where one might look for potential drivers of observed disparities.
-If the unexplained component is larger (differences in $Y|X$ dominate), it may highlight the need to investigate differences in medical care, such as medication titration practices, adherence support, or access to antihypertensives. 
+An important public health question is whether differences in blood pressure between two populations are due mainly to differences in underlying BMI distributions or to differences in how BMI impacts blood pressure \textcolor{red}{can we cite?}.
+
+Our example imagines two populations of adults in primary care being followed for elevated blood pressure, using systolic blood pressure (SBP) at a standardized follow-up visit as the outcome $Y$. The BMI ($X$) of each adult is measured at an initial intake visit.
+The first population, Group $H$, comes from a higher-resource setting, such as an urban neighborhood with structured care pathways, frequent follow up, and better access to healthy food and physical activity options. 
+The second population, Group $K$, comes from lower-resource setting, where patients face barriers such as longer travel distances to clinics, infrequent follow up, delayed medication titration, and limited access to nutritious food.
+These factors shape both the composition of each group (including average BMI) and the structure of the SBP--BMI relationship. We follow a clinical literature finding an approximately linear relationship between BMI and SBP \cite{kaufman1997, cappuccio2008, chen2023}; in particular, we assume a separate linear relationship in each group.
+
+While an OBD cannot establish causality without further assumptions, it can suggest where one might look for potential drivers of observed disparities between the two groups.
+If the unexplained component is larger (differences in $Y|X$ dominate), it may highlight the need to investigate differences in medical care, such as medication titration practices, adherence support, or access to antihypertensives. \textcolor{red}{right now we're highlighting a decision that is not a sign-based decision, so that choice clashes with the rest of the narrative}
 %In either case, OBD serves only as a descriptive tool that helps formulate hypotheses about where meaningful differences may arise, not as a causal model.
 %The answer can inform where to direct limited resources. 
-If most of the explained component is larger (differences in $X$ dominate), targeted interventions on weight management, nutrition, and physical activity may be most impactful. 
+If the explained component is larger (differences in $X$ dominate), targeted interventions on weight management, nutrition, and physical activity may be most impactful. 
 %If the unexplained component dominates, changes to care delivery, such as earlier medication titration, improved medication adherence support, or broader access to antihypertensives, may be more effective. 
 
-Our example considers two populations of adults in primary care being followed for elevated blood pressure, using systolic blood pressure (SBP) at a standardized follow-up visit as the outcome.
-The first population, Group $H$, comes from a higher resource setting, such as an urban neighborhood with structured care pathways, frequent follow up, and better access to healthy food and physical activity options. 
-The second population, Group $K$, comes from lower resource setting, where patients face barriers such as longer travel distances to clinics, infrequent follow up, delayed medication titration, and limited access to nutritious food. 
-These factors shape both the composition of each group (including average BMI) and the structure of the BMI–SBP relationship.
-
-Following a clinical literature finding an approximately linear relationship between BMP and SBP \cite{kaufman1997, cappuccio2008, chen2023}, we model the SBP in group \( g \) as
+\textbf{Simulated data.}
+We generate the BMI ($X$, in kg/m$^2$) of an individual in group \( g \) from a group-specific normal distribution.
+We generate the SBP ($Y$, in mmHg) of an individual in group \( g \) as a noisy function of their BMI:
 \begin{equation}
     \label{eq:linear_model}
-    \text{SBP}_g = \alpha_g + \beta_g \times \text{BMI} + \varepsilon,
+   Y = \alpha_g + \beta_g \times X + \varepsilon.
 \end{equation}
-where $\alpha_g \in \mathbb{R}$ is the group-specific intercept, $\beta_g \in \mathbb{R}$ is the group-specific slope, representing the average change in SBP (mmHg) per unit increase in BMI for $g \in \{H, K\}$, and $\varepsilon$ reflects individual variability in SBP that is uncorrelated with BMI.
-We present key parameters in \cref{tab:dgp_short} and provide further details about the data-generating process in Supplementary Material \ref{appendix:dgp}.
+Here $\alpha_g \in \mathbb{R}$ is the group-specific intercept (in units of mmHg); $\beta_g \in \mathbb{R}$ is the group-specific slope, representing the average change in SBP (mmHg) per unit increase in BMI (kg/m$^2$); and $\varepsilon$ reflects individual variability in SBP that is uncorrelated with BMI. We take $\varepsilon$ independent and identically distributed across adult patients, with the same (mean-zero Gaussian) distribution in each group.
+We present key parameters in \cref{tab:dgp_short} and provide further details about the data-generating process in \cref{appendix:dgp}.
 
 \begin{table}[h]
-\caption{True model parameters by group}
+\caption{Key chosen and derived parameters by group.}
 \label{tab:dgp_short}
 \begin{center}
 \small
@@ -38,7 +44,7 @@ H & 25.0 & 110.4 & 1.0 & 135.4 \\
 K & 27.0 & 100.0 & 1.4 & 137.8 \\
 \end{tabular}
 \end{center}
-\footnotesize{Note: H = Higher-resource group, K = Lower-resource group. BMI and SBP in $kg/m^2$ and mmHg respectively. $\alpha$ in mmHg, $\beta$ in mmHg per $kg/m^2$.}
+\footnotesize{Note: H = Higher-resource group, K = Lower-resource group. BMI and SBP in kg/m$^2$ and mmHg respectively. $\alpha$ in mmHg, $\beta$ in mmHg per kg/m$^2$.}
 \end{table}
 
 \cref{fig:bmi_sbp} shows the fitted BMI–SBP relationships for both groups, showing how differences in intercepts, slopes, and BMI distributions interact.

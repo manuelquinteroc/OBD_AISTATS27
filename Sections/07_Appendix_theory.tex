@@ -87,16 +87,15 @@ Note that the sign flip is symmetric by construction, but the magnitude of the d
 \subsection{Proportion of Parameter Space that Produces Sign Flips}
 \label{app:sign_flip_volume}
 
-\subsection{TODO: this is just copy-pasted from the main text}
+In \cref{sec:sign_flip_fraction}, we characterize the proportion of the parameter space that produces sign flips in the explained and unexplained components of the OBD. In this appendix, we provide a more detailed description on the statement and proof of \cref{prop:unexplained_fraction}.
 
-Moreover, as with the explained component, sign flips corresponds to a nontrivial region of the parameter space.
-We argue similarly as before, placing a Uniform(-M, M) measure on all intercepts and regression coefficients, and then computing the volume of the region in \cref{thm:ordering_sensitivity}.
+Similar to the unexplained component in \cref{prop:explained_fraction} we argue by placing a Uniform$(-M, M)$ measure on all intercepts and regression coefficients, and then computing the volume of the region in \cref{thm:ordering_sensitivity}.
 The resulting volume depends on the dimension of the covariates, \( d \), and the bounds on the Uniform measure, but quickly approaches an asymptotic value of 50\% for larger \( d \) or \( M \).
-\cref{fig:prob_unexplained} depicts this probability for various \( d \) at several choices of \( M \); detailed derivations are in \cref{app:sign_flip_volume}.
+\cref{fig:prob_unexplained} depicts this probability for various \( d \) at several choices of \( M \). 
+% detailed derivations are in \cref{app:sign_flip_volume}.
 
-
-An attentive reader may note that unexplained component sign flips are rare in practice in our empirical investigation, despite accounting for a large proportion of the parameter space.
-We offer a possible explanation for why such sign flips are rare.
+An attentive reader may note that unexplained component sign flips are rare in practice in our empirical investigation presented in \cref{appendix:icu_details,appendix:us_labor_force}, despite accounting for a large proportion of the parameter space.
+Here, we offer a possible explanation for why such sign flips are rare.
 For sign flips to be unlikely, it should be the case that data-generating processes that produce large \( | 1^T \Delta \beta | \) also produce large \( \Delta \alpha \).
 This can happen when the analyst's dataset omits important explanatory covariates.
 For example, hospital records only record measurements that doctors have ordered (not the results of important tests a doctor may have skipped).
@@ -104,14 +103,16 @@ Similarly, census data used for studying wage gaps typically lack detailed infor
 Let \( Z \in \mathbb{R}^{d'} \) be a vector of such \textit{omitted covariates}.
 We will establish that both \( \Delta \beta \) and \( \Delta \alpha \) depend on these omitted covariates.
 
-The OBD is based on regressing the outcome against the observed covariates via
-\[ \E_g[Y] = \alpha_g + \E_g[X]^\top \beta_g. \]
-However, we can also write the regressions
+Recall that the OBD is based on regressing the outcome against the observed covariates for each group \(g \in \{H, K\}\) via
+\[ 
+  \E_g[Y] = \alpha_g + \E_g[X]^\top \beta_g. 
+\]
+However, we can also write for \(g \in \{H, K\}\), 
 \begin{align*}
    \E_g[Y] &= \omega_g + \E_g[X]^\top \theta_g + \E_g[Z]^\top \gamma_g, \\    
    \E_g[Z] &= \zeta_g + \Psi_g \E_g[X].
 \end{align*}
-In the first regression, \( \theta_g \) reflects the predictive power of \( X \), \( \gamma_g \) reflects the predictive power of \( Z \), and \( \Psi_g \) projects \( X \) onto \( Z \).
+Where in the first regression, \( \theta_g \) reflects the predictive power of \( X \), \( \gamma_g \) reflects the predictive power of \( Z \), and \( \Psi_g \) projects \( X \) onto \( Z \).
 \textcolor{red}{Advik: is ``project'' too technically loaded as a term here?}
 In \cref{app:omitted_variables} we show that
 \begin{align*}
@@ -120,57 +121,11 @@ In \cref{app:omitted_variables} we show that
 \end{align*}
 where \( \Delta \) takes the \( H - K \) difference in the corresponding parameter; for example \( \Delta \omega := \omega_H - \omega_K \).
 
-Now, note that there are several ways for \( \mathbf{1}^\top \Delta \beta \) to be large.
-First, \(\mathbf{1}^\top \Delta \theta \) can be large, meaning X has bona fide predictive power separate from Z.
+Let \(\mathbf{1}\) denote the vector of ones. Note that there are several ways for \( \mathbf{1}^\top \Delta \beta \) to be large.
+First, \(\mathbf{1}^\top \Delta \theta \) can be large, meaning X has \textit{bona fide} predictive power separate from Z.
 Second, \(\mathbf{1}^\top \Delta \Psi^\top \Delta \gamma \) can be large, meaning the omitted Z has predictive power which X is ``borrowing'' via \( \Psi \).
 In the latter case, \( \Delta \alpha \) will tend to be large as well, making it more difficult for the sign-flip condition to obtain.
 As such, sign flips may be unlikely in domains where observed covariates have limited predictive power compared to omitted covariates; roughly, in settings where regressions have low \( R^2 \).
-
-\subsection{TODO: this is the original text of the appendix}
-
-We now compute the volume of the parameter space that can produce sign flips in the explained and unexplained components of the OBD.
-To simplify calculations, we assume the variables are scaled so that \( \E_K[X] = 0 \) and \( \E_H[X] = 1 \).
-We can achieve this by transforming the covariates via \( \tilde{X} = (X - \mu_K) / (\mu_H - \mu_K) \), which is permissible as long as \( \mu_H \neq \mu_K \) elementwise. 
-We view this without loss of generality since \( \mu_H \neq \mu_K \) elementwise holds almost surely when the covariates are drawn from an atomless distributions.
-With this rescaling \( \Delta \mu = \mathbf{1} \), where \( \mathbf{1} \) is a vector of ones.
-
-We start with the explained component.
-Recall that the covariates, \( X \), are $d$-dimensional.
-After rescaling, \cref{eq:sign_flip_condition_explained_neq} simplifies to 
-\[ \sign\!\left(\mathbf{1}^\top \beta_{H}\right) \neq \sign\!\left(\mathbf{1}^\top \beta_{K}\right). \]
-A Uniform(-M, M) distribution on \( \beta_H \) and \( \beta_K \) translates to distributions on \( \mathbf{1}^\top \beta_{H} \) and \( \mathbf{1}^\top \beta_{K} \) that are identical and symmetric around zero.
-As such, the signs of \( \mathbf{1}^\top \beta_{H} \) and \( \mathbf{1}^\top \beta_{H} \) will disagree in 50\% of the parameter space.
-
-Now we turn to the unexplained component.
-For the rescaled covariates, the conditions in \cref{alg:decision_tree} simplify, eliminating several of its branches.
-In particular, the unexplained component flips sign if and only if \( \mathbf{1}^T \Delta \beta \neq 0 \), \( \sign (\Delta \alpha) \neq \sign (\mathbf{1}^\top \Delta \beta) \), and \( | \mathbf{1}^T \Delta \beta | > |\Delta \alpha| \).
-The first condition holds almost surely, so we can focus on the latter two.
-To do so, we will determine the distributions of  \( \Delta \alpha \) and \( \mathbf{1}^\top \Delta \beta \).
-
-The sum of \( n \) Uniform(0,1) random variables is sometimes called the Irwin-Hall(\(n\)) distribution.%
-\footnote{For \(n = 2\) this is a familiar triangular distribution.}
-When we place a Uniform(-M, M) measure on the \( \alpha \)s and \( \beta \)s, there is a straightforward relationship between \( \Delta \alpha \), \( \mathbf{1}^\top \Delta \beta \), and appropriately defined Irwin-Hall random variables.
-The difference \( \Delta \alpha \) is the sum of two Uniform(-M, M) variables, which is equivalent to an Irwin-Hall($2$) distribution, rescaled to the interval $[-2M, 2M]$.
-Similarly, \( \mathbf{1}^T \Delta \beta \) is the sum of \( 2 d \) Uniform(-M, M) variables, and its distribution is an Irwin-Hall($2 d$) distribution, rescaled to the domain \( -2dM, 2dM \).
-
-We can use this correspondence to translate the event 
-\[ | 1^T \Delta \beta | > |\Delta \alpha| \cup \sign (\Delta \alpha) \neq \sign (1^T \Delta \beta) \]
-into an equivalent event in terms of two independent Irwin-Hall random variables.
-In particular, let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent random variables.
-The above event is equivalent to 
-\[ (I_2 > 1 \cap J_{2d} \in [-2d, \frac{2dM - I_2}{2M}]) \cup (I_2 < 1 \cap J_{2d} \in [\frac{I_2 + 2dM}{2M}, 2d]).  \]
-That is, unexplained component sign flips have the same volume as the region where \( I_2 \) falls above its median and \( J_{2d} \) falls far in its left tail, or vice versa.
-Because both \( I_2 \) and \( J_{2d} \) are symmetric, this volume is equal to twice the probability that \( I_2 \) is above its median and \( J_{2d} \) is sufficiently small.
-That is:
-\[ Pr(| 1^T \Delta \beta | > |\Delta \alpha|) = 2 Pr(I_2 > 1 \cap J_{2d} < \frac{2dM - I_2}{2M}). \] 
-
-We can calculate this exactly for small \( d \) by using the Irwin-Hall(n) cumulative distribution function,
-\[ F(x) = \frac{1}{n!} \sum_{k=0}^{\lfloor x \rfloor} (-1)^k {n \choose k} (x - k)^n. \]
-For larger \( d \), the combinatorial terms in the CDF become difficult to evaluate.
-In those cases the central limit theorem allows us to approximate an Irwin-Hall(2d) distribution with a \( N(d, \frac{d}{6})\) distribution.
-Finally, as \( d \to \infty \), sign flips have a volume equal to
-\[ 2 Pr(I_2 > 1) Pr(J_{2d} < d | I_2 > 1).  \] 
-Since the median of \( I_2 \) is 1 and the median of \( J_{2d} \) is 2, both probabilities are equal to \( \frac{1}{2} \), and the corresponding volume is therefore \( 0.5 \).
 
 \subsection{Relationship Between Regression Parameters and Omitted Variables}
 \label{app:omitted_variables}
@@ -207,3 +162,61 @@ Similarly,
 \end{align*}
 where \( \Delta \) takes the \( H - K \) difference in the corresponding parameter. 
 For example \( \Delta \omega = \omega_H - \omega_K \).
+
+\subsection{Volume of the Sign-Flip Parameter Region}
+
+We now compute the volume of the parameter space that can produce sign flips in the explained and unexplained components of the OBD.
+To simplify calculations, we assume the variables are scaled so that \( \E_K[X] = 0 \) and \( \E_H[X] = 1 \).
+We can achieve this by transforming the covariates via \( \tilde{X} = (X - \mu_K) / (\mu_H - \mu_K) \), which is permissible as long as \( \mu_H \neq \mu_K \) elementwise. 
+We view this without loss of generality since \( \mu_H \neq \mu_K \) elementwise holds almost surely when the covariates are drawn from an atomless distributions (i.e., no point masses).
+With this rescaling \( \Delta \mu = \mathbf{1} \).
+
+We start with the explained component.
+Recall that the covariates, \( X \), are $d$-dimensional.
+After rescaling, \cref{eq:sign_flip_condition_explained_neq} simplifies to 
+\[ \sign\!\left(\mathbf{1}^\top \beta_{H}\right) \neq \sign\!\left(\mathbf{1}^\top \beta_{K}\right). \]
+A Uniform$(-M, M)$ distribution on \( \beta_H \) and \( \beta_K \) translates to distributions on \( \mathbf{1}^\top \beta_{H} \) and \( \mathbf{1}^\top \beta_{K} \) that are identical and symmetric around zero.
+As such, the signs of \( \mathbf{1}^\top \beta_{H} \) and \( \mathbf{1}^\top \beta_{H} \) will disagree in 50\% of the parameter space.
+
+Now we turn to the unexplained component.
+For the rescaled covariates, the conditions in \cref{alg:decision_tree} simplify, eliminating several of its branches.
+In particular, the unexplained component flips sign if and only if \( \mathbf{1}^T \Delta \beta \neq 0 \), \( \sign (\Delta \alpha) \neq \sign (\mathbf{1}^\top \Delta \beta) \), and \( | \mathbf{1}^T \Delta \beta | > |\Delta \alpha| \).
+The first condition holds almost surely under the assumed Uniform$(-M,M)$ measure on the coefficients, since \( \mathbf{1}^\top \Delta \beta \) is a non-degenerate linear combination of continuously distributed random variables, so we can focus on the latter two.
+To do so, we will determine the distributions of  \( \Delta \alpha \) and \( \mathbf{1}^\top \Delta \beta \).
+
+The sum of \( n \) Uniform$(0,1)$ random variables is sometimes called the Irwin-Hall(\(n\)) distribution.%
+\footnote{For \(n = 2\) this is a familiar triangular distribution.}
+When we place a Uniform$(-M, M)$ measure on the \( \alpha \)'s and \( \beta \)'s, there is a straightforward relationship between \( \Delta \alpha \), \( \mathbf{1}^\top \Delta \beta \), and appropriately defined Irwin-Hall random variables.
+The difference \( \Delta \alpha \) is the sum of two Uniform$(-M, M)$ variables, which is equivalent to an Irwin-Hall($2$) distribution, rescaled to the interval $[-2M, 2M]$.
+Similarly, \( \mathbf{1}^T \Delta \beta \) is the sum of \( 2 d \) Uniform$(-M, M)$ variables, and its distribution is an Irwin-Hall($2 d$) distribution, rescaled to the domain \( -2dM, 2dM \).
+
+We can use this correspondence to translate the event 
+\[
+\{ |\mathbf{1}^\top \Delta \beta| > |\Delta \alpha| \}
+\cap
+\{ \sign(\Delta \alpha) \neq \sign(\mathbf{1}^\top \Delta \beta) \}.
+\]
+into an equivalent event in terms of two independent Irwin-Hall random variables.
+In particular, let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent random variables.
+The above event is equivalent to 
+\[
+\bigl(\{ I_2 > 1 \} \cap \{ -2d \le J_{2d} \le \tfrac{2dM - I_2}{2M} \}\bigr)
+\;\cup\;
+\bigl(\{ I_2 < 1 \} \cap \{ \tfrac{I_2 + 2dM}{2M} \le J_{2d} \le 2d \}\bigr).
+\]
+That is, unexplained component sign flips have the same volume as the region where \( I_2 \) falls above its median and \( J_{2d} \) falls far in its left tail, or vice versa.
+Because both \( I_2 \) and \( J_{2d} \) are symmetric, this volume is equal to twice the probability that \( I_2 \) is above its median and \( J_{2d} \) is sufficiently small.
+That is:
+\[
+\Pr\!\left( \{ |\mathbf{1}^\top \Delta \beta| > |\Delta \alpha| \} \right)
+=
+2\,\Pr\!\left( \{ I_2 > 1 \} \cap \left\{ J_{2d} < \tfrac{2dM - I_2}{2M} \right\} \right).
+\]
+We can calculate this exactly for small \( d \) by using the Irwin-Hall(n) cumulative distribution function (CDF),
+\[ F(x) = \frac{1}{n!} \sum_{k=0}^{\lfloor x \rfloor} (-1)^k {n \choose k} (x - k)^n. \]
+For larger \( d \), the combinatorial terms in the CDF become difficult to evaluate.
+In those cases the central limit theorem allows us to approximate an Irwin-Hall(2d) distribution with a \( N(d, \frac{d}{6})\) distribution.
+Finally, as \( d \to \infty \), sign flips have a volume equal to
+\[ 2 Pr(I_2 > 1) Pr(J_{2d} < d \mid I_2 > 1).  \] 
+Since the median of \( I_2 \) is $1$ and the median of \( J_{2d} \) is $2$, both probabilities are equal to \( \frac{1}{2} \), and the corresponding volume is therefore \( 0.5 \).
+

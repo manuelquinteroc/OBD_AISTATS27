@@ -1,16 +1,18 @@
 \section{Real-data example: Gender gap in ICU mortality in moderate tachycardia}
 \label{sec:real_example}
 
-The index number problem reflects that the two reference choices for the OBD could yield two different sets of values for the explained and unexplained components. We are not aware of an illustration that the two OBD directions can lead to substantively different conclusions. We supply such an illustration next for a real-data analysis.
+The index number problem reflects that the two reference choices for the OBD could yield two different sets of values for the explained and unexplained components. We are not aware of an illustration in the literature that the two OBD directions can lead to substantively different conclusions. We supply such an illustration next for a real-data analysis.
 
-\textbf{Data.} To construct our example, we examine data from the PhysioNet cohort of ICU patients collected for a study of in hospital mortality \citep{goldberger2000physiobank}. The dataset contains routine measurements taken at admission, including heart rate (HR), mean arterial pressure, temperature, and urine output. These values are recorded for every patient at the time of entry into the unit and provide a description of their initial physiological state.
+\textbf{Data.} To construct our example, we examine data from the PhysioNet cohort of intensive care unit (ICU) patients collected for a study of in-hospital mortality \citep{goldberger2000physiobank}. The dataset contains routine measurements taken at admission, including heart rate (HR), mean arterial pressure, temperature, and urine output. These values are recorded for every patient at the time of entry into the unit and provide a description of their initial physiological state.
 
 Medical practitioners often look at moderate elevations in heart rate as a first indication of stress, infection, or early hemodynamic change (early changes in blood flow and circulation). In the present example, we restrict our analysis to patients whose admission heart rate lies between the $50$ and $75$ percentiles, which we refer to as HR quartile two. These patients reflects a familiar clinical presentation in which the heart rate is elevated but not extreme. Within this group, the mortality rate for men exceeds the mortality rate for women by approximately $3.5$ percentage points (see \cref{tab:hr_q2_decomposition}).
 
-\textbf{Analysis.} We would like to understand to what extent the observed mortality difference between men and women in HR quartile two might be attributable to observed characteristics upon admission (i.e.\ the covariates) vs.\ medical care. To that end, we let $Y$ be an indicator for in-hospital mortality; $X$ is the vector of admission covariates comprising heart rate, mean arterial pressure, temperature, urine output, age, and ICU type. We let the groups be $g \in \{\text{men}, \text{women}\}$. Despite the indicator outcome, we observe that it remains common practice in applied health and policy research to fit separate linear models (via OLS) for the relationship between an indicator outcome and covariates in each group, and then apply the OBD \citep{jann2008, edokaChangesCatastrophicHealth2017, sujin_LPM_OB, mweembaGapSelfRatedHealth2023}.\footnote{In fact, this use of the linear model for an indicator outcome is so common that it has a name, the ``linear probability model.''} We provide a detailed description of our data analysis --- and our search procedure for a data analysis exhibiting a substantive conclusion change --- in \cref{appendix:icu_details}. \textcolor{red}{as long as note cherry-picking later in main text, i think ok not to here}
+\textbf{Analysis.} We would like to understand to what extent the observed mortality difference between men and women in HR quartile two might be attributable to observed characteristics upon admission (covariates) vs.\ medical care (outcome given covariates). 
+To that end, let $Y$ be a binary indicator for in-hospital mortality, and let $X$ be the vector of admission covariates comprising heart rate, mean arterial pressure, temperature, urine output, age, and ICU type. 
+We let the groups be $g \in \{\text{men}, \text{women}\}$. Despite the indicator outcome, it is common practice in applied health and policy research to fit separate linear models (via OLS) for the relationship between an indicator outcome and covariates in each group, and then apply the OBD \citep{jann2008, edokaChangesCatastrophicHealth2017, sujin_LPM_OB, mweembaGapSelfRatedHealth2023}.\footnote{In fact, this use of the linear model for an indicator outcome is so common that it has a name, the ``linear probability model.''} We provide a detailed description of our data analysis --- and our search procedure for a data analysis exhibiting a substantive conclusion change --- in \cref{appendix:icu_details}. \textcolor{red}{as long as note cherry-picking later in main text, i think ok not to here}
 
 \textbf{Two different conclusions.} 
-We report the OBD decomposition for each reference group in \cref{tab:hr_q2_decomposition}. We next interpret the substantive conclusions
+We report the OBD for each reference group in \cref{tab:hr_q2_decomposition}. We next interpret the substantive conclusions
 we might draw from each direction. First, consider the case with women as the reference. The explained component is positive ($0.021$), with a statistically significant difference from 0.
 This result suggests that differences in admission covariates place men at higher mortality risk. A medical practitioner might therefore examine whether various factors before admission differ across gender; these factors include early differences in blood flow and circulation, underlying disease burden, or overall severity at admission.
 
@@ -47,9 +49,13 @@ Second, consider the case with men as the reference. The explained component is 
     }
 \end{table}
 
-\textbf{How does the difference arise?}
-To help illustrate why we might see these substantive differences in the two OBD directions, we plot linear fits while now restricting to a single covariate for ease of visualization.
-\cref{fig:hr_quartile2} shows the fitted linear models of in-hospital mortality on admission heart rate for men and women within HR quartile two, holding all other covariates fixed at their subgroup means. See Appendix \cref{fig:hr_quartile2_hist} for the counts of mortality outcomes within HR quartile two by gender. Men have a higher baseline rate of in-hospital mortality ($\alpha_{\text{Men}}$) than women, but women have a steeper slope. In fact, men exhibit a negative coefficient on heart rate, whereas mortality increases with heart rate among women. Thus, mortality is much more responsive to heart rate for women than for men, and in the opposite direction. \textcolor{red}{a bit more discussion of relation to the OBD results/interpretations}
+\textbf{How does the sign flip arise?}
+Recall that the explained component is given by $\EHOB := \Delta\mu^T \beta_H$ when $H$ is the reference group, and $\EKOB := \Delta\mu^T \beta_K$ when $K$ is the reference group.
+As $\Delta\mu$ is fixed between $\EHOB$ and $\EKOB$, it must be that some components of $\beta_H$ and $\beta_K$ are changing sign to give $\EHOB$ and $\EKOB$ opposite signs.
+In \cref{fig:hr_quartile2}, we show the fitted linear models of in-hospital mortality on admission heart rate, holding all other covariates fixed at their subgroup means. 
+Indeed, we see that the signs of the slopes differ.
+In Appendix \cref{tab:delta_mu_betas}, we report values for all $\beta$'s and see that there are multiple covariates for which $\beta_{men} < 0 < \beta_{women}$, and additionally, $\Delta\mu$ is positive for all of these covariates.
+Put together, these changes are enough to cause a sign flip in the OBD.
 
 \begin{figure}[h]
     \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/hr_quartile2_mortality_lines.pdf}}

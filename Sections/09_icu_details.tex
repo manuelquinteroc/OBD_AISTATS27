@@ -28,14 +28,15 @@ Our first step was to evaluate whether sign reversals appeared in coarse, clinic
     \caption{OBD for the nine predefined ICU subgroups}
     \label{tab:A1_initial_subgroups}
     \begin{tabular}{l|r|r|cc|cc}
-    \hline
-    \textbf{subset} & \textbf{n} & \textbf{Total gap} 
-        & \multicolumn{2}{c|}{\textbf{Men reference}} 
-        & \multicolumn{2}{c}{\textbf{Women reference}} \\ 
+    \toprule
+    Subset & n & Total gap
+        & \multicolumn{2}{c|}{Men reference} 
+        & \multicolumn{2}{c}{Women reference} \\ 
     \cline{4-7}
       &   &   
-      & \textbf{Explained} & \textbf{Unexplained} 
-      & \textbf{Explained} & \textbf{Unexplained} \\ \hline
+      & Explained & Unexplained
+      & Explained & Unexplained \\
+      \midrule
     All patients    & 3429 &  0.0079 &  0.0114 & -0.0035 &  0.0156 & -0.0077 \\ 
     ICUType 1.0     &  490 &  0.0295 &  0.0306 & -0.0012 &  0.0368 & -0.0073 \\ 
     ICUType 2.0     &  643 & -0.0010 &  0.0039 & -0.0049 &  0.0040 & -0.0050 \\ 
@@ -44,7 +45,8 @@ Our first step was to evaluate whether sign reversals appeared in coarse, clinic
     Age $< 65$      & 1567 &  0.0170 &  0.0085 &  0.0085 &  0.0055 &  0.0115 \\ 
     Age $\ge 65$    & 1862 & -0.0098 &  0.0101 & -0.0199 &  0.0159 & -0.0256 \\ 
     SAPS $\le 15$   & 1971 &  0.0257 &  0.0093 &  0.0164 &  0.0121 &  0.0136 \\ 
-    SAPS $> 15$     & 1458 & -0.0157 &  0.0104 & -0.0261 &  0.0133 & -0.0290 \\ \hline
+    SAPS $> 15$     & 1458 & -0.0157 &  0.0104 & -0.0261 &  0.0133 & -0.0290 \\
+    \bottomrule
     \end{tabular}
 \end{table}
 
@@ -91,16 +93,20 @@ These complete results appear in Table~\ref{tab:icu_mortality}. The persistence 
 
 \begin{table}[H]
     \centering
-    \caption{ICU Mortality Gap Decomposition for Subgroups Exhibiting Sign Reversals}
+    \caption{ICU Mortality Gap Decomposition for Subgroups Exhibiting Sign Reversals. Standard errors in parentheses computed via bootstrap resampling with $1{,}000$ replications.  
+    P-values based on a normal approximation.  
+    Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$.  
+    The decomposition separates the gender mortality gap (male minus female) into explained and unexplained components using the Oaxaca--Blinder method.  
+    Female Reference uses the model for females as the reference outcome structure; Male Reference uses the model for males.}
     \label{tab:icu_mortality}
     \scriptsize
     \begin{tabular}{@{}lc*{5}{c}@{}}
     \toprule
-    \multirow{2}{*}{\textbf{Subset}} &
-    \multirow{2}{*}{\textbf{n}} &
-    \textbf{Gap} &
-    \multicolumn{2}{c}{\textbf{Female Reference}} &
-    \multicolumn{2}{c}{\textbf{Male Reference}} \\
+    \multirow{2}{*}{Subset} &
+    \multirow{2}{*}{n} &
+    Gap &
+    \multicolumn{2}{c}{Female Reference} &
+    \multicolumn{2}{c}{Male Reference} \\
     \cmidrule(lr){3-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
     & & (M–F) & Expl. & Unexp. & Expl. & Unexp. \\
     \midrule
@@ -188,14 +194,6 @@ These complete results appear in Table~\ref{tab:icu_mortality}. The persistence 
     
     \bottomrule
     \end{tabular}
-    \vspace{0.5em}
-    
-    \footnotesize
-    \textit{Note:} Standard errors in parentheses computed via bootstrap resampling with $1{,}000$ replications.  
-    P-values based on a normal approximation.  
-    Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$.  
-    The decomposition separates the gender mortality gap (men minus women) into explained and unexplained components using the Oaxaca--Blinder method.  
-    Female Reference uses the model for women as the reference outcome structure; Male Reference uses the model for men.
 \end{table}
     
 \cref{fig:hr_quartile2_hist} presents the histogram for the $816$ patients in HR quartile two, showing the distribution of mortality outcomes used in the linear probability models displayed in \cref{fig:hr_quartile2}. \cref{tab:delta_mu_betas} shows the covariate mean differences and group-specific coefficients for HR quartile two that underlie the sign reversal documented in Section~\ref{sec:real_example}.
@@ -209,15 +207,16 @@ These complete results appear in Table~\ref{tab:icu_mortality}. The persistence 
 \begin{table}[h]
     \centering
     \small
-    \caption{Covariate mean differences and group-specific coefficients in HR quartile two}
+    \caption{Covariate mean differences and group-specific coefficients in HR quartile two. $\Delta\mu$ denotes the difference in covariate means between men and women within HR quartile two (men minus women). 
+    $\beta_{\text{Men}}$ and $\beta_{\text{Women}}$ are coefficients from group-specific linear probability models for in-hospital mortality.}
     \label{tab:delta_mu_betas}
     \begin{tabular}{lrrr}
-    \hline
-    \textbf{Covariate} 
-    & $\boldsymbol{\Delta\mu}$ 
-    & $\boldsymbol{\beta_{\text{Men}}}$ 
-    & $\boldsymbol{\beta_{\text{Women}}}$ \\
-    \hline \\[-6pt]
+    \toprule
+    Covariate 
+    & $\Delta\mu$ 
+    & $\beta_{\text{Men}}$ 
+    & $\beta_{\text{Women}}$ \\
+    \midrule
     Intercept & $0.0000$   & $1.1813$  & $-0.8515$ \\
     Age       & $3.8938$   & $-0.0000$ & $0.0039$ \\
     ICU Type  & $0.0095$   & $0.0173$  & $0.0116$ \\
@@ -225,15 +224,9 @@ These complete results appear in Table~\ref{tab:icu_mortality}. The persistence 
     MAP       & $-0.6669$  & $0.0004$  & $0.0010$ \\
     Temp      & $0.3604$   & $-0.0230$ & $0.0028$ \\
     Urine     & $-39.8976$ & $-0.0001$ & $-0.0001$ \\
-    \hline
+    \bottomrule
     \end{tabular}
-    
-    \vspace{0.5em}
-    \footnotesize{
-    \textit{Note:} $\Delta\mu$ denotes the difference in covariate means between men and women within HR quartile two (men minus women). 
-    $\beta_{\text{Men}}$ and $\beta_{\text{Women}}$ are coefficients from group-specific linear probability models for in-hospital mortality.
-    }
-    \end{table}
+\end{table}
     
 \subsection{U.S. Labor Force Example}
 \label{appendix:us_labor_force}
@@ -251,10 +244,13 @@ We purposely construct a large set of analyses to search for sign flips in diffe
     \caption{Settings for sign flip search in American labor force dataset}
     \label{tab:us_census_design}
     \begin{tabular}{l l l l}
-    Subset \( S \)          & Outcome \( Y \)            & Group (\( H, K \))                     & Covariate (\(X\))        \\ \midrule
+    \toprule
+    Subset \( S \)          & Outcome \( Y \)            & Group (\( H, K \))                     & Covariate (\(X\))        \\ 
+    \midrule
     50 states + DC          & Income           (\$)      & Sex  (male, female)                 & Has Bachelor's degree (0/1) \\
     26 industries (NAICS 2) & Has health insurance (0/1) & Race (black, white)                  & Currently married (0/1)     \\
-                            &                            & Nativity (native born, foreign born) & 
+                            &                            & Nativity (native born, foreign born) & \\
+    \bottomrule                         
 \end{tabular}
 \end{table}
 
@@ -279,16 +275,18 @@ Taking the native-born population as the reference group, differences in remuner
 
 \begin{table}[H]
     \centering
-    \caption{ICU Mortality Gap Decomposition for Subgroups Exhibiting Sign Reversals}
+    \caption{ICU Mortality Gap Decomposition for Subgroups Exhibiting Sign Reversals. Standard errors in parentheses are computed via bootstrap resampling with $20{,}000$ replications.  
+    P-values are based on a normal approximation.  
+    Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$. }
     \label{tab:us_census_flips}
     \scriptsize
     \begin{tabular}{@{}lc*{5}{c}@{}}
     \toprule
-    \multirow{2}{*}{\textbf{Subset}} &
-    \multirow{2}{*}{\textbf{n}} &
-    \textbf{Gap} &
-    \multicolumn{2}{c}{\textbf{Foreign Born Reference}} &
-    \multicolumn{2}{c}{\textbf{Native Reference}} \\
+    \multirow{2}{*}{Subset} &
+    \multirow{2}{*}{n} &
+    Gap &
+    \multicolumn{2}{c}{Foreign Born Reference} &
+    \multicolumn{2}{c}{Native Reference} \\
     \cmidrule(lr){3-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
     & State & (F–N) & Expl. & Unexp. & Expl. & Unexp. \\
     \midrule
@@ -296,11 +294,5 @@ Taking the native-born population as the reference group, differences in remuner
     Michigan & 25,724 & 0.117$^{***}$ & 0.148$^{***}$  & \(-0.032\)$^{*}$ & 0.101$^{***}$ & 0.016   \\
              &        & (0.019)       & (0.011)        & (0.017)          & (0.007)       & (0.017) \\ [0.3em]
     \bottomrule
-    \end{tabular}
-    \vspace{0.5em}
-    
-    \footnotesize
-    \textit{Note:} Standard errors in parentheses computed via bootstrap resampling with $20{,}000$ replications.  
-    P-values based on a normal approximation.  
-    Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$.      
+    \end{tabular}    
 \end{table}

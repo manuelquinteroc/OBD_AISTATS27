@@ -33,9 +33,9 @@ The condition and its proof under which such a sign flip occurs follows immediat
     If either $\Delta\mu^T \beta_H = 0$ or  $\Delta\mu^T \beta_K = 0$, then one explained term equals zero, and no sign flip is possible.
 \end{remark}
 
-A large region of the parameter space satisfies \cref{eq:sign_flip_condition_explained_neq}.
-We compute the volume of this region by integrating the region that satsfies \cref{eq:sign_flip_condition_explained_neq} against a Uniform(-M, M) measure on \( \beta_H \) and \( \beta_K \), where \( M \) is large.
-The computations, which appear in \cref{app:sign_flip_volume}, show that 50\% of the parameter space satisfies \cref{eq:sign_flip_condition_explained_neq}.
+% A large region of the parameter space satisfies \cref{eq:sign_flip_condition_explained_neq}.
+% We compute the volume of this region by integrating the region that satsfies \cref{eq:sign_flip_condition_explained_neq} against a Uniform(-M, M) measure on \( \beta_H \) and \( \beta_K \), where \( M \) is large.
+% The computations, which appear in \cref{app:sign_flip_volume}, show that 50\% of the parameter space satisfies \cref{eq:sign_flip_condition_explained_neq}.
 
 To see how this characterization applies in practice, we return to the ICU mortality and heart rate example presented in \cref{sec:real_example}. In that example, we observed a sign flip in the explained component of the OBD when using men or women as the reference group. Within HR quartile two, the covariate mean difference $\Delta\mu$ between men and women is fixed by the sample, but the coefficients governing how mortality loads on these covariate differences differ in sign across groups. In particular, the opposite directions of the heart rate coefficients for men and women shown in \cref{fig:hr_quartile2} suggest that a sign flip can occur. As a result, $\Delta\mu^T\beta_{\text{women}}$ and $\Delta\mu^T\beta_{\text{men}}$ have opposite signs, leading to a sign reversal in the explained component. A numerical breakdown of $\Delta\mu$ and the group-specific coefficients is reported in Appendix~\cref{tab:delta_mu_betas}.
 

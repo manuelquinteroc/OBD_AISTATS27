@@ -65,33 +65,7 @@ We now demonstrate that sign flipping in the unexplained component of the OBD is
     If $-\Delta\alpha \in \{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}$, then one unexplained term equals zero.
 \end{remark}
 
-In \cref{sec:sign_flip_proof}, we provide the proof of \cref{thm:ordering_sensitivity}. 
-
-To shed more light on \cref{thm:ordering_sensitivity}, we present the condition in \cref{eq:sign_flip_condition} as a ``decision tree'' of when a sign flip can occur: 
-
-\begin{algorithm}[H]
-    \caption{Unexplained component sign-flip}
-    \label{alg:decision_tree}
-\begin{algorithmic}  
-    \If{$\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$}
-        \If{$\sign(\mu_H^T \Delta\beta) = \sign(\mu_K^T \Delta\beta)$}
-            \If{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$}
-                \If{$|\mu_H^T \Delta\beta| < |\Delta\alpha| < |\mu_K^T \Delta\beta|$ \textbf{or} $|\mu_K^T \Delta\beta| < |\Delta\alpha| < |\mu_H^T \Delta\beta|$}
-                    \State A sign flip occurs.
-                \EndIf
-            \EndIf
-        \ElsIf{$\sign(\mu_H^T \Delta\beta) \neq \sign(\mu_K^T \Delta\beta)$}
-            \If{$\sign(\Delta\alpha) = \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_K^T \Delta\beta| > |\Delta\alpha|$}
-                \State A sign flip occurs.
-            \ElsIf{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_H^T \Delta\beta| > |\Delta\alpha|$}
-                \State A sign flip occurs.
-            \EndIf
-        \EndIf
-    \Else
-        \State There is no sign flip.
-    \EndIf
-\end{algorithmic}
-\end{algorithm}
+We provide the proof of \cref{thm:ordering_sensitivity} in \cref{sec:sign_flip_proof}, and represent the conditions in \cref{eq:sign_flip_condition} as a decision tree in \cref{alg:decision_tree}.
 
 To illustrate how we can make use of \cref{alg:decision_tree}, we return to the healthcare example in \cref{sec:example}.
 In this example, $\mu_H$ and $\mu_K$ denote mean BMIs, both of which are positive by definition and thus $\sign{(\mu_H \Delta\beta)} = \sign{(\mu_K \Delta\beta)} = \sign{(\Delta\beta)}$. Therefore, following \Cref{alg:decision_tree}, a sign flip will occur only if $\sign{(\Delta\alpha)} \neq \sign{(\mu_H \Delta\beta)} = \sign{(\Delta\beta)}$; equivalently, it must hold that one group has a larger $\beta_g$ (more sensitive to higher BMI) but lower $\alpha_g$ (lower SBP on average).
@@ -135,26 +109,32 @@ Even though \cref{thm:ordering_sensitivity} does not restrict the magnitude of t
 \cref{sec:real_example,sec:example} demonstrate that, in practical scenarios, sign flips in the OBD can occur.
 And \cref{thm:explained_ordering_sensitivity} and \cref{thm:ordering_sensitivity} fully describe the conditions under which sign flips occur.
 However, it is not obvious how likely sign flips are.
-One way to answer this question is to measure the fraction of parameters ($\mu_g, \beta_g, \alpha_g)$ for $g \in \{H,K\}$) that lead to sign flips. As the next two propositions demonstrate, the fraction leading to sign flips is fairly large.
+One way to answer this question is to measure the fraction of parameters ($\mu_g, \beta_g, \alpha_g)$ for $g \in \{H,K\}$ that lead to sign flips. As the next two propositions demonstrate, the fraction leading to sign flips is fairly large.
 %
-\begin{proposition}
-	Let $C_M \subset \R^{2d}$ be a cube with side length $M > 0$, and suppose $(\beta_K, \beta_H)$ jointly lie in this cube. Let $C_{flip} \subset C_M$ be the settings of $(\beta_H, \beta_K)$ that lead to a sign flip in the explained component.
+\begin{proposition} \label{prop:explained_fraction}
+	Let $C_M \subset \R^{2d}$ be a cube with side length $2M > 0$ centered at the origin, and suppose $(\beta_K, \beta_H)$ jointly lie in this cube. Let $C_{flip} \subset C_M$ be the settings of $(\beta_H, \beta_K)$ that lead to a sign flip in the explained component.
 	Then, after choosing units in the regression problems such that $\mu_K = 0 \in \R^d$ and $\mu_H = 1 \in \R^d$, we have that for for any $M > 0$:
 	\begin{equation}
 		\frac{\mathrm{Volume}(C_{flip})}{\mathrm{Volume}(C_M)} = \frac{1}{2}.
 	\end{equation}
 I.e., half of the parameter space leads to sign flips in the explained component.
+\begin{proof}
+    See \cref{proof:explained_fraction}.
+\end{proof}
 \end{proposition}
 %
 \begin{proposition} \label{prop:unexplained_fraction}
-	Let $C_M \subset \R^{2d+2}$ be a cube with side length $M > 0$, and suppose $(\beta_K, \beta_H, \alpha_K, \alpha_H)$ jointly lie in this cube.
+	Let $C_M \subset \R^{2d+2}$ be a cube with side length $2M > 0$ centered at the origin, and suppose $(\beta_K, \beta_H, \alpha_K, \alpha_H)$ jointly lie in this cube.
 	Let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent random variables.
-	Then after choosing units in the regression problems such that $\mu_K = 0$ and $\mu_H = 1 \in \R^d$ and centering $Y$ such that $\alpha_K = 0$, we have
+	Then after choosing units in the regression problems such that $\mu_K = 0$ and $\mu_H = 1 \in \R^d$, we have
  	that the fraction of $C_M$ for which a sign flip occurs in the unexplained component is given by:
 \begin{equation} \label{eq:unexplained_fraction}
 2 Pr\left(I_2 > 1 \cap J_{2d} < \frac{2dM - I_2}{2M}\right).
  \end{equation}
- And this probability approaches $1/2$ as $d \to \infty$.
+ And this quantity approaches $1/2$ as $d \to \infty$.
+ \begin{proof}
+    See \cref{proof:unexplained_fraction}.
+\end{proof}
 \end{proposition}
 The joint Irwin-Hall probability in \cref{eq:unexplained_fraction} is hard to evaluate analytically, so in \cref{fig:prob_unexplained} we evaluate it numerically for various values of $d$ and $M$.
 We see that for even modest values of $M$ and low dimension $d$, the fraction of parameter space leading to sign flips exceeds 40\%.
@@ -162,11 +142,11 @@ We see that for even modest values of $M$ and low dimension $d$, the fraction of
 \section{Are sign flips common?}
 \label{sec:no_sign_flips}
 \cref{sec:sign_flip_fraction} shows that, as a fraction of parameter space, a large number of parameters lead to sign flips.
+
 However, this seems to contradict empirical evidence.
 In particular, in \cref{appendix:icu_details,appendix:us_labor_force}, only a small number of problems lead to sign flips.
 And, while not all applications of the OBD in the literature report both choices of reference group $g$, many that do show no sign flip \textcolor{red}{Will: I believe we have citations for this? Having 3 or so would be good to back up this point.}
-This discrepancy must be explained by a bias in the parameter values we see in practice.
-In this section we attempt to explain this bias towards parameter values in practice that do not lead to sign flips.
+One explanation for this tension is that the theoretical analysis places a uniform distribution over the linear regression parameters, while true data-generating processes may be non-uniform.
 
 %While \cref{thm:explained_ordering_sensitivity,thm:ordering_sensitivity} characterizes when sign reversals can arise, it is also useful to understand when they do \emph{not} occur. 
 %For the explained component, although differences in coefficients can in principle offset differences in covariate means, the most immediate condition under which no sign reversal occurs is when the covariate mean difference loads in the same direction under both reference models.
@@ -190,7 +170,7 @@ We formalize this idea in the following assumption.
     \label{prop:no_sign_flip}
     Under \cref{ass:no_sign_flip}, the unexplained components 
     \( U^{(H)}\) and  \(U^{(K)}\) share the same sign.
-    \end{proposition}
+\end{proposition}
 
 Under \Cref{ass:no_sign_flip} both unexplained components share the same sign and the OBD cannot exhibit a sign reversal. 
 This assumption requires that the group with higher baseline outcomes ($\alpha_g$) also benefits more from the covariates ($\beta_g$) for \(g \in \{H,K\}\).

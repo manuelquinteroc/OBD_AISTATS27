@@ -84,131 +84,139 @@ Hence, the difference between the two decompositions is \( \EHOB - \EKOB = L\var
 
 Note that the sign flip is symmetric by construction, but the magnitude of the discrepancy grows linearly in \( L \), highlighting that the attribution gap between reference groups can be stretched arbitrarily far.
 
-\subsection{Proportion of Parameter Space that Produces Sign Flips}
-\label{app:sign_flip_volume}
+\subsection{Decision Tree Representation of \cref{eq:sign_flip_condition}}
 
-In \cref{sec:sign_flip_fraction}, we characterize the proportion of the parameter space that produces sign flips in the explained and unexplained components of the OBD. In this appendix, we provide a more detailed description on the statement and proof of \cref{prop:unexplained_fraction}.
+  \begin{algorithm}[H]
+    \caption{Unexplained component sign-flip}
+    \label{alg:decision_tree}
+    \begin{algorithmic}  
+        \If{$\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$}
+            \If{$\sign(\mu_H^T \Delta\beta) = \sign(\mu_K^T \Delta\beta)$}
+                \If{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$}
+                    \If{$|\mu_H^T \Delta\beta| < |\Delta\alpha| < |\mu_K^T \Delta\beta|$ \textbf{or} $|\mu_K^T \Delta\beta| < |\Delta\alpha| < |\mu_H^T \Delta\beta|$}
+                        \State A sign flip occurs.
+                    \EndIf
+                \EndIf
+            \ElsIf{$\sign(\mu_H^T \Delta\beta) \neq \sign(\mu_K^T \Delta\beta)$}
+                \If{$\sign(\Delta\alpha) = \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_K^T \Delta\beta| > |\Delta\alpha|$}
+                    \State A sign flip occurs.
+                \ElsIf{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_H^T \Delta\beta| > |\Delta\alpha|$}
+                    \State A sign flip occurs.
+                \EndIf
+            \EndIf
+        \Else
+            \State There is no sign flip.
+        \EndIf
+    \end{algorithmic}
+\end{algorithm}
 
-Similar to the unexplained component in \cref{prop:explained_fraction} we argue by placing a Uniform$(-M, M)$ measure on all intercepts and regression coefficients, and then computing the volume of the region in \cref{thm:ordering_sensitivity}.
-The resulting volume depends on the dimension of the covariates, \( d \), and the bounds on the Uniform measure, but quickly approaches an asymptotic value of 50\% for larger \( d \) or \( M \).
-\cref{fig:prob_unexplained} depicts this probability for various \( d \) at several choices of \( M \). 
-% detailed derivations are in \cref{app:sign_flip_volume}.
 
-An attentive reader may note that unexplained component sign flips are rare in practice in our empirical investigation presented in \cref{appendix:icu_details,appendix:us_labor_force}, despite accounting for a large proportion of the parameter space.
-Here, we offer a possible explanation for why such sign flips are rare.
-For sign flips to be unlikely, it should be the case that data-generating processes that produce large \( | 1^T \Delta \beta | \) also produce large \( \Delta \alpha \).
-This can happen when the analyst's dataset omits important explanatory covariates.
-For example, hospital records only record measurements that doctors have ordered (not the results of important tests a doctor may have skipped).
+\subsection{Relationship Between Unexplained Component Sign Flips and Omitted Variables}
+\label{sec:ovb}
+Since unexplained component sign flips require \( | 1^T \Delta \beta | > | \Delta \alpha | \), any data-generating processes that jointly produces large \( | 1^T \Delta \beta | \) and \( \Delta \alpha \) would make sign flips less likely than \cref{prop:unexplained_fraction} suggests.
+
+A candidate explanation is that the researcher's dataset omits important covariates, which are related to both \( X \) and \( Y \).
+For example, hospital records only contain measurements that doctors have ordered, not the results of important tests a doctor may have skipped.
 Similarly, census data used for studying wage gaps typically lack detailed information about skills and experience from a worker's resume and work history.
+Finally, in practice, nonlinear transformations of the covariates are also effectively omitted from analysis, like when a researcher does not include polynomial terms in a regression specification.
 Let \( Z \in \mathbb{R}^{d'} \) be a vector of such \textit{omitted covariates}.
-We will establish that both \( \Delta \beta \) and \( \Delta \alpha \) depend on these omitted covariates.
+We will establish that both \( \Delta \beta \) and \( \Delta \alpha \) can depend on the relationship between \( Z, X, \) and \( Y \).
+
+Our argument requires us to specify the conditional expectations \( \E_g[Y \mid X, Z] \) and \( \E_g[Z \mid X] \).
+To establish a simple example, we will assume that both are linear and satisfy
+\begin{align}
+  \label{eq:y_on_x_z}
+  \E_g[Y \mid X, Z] &= \omega_g + X^\top \theta_g + Z^\top \gamma_g, \\
+  \label{eq:z_on_x}
+  \E_g[Z \mid X] &= \zeta_g + \Psi_g X.
+\end{align}
+Relaxing these assumptions may lead to other non-uniform relationships between \( \Delta \beta \) and \( \Delta \alpha \).
 
 Recall that the OBD is based on regressing the outcome against the observed covariates for each group \(g \in \{H, K\}\) via
-\[ 
-  \E_g[Y] = \alpha_g + \E_g[X]^\top \beta_g. 
-\]
-However, we can also write for \(g \in \{H, K\}\), 
-\begin{align*}
-   \E_g[Y] &= \omega_g + \E_g[X]^\top \theta_g + \E_g[Z]^\top \gamma_g, \\    
-   \E_g[Z] &= \zeta_g + \Psi_g \E_g[X].
-\end{align*}
-Where in the first regression, \( \theta_g \) reflects the predictive power of \( X \), \( \gamma_g \) reflects the predictive power of \( Z \), and \( \Psi_g \) projects \( X \) onto \( Z \).
-\textcolor{red}{Advik: is ``project'' too technically loaded as a term here?}
-In \cref{app:omitted_variables} we show that
-\begin{align*}
-  &\Delta \alpha = \Delta \omega + \Delta \zeta^\top \Delta \gamma,
-  &\Delta \beta  = \Delta \theta + \Delta \Psi^\top \Delta \gamma,
-\end{align*}
-where \( \Delta \) takes the \( H - K \) difference in the corresponding parameter; for example \( \Delta \omega := \omega_H - \omega_K \).
-
-Let \(\mathbf{1}\) denote the vector of ones. Note that there are several ways for \( \mathbf{1}^\top \Delta \beta \) to be large.
-First, \(\mathbf{1}^\top \Delta \theta \) can be large, meaning X has \textit{bona fide} predictive power separate from Z.
-Second, \(\mathbf{1}^\top \Delta \Psi^\top \Delta \gamma \) can be large, meaning the omitted Z has predictive power which X is ``borrowing'' via \( \Psi \).
-In the latter case, \( \Delta \alpha \) will tend to be large as well, making it more difficult for the sign-flip condition to obtain.
-As such, sign flips may be unlikely in domains where observed covariates have limited predictive power compared to omitted covariates; roughly, in settings where regressions have low \( R^2 \).
-
-\subsection{Relationship Between Regression Parameters and Omitted Variables}
-\label{app:omitted_variables}
-
-We start by noting that the OBD is based on a linear model for the expected value of the outcome in terms of the covariates:
 \begin{align}
     \label{eq:y_on_x}    
-    \E_g[Y] = \alpha_g + \E_g[X]^\top \beta_g.
+    \E_g[Y \mid X] = \alpha_g + X^\top \beta_g.
 \end{align}
-Let \( Z \in \mathbb{R}^{d'} \) be a vector of \textit{omitted covariates} that are not recorded in an analyst's dataset.
+We will start by showing that \( \alpha_g \) and \( \beta_g \) depend on \( \gamma_g, \zeta_g, \), and \( \Psi_g \). 
+To do so, apply the law of iterated expectations to \cref{eq:y_on_x}, plug in \cref{eq:y_on_x_z,eq:z_on_x}, and then rearrange terms:
+\begin{align}    
+    \E_g[Y \mid X] 
+    &= \E_g[ \E_g[Y \mid X, Z] \mid X ] \nonumber \\
+    &= \E_g[ \omega_g + X^\top \theta_g + Z^\top \gamma_g \mid X ] \nonumber  \\
+    &= \omega_g + X^\top \theta_g + \E_g[Z \mid X]^\top \gamma_g \nonumber \\
+    &= \omega_g + X^\top \theta_g + (\zeta_g + \Psi_g X)^\top \gamma_g \nonumber \\ 
+    \label{eq:ovb}
+    &= \underbrace{\omega_g + \zeta_g^\top \gamma_g}_{=\alpha_g} + \E_g[X]^\top \underbrace{(\theta_g + \Psi_g^\top \gamma_g)}_{=\beta_g}.
+\end{align}
+\cref{eq:ovb} is the well-known \textit{omitted variables bias} formula.
+It describes how the slope and intercept of a regression equation depend on variables that are not included in the equation.
+We can use this formula to express the difference in slopes and intercepts across the two populations as 
+\begin{align}  
+  \label{eq:delta_alpha_gamma}
+  \Delta \alpha &= \Delta \omega + \Delta \zeta^\top \Delta \gamma,  \\
+  \label{eq:delta_beta_gamma}
+  \Delta \beta  &= \Delta \theta + \Delta \Psi^\top \Delta \gamma.
+\end{align}
+These equations show that \( \Delta \alpha \) and \( \Delta \beta \) depend on the role of omitted covariates in the data-generating process.
+Crucially, they provide a mechanism to produce \( \Delta \alpha \) and \( 1^\top \Delta \beta \) that are jointly large.
+If both the Z-X and Z-Y relationships change in complementary ways, then both \( \Delta \zeta^\top \Delta \gamma \) and \( 1^\top \Delta \Psi^\top \Delta \gamma \) will be large.
 
-We can rewrite the expected value of the outcome using both \( X \) and \( Z \) as
-\begin{align}
-    \label{eq:y_on_x_z}
-    \E_g[Y] = \omega_g + \E_g[X]^\top \theta_g + \E_g[Z]^\top \gamma_g.
-\end{align}
-We can also express the relationship between the omitted and observed covariates as 
-\begin{align}
-   \label{eq:z_on_x}
-   \E_g[Z] &= \zeta_g + \Psi_g \E_g[X],
-\end{align}
-where \( \Psi_g \in \mathbb{R}^{d' \times d} \).
-Plugging \cref{eq:z_on_x} into \cref{eq:y_on_x_z} and rearranging terms gives
-\[ \E_g[Y] = \omega_g + \zeta_g^\top \gamma_g + \E_g[X]^\top (\theta_g + \Psi_g^\top \gamma_g).\]
-By comparing this to \cref{eq:y_on_x}, we obtain
-\begin{align*}    
-   &\alpha_g = \omega_g + \zeta_g^\top \gamma_g,
-   &\beta_g  = \theta_g + \Psi_g^\top \gamma_g.
-\end{align*}
-Similarly,
-\begin{align*}
-  &\Delta \alpha = \Delta \omega + \Delta \zeta^\top \Delta \gamma,
-  &\Delta \beta  = \Delta \theta + \Delta \Psi^\top \Delta \gamma,
-\end{align*}
-where \( \Delta \) takes the \( H - K \) difference in the corresponding parameter. 
-For example \( \Delta \omega = \omega_H - \omega_K \).
 
 \subsection{Volume of the Sign-Flip Parameter Region}
+We first show how to choose units for the covariates conveniently, so that \( \Delta \mu = 1 \).
+This will simplify volume calculations for the regions of parameter space that flip the explained and unexplained components of the OBD.
+\begin{lemma}
+  \label{lemma:units}
+  If \( \mu_H \neq \mu_K \) elementwise, we can choose units for \( X \) such that \( \E_K[X] = 0 \) and \( \E_H[X] = 1 \).
+  \begin{proof}  
+  Consider the transformation \( \tilde{X} = (X - \mu_K) / (\mu_H - \mu_K) \), where the division is elementwise.
+  This is well-defined as long as \( \mu_H \neq \mu_K \) elementwise.
+  Since \( \tilde{X} \) is a linear transformation of \( X \), it corresponds to a change in units.
+  Under these new units, \( \E_K[\tilde{X}] = 0 \) and \( \E_H[\tilde{X}] = 1 \).  
+  \end{proof}
+\end{lemma}
 
-We now compute the volume of the parameter space that can produce sign flips in the explained and unexplained components of the OBD.
-To simplify calculations, we assume the variables are scaled so that \( \E_K[X] = 0 \) and \( \E_H[X] = 1 \).
-We can achieve this by transforming the covariates via \( \tilde{X} = (X - \mu_K) / (\mu_H - \mu_K) \), which is permissible as long as \( \mu_H \neq \mu_K \) elementwise. 
-We view this without loss of generality since \( \mu_H \neq \mu_K \) elementwise holds almost surely when the covariates are drawn from an atomless distributions (i.e., no point masses).
-With this rescaling \( \Delta \mu = \mathbf{1} \).
+\subsubsection{Proof of \cref{prop:explained_fraction}}
+\label{proof:explained_fraction}
+Apply \cref{lemma:units} so that \( \E_K[X] = 0 \), \( \E_H[X] = 1 \), and therefore \( \Delta \mu = 1 \).
+\cref{eq:sign_flip_condition_explained_neq} now simplifies to 
+\[ \sign\!\left(1^\top \beta_{H}\right) \neq \sign\!\left(1^\top \beta_{K}\right). \]
+A Uniform$(-M, M)$ distribution on \( \beta_H \) and \( \beta_K \) corresponds to distributions on \( 1^\top \beta_{H} \) and \( 1^\top \beta_{K} \) that are identical and symmetric around zero.
+As such, the signs of \( 1^\top \beta_{H} \) and \( 1^\top \beta_{H} \) will disagree in 50\% of the parameter space.
 
-We start with the explained component.
-Recall that the covariates, \( X \), are $d$-dimensional.
-After rescaling, \cref{eq:sign_flip_condition_explained_neq} simplifies to 
-\[ \sign\!\left(\mathbf{1}^\top \beta_{H}\right) \neq \sign\!\left(\mathbf{1}^\top \beta_{K}\right). \]
-A Uniform$(-M, M)$ distribution on \( \beta_H \) and \( \beta_K \) translates to distributions on \( \mathbf{1}^\top \beta_{H} \) and \( \mathbf{1}^\top \beta_{K} \) that are identical and symmetric around zero.
-As such, the signs of \( \mathbf{1}^\top \beta_{H} \) and \( \mathbf{1}^\top \beta_{H} \) will disagree in 50\% of the parameter space.
-
-Now we turn to the unexplained component.
+\subsubsection{Proof of \cref{prop:unexplained_fraction}}
+\label{proof:unexplained_fraction}
+Apply \cref{lemma:units} so that \( \E_K[X] = 0 \), \( \E_H[X] = 1 \), and therefore \( \Delta \mu = 1 \).
 For the rescaled covariates, the conditions in \cref{alg:decision_tree} simplify, eliminating several of its branches.
-In particular, the unexplained component flips sign if and only if \( \mathbf{1}^T \Delta \beta \neq 0 \), \( \sign (\Delta \alpha) \neq \sign (\mathbf{1}^\top \Delta \beta) \), and \( | \mathbf{1}^T \Delta \beta | > |\Delta \alpha| \).
-The first condition holds almost surely under the assumed Uniform$(-M,M)$ measure on the coefficients, since \( \mathbf{1}^\top \Delta \beta \) is a non-degenerate linear combination of continuously distributed random variables, so we can focus on the latter two.
-To do so, we will determine the distributions of  \( \Delta \alpha \) and \( \mathbf{1}^\top \Delta \beta \).
+In particular, the unexplained component flips sign if and only if \( 1^T \Delta \beta \neq 0 \), \( \sign (\Delta \alpha) \neq \sign (1^\top \Delta \beta) \), and \( | 1^T \Delta \beta | > |\Delta \alpha| \).
+The first condition holds almost surely under the assumed Uniform$(-M,M)$ measure on the coefficients, since \( 1^\top \Delta \beta \) is a non-degenerate linear combination of continuously distributed random variables, so we can focus on the latter two.
+To do so, we will determine the distributions of  \( \Delta \alpha \) and \( 1^\top \Delta \beta \).
 
 The sum of \( n \) Uniform$(0,1)$ random variables is sometimes called the Irwin-Hall(\(n\)) distribution.%
 \footnote{For \(n = 2\) this is a familiar triangular distribution.}
-When we place a Uniform$(-M, M)$ measure on the \( \alpha \)'s and \( \beta \)'s, there is a straightforward relationship between \( \Delta \alpha \), \( \mathbf{1}^\top \Delta \beta \), and appropriately defined Irwin-Hall random variables.
+When we place a Uniform$(-M, M)$ measure on the \( \alpha \)'s and \( \beta \)'s, there is a straightforward relationship between \( \Delta \alpha \), \( 1^\top \Delta \beta \), and appropriately defined Irwin-Hall random variables.
 The difference \( \Delta \alpha \) is the sum of two Uniform$(-M, M)$ variables, which is equivalent to an Irwin-Hall($2$) distribution, rescaled to the interval $[-2M, 2M]$.
-Similarly, \( \mathbf{1}^T \Delta \beta \) is the sum of \( 2 d \) Uniform$(-M, M)$ variables, and its distribution is an Irwin-Hall($2 d$) distribution, rescaled to the domain \( -2dM, 2dM \).
+Similarly, \( 1^T \Delta \beta \) is the sum of \( 2 d \) Uniform$(-M, M)$ variables, and its distribution is an Irwin-Hall($2 d$) distribution, rescaled to the domain \( [-2dM, 2dM] \).
 
 We can use this correspondence to translate the event 
 \[
-\{ |\mathbf{1}^\top \Delta \beta| > |\Delta \alpha| \}
+\{ |1^\top \Delta \beta| > |\Delta \alpha| \}
 \cap
-\{ \sign(\Delta \alpha) \neq \sign(\mathbf{1}^\top \Delta \beta) \}.
+\{ \sign(\Delta \alpha) \neq \sign(1^\top \Delta \beta) \}.
 \]
-into an equivalent event in terms of two independent Irwin-Hall random variables.
-In particular, let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent random variables.
+into an equivalent event in terms independent Irwin-Hall random variables.
+Let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent.
 The above event is equivalent to 
 \[
-\bigl(\{ I_2 > 1 \} \cap \{ -2d \le J_{2d} \le \tfrac{2dM - I_2}{2M} \}\bigr)
+\bigl(\{ I_2 > 1 \} \cap \{ J_{2d} \le \tfrac{2dM - I_2}{2M} \}\bigr)
 \;\cup\;
-\bigl(\{ I_2 < 1 \} \cap \{ \tfrac{I_2 + 2dM}{2M} \le J_{2d} \le 2d \}\bigr).
+\bigl(\{ I_2 < 1 \} \cap \{ \tfrac{I_2 + 2dM}{2M} \le J_{2d} \}\bigr).
 \]
 That is, unexplained component sign flips have the same volume as the region where \( I_2 \) falls above its median and \( J_{2d} \) falls far in its left tail, or vice versa.
 Because both \( I_2 \) and \( J_{2d} \) are symmetric, this volume is equal to twice the probability that \( I_2 \) is above its median and \( J_{2d} \) is sufficiently small.
 That is:
 \[
-\Pr\!\left( \{ |\mathbf{1}^\top \Delta \beta| > |\Delta \alpha| \} \right)
+\Pr\!\left( \{ |1^\top \Delta \beta| > |\Delta \alpha| \} \right)
 =
 2\,\Pr\!\left( \{ I_2 > 1 \} \cap \left\{ J_{2d} < \tfrac{2dM - I_2}{2M} \right\} \right).
 \]

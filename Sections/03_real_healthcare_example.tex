@@ -18,38 +18,75 @@ This result suggests that differences in admission covariates place men at highe
 
 Second, consider the case with men as the reference. The explained component is negative ($-0.007$), though the difference from 0 is not statistically significant. In this case, the observed covariate differences seem to predict lower (or equal) mortality for men relative to women rather than higher. In other words, the same covariates would now be interpreted as offering men a slight mortality advantage. This interpretation is substantively different than the interpretation that results from using women as the reference.
 
-\begin{table}[h]
-\caption{Oaxaca--Blinder decompositions for HR quartile two. We compute standard errors (in parentheses) via bootstrap resampling with $1{,}000$ replications. 
+%\begin{table}[h]
+%\caption{Oaxaca--Blinder decompositions for HR quartile two. We compute standard errors (in parentheses) via bootstrap resampling with $1{,}000$ replications. 
+%    We calculate p-values using a normal approximation (Wald test), where the test statistic is the coefficient divided by its bootstrap standard error. 
+%    Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$.}
+%\label{tab:hr_q2_decomposition}
+%    \begin{center}
+%    \begin{small}
+%    \begin{sc}
+%    \begin{tabular}{lccc}
+%    \toprule
+%    \textbf{Reference} & \textbf{Explained} & \textbf{Unexplained} & \textbf{Total gap} \\
+%    \midrule
+%    %\hline \\[-6pt]
+%    Women 
+%    & \makecell{$0.021^{***}$ \\ $(0.007)$}
+%    & \makecell{$0.014$ \\ $(0.025)$}
+%    & \makecell{$0.035$ \\ $(0.023)$}
+%    \\
+%    Men 
+%    & \makecell{$-0.007$ \\ $(0.011)$}
+%    & \makecell{$0.042^{*}$ \\ $(0.025)$}
+%    & \makecell{$0.035$ \\ $(0.023)$}
+%    \bottomrule
+%    \end{tabular}
+%    \end{sc}
+%    \end{small}
+%    \end{center}
+%\end{table}
+
+\begin{table}[t]
+  \caption{Oaxaca--Blinder decompositions for HR quartile two. We compute standard errors (in parentheses) via bootstrap resampling with $1{,}000$ replications. 
     We calculate p-values using a normal approximation (Wald test), where the test statistic is the coefficient divided by its bootstrap standard error. 
     Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$.}
-\label{tab:hr_q2_decomposition}
-    \begin{center}
-    \small
-    \begin{tabular}{lccc}
-    \textbf{Reference} & \textbf{Explained} & \textbf{Unexplained} & \textbf{Total gap} \\
-    \hline \\[-6pt]
-    Women 
+  \label{sample-table}
+  \begin{center}
+    \begin{small}
+      \begin{sc}
+        \begin{tabular}{lcccr}
+          \toprule
+          Reference & Explained & Unexplained & Total gap  \\
+          \midrule
+              Women 
     & \makecell{$0.021^{***}$ \\ $(0.007)$}
     & \makecell{$0.014$ \\ $(0.025)$}
     & \makecell{$0.035$ \\ $(0.023)$}
-    \\[4pt]
+    \\
     Men 
     & \makecell{$-0.007$ \\ $(0.011)$}
     & \makecell{$0.042^{*}$ \\ $(0.025)$}
     & \makecell{$0.035$ \\ $(0.023)$}
     \\
-    \hline
-    \end{tabular}
-    \end{center}
+          \bottomrule
+        \end{tabular}
+      \end{sc}
+    \end{small}
+  \end{center}
+  \vskip -0.1in
 \end{table}
+
 
 \textbf{How does the sign flip arise?}
 Recall that the explained component is given by $\EHOB := \Delta\mu^T \beta_H$ when $H$ is the reference group, and $\EKOB := \Delta\mu^T \beta_K$ when $K$ is the reference group.
 As $\Delta\mu$ is fixed between $\EHOB$ and $\EKOB$, it must be that some components of $\beta_H$ and $\beta_K$ are changing sign to give $\EHOB$ and $\EKOB$ opposite signs.
 In \cref{fig:hr_quartile2}, we show the fitted linear models of in-hospital mortality on admission heart rate, holding all other covariates fixed at their group means.
 Indeed, we see that the signs of the slopes differ.
-In Appendix \cref{tab:delta_mu_betas}, we report values for all elements of each vector $\beta_{g}$ in the full analysis. We see that there are multiple covariates $c$ for which \( \Delta \mu \) is nonzero and $\beta_{\textrm{men},c} < 0 < \beta_{\textrm{women},c}$. %, and additionally, $\Delta\mu$ is positive for all of these covariates.
-Put together, these changes are enough to cause a sign flip in the explained component of the OBD.
+In Appendix \cref{tab:delta_mu_betas}, we report values for all elements of each vector $\beta_{g}$ in the full analysis. 
+We see that there are multiple covariates $c$ for which $\beta_{\textrm{men},c} < 0 < \beta_{\textrm{women},c}$.
+And as $\Delta\mu_c$ has the same sign for all of these covariates, each one pushes towards a sign flip. %, and additionally, $\Delta\mu$ is positive for all of these covariates.
+In aggregate, these changes add enough to cause a sign flip in the explained component of the OBD.
 
 \begin{figure}[h]
     \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/hr_quartile2_mortality_lines.pdf}}

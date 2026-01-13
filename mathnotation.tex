@@ -68,7 +68,6 @@
 
 
 % --- Theorems ---
-
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section] % [section] resets numbering per section
 
@@ -82,3 +81,26 @@
 
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
+% --- cleveref names for theorem-like environments (must come after \newtheorem) ---
+\crefname{theorem}{Theorem}{Theorems}
+\Crefname{theorem}{Theorem}{Theorems}
+
+\crefname{definition}{Definition}{Definitions}
+\Crefname{definition}{Definition}{Definitions}
+\crefalias{definition}{definition}
+
+\crefname{proposition}{Proposition}{Propositions}
+\Crefname{proposition}{Proposition}{Propositions}
+\crefalias{proposition}{proposition}
+
+\crefname{lemma}{Lemma}{Lemmas}
+\Crefname{lemma}{Lemma}{Lemmas}
+\crefalias{lemma}{lemma}
+
+\crefname{corollary}{Corollary}{Corollaries}
+\Crefname{corollary}{Corollary}{Corollaries}
+\crefalias{corollary}{corollary}
+
+\crefname{remark}{Remark}{Remarks}
+\Crefname{remark}{Remark}{Remarks}
+\crefalias{remark}{remark}

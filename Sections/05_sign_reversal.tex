@@ -18,7 +18,7 @@ We begin with the explained component. Recall from \cref{eq:OB_H_decomp,eq:OB_K_
 
 The condition and its proof under which such a sign flip occurs follows immediately from this definition.
 
-\begin{restatable}[OBD explained sign flips]{theorem}{OBSignFlipsExplained}
+\begin{remark}
     \label{thm:explained_ordering_sensitivity}
     The OBD \emph{sign flips the explained component} if and only if $\Delta\mu^T \beta_H \neq \Delta\mu^T \beta_K$, and
     \begin{equation}
@@ -27,7 +27,7 @@ The condition and its proof under which such a sign flip occurs follows immediat
         < 0 <
         \max\{\Delta\mu^T \beta_H,\ \Delta\mu^T \beta_K\}.
     \end{equation}
-\end{restatable}
+\end{remark}
 
 \begin{remark}
     If either $\Delta\mu^T \beta_H = 0$ or  $\Delta\mu^T \beta_K = 0$, then one explained term equals zero, and no sign flip is possible.
@@ -60,15 +60,20 @@ We now demonstrate that sign flipping in the unexplained component of the OBD is
     \label{eq:sign_flip_condition}
     \min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\} < -\Delta\alpha < \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
     \end{equation}
+    \begin{proof}
+        See \cref{sec:sign_flip_proof}.
+    \end{proof}
 \end{restatable}    
 
 \begin{remark}
     If $-\Delta\alpha \in \{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}$, then one unexplained term equals zero.
 \end{remark}
 
-We provide the proof of \cref{thm:ordering_sensitivity} in \cref{sec:sign_flip_proof}, and represent the conditions in \cref{eq:sign_flip_condition} as a decision tree in \cref{alg:decision_tree}.
+\cref{thm:ordering_sensitivity} provides a useful insight about the kinds of domains where sign flips are likely, by relating the magnitudes of \( \Delta \beta \) and \( \Delta \alpha \).
+Holding fixed the covariate means, \( \mu_H \) and \( \mu_K \), scaling up the change in the regression coefficients would induce sign flips for more values of the change in intercepts.
+That is, larger magnitudes of \( \Delta \beta \) create ``more room'' for sign flips in the unexplained component.
 
-To illustrate how we can make use of \cref{alg:decision_tree}, we return to the healthcare example in \cref{sec:example}.
+To further illustrate how we can use the theorem, we represent the condition in \cref{eq:sign_flip_condition} as a decision tree in \cref{alg:decision_tree} and use it to scrutinize the healthcare example in \cref{sec:example}.
 In this example, $\mu_H$ and $\mu_K$ denote mean BMIs, both of which are positive by definition and thus $\sign{(\mu_H \Delta\beta)} = \sign{(\mu_K \Delta\beta)} = \sign{(\Delta\beta)}$. Therefore, following \Cref{alg:decision_tree}, a sign flip will occur only if $\sign{(\Delta\alpha)} \neq \sign{(\mu_H \Delta\beta)} = \sign{(\Delta\beta)}$; equivalently, it must hold that one group has a larger $\beta_g$ (more sensitive to higher BMI) but lower $\alpha_g$ (lower SBP on average).
 This might occur if one group has better access to treatment but worse genetic factors, as in \cref{sec:example}.
 Furthermore, a sign-flip will occur if either $\abs{\mu_H \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K \Delta\beta}$ or $\abs{\mu_K \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_H \Delta\beta}$. This condition implies a range of values over which sign flips will occur; that is, there will be at least one choice of reference group under which improved healthcare appears to help in lowering mean SBP and another ordering under which improved healthcare appears to \emph{hurt} mean SBP.
@@ -130,7 +135,7 @@ I.e., half of the parameter space leads to sign flips in the explained component
 	Then after choosing units in the regression problems such that $\mu_K = 0$ and $\mu_H = 1 \in \R^d$, we have
  	that the fraction of $C_M$ for which a sign flip occurs in the unexplained component is given by:
 \begin{equation} \label{eq:unexplained_fraction}
-2 Pr\left(I_2 > 1 \cap J_{2d} < \frac{2dM - I_2}{2M}\right).
+2 Pr\left(\{ I_2 > 1 \} \{ \cap J_{2d} < \frac{2dM - I_2}{2M} \} \right).
  \end{equation}
  And this quantity approaches $1/2$ as $d \to \infty$.
  \begin{proof}

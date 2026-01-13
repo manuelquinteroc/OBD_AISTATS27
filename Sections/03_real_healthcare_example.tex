@@ -5,7 +5,7 @@ The index number problem reflects that the two reference choices for the OBD cou
 
 \textbf{Data.} To construct our example, we examine data from the PhysioNet cohort of intensive care unit (ICU) patients collected for a study of in-hospital mortality \citep{goldberger2000physiobank}. The dataset contains routine measurements taken at admission, including heart rate (HR), mean arterial pressure, temperature, and urine output. These values are recorded for every patient at the time of entry into the unit and provide a description of their initial physiological state.
 
-Medical practitioners often look at moderate elevations in heart rate as a first indication of stress, infection, or early hemodynamic change (early changes in blood flow and circulation). In the present example, we restrict our analysis to patients whose admission heart rate lies between the $50$ and $75$ percentiles, which we refer to as HR quartile two. These patients reflects a familiar clinical presentation in which the heart rate is elevated but not extreme. Within this group, the mortality rate for men exceeds the mortality rate for women by approximately $3.5$ percentage points (see \cref{tab:hr_q2_decomposition}).
+Medical practitioners often look at moderate elevations in heart rate as a first indication of stress, infection, or early hemodynamic change (early changes in blood flow and circulation). In the present example, we restrict our analysis to patients whose admission heart rate lies between the $50$th and $75$th percentiles, which we refer to as HR quartile two. These patients reflect a familiar clinical presentation in which the heart rate is elevated but not extreme. Within this group, the mortality rate for men exceeds the mortality rate for women by approximately $3.5$ percentage points; see \cref{tab:hr_q2_decomposition}.
 
 \textbf{Analysis.} We would like to understand to what extent the observed mortality difference between men and women in HR quartile two might be attributable to observed characteristics upon admission (covariates) vs.\ medical care (outcome given covariates). 
 To that end, let $Y$ be a binary indicator for in-hospital mortality, and let $X$ be the vector of admission covariates comprising heart rate, mean arterial pressure, temperature, urine output, age, and ICU type. 
@@ -19,7 +19,9 @@ This result suggests that differences in admission covariates place men at highe
 Second, consider the case with men as the reference. The explained component is negative ($-0.007$), though the difference from 0 is not statistically significant. In this case, the observed covariate differences seem to predict lower (or equal) mortality for men relative to women rather than higher. In other words, the same covariates would now be interpreted as offering men a slight mortality advantage. This interpretation is substantively different than the interpretation that results from using women as the reference.
 
 \begin{table}[h]
-\caption{Oaxaca--Blinder decompositions for HR quartile two.}
+\caption{Oaxaca--Blinder decompositions for HR quartile two. We compute standard errors (in parentheses) via bootstrap resampling with $1{,}000$ replications. 
+    We calculate p-values using a normal approximation (Wald test), where the test statistic is the coefficient divided by its bootstrap standard error. 
+    Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$.}
 \label{tab:hr_q2_decomposition}
     \begin{center}
     \small
@@ -39,27 +41,19 @@ Second, consider the case with men as the reference. The explained component is 
     \hline
     \end{tabular}
     \end{center}
-
-    \tiny{
-    \textit{Note:} Standard errors in parentheses computed via bootstrap resampling with $1{,}000$ replications. 
-    P-values are calculated using a normal approximation (Wald test), where the test statistic is the coefficient divided by its bootstrap standard error. 
-    Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$. 
-    The decomposition separates the gender mortality gap (men minus women) into explained and unexplained components using the Oaxaca Blinder decomposition. 
-    Women uses the mortality model for women as the reference structure; Men uses the mortality model for men.
-    }
 \end{table}
 
 \textbf{How does the sign flip arise?}
 Recall that the explained component is given by $\EHOB := \Delta\mu^T \beta_H$ when $H$ is the reference group, and $\EKOB := \Delta\mu^T \beta_K$ when $K$ is the reference group.
 As $\Delta\mu$ is fixed between $\EHOB$ and $\EKOB$, it must be that some components of $\beta_H$ and $\beta_K$ are changing sign to give $\EHOB$ and $\EKOB$ opposite signs.
-In \cref{fig:hr_quartile2}, we show the fitted linear models of in-hospital mortality on admission heart rate, holding all other covariates fixed at their subgroup means. 
+In \cref{fig:hr_quartile2}, we show the fitted linear models of in-hospital mortality on admission heart rate, holding all other covariates fixed at their group means.
 Indeed, we see that the signs of the slopes differ.
-In Appendix \cref{tab:delta_mu_betas}, we report values for all $\beta$'s and see that there are multiple covariates for which $\beta_{men} < 0 < \beta_{women}$, and additionally, $\Delta\mu$ is positive for all of these covariates.
-Put together, these changes are enough to cause a sign flip in the OBD.
+In Appendix \cref{tab:delta_mu_betas}, we report values for all elements of each vector $\beta_{g}$ in the full analysis. We see that there are multiple covariates $c$ for which $\beta_{\textrm{men},c} < 0 < \beta_{\textrm{women},c}$. %, and additionally, $\Delta\mu$ is positive for all of these covariates.
+Put together, these changes are enough to cause a sign flip in the explained component of the OBD.
 
 \begin{figure}[h]
     \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/hr_quartile2_mortality_lines.pdf}}
-    \caption{Linear fits of mortality on admission heart rate.}
+    \caption{Linear fit of mortality on admission heart rate for each group when holding all other covariates fixed at their group means.}
     \label{fig:hr_quartile2}
 \end{figure}
 

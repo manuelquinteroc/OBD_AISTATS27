@@ -1,9 +1,10 @@
 \subsection{Difference in means problem: A counterfactual exercise} 
 \label{sec:counterfactual_example}
 
-As a first step toward describing the OBD, we illustrate the index-number problem by framing it as a counterfactual exercise as in \citet{fortinLemieuxFirpo2011}. 
+As a first step toward describing the OBD, we illustrate the index-number problem by framing it as a counterfactual exercise as in \citet{fortinLemieuxFirpo2011}.
+Unlike \citet{fortinLemieuxFirpo2011}, we observe that this counterfactual exercise need not invoke a linear model, which we leave off until \ref{sec:ob} below.
 
-We consider an observed outcome $Y \in \mathbb{R}$ and covariates $X$ in some space $\mathcal{X}$. We consider two groups, $H$ and $K$. We let $\mathbb{P}_g$ denote the distribution of $(X,Y)$ for members of group $g$. \textcolor{orange}{This is the only time we use blackboard P to denote distribution in the main text and appendices. Should we remove?} We suppose we observe a gap in the mean outcomes, $\E_H[Y]$ and $\E_K[Y]$, and would like to understand to what extent the gap is due to differences in covariates between the two groups. 
+We consider an observed outcome $Y \in \mathbb{R}$ and covariates $X$ in some space $\mathcal{X}$. We consider two groups, $H$ and $K$. We assume that the tuple $(X,Y)$ is independently and identically distributed across members of group $g$, with corresponding expectation $\E_g$. We suppose we observe a gap in the mean outcomes, $\E_H[Y]$ and $\E_K[Y]$, and would like to understand to what extent the gap is due to differences in covariates between the two groups. 
 For the moment, we assume we have access to population-level quantities, including all expectations of interest.
 
 To analyze this gap, we might construct a counterfactual world driven only by differences in covariates.
@@ -49,7 +50,7 @@ Traditionally the term corresponding to changing the covariate distribution is c
 covariates \textcolor{red}{cite}. The remaining term, corresponding to changing the conditional $Y|X$ distribution,
 is called the ``unexplained component'' since it is not explained by the observed covariates. We use the 
 notation $E$ and $U$ to correspond to these components, respectively, with superscript denoting 
-the reference group choice.\textcolor{red}{check: is our use of the word reference here consistent with any established usage? in particular, does it get used in the symmetric way?}
+the reference group choice.\textcolor{red}{cite for this particular choice of reference in the equations above, as discussed in Monday's meeting}
 
 We might interpret $E$ and $U$ as the respective contributions of the covariates and outcome--covariate relationship to the 
 difference in outcome means between groups $H$ and $K$. The \textbf{index number problem}, then, represents the observation
@@ -61,5 +62,5 @@ It is not clear to us in the SBP--BMI example above that one direction is more n
 directions represent clearly distinguishable policy questions.
 There may be resolutions in particular areas of study.
 Many papers on the gender wage gap seem to favor taking men as the reference \textcolor{red}{cite}; this tendency might suggest a consensus.
-However, we also observe the existence of published work that takes women as the reference \textcolor{red}{cite}.
+However, we also observe the existence of published work that takes women as the reference \citep{paradaContzen2025}.
 

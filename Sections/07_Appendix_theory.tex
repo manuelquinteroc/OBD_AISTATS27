@@ -3,24 +3,71 @@
 
 In this section, we present the proof of \cref{thm:ordering_sensitivity} and an example showing that the difference between the two decompositions can be made arbitrarily large even when the mean gap is fixed.
 
-
 \subsection{Proof of \cref{thm:ordering_sensitivity}}
 \label{sec:sign_flip_proof}
 \begin{proof}
-For a sign flip to occur, it must be that the unexplained components have different signs. That is:
-\begin{equation}
-	\sign( \mu_H^T \Delta\beta + \Delta\alpha) \neq \sign( \mu_K^T \Delta\beta + \Delta\alpha)\end{equation}
-First, consider the case where $\sign \mu_K^T \Delta\beta = \sign \mu_H^T \Delta\beta$.
-In this case, the addition of $\Delta\alpha$ must be small enough to flip one of the signs of the $\mu_g^T \Delta\beta$ but so large that it flips the other.
-As we have assumed $\mu_K^T \Delta\beta \neq \mu_H^T \Delta\beta$, one of the $\mu_g^T \Delta\beta$ will be lesser in magnitude; without loss of generality, suppose this is $g = H$.
-That is, $\abs{\mu_H^T \Delta\beta} < \abs{\mu_K^T \Delta\beta}$.
-Now, we have also assumed that $\sign \Delta\alpha \neq \sign \mu_K^T \Delta\beta$ and $\abs{\mu_H^T \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K^T \Delta\beta}$.
-We conclude that $\sign( \mu_H^T \Delta\beta + \Delta\alpha) \neq \sign( \mu_K^T \Delta\beta + \Delta\alpha)$.
+Using \cref{def:unexplained_sign_flip}, we want to show that 
+\[
+\sign\!\left( \mu_K^T \Delta\beta + \Delta\alpha \right)
+\neq
+\sign\!\left( \mu_H^T \Delta\beta + \Delta\alpha \right)
+\iff
+\begin{aligned}
+&\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta, \\
+&\min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}
+<
+-\Delta\alpha
+<
+\max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
+\end{aligned}
+\]
 
-Next, consider the case where $\sign \mu_K^T \Delta\beta \neq \sign \mu_H^T \Delta\beta$.
-In this case, the addition of $\Delta\alpha$ to the $\mu_g^T \Delta\beta$ must be small enough such that it does not change the sign of either one.
-Without loss of generality, suppose that $\sign \Delta\alpha \neq \sign \mu_H^T \Delta\beta$.
-Then the assumed condition $\abs{\mu_H^T \Delta\beta} > \abs{\Delta\alpha}$ is enough to ensure that $\sign(\mu_H^T \Delta\beta) = \sign(\mu_H^T \Delta\beta + \Delta\alpha) \neq \sign(\mu_K^T \Delta\beta + \Delta\alpha)$.
+
+$\Rightarrow$: Suppose that $\sign\left( \mu_K^T \Delta\beta + \Delta\alpha \right) \neq \sign\left( \mu_H^T \Delta\beta + \Delta\alpha \right)$. If $\mu_H^T \Delta\beta = \mu_K^T \Delta\beta$, then both $\mu_g^T \Delta\beta + \Delta\alpha$ would have the same sign, which contradicts our assumption of opposite signs. Thus, we must have $\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$.
+
+Next, suppose that $\mu_K^T \Delta\beta + \Delta\alpha >0$ and $\mu_H^T \Delta\beta + \Delta\alpha <0$. Then, 
+\[
+\mu_K^T \Delta\beta > -\Delta\alpha \quad \text{and} \quad \mu_H^T \Delta\beta < -\Delta\alpha.
+\]
+Combining these two inequalities, we have 
+\begin{equation}
+  \label{eq:intermediate_ineq1}
+  \mu_H^T \Delta\beta < -\Delta\alpha < \mu_K^T \Delta\beta.
+\end{equation}
+Similarly, if $\mu_K^T \Delta\beta + \Delta\alpha <0$ and $\mu_H^T \Delta\beta + \Delta\alpha >0$, then
+\begin{equation}
+  \label{eq:intermediate_ineq2}
+  \mu_K^T \Delta\beta < -\Delta\alpha < \mu_H^T \Delta\beta.
+\end{equation}
+Combining \cref{eq:intermediate_ineq1,eq:intermediate_ineq2}, we conclude that
+\[
+  \min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\} < -\Delta\alpha < \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
+\]
+
+$\Leftarrow$; We now show the converse direction. Suppose that:
+
+$(1)$ $\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$ and 
+
+$(2)$ $\min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\} < -\Delta\alpha < \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}$. 
+
+We want to show that $\sign\left( \mu_K^T \Delta\beta + \Delta\alpha \right) \neq \sign\left( \mu_H^T \Delta\beta + \Delta\alpha \right)$.
+$(2)$ implies that one of the following must be true:
+\[
+  \mu_H^T \Delta\beta < -\Delta\alpha < \mu_K^T \Delta\beta, \quad \text{or} \quad \mu_K^T \Delta\beta < -\Delta\alpha < \mu_H^T \Delta\beta.
+\]
+If the first one holds, then $\mu_H^T \Delta\beta + \Delta\alpha <0$ and $\mu_K^T \Delta\beta + \Delta\alpha >0$, that is, the unexplained components have opposite signs. If the second holds, a symmetric argument yields the same conclusion as desired. 
+
+% First, consider the case where $\sign \mu_K^T \Delta\beta = \sign \mu_H^T \Delta\beta$.
+% In this case, the addition of $\Delta\alpha$ must be small enough to flip one of the signs of the $\mu_g^T \Delta\beta$ but so large that it flips the other.
+% As we have assumed $\mu_K^T \Delta\beta \neq \mu_H^T \Delta\beta$, one of the $\mu_g^T \Delta\beta$ will be lesser in magnitude; without loss of generality, suppose this is $g = H$.
+% That is, $\abs{\mu_H^T \Delta\beta} < \abs{\mu_K^T \Delta\beta}$.
+% Now, we have also assumed that $\sign \Delta\alpha \neq \sign \mu_K^T \Delta\beta$ and $\abs{\mu_H^T \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K^T \Delta\beta}$.
+% We conclude that $\sign( \mu_H^T \Delta\beta + \Delta\alpha) \neq \sign( \mu_K^T \Delta\beta + \Delta\alpha)$.
+
+% Next, consider the case where $\sign \mu_K^T \Delta\beta \neq \sign \mu_H^T \Delta\beta$.
+% In this case, the addition of $\Delta\alpha$ to the $\mu_g^T \Delta\beta$ must be small enough such that it does not change the sign of either one.
+% Without loss of generality, suppose that $\sign \Delta\alpha \neq \sign \mu_H^T \Delta\beta$.
+% Then the assumed condition $\abs{\mu_H^T \Delta\beta} > \abs{\Delta\alpha}$ is enough to ensure that $\sign(\mu_H^T \Delta\beta) = \sign(\mu_H^T \Delta\beta + \Delta\alpha) \neq \sign(\mu_K^T \Delta\beta + \Delta\alpha)$.
 \end{proof}
 
 % ---------------------------------------------------------

@@ -303,7 +303,7 @@ The corresponding fraction of $C_M$ leading to sign flips is therefore \( 0.5 \)
 \begin{remark} \label{remark:computing_irwin_hall}
 We can calculate this exactly for small \( d \) by using the Irwin-Hall(n) cumulative distribution function (CDF),
 \begin{equation}
-F(x) = \frac{1}{n!} \sum_{k=0}^{\lfloor x \rfloor} (-1)^k {n \choose k} (x - k)^n. \label{eq:exact_irwin_hall}
+F(x) = \frac{1}{n!} \sum_{k=0}^{\lfloor x \rfloor} (-1)^k \binom{n}{k} (x - k)^n. \label{eq:exact_irwin_hall}
 \end{equation}
 For larger \( d \), the combinatorial terms in the CDF become difficult to evaluate.
 In those cases the central limit theorem allows us to approximate an Irwin-Hall(2d) distribution with a \( N(d, \frac{d}{6})\) distribution.

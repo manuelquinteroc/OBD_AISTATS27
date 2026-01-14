@@ -258,13 +258,13 @@ The sum of \( n \) Uniform$(0,1)$ random variables is sometimes called the Irwin
 \footnote{For \(n = 2\) this is a familiar triangular distribution.}
 When we place a Uniform$(-M, M)$ measure on the \( \alpha \)'s and \( \beta \)'s, there is a straightforward relationship between \( \Delta \alpha \), \( 1^\top \Delta \beta \), and appropriately defined Irwin-Hall random variables.
 The difference \( \Delta \alpha \) is the sum of two Uniform$(-M, M)$ variables, which is equivalent to an Irwin-Hall($2$) distribution, rescaled from $[0,2]$ to $[-2M, 2M]$.
-Similarly, \( 1^T \Delta \beta \) is the sum of \( 2 d \) Uniform$(-M, M)$ variables, and its distribution is an Irwin-Hall($2 d$) distribution, rescaled from $[[0,2d]]$ to \( [-2dM, 2dM] \).
+Similarly, \( 1^T \Delta \beta \) is the sum of \( 2 d \) Uniform$(-M, M)$ variables, and its distribution is an Irwin-Hall($2 d$) distribution, rescaled from $[0,2d]$ to \( [-2dM, 2dM] \).
 
 That is, let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent.
 We can represent
 \begin{align*}
-    &\Delta \alpha = 2M (I_2 - 1) 
-    &\Delta \beta  = 2M (J_{2d} - d)
+    &1^T\Delta \alpha = 2M (I_2 - 1) 
+    &1^T\Delta \beta  = 2M (J_{2d} - d)
 \end{align*}
 
 We can use this correspondence to translate the event 
@@ -279,10 +279,10 @@ into an equivalent event in terms independent Irwin-Hall random variables:
     \cap
     \{ \sign(\Delta \alpha) \neq \sign(1^\top \Delta \beta) \} \right) \\
     =& 
-    Pr \left( \{ \Delta \alpha > 0 \} \cap \{ \Delta \beta < - \Delta \alpha \} \right)
+    Pr \left( \{ \Delta \alpha > 0 \} \cap \{ 1^T \Delta \beta < - \Delta \alpha \} \right)
     +
     Pr \left(
-    \{ \Delta \alpha < 0 \} \cap \{ \Delta \beta > - \Delta \alpha \} \right) \\
+    \{ \Delta \alpha < 0 \} \cap \{ 1^T\Delta \beta > - \Delta \alpha \} \right) \\
     =& 
     Pr \left( \{ 2M (I_2 - 1)  > 0 \} \cap \{ 2M (J_{2d} - d) < - 2M (I_2 - 1)  \} \right)  \\
     &+
@@ -293,15 +293,22 @@ into an equivalent event in terms independent Irwin-Hall random variables:
 \end{align*}
 
 That is, unexplained component sign flips have the same volume as the region where \( I_2 \) falls above its median and \( J_{2d} \) falls far in its left tail, or vice versa.
-We can calculate this exactly for small \( d \) by using the Irwin-Hall(n) cumulative distribution function (CDF),
-\[ F(x) = \frac{1}{n!} \sum_{k=0}^{\lfloor x \rfloor} (-1)^k {n \choose k} (x - k)^n. \]
-For larger \( d \), the combinatorial terms in the CDF become difficult to evaluate.
-In those cases the central limit theorem allows us to approximate an Irwin-Hall(2d) distribution with a \( N(d, \frac{d}{6})\) distribution.
+
 Finally, as \( d \to \infty \), sign flips have a volume equal to
 \[ Pr \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d \}  \right) +
     Pr \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d \} \right).  \] 
 Since the median of \( I_2 \) is $1$ and the median of \( J_{2d} \) is $d$, and the two random variables are independent, each probability equals \( 0.25 \).
-The corresponding fraction of $C_M$ leading to sign flips is therefore \( 0.5 \).
+The corresponding fraction of $C_M$ leading to sign flips is therefore \( 0.5 \) as claimed.
+
+\begin{remark} \label{remark:computing_irwin_hall}
+We can calculate this exactly for small \( d \) by using the Irwin-Hall(n) cumulative distribution function (CDF),
+\begin{equation}
+F(x) = \frac{1}{n!} \sum_{k=0}^{\lfloor x \rfloor} (-1)^k {n \choose k} (x - k)^n. \label{eq:exact_irwin_hall}
+\end{equation}
+For larger \( d \), the combinatorial terms in the CDF become difficult to evaluate.
+In those cases the central limit theorem allows us to approximate an Irwin-Hall(2d) distribution with a \( N(d, \frac{d}{6})\) distribution.
+We compute the probabilities in \cref{sec:sign_flip_fraction} for $d \leq 40$ using the exact CDF in \cref{eq:exact_irwin_hall}, and we use the normal approximation for $d > 40$.
+\end{remark}
 
 \subsection{Proofs from \cref{sec:no_sign_flips}}
 

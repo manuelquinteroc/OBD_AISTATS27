@@ -51,35 +51,50 @@ dirwinhall_approx = function(x, n) {
 
 
 pr_signflip = function(d, m) {
-  integrate(\(i) 2 * pirwinhall(x = (2*d*m - i) / (2*m), n = 2*d) * dirwinhall(x = i, n = 2),
-            lower = 1,
-            upper = 2)$value
+  
+  lower = integrate(\(i) (1 - pirwinhall(x = d + 1 - i, n = 2*d)) * dirwinhall(x = i, n = 2),
+                    lower = 0,
+                    upper = 1)$value
+  
+  upper = integrate(\(i) pirwinhall(x = d + 1 - i, n = 2*d) * dirwinhall(x = i, n = 2),
+                    lower = 1,
+                    upper = 2)$value
+  
+  lower + upper
 }
 
 
 # Setup --------------------------------------------------------------------
-design = tidyr::crossing(d = 1:50,
-                         m = c(10,100,1000))
+design = tidyr::crossing(d = 1:100,
+                         m = 10)
 tb = dplyr::mutate(design,
-                   p = purrr::pmap_dbl(design, pr_signflip),
-                   m = glue("Unif(-{m},{m})"))
+                   pr_unexplained = purrr::pmap_dbl(design, pr_signflip),
+                   pr_explained   = 0.5) |> 
+  pivot_longer(c(pr_explained, pr_unexplained),
+               names_prefix = 'pr_',
+               names_to = 'component',
+               values_to = 'pr') |> 
+  mutate(component = ifelse(component == 'explained',
+                            'Explained Component',
+                            'Unexplained Component'))
 
 
 # Plot ---------------------------------------------------------------------
 gg = ggplot(tb,
-            aes(x = d, y = p, color = m)) +
+            aes(x = d, y = pr, color = component)) +
   labs(x     = "Dimensionality of Covariates (d)",
-       y     = "Percentage of Parameter Space with\nUnexplained Component Sign Flip",
-       color = "Measure on Each\nRegression Parameter") +
-  theme_bw(base_size = 22) +
+       y     = "Percentage of Parameter Space\nwith OBD Sign Flip",
+       color = "Sign Flip in...") +
+  theme_bw(base_size = 26) +
   theme(axis.text       = element_text(color = 'black'),
         legend.position = "inside",
         legend.position.inside = c(0.775, 0.15),
         legend.background = element_rect(colour = "black")) +
-  scale_color_viridis_d(end = 0.9) +
+  scale_color_manual(values = c('Explained Component'   = '#785EF0',
+                                'Unexplained Component' = '#FE6100')) +
   scale_y_continuous(labels = scales::percent) +
   geom_line(linewidth = 2)
 
 ggsave(here('Sections', 'Figures', 'prob_unexplained.pdf'),
        gg, 
-       width = 10, height = 8, units = "in")
+       width = 11, height = 8, units = "in")

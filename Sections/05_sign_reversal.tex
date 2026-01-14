@@ -13,8 +13,8 @@ We start by concretizing the type of decision we will focus on in our analysis.
 In particular, we will consider a conclusion based on the sign of either the explained or unexplained component of the OBD.
 We will assume we are working with full population information so that a sign flip alone is enough to change conclusions;
 when working with finite samples (as will always be the case in practice), we might also be concerned with statistical significance.
-Although flipping from a signed value to zero could also be considered to change conclusions, we here focus on the more
-extreme case where we able to flip to the opposite sign by choosing a different reference.
+Although flipping from a signed value to zero would also be considered to change conclusions, we here focus on the more
+extreme case where we are able to flip to the opposite sign by choosing a different reference.
 
 \textbf{Explained component.}
 Recall from \cref{eq:ob_decomp_ref_group} the two possible explained components, each corresponding to a different reference.
@@ -79,7 +79,7 @@ See \cref{sec:sign_flip_proof} for the proof.
 %\end{remark}
 
 From \cref{thm:unexplained_ordering_sensitivity}, we see that group-specific slopes serve a different role in sign flips in the unexplained case relative to the explained case.
-Suppose we hold fixed the covariate means $\mu_H$ and $\mu_K$. Then we see that scaling up the magnitude of the vector change in slopes ($\Delta \beta$) induces sign flips in a greater range of values 
+Suppose we hold fixed the covariate means $\mu_H$ and $\mu_K$. Then we see that scaling up the magnitude of the vector change in slopes ($\Delta \beta$) induces sign flips for a greater range of values 
 of the scalar change in intercepts ($\Delta \alpha$).
 That is, larger magnitudes of \( \Delta \beta \) create ``more room'' for sign flips in the unexplained component.
 
@@ -107,25 +107,33 @@ That is, larger magnitudes of \( \Delta \beta \) create ``more room'' for sign f
 \subsection{How many parameters lead to sign flips?}
 \label{sec:sign_flip_fraction}
 
-\begin{figure}
-    \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/prob_unexplained.pdf}}
-    \caption{Percentage of parameter space leading to sign flips. See \cref{remark:computing_irwin_hall} for how we compute the probability for the unexplained component.}
-    \label{fig:prob_unexplained}
-\end{figure}
-
-After characterizing sign flips in \cref{sign_flip_characterizations}, we can ask how likely they are.
+After characterizing sign flips in \cref{sec:sign_flip_characterizations}, we can ask how likely they are.
 One formalization of this question is to ask what proportion of the parameter space corresponds to sign flips.
-To do so, we must choose a region of parameter space we are interested in and then compute the volume of this region that leads to sign flips.
-What region of parameter space should we pick?
-In absence of any specific applied problem, we first standardize units of $X$ such that $\mu_K = 0$ and $\mu_H = 1$ (this is always possible as long as $\mu_K \neq \mu_H$; see \cref{lemma:units}) and then let all entries of $\beta_g$ and $\alpha_g$ lie in $[-M,M]$ for $M > 0$, $g \in \{H,K\}$.
-The fact that each $\mu_g$ has constant entries and that each entry of each $\beta_g$ lies in the same range means that we are making no assumption on the magnitude of each covariate's constribution to the response $Y$ (i.e., $\mu_{g,i}\beta_{g,i}$ sits in the same range for all $i=1,\dots,d$).
-As the next two propositions demonstrate, under these choices, the fraction of parameters leading to sign flips is fairly large.
+An immediate challenge with talking about volume within a parameter space is that the parameter space inherits
+its dimension units from the covariates and response; in particular, any individual unit choice is somewhat
+arbitrary (consider a choice of centimeters vs.\ millimeters for a length scale), but also different covariates need not be 
+comparable (consider comparing a temperature to a weight). To alleviate this potential incompatibility between dimensions,
+we first make a common standardization choice in one population: we transform the covariate means to be zero,
+$\mu_K=0$. How to standardize population spread and how to handle the second group are less obvious,
+but we address both of these challenges by choosing $\mu_H =1$. We note that our standardization choice ($\mu_K=0,\mu_H=1$) is
+always possible as long as $\mu_K \neq \mu_H$; see \cref{lemma:units}.
+
+In the theory that follows, we will find it convenient to restrict our focus to a bounded range of parameters. Namely, we
+assume that, for some $M > 0$ and all groups $g$, the entries of $\beta_g$ and $\alpha_g$ lie in $[-M,M]$.
+Importantly, we do not restrict the choice of $M$; it can be arbitrarily large. And notably, the proportions we compute in all
+cases end up having no dependence on $M$.
+
+%To do so, we must choose a region of parameter space we are interested in and then compute the volume of this region that leads to sign flips.
+%What region of parameter space should we pick?
+%In absence of any specific applied problem, we first standardize units of $X$ such that $\mu_K = 0$ and $\mu_H = 1$ (this is always possible as long as $\mu_K \neq \mu_H$; see \cref{lemma:units}) and then let all entries of $\beta_g$ and $\alpha_g$ lie in $[-M,M]$ for $M > 0$, $g \in \{H,K\}$.
+%The fact that each $\mu_g$ has constant entries and that each entry of each $\beta_g$ lies in the same range means that we are making no assumption on the magnitude of each covariate's constribution to the response $Y$ (i.e., $\mu_{g,i}\beta_{g,i}$ sits in the same range for all $i=1,\dots,d$).
+As the next two results demonstrate, under these choices, the fraction of parameters leading to sign flips is fairly large.
 %
-For the explained component, we find that, under our conditions, half of the parameter space corresponds to sign flips.
+First, for the explained component, we find that, under our conditions, half of the parameter space $(\beta_H, \beta_K, \alpha_H, \alpha_K)$ corresponds to sign flips.
 \begin{proposition} \label{prop:explained_fraction}
 	Suppose $\mu_K = 0 \in \R^d$ and $\mu_H = 1 \in \R^d$.
 	Choose any $M > 0$.
-	Let $C_M \subset \R^{2d}$ be a cube with side length $2M > 0$ centered at the origin, and suppose $(\beta_K, \beta_H)$ jointly lie in this cube. Let $C_{flip} \subset C_M$ be the settings of $(\beta_H, \beta_K)$ that lead to a sign flip in the explained component.
+	Let $C_M \subset \R^{2d}$ be a cube with side length $2M > 0$ centered at the origin, and suppose $(\beta_H, \beta_K)$ jointly lie in this cube. Let $C_{flip} \subset C_M$ be the settings of $(\beta_H, \beta_K)$ that lead to a sign flip in the explained component.
 	Then
 	\begin{equation}
 		\frac{\mathrm{Volume}(C_{flip})}{\mathrm{Volume}(C_M)} = \frac{1}{2}.
@@ -133,7 +141,7 @@ For the explained component, we find that, under our conditions, half of the par
 \end{proposition}
 See \cref{proof:explained_fraction} for the proof.
 
-For the unexplained component, we find that the proportion of parameter space corresponding to sign flips nears 1/2 as the dimension of the covariate vector grows.
+Second, for the unexplained component, we find that the proportion of parameter space corresponding to sign flips nears 1/2 as the dimension of the covariate vector grows.
 \begin{proposition} 
 \label{prop:unexplained_fraction}
 	Suppose $\mu_K = 0$ and $\mu_H = 1 \in \R^d$.
@@ -141,15 +149,21 @@ For the unexplained component, we find that the proportion of parameter space co
 	Let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent random variables.
 	The fraction of $C_M$ for which a sign flip occurs in the unexplained component is given by:
 \begin{align} \label{eq:unexplained_fraction}
-    P_d := Pr \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d + 1 - I_2 \}  \right) + \nonumber \\
-    Pr \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d + 1 - I_2 \} \right),
+    P_d := \mathrm{Pr} \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d + 1 - I_2 \}  \right) + \nonumber \\
+    \mathrm{Pr} \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d + 1 - I_2 \} \right),
 \end{align}
-where the probability $Pr$ is over the independent random variables $I_2, J_{2d}$.
+where the probability $\mathrm{Pr}$ is over the independent random variables $I_2, J_{2d}$.
 Moreover, as $d \to \infty$, $P_d \rightarrow 1/2$.
 \end{proposition}
 See \cref{proof:unexplained_fraction} for the proof.
-The joint Irwin-Hall probability in \cref{eq:unexplained_fraction} is hard to evaluate analytically, so in \cref{fig:prob_unexplained} we evaluate it numerically for various values of $d$.
+
+The joint Irwin-Hall probability in \cref{eq:unexplained_fraction} is hard to evaluate analytically, so in \cref{fig:prob_unexplained} we evaluate it numerically for various values of the dimension $d$.
 We see that for even modest dimension $d$, the fraction of parameter space leading to sign flips exceeds 40\%.
+\begin{figure}
+    \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/prob_unexplained.pdf}}
+    \caption{Percentage of parameter space leading to sign flips. See \cref{remark:computing_irwin_hall} for how we compute the percentage for the unexplained component.}
+    \label{fig:prob_unexplained}
+\end{figure}
 
 \section{Are sign flips common?}
 \label{sec:no_sign_flips}

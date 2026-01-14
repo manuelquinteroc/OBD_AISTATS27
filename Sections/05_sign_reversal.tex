@@ -107,7 +107,7 @@ Even though \cref{thm:ordering_sensitivity} does not restrict the magnitude of t
 
 \begin{figure}
     \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/prob_unexplained.pdf}}
-    \caption{Fraction of parameter space leading to sign flips of the unexplained component from \cref{prop:unexplained_fraction}.\textcolor{red}{Will: we still haven't gotten cleverref to correctly name things as, e.g., Proposition 5.8 -- it's still saying Theorem} \textcolor{orange}{MQ: in mine it says Proposition 5.8. Maybe try pulling the latest mathnotation.tex file}}
+    \caption{Fraction of parameter space leading to sign flips.\textcolor{red}{Will: we still haven't gotten cleverref to correctly name things as, e.g., Proposition 5.8 -- it's still saying Theorem} \textcolor{orange}{MQ: in mine it says Proposition 5.8. Maybe try pulling the latest mathnotation.tex file}}
     \label{fig:prob_unexplained}
 \end{figure}
 
@@ -137,16 +137,17 @@ I.e., half of the parameter space leads to sign flips in the explained component
 	Let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent random variables.
 	Then we may choose units of $X$ such that $\mu_K = 0$ and $\mu_H = 1 \in \R^d$, and
  	the fraction of $C_M$ for which a sign flip occurs in the unexplained component is given by:
-\begin{equation} \label{eq:unexplained_fraction}
-2 Pr\left(\{ I_2 > 1 \} \cap \{ J_{2d} < \frac{2dM - I_2}{2M} \} \right).
- \end{equation}
- And this quantity approaches $1/2$ as $d \to \infty$.
+\begin{align} \label{eq:unexplained_fraction}
+    Pr \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d + 1 - I_2 \}  \right) + \nonumber \\
+    Pr \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d + 1 - I_2 \} \right),
+\end{align}
+ and this quantity approaches $1/2$ as $d \to \infty$.
  \begin{proof}
     See \cref{proof:unexplained_fraction}.
 \end{proof}
 \end{proposition}
-The joint Irwin-Hall probability in \cref{eq:unexplained_fraction} is hard to evaluate analytically, so in \cref{fig:prob_unexplained} we evaluate it numerically for various values of $d$ and $M$.
-We see that for even modest values of $M$ and low dimension $d$, the fraction of parameter space leading to sign flips exceeds 40\%.
+The joint Irwin-Hall probability in \cref{eq:unexplained_fraction} is hard to evaluate analytically, so in \cref{fig:prob_unexplained} we evaluate it numerically for various values of $d$.
+We see that for even modest dimension $d$, the fraction of parameter space leading to sign flips exceeds 40\%.
 
 \section{Are sign flips common?}
 \label{sec:no_sign_flips}

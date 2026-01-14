@@ -85,7 +85,7 @@ gg = ggplot(tb,
   labs(x     = "Dimensionality of Covariates (d)",
        y     = "Percentage of Parameter Space",
        color = "Sign Flip in...") +
-  theme_bw(base_size = 26) +
+  theme_bw(base_size = 30) +
   theme(axis.text       = element_text(color = 'black'),
         legend.position = "inside",
         legend.position.inside = c(0.775, 0.15),

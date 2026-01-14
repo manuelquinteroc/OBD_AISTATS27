@@ -115,9 +115,11 @@ That is, larger magnitudes of \( \Delta \beta \) create ``more room'' for sign f
 
 After characterizing sign flips in \cref{sign_flip_characterizations}, we can ask how likely they are.
 One formalization of this question is to ask what proportion of the parameter space corresponds to sign flips.
-In particular, for convenience, we set $\mu_K=0$ and $\mu_H=1$. We then measure the fraction of parameters ($\beta_g, \alpha_g)$ for $g \in \{H,K\}$ that lead to sign flips. As the next two propositions demonstrate, the fraction leading to sign flips is fairly large.
-\textcolor{red}{argue more clearly about the mu choices, bring up \cref{lemma:units}}
-
+To do so, we must choose a region of parameter space we are interested in and then compute the volume of this region that leads to sign flips.
+What region of parameter space should we pick?
+In absence of any specific applied problem, we first standardize units of $X$ such that $\mu_K = 0$ and $\mu_H = 1$ (this is always possible as long as $\mu_K \neq \mu_H$; see \cref{lemma:units}) and then let all entries of $\beta_g$ and $\alpha_g$ lie in $[-M,M]$ for $M > 0$, $g \in \{H,K\}$.
+The fact that each $\mu_g$ has constant entries and that each entry of each $\beta_g$ lies in the same range means that we are making no assumption on the magnitude of each covariate's constribution to the response $Y$ (i.e., $\mu_{g,i}\beta_{g,i}$ sits in the same range for all $i=1,\dots,d$).
+As the next two propositions demonstrate, under these choices, the fraction of parameters leading to sign flips is fairly large.
 %
 For the explained component, we find that, under our conditions, half of the parameter space corresponds to sign flips.
 \begin{proposition} \label{prop:explained_fraction}

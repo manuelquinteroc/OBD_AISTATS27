@@ -83,7 +83,7 @@ tb = dplyr::mutate(design,
 gg = ggplot(tb,
             aes(x = d, y = pr, color = component)) +
   labs(x     = "Dimensionality of Covariates (d)",
-       y     = "Percentage of Parameter Space\nwith OBD Sign Flip",
+       y     = "Percentage of Parameter Space",
        color = "Sign Flip in...") +
   theme_bw(base_size = 26) +
   theme(axis.text       = element_text(color = 'black'),

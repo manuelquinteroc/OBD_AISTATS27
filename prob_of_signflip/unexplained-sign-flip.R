@@ -8,7 +8,7 @@ library(ggplot2)
 
 # Helpers -----------------------------------------------------------------
 pirwinhall = function(x, n) {
-  if (n > 50) {
+  if (n > 80) {
     pirwinhall_approx(x, n)
   } else {
     pirwinhall_exact(x, n)

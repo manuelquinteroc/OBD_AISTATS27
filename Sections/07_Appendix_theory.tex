@@ -142,13 +142,19 @@ Note that the sign flip is symmetric by construction, but the magnitude of the d
                 \If{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$}
                     \If{$|\mu_H^T \Delta\beta| < |\Delta\alpha| < |\mu_K^T \Delta\beta|$ \textbf{or} $|\mu_K^T \Delta\beta| < |\Delta\alpha| < |\mu_H^T \Delta\beta|$}
                         \State A sign flip occurs.
+                    \Else
+                    	\State There is no sign flip.
                     \EndIf
+                \Else
+                	\State There is no sign flip.
                 \EndIf
             \ElsIf{$\sign(\mu_H^T \Delta\beta) \neq \sign(\mu_K^T \Delta\beta)$}
                 \If{$\sign(\Delta\alpha) = \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_K^T \Delta\beta| > |\Delta\alpha|$}
                     \State A sign flip occurs.
                 \ElsIf{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_H^T \Delta\beta| > |\Delta\alpha|$}
                     \State A sign flip occurs.
+                \Else
+                    \State There is no sign flip.
                 \EndIf
             \EndIf
         \Else

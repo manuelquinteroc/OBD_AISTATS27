@@ -108,7 +108,7 @@ Even though \cref{thm:ordering_sensitivity} does not restrict the magnitude of t
 
 \begin{figure}
     \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/prob_unexplained.pdf}}
-    \caption{Fraction of parameter space leading to sign flips of the unexplained component from \cref{prop:unexplained_fraction}.}
+    \caption{Fraction of parameter space leading to sign flips of the unexplained component from \cref{prop:unexplained_fraction}.\textcolor{red}{Will: we still haven't gotten cleverref to correctly name things as, e.g., Proposition 5.8 -- it's still saying Theorem}}
     \label{fig:prob_unexplained}
 \end{figure}
 
@@ -116,10 +116,12 @@ Even though \cref{thm:ordering_sensitivity} does not restrict the magnitude of t
 And \cref{thm:explained_ordering_sensitivity} and \cref{thm:ordering_sensitivity} fully describe the conditions under which sign flips occur.
 However, it is not obvious how likely sign flips are.
 One way to answer this question is to measure the fraction of parameters ($\mu_g, \beta_g, \alpha_g)$ for $g \in \{H,K\}$ that lead to sign flips. As the next two propositions demonstrate, the fraction leading to sign flips is fairly large.
+Throughout this section and the next, we will make use of the fact that as long as the (fairly improbable) event of $\mu_H = \mu_K$ does not occur, we can fix the units of the covariates $X$ such that $\mu_K = 0$ and $\mu_K = 1$; see \cref{lemma:units}.
 %
 \begin{proposition} \label{prop:explained_fraction}
+	Assume $\mu_H \neq \mu_K$ elementwise.
 	Let $C_M \subset \R^{2d}$ be a cube with side length $2M > 0$ centered at the origin, and suppose $(\beta_K, \beta_H)$ jointly lie in this cube. Let $C_{flip} \subset C_M$ be the settings of $(\beta_H, \beta_K)$ that lead to a sign flip in the explained component.
-	Then, after choosing units in the regression problems such that $\mu_K = 0 \in \R^d$ and $\mu_H = 1 \in \R^d$, we have that for for any $M > 0$:
+	Then we may choose units of $X$ such that $\mu_K = 0 \in \R^d$ and $\mu_H = 1 \in \R^d$, and for for any $M > 0$:
 	\begin{equation}
 		\frac{\mathrm{Volume}(C_{flip})}{\mathrm{Volume}(C_M)} = \frac{1}{2}.
 	\end{equation}
@@ -129,13 +131,15 @@ I.e., half of the parameter space leads to sign flips in the explained component
 \end{proof}
 \end{proposition}
 %
-\begin{proposition} \label{prop:unexplained_fraction}
+\begin{proposition} 
+\label{prop:unexplained_fraction}
+	Assume $\mu_H \neq \mu_K$ elementwise.
 	Let $C_M \subset \R^{2d+2}$ be a cube with side length $2M > 0$ centered at the origin, and suppose $(\beta_K, \beta_H, \alpha_K, \alpha_H)$ jointly lie in this cube.
 	Let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent random variables.
-	Then after choosing units in the regression problems such that $\mu_K = 0$ and $\mu_H = 1 \in \R^d$, we have
- 	that the fraction of $C_M$ for which a sign flip occurs in the unexplained component is given by:
+	Then we may choose units of $X$ such that $\mu_K = 0$ and $\mu_H = 1 \in \R^d$, and
+ 	the fraction of $C_M$ for which a sign flip occurs in the unexplained component is given by:
 \begin{equation} \label{eq:unexplained_fraction}
-2 Pr\left(\{ I_2 > 1 \} \{ \cap J_{2d} < \frac{2dM - I_2}{2M} \} \right).
+%2 Pr\left(\{ I_2 > 1 \} \cap \{ J_{2d} < \frac{2dM - I_2}{2M} \} \right).
  \end{equation}
  And this quantity approaches $1/2$ as $d \to \infty$.
  \begin{proof}
@@ -178,6 +182,10 @@ We formalize this idea in the following assumption.
     \( U^{(H)}\) and  \(U^{(K)}\) share the same sign.
 \end{proposition}
 
+\begin{proof}
+See \cref{proof:no_sign_flip}.
+\end{proof}
+
 Under \Cref{ass:no_sign_flip} both unexplained components share the same sign and the OBD cannot exhibit a sign reversal. 
 This assumption requires that the group with higher baseline outcomes ($\alpha_g$) also benefits more from the covariates ($\beta_g$) for \(g \in \{H,K\}\).
 
@@ -190,9 +198,13 @@ We can similarly identify conditions under which a sign flip cannot occur in the
 Recall that, by definition, there is a sign flip in the explained component if $\sign(\Delta\mu^T \beta_H) \neq \sign(\Delta\mu^T \beta_K)$. The following proposition follows immediately:
 %
 \begin{proposition} \label{prop:no_explained_sign_flip}
-	After fixing units such that $\mu_K = 0 \in \R^d$ and $\mu_H = 1 \in \R^d$, there is no sign flip in the explained components if and only if $\sign (\sum_{i=1}^d \beta_{H,i}) \neq \sign( \sum_{i=1}^d \beta_{K,i})$.
+	Assume that $\mu_K \neq \mu_H$ elementwise.
+	Then we may choose units for $X$ such that there is no sign flip in the explained components if and only if $\sign (\sum_{i=1}^d \beta_{H,i}) \neq \sign( \sum_{i=1}^d \beta_{K,i})$.
 \end{proposition}
 %
+\begin{proof}
+See \cref{proof:no_explained_sign_flip}.
+\end{proof}
 \cref{prop:no_explained_sign_flip} helps us understand why sign flips in the explained component are unusual in the settings considered in this paper.
 In both the SBP--BMI example in \cref{sec:example}, it is expected that any subpopulation will have a positive relationship between BMI and SBP; i.e., we expect $\beta_H, \beta_K > 0$ for any choice of $H, K$.
 

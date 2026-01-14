@@ -214,7 +214,7 @@ We first show how to choose units for the covariates conveniently, so that \( \D
 This will simplify volume calculations for the regions of parameter space that flip the explained and unexplained components of the OBD.
 \begin{lemma}
   \label{lemma:units}
-  If \( \mu_H \neq \mu_K \) elementwise, we can choose units for \( X \) such that \( \E_K[X] = 0 \) and \( \E_H[X] = 1 \).
+  If \( \mu_H \neq \mu_K \) elementwise, we can choose units for \( X \) such that \( \mu_K := \E_K[X] = 0 \) and \( \mu_H := \E_H[X] = 1 \).
   \begin{proof}  
   Consider the transformation \( \tilde{X} = (X - \mu_K) / (\mu_H - \mu_K) \), where the division is elementwise.
   This is well-defined as long as \( \mu_H \neq \mu_K \) elementwise.
@@ -234,9 +234,11 @@ As such, the signs of \( 1^\top \beta_{H} \) and \( 1^\top \beta_{H} \) will dis
 \subsubsection{Proof of \cref{prop:unexplained_fraction}}
 \label{proof:unexplained_fraction}
 Apply \cref{lemma:units} so that \( \E_K[X] = 0 \), \( \E_H[X] = 1 \), and therefore \( \Delta \mu = 1 \).
-For the rescaled covariates, the conditions in \cref{alg:decision_tree} simplify, eliminating several of its branches.
+For the rescaled covariates, the conditions in \cref{thm:ordering_sensitivity} simplify.
 In particular, the unexplained component flips sign if and only if \( 1^T \Delta \beta \neq 0 \), \( \sign (\Delta \alpha) \neq \sign (1^\top \Delta \beta) \), and \( | 1^T \Delta \beta | > |\Delta \alpha| \).
-The first condition holds almost surely under the assumed Uniform$(-M,M)$ measure on the coefficients, since \( 1^\top \Delta \beta \) is a non-degenerate linear combination of continuously distributed random variables, so we can focus on the latter two.
+
+To compute the fraction of $C_M$ for which there are sign flips, we equivalently compute the probability of a sign flip under an independent $\mathrm{Uniform}(-M,M)$ measure on each element of the vector $(\beta_H, \beta_K, \alpha_H, \alpha_K) \in \R^{2d+2}$.
+The condition \( 1^T \Delta \beta \neq 0 \) holds almost surely under the assumed Uniform$(-M,M)$ measure, since \( 1^\top \Delta \beta \) is a non-degenerate linear combination of continuously distributed random variables, so we can focus on the latter two conditions.
 To do so, we will determine the distributions of  \( \Delta \alpha \) and \( 1^\top \Delta \beta \).
 
 The sum of \( n \) Uniform$(0,1)$ random variables is sometimes called the Irwin-Hall(\(n\)) distribution.%
@@ -273,5 +275,23 @@ For larger \( d \), the combinatorial terms in the CDF become difficult to evalu
 In those cases the central limit theorem allows us to approximate an Irwin-Hall(2d) distribution with a \( N(d, \frac{d}{6})\) distribution.
 Finally, as \( d \to \infty \), sign flips have a volume equal to
 \[ 2 Pr(I_2 > 1) Pr(J_{2d} < d \mid I_2 > 1).  \] 
-Since the median of \( I_2 \) is $1$ and the median of \( J_{2d} \) is $2$, both probabilities are equal to \( \frac{1}{2} \), and the corresponding volume is therefore \( 0.5 \).
+Since the median of \( I_2 \) is $1$ and the median of \( J_{2d} \) is $d$, both probabilities are equal to \( \frac{1}{2} \), and the corresponding fraction of $C_M$ leading to sign flips is therefore \( 0.5 \).
+
+\subsection{Proofs from \cref{sec:no_sign_flips}}
+
+
+\subsubsection{Proof of \cref{prop:no_sign_flip}}
+\label{proof:no_sign_flip}
+Recall that by definition
+$$
+	\UK := \mu_H^T \Delta\beta + \Delta\alpha, \quad \quad \UH := \mu_K^T \Delta\beta + \Delta\alpha.
+$$
+By assumption, $\sign(\Delta\alpha) = \sign(\mu_H^T\Delta\beta) = \sign(\mu_K^T\Delta\beta)$, and thus $\sign(\UH) = \sign(\UK)$.
+\subsubsection{Proof of \cref{prop:no_explained_sign_flip}}
+\label{proof:no_explained_sign_flip}
+As $\mu_K \neq \mu_H$ by assumption, \cref{lemma:units} applies to imply that we can fix units such that $\mu_K = 0$ and $\mu_H = 1$. Then $\Delta\mu = 1$, and the condition for the explained component to not sign flip, $\sign(\Delta\mu^T\beta_K) \neq \sign(\Delta\mu^T \beta_H)$ reduces to:
+\begin{equation}
+	\sign\left( \sum_{i=1}^d \beta_{K,i} \right) \neq \sign\left( \sum_{i=1}^d \beta_{H,i} \right),
+\end{equation}
+as claimed.
 

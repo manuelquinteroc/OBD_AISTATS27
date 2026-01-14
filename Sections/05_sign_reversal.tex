@@ -114,8 +114,9 @@ its dimension units from the covariates and response; in particular, any individ
 arbitrary (consider a choice of centimeters vs.\ millimeters for a length scale), but also different covariates need not be 
 comparable (consider comparing a temperature to a weight). To alleviate this potential incompatibility between dimensions,
 we first make a common standardization choice in one population: we transform the covariate means to be zero,
-$\mu_K=0$. How to standardize population spread and how to handle the second group are less obvious,
-but we address both of these challenges by choosing $\mu_H =1$. We note that our standardization choice ($\mu_K=0,\mu_H=1$) is
+$\mu_K=0 \in \R^d$. How to standardize population spread and how to handle the second group are less obvious,
+but we address both of these challenges by choosing $\mu_H =1\in \R^d$. \textcolor{red}{TB: what do we think about using bold or some other distinguishing notation for a 0 or 1 vector?}
+We note that our standardization choice ($\mu_K=0,\mu_H=1$) is
 always possible as long as $\mu_K \neq \mu_H$; see \cref{lemma:units}.
 
 In the theory that follows, we will find it convenient to restrict our focus to a bounded range of parameters. Namely, we
@@ -191,14 +192,16 @@ We started by evaluating the OBD across nine predefined data subsets: the full c
 We then expanded our analysis to a larger and more heterogeneous collection of subpopulations.
 Across all $139$ data subsets, we found that $27$ exhibited at least one sign reversal.
 The HR quartile two example in \textcolor{red}{section} was one such example. We describe the data and our search procedure in more detail in 
-\textcolor{red}{appendix}. We conclude from this search that we do not expect sign flips to be more than empirically rare, but
-their existence is still possible.
+\cref{appendix:icu_details}.
 
 We ran a similar search on U.S.\ labor force data; in particular,
 the raw data come from the 2016 American Community Survey 1-Year Public Use Microdata Sample \textcolor{red}{cite}.
 We again purposely constructed a large set of data analyses to search for sign flips in different subsets of the data, comprising all combinations of the factors in Appendix \cref{tab:us_census_design}.
 Out of the 355 comparisons we examined, we found 0 cases where the explained component flipped signs and 1 case where the unexplained component flipped signs.
-See \textcolor{red}{appendix} for details of this dataset and our search procedure.
+See \cref{appendix:us_labor_force} for details of this data set and our search procedure.
+
+We conclude from these two searches that we do not expect sign flips to be more than empirically rare, but
+their existence is still possible.
 
 \subsection{Understanding the sign-flip gap}
 \label{sec:no_sign_flips}

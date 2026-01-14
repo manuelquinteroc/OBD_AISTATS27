@@ -165,7 +165,42 @@ We see that for even modest dimension $d$, the fraction of parameter space leadi
     \label{fig:prob_unexplained}
 \end{figure}
 
-\section{Are sign flips common?}
+\subsection{Are sign flips common in practice?}
+\label{sec:sign_flips_practice}
+
+In \cref{sec:sign_flip_fraction}, we show that a large fraction of parameter space corresponds to sign flips.
+However, we here observe that empirical evidence suggests sign flips in practice may be rare.
+We discuss resolutions to this apparent contradiction in \cref{sec:no_sign_flips}.
+
+An exhaustive search of the literature applying the OBD is beyond the scope of the present paper;
+particular Stata and R implementations of the OBD have hundreds of citations alone
+\textcolor{red}{cite A Stata implementation of the Blinder-Oaxaca decomposition and oaxaca: Blinder-Oaxaca decomposition in R}, 
+and the paper introducing the Stata implementation has thousands of citations \textcolor{red}{cite A Stata implementation of the Blinder-Oaxaca decomposition}.
+Moreover, many papers performing the OBD do not even cite particular software implementations. \textcolor{red}{check we agree with that last claim}
+Without trying to form a representative sample, we examined a selection of papers performing the OBD. 
+Of the particular papers we examined, many did not report both directions of the OBD.
+Of the papers that did report both directions \citep{ONeill2006, fortinLemieuxFirpo2011, sharafRashad2016, rahimiNazari2021},
+none exhibited a sign flip.
+
+Publication or other biases could affect the published literature. To avoid these concerns and also offer a more systematic investigation,
+we examined collections
+of OBD analyses one might potentially run on two rich, publicly available datasets. 
+In each case, our systematic search for sign flips turned up few examples.
+First, we examined the PhysioNet ICU cohort collected for the study of in-hospital mortality \textcolor{red}{cite}.
+We started by evaluating the OBD across nine predefined data subsets: the full cohort, each ICU type category, two broad age groups (patients younger than $65$ and patients aged $65$ or older), and two groups defined by a median split of the SAPS--I score. For each of these subsets, we fit gender-specific linear models and computed the OBD. We did not find any sign flips.
+We then expanded our analysis to a larger and more heterogeneous collection of subpopulations.
+Across all $139$ data subsets, we found that $27$ exhibited at least one sign reversal.
+The HR quartile two example in \textcolor{red}{section} was one such example. We describe the data and our search procedure in more detail in 
+\textcolor{red}{appendix}. We conclude from this search that we do not expect sign flips to be more than empirically rare, but
+their existence is still possible.
+
+We ran a similar search on U.S.\ labor force data; in particular,
+the raw data come from the 2016 American Community Survey 1-Year Public Use Microdata Sample \textcolor{red}{cite}.
+We again purposely constructed a large set of data analyses to search for sign flips in different subsets of the data, comprising all combinations of the factors in Appendix \cref{tab:us_census_design}.
+Out of the 355 comparisons we examined, we found 0 cases where the explained component flipped signs and 1 case where the unexplained component flipped signs.
+See \textcolor{red}{appendix} for details of this dataset and our search procedure.
+
+\subsection{Understanding the sign-flip gap}
 \label{sec:no_sign_flips}
 \cref{sec:sign_flip_fraction} shows that, as a fraction of parameter space, a large number of parameters lead to sign flips.
 

@@ -1,48 +1,56 @@
-\section{When can sign reversals occur?} 
+\section{How common are sign flips?} 
 \label{sec:signflips}
 
-Building on the real clinical case study and our simulated example, a natural next step is to ask under what conditions the explained and unexplained components flip sign, as policy implications may hinge critically on their direction. 
-\cref{eq:OB_H_decomp,eq:OB_K_decomp} make clear that the value can vary with the choice of reference group, but it is less obvious when a sign flip can occur, prompting the question: under what conditions do these components flip sign?
+Our examples above serve as existence proofs that conclusion reversals are possible when using the OBD with different references.
+In what follows, we focus on conclusions based on sign flips.
+We show that sign reversals (of either the explained or unexplained component) represent a large proportion of the parameter space, in a sense we make precise below.
+Then we explain why these sign flips still might not be common in practical applications.
 
-\paragraph{Explained component.}
-We begin with the explained component. Recall from \cref{eq:OB_H_decomp,eq:OB_K_decomp} that the explained term takes the form $\Delta\mu^T\beta_g$, where $\Delta\mu := \mu_H - \mu_K$ is the common covariate mean difference and $g \in \{H,K\}$ denotes the reference group. 
-%Because $\Delta\mu$ is fixed across references, any change in sign of the explained component is entirely driven by the inner product of $\Delta\mu$ with the coefficient vectors $\beta_g$.
+\subsection{Signed conclusions}
 
+We start by concretizing the type of decision we will focus on in our analysis. 
+In particular, we will consider a conclusion based on the sign of either the explained or unexplained component of the OBD.
+We will assume we are working with full population information so that a sign flip alone is enough to change conclusions;
+when working with finite samples (as will always be the case in practice), we might also be concerned with statistical significance.
+Although flipping from a signed value to zero could also be considered to change conclusions, we here focus on the more
+extreme case where we able to flip to the opposite sign by choosing a different reference.
+
+\textbf{Explained component.}
+Recall from \cref{eq:ob_decomp_ref_group} the two possible explained components, each corresponding to a different reference.
+With this notation in hand, we can define changing a signed conclusion at the population level.
 \begin{definition}
-	Let $\Delta\mu := \mu_H - \mu_K$. The OBD \emph{sign flips the explained component} if the sign of the explained term, $\Delta\mu^T \beta_g$, depends on the reference group. That is
+	We say the OBD \emph{sign flips the explained component} if the sign of the explained term, $\Delta\mu^T \beta_g$, depends on the reference group. That is,
 	\begin{equation}
         \label{eq:sign_flip_condition_explained_neq}
 		\sign\!\left(\Delta\mu^T \beta_H\right) \neq \sign\!\left(\Delta\mu^T \beta_K\right).
 	\end{equation}
 \end{definition}
 
-The condition and its proof under which such a sign flip occurs follows immediately from this definition.
-
+From the definition, we can immediately see the following alternative characterization.
+%
 \begin{remark}
-    \label{thm:explained_ordering_sensitivity}
-    The OBD \emph{sign flips the explained component} if and only if $\Delta\mu^T \beta_H \neq \Delta\mu^T \beta_K$, and
-    \begin{equation}
+    \label{rmk:explained_ordering_sensitivity}
+    The OBD sign flips the explained component if and only if the following two conditions hold:
+    \begin{gather}
+    	\nonumber
+    	\Delta\mu^T \beta_H \neq \Delta\mu^T \beta_K \\
     \label{eq:sign_flip_condition_explained}
         \min\{\Delta\mu^T \beta_H,\ \Delta\mu^T \beta_K\}
         < 0 <
         \max\{\Delta\mu^T \beta_H,\ \Delta\mu^T \beta_K\}.
-    \end{equation}
+    \end{gather}
 \end{remark}
-
-\begin{remark}
-    If either $\Delta\mu^T \beta_H = 0$ or  $\Delta\mu^T \beta_K = 0$, then one explained term equals zero, and no sign flip is possible.
-\end{remark}
+Since $\Delta\mu$ is constant across analyses, sign flips in the explained component are straightforwardly driven
+by differences in sign in the slope between groups.
 
 % A large region of the parameter space satisfies \cref{eq:sign_flip_condition_explained_neq}.
 % We compute the volume of this region by integrating the region that satsfies \cref{eq:sign_flip_condition_explained_neq} against a Uniform(-M, M) measure on \( \beta_H \) and \( \beta_K \), where \( M \) is large.
 % The computations, which appear in \cref{app:sign_flip_volume}, show that 50\% of the parameter space satisfies \cref{eq:sign_flip_condition_explained_neq}.
 
-To see how this characterization applies in practice, we return to the ICU mortality and heart rate example presented in \cref{sec:real_example}. In that example, we observed a sign flip in the explained component of the OBD when using men or women as the reference group. Within HR quartile two, the covariate mean difference $\Delta\mu$ between men and women is fixed by the sample, but the coefficients governing how mortality loads on these covariate differences differ in sign across groups. In particular, the opposite directions of the heart rate coefficients for men and women shown in \cref{fig:hr_quartile2} suggest that a sign flip can occur. As a result, $\Delta\mu^T\beta_{\text{women}}$ and $\Delta\mu^T\beta_{\text{men}}$ have opposite signs, leading to a sign reversal in the explained component. A numerical breakdown of $\Delta\mu$ and the group-specific coefficients is reported in Appendix~\cref{tab:delta_mu_betas}.
+%To see how this characterization applies in practice, we return to the ICU mortality and heart rate example presented in \cref{sec:real_example}. In that example, we observed a sign flip in the explained component of the OBD when using men or women as the reference group. Within HR quartile two, the covariate mean difference $\Delta\mu$ between men and women is fixed by the sample, but the coefficients governing how mortality loads on these covariate differences differ in sign across groups. In particular, the opposite directions of the heart rate coefficients for men and women shown in \cref{fig:hr_quartile2} suggest that a sign flip can occur. As a result, $\Delta\mu^T\beta_{\text{women}}$ and $\Delta\mu^T\beta_{\text{men}}$ have opposite signs, leading to a sign reversal in the explained component. A numerical breakdown of $\Delta\mu$ and the group-specific coefficients is reported in Appendix~\cref{tab:delta_mu_betas}.
 
-\paragraph{Unexplained component.}
-
-Unlike the explained component, sign reversals in the unexplained component arise from the interaction between slope and intercept differences, leading to a richer set of conditions.
-
+\textbf{Unexplained component.}
+Unlike the explained component, sign reversals in the unexplained component arise from the interaction between slope and intercept differences.
 \begin{definition}
     \label{def:unexplained_sign_flip}
 	Let $\Delta\beta := \beta_H - \beta_K$ and $\Delta\alpha := \alpha_H - \alpha_K$. The OBD \emph{sign flips the unexplained component} if the sign of the unexplained term, $\mu_{g'}^T \Delta\beta + \Delta\alpha$, depends on the reference group. That is
@@ -50,35 +58,36 @@ Unlike the explained component, sign reversals in the unexplained component aris
 		\sign\left( \mu_K^T \Delta\beta + \Delta\alpha \right) \neq \sign\left( \mu_H^T \Delta\beta + \Delta\alpha \right).
 	\end{equation}
 \end{definition}
+
+The following alternative characterization for sign flips of the unexplained component is analogous to \cref{rmk:explained_ordering_sensitivity}.
 %
-We now demonstrate that sign flipping in the unexplained component of the OBD is not an isolated phenomenon.
-
-\begin{restatable}[OBD unexplained sign flips]{theorem}{OBSignFlips}
-    \label{thm:ordering_sensitivity}
-    The OBD \emph{sign flips the unexplained component} if and only if $\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$, and
-    \begin{equation}
+\begin{restatable}[OBD unexplained sign flips]{proposition}{OBSignFlips}
+    \label{thm:unexplained_ordering_sensitivity}
+    The OBD sign flips the unexplained component if and only if the following two conditions hold:
+    \begin{gather}
+    	\nonumber
+    	\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta \\
     \label{eq:sign_flip_condition}
-    \min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\} < -\Delta\alpha < \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
-    \end{equation}
-    \begin{proof}
-        See \cref{sec:sign_flip_proof}.
-    \end{proof}
+   	 \min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\} < -\Delta\alpha < \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
+    \end{gather}
 \end{restatable}    
+See \cref{sec:sign_flip_proof} for the proof.
 
-\begin{remark}
-    If $-\Delta\alpha \in \{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}$, then one unexplained term equals zero.
-\end{remark}
+%\begin{remark}
+%    If $-\Delta\alpha \in \{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}$, then one unexplained term equals zero.
+%\end{remark}
 
-\cref{thm:ordering_sensitivity} provides a useful insight about the kinds of domains where sign flips are likely, by relating the magnitudes of \( \Delta \beta \) and \( \Delta \alpha \).
-Holding fixed the covariate means, \( \mu_H \) and \( \mu_K \), scaling up the change in the regression coefficients would induce sign flips for more values of the change in intercepts.
+From \cref{thm:unexplained_ordering_sensitivity}, we see that group-specific slopes serve a different role in sign flips in the unexplained case relative to the explained case.
+Suppose we hold fixed the covariate means $\mu_H$ and $\mu_K$. Then we see that scaling up the magnitude of the vector change in slopes ($\Delta \beta$) induces sign flips in a greater range of values 
+of the scalar change in intercepts ($\Delta \alpha$).
 That is, larger magnitudes of \( \Delta \beta \) create ``more room'' for sign flips in the unexplained component.
 
-To further illustrate how we can use the theorem, we represent the condition in \cref{eq:sign_flip_condition} as a decision tree in \cref{alg:decision_tree} and use it to scrutinize the healthcare example in \cref{sec:example}.
+To further illustrate how we can use \cref{thm:unexplained_ordering_sensitivity}, we represent the condition in \cref{eq:sign_flip_condition} as a decision tree in \cref{alg:decision_tree} and use it to scrutinize the healthcare example in \cref{sec:example}.
 In this example, $\mu_H$ and $\mu_K$ denote mean BMIs, both of which are positive by definition and thus $\sign{(\mu_H \Delta\beta)} = \sign{(\mu_K \Delta\beta)} = \sign{(\Delta\beta)}$. Therefore, following \Cref{alg:decision_tree}, a sign flip will occur only if $\sign{(\Delta\alpha)} \neq \sign{(\mu_H \Delta\beta)} = \sign{(\Delta\beta)}$; equivalently, it must hold that one group has a larger $\beta_g$ (more sensitive to higher BMI) but lower $\alpha_g$ (lower SBP on average).
 This might occur if one group has better access to treatment but worse genetic factors, as in \cref{sec:example}.
 Furthermore, a sign-flip will occur if either $\abs{\mu_H \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K \Delta\beta}$ or $\abs{\mu_K \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_H \Delta\beta}$. This condition implies a range of values over which sign flips will occur; that is, there will be at least one choice of reference group under which improved healthcare appears to help in lowering mean SBP and another ordering under which improved healthcare appears to \emph{hurt} mean SBP.
 
-Even though \cref{thm:ordering_sensitivity} does not restrict the magnitude of the parts of the unexplained components, in \cref{ex:unbounded} we provide an example to illustrate that these sign flips are not relegated to settings in which $\mu_g^T\Delta\beta$ are small in magnitude; in fact, we show that they can be arbitrarily large in magnitude.
+Even though \cref{thm:unexplained_ordering_sensitivity} does not restrict the magnitude of the parts of the unexplained components, in \cref{ex:unbounded} we provide an example to illustrate that these sign flips are not relegated to settings in which $\mu_g^T\Delta\beta$ are small in magnitude; in fact, we show that they can be arbitrarily large in magnitude.
 
 
 %    \Cref{thm:ordering_sensitivity} shows that sign reversals in the unexplained component are not edge cases. Equation \(U^{(K)} - U^{(H)} = -B\) implies that switching the reference group shifts the unexplained term by exactly \(B\), and the explained part by \(-B\). When \(B \neq 0\), this shift can flip the diagnosis—from structural underpayment to overpayment—even with a correctly specified model. The disagreement region \(S \in (-B, 0)\) for \(B > 0\) (and its mirror for \(B < 0\)) is tight: outside this interval, both orderings agree in sign; inside it, they disagree (see \cref{imageTODO}). This window has width \(|B|\), which grows with larger covariate shifts or slope differences—both common in practice. So sign flips are not rare or pathological; they’re a general sensitivity that arises whenever \(B\) is materially different from zero. This motivates the next result.
@@ -112,7 +121,7 @@ Even though \cref{thm:ordering_sensitivity} does not restrict the magnitude of t
 \end{figure}
 
 \cref{sec:real_example,sec:example} demonstrate that, in practical scenarios, sign flips in the OBD can occur.
-And \cref{thm:explained_ordering_sensitivity} and \cref{thm:ordering_sensitivity} fully describe the conditions under which sign flips occur.
+%And \cref{thm:explained_ordering_sensitivity} and \cref{thm:ordering_sensitivity} fully describe the conditions under which sign flips occur.
 However, it is not obvious how likely sign flips are.
 One way to answer this question is to measure the fraction of parameters ($\mu_g, \beta_g, \alpha_g)$ for $g \in \{H,K\}$ that lead to sign flips. As the next two propositions demonstrate, the fraction leading to sign flips is fairly large.
 Throughout this section and the next, we will make use of the fact that as long as the (fairly improbable) event of $\mu_H = \mu_K$ does not occur, we can fix the units of the covariates $X$ such that $\mu_K = 0$ and $\mu_K = 1$; see \cref{lemma:units}.

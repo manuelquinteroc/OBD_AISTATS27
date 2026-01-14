@@ -7,6 +7,7 @@ We show that sign reversals (of either the explained or unexplained component) r
 Then we explain why these sign flips still might not be common in practical applications.
 
 \subsection{Signed conclusions}
+\label{sec:sign_flip_characterizations}
 
 We start by concretizing the type of decision we will focus on in our analysis. 
 In particular, we will consider a conclusion based on the sign of either the explained or unexplained component of the OBD.
@@ -112,41 +113,39 @@ That is, larger magnitudes of \( \Delta \beta \) create ``more room'' for sign f
     \label{fig:prob_unexplained}
 \end{figure}
 
-\cref{sec:real_example,sec:example} demonstrate that, in practical scenarios, sign flips in the OBD can occur.
-%And \cref{thm:explained_ordering_sensitivity} and \cref{thm:ordering_sensitivity} fully describe the conditions under which sign flips occur.
-However, it is not obvious how likely sign flips are.
-One way to answer this question is to measure the fraction of parameters ($\mu_g, \beta_g, \alpha_g)$ for $g \in \{H,K\}$ that lead to sign flips. As the next two propositions demonstrate, the fraction leading to sign flips is fairly large.
-Throughout this section and the next, we will make use of the fact that as long as the (fairly improbable) event of $\mu_H = \mu_K$ does not occur, we can fix the units of the covariates $X$ such that $\mu_K = 0$ and $\mu_K = 1$; see \cref{lemma:units}.
+After characterizing sign flips in \cref{sign_flip_characterizations}, we can ask how likely they are.
+One formalization of this question is to ask what proportion of the parameter space corresponds to sign flips.
+In particular, for convenience, we set $\mu_K=0$ and $\mu_H=1$. We then measure the fraction of parameters ($\beta_g, \alpha_g)$ for $g \in \{H,K\}$ that lead to sign flips. As the next two propositions demonstrate, the fraction leading to sign flips is fairly large.
+\textcolor{red}{argue more clearly about the mu choices, bring up \cref{lemma:units}}
+
 %
+For the explained component, we find that, under our conditions, half of the parameter space corresponds to sign flips.
 \begin{proposition} \label{prop:explained_fraction}
-	Assume $\mu_H \neq \mu_K$ elementwise.
+	Suppose $\mu_K = 0 \in \R^d$ and $\mu_H = 1 \in \R^d$.
+	Choose any $M > 0$.
 	Let $C_M \subset \R^{2d}$ be a cube with side length $2M > 0$ centered at the origin, and suppose $(\beta_K, \beta_H)$ jointly lie in this cube. Let $C_{flip} \subset C_M$ be the settings of $(\beta_H, \beta_K)$ that lead to a sign flip in the explained component.
-	Then we may choose units of $X$ such that $\mu_K = 0 \in \R^d$ and $\mu_H = 1 \in \R^d$, and for for any $M > 0$:
+	Then
 	\begin{equation}
 		\frac{\mathrm{Volume}(C_{flip})}{\mathrm{Volume}(C_M)} = \frac{1}{2}.
 	\end{equation}
-I.e., half of the parameter space leads to sign flips in the explained component.
-\begin{proof}
-    See \cref{proof:explained_fraction}.
-\end{proof}
 \end{proposition}
-%
+See \cref{proof:explained_fraction} for the proof.
+
+For the unexplained component, we find that the proportion of parameter space corresponding to sign flips nears 1/2 as the dimension of the covariate vector grows.
 \begin{proposition} 
 \label{prop:unexplained_fraction}
-	Assume $\mu_H \neq \mu_K$ elementwise.
+	Suppose $\mu_K = 0$ and $\mu_H = 1 \in \R^d$.
 	Let $C_M \subset \R^{2d+2}$ be a cube with side length $2M > 0$ centered at the origin, and suppose $(\beta_K, \beta_H, \alpha_K, \alpha_H)$ jointly lie in this cube.
 	Let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent random variables.
-	Then we may choose units of $X$ such that $\mu_K = 0$ and $\mu_H = 1 \in \R^d$, and
- 	the fraction of $C_M$ for which a sign flip occurs in the unexplained component is given by:
+	The fraction of $C_M$ for which a sign flip occurs in the unexplained component is given by:
 \begin{align} \label{eq:unexplained_fraction}
-    Pr \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d + 1 - I_2 \}  \right) + \nonumber \\
+    P_d := Pr \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d + 1 - I_2 \}  \right) + \nonumber \\
     Pr \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d + 1 - I_2 \} \right),
 \end{align}
- and this quantity approaches $1/2$ as $d \to \infty$.
- \begin{proof}
-    See \cref{proof:unexplained_fraction}.
-\end{proof}
+where the probability $Pr$ is over the independent random variables $I_2, J_{2d}$.
+Moreover, as $d \to \infty$, $P_d \rightarrow 1/2$.
 \end{proposition}
+See \cref{proof:unexplained_fraction} for the proof.
 The joint Irwin-Hall probability in \cref{eq:unexplained_fraction} is hard to evaluate analytically, so in \cref{fig:prob_unexplained} we evaluate it numerically for various values of $d$.
 We see that for even modest dimension $d$, the fraction of parameter space leading to sign flips exceeds 40\%.
 

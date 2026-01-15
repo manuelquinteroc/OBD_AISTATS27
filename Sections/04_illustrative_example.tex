@@ -7,12 +7,12 @@ Given the results in \cref{sec:real_example}, natural questions arise. For examp
 
 \textbf{Motivation.}
 While our example is purely simulated, it is motivated by the following real-life concerns and observations.
-Body mass index (BMI) is a widely recognized and routinely measured marker of wellness \cite{heymsfield2016} and is strongly linked to cardiometabolic outcomes, such as elevated blood pressure.
+Body mass index (BMI) is a widely recognized and routinely measured marker of wellness \cite{heymsfield2016} and is strongly linked to cardiometabolic outcomes, such as elevated blood pressure \textcolor{red}{cite}.
 A researcher studying cardiac health may use commonly observed covariates like BMI to investigate whether differences in blood pressure between two populations are explainable by differences in basic markers of health between the populations, or differences in how these markers map to blood pressure.
 
-Our example imagines two populations of adults in primary care being followed for elevated blood pressure, using systolic blood pressure (SBP) at a standardized follow-up visit as the outcome $Y$. The BMI ($X$) of each adult is measured at an initial intake visit.
+Our example imagines two populations of adults in primary care being followed for elevated blood pressure, using systolic blood pressure (SBP) at a standardized follow-up visit as the outcome $Y$. The BMI ($X$) of each adult is measured at an intake visit.
 The first population, Group $H$, comes from a higher-resource setting, such as an urban neighborhood with structured care pathways, frequent follow up, and better access to healthy food and physical activity options. 
-The second population, Group $K$, comes from lower-resource setting, where patients face barriers such as longer travel distances to clinics, infrequent follow up, delayed medication titration, and limited access to nutritious food.
+The second population, Group $K$, comes from a lower-resource setting, where patients face barriers such as longer travel distances to clinics, infrequent follow up, delayed medication titration, and limited access to nutritious food.
 These factors shape both the composition of each group (including average BMI) and the structure of the SBP--BMI relationship. We follow a clinical literature finding an approximately linear relationship between BMI and SBP \cite{kaufman1997, cappuccio2008, chen2023}; in particular, we assume a separate linear relationship in each group.
 
 While an OBD cannot establish causality without further assumptions, it can suggest where one might look for potential drivers of observed disparities between the two groups.
@@ -49,7 +49,7 @@ K & 27.0 & 100.0 & 1.4 & 137.8 \\
 \cref{fig:bmi_sbp} shows the population SBP--BMI relationships for both groups (two lines). The figure also shows data samples
 to illustrate the BMI distribution in each group --- as well as how the intercepts, slopes, and BMI distributions interact.
 %
-Analogous to the real-data study in \cref{sec:real_example}, the two population lines display a similar qualitative pattern. Overall, Group $H$ has lower average SBP than Group $K$, owing both to lower average BMI and a shallower slope relating BMI to SBP, perhaps reflecting improved access and adherence to treatment, or availability of non-pharmacological support.
+Overall, Group $H$ has lower average SBP than Group $K$, owing both to lower average BMI and a shallower slope relating BMI to SBP, perhaps reflecting improved access and adherence to treatment, or availability of non-pharmacological support.
 However, Group $H$ has a higher baseline SBP ($\alpha_H$), perhaps reflecting genetic factors in Group $H$.
 
 \begin{figure}[h]
@@ -70,7 +70,7 @@ When group $H$ is the reference, the negative unexplained component implies that
 However, when group $K$ is the reference, institutional factors appear to actually \emph{increase} group $H$'s average blood pressure relative to group $K$.
 Intuitively, because blood pressure in group $K$ is so much more responsive to BMI, group $H$'s lower average BMI appears so good as to ``over-explain'' the difference in SBP; the unexplained component is then forced to be positive to compensate.
 
-In this example, the sign change is in the unexplained component rather than the explained component (cf.\ \cref{sec:real_example}). Since we simulate the data according to group-specific linear models, there is no specification. And since we have access to (and work directly with) population quantities, the difference in OBD conclusions is not a product of sampling error.
+In this example, the sign change is in the unexplained component rather than the explained component (cf.\ \cref{sec:real_example}). Since we simulate the data according to group-specific linear models, there is no misspecification. And since we work directly with population quantities, the difference in OBD conclusions is not a product of sampling error.
 
 \begin{table}[H]
 \caption{Population Oaxaca–Blinder decomposition of mean SBP differences. All values are in mmHg.}

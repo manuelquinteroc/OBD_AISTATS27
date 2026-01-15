@@ -80,8 +80,8 @@ See \cref{sec:sign_flip_proof} for the proof.
 %\end{remark}
 
 From \cref{thm:unexplained_ordering_sensitivity}, we see that group-specific slopes serve a different role in sign flips in the unexplained case relative to the explained case.
-Suppose we hold fixed the covariate means $\mu_H$ and $\mu_K$. Then we see that scaling up the magnitude of the vector change in slopes ($\Delta \beta$) induces sign flips for a greater range of values 
-of the scalar change in intercepts ($\Delta \alpha$).
+Suppose we hold fixed the covariate means $\mu_H$ and $\mu_K$. Then scaling up the magnitude of the vector change-in-slopes ($\Delta \beta$) induces sign flips for a greater range of values 
+of the scalar change-in-intercepts ($\Delta \alpha$).
 That is, larger magnitudes of \( \Delta \beta \) create ``more room'' for sign flips in the unexplained component.
 
 %    \Cref{thm:ordering_sensitivity} shows that sign reversals in the unexplained component are not edge cases. Equation \(U^{(K)} - U^{(H)} = -B\) implies that switching the reference group shifts the unexplained term by exactly \(B\), and the explained part by \(-B\). When \(B \neq 0\), this shift can flip the diagnosis—from structural underpayment to overpayment—even with a correctly specified model. The disagreement region \(S \in (-B, 0)\) for \(B > 0\) (and its mirror for \(B < 0\)) is tight: outside this interval, both orderings agree in sign; inside it, they disagree (see \cref{imageTODO}). This window has width \(|B|\), which grows with larger covariate shifts or slope differences—both common in practice. So sign flips are not rare or pathological; they’re a general sensitivity that arises whenever \(B\) is materially different from zero. This motivates the next result.
@@ -118,7 +118,7 @@ we first make a common standardization choice in one population: we transform th
 $\mu_K=0 \in \R^d$. How to standardize population spread and how to handle the second group are less obvious,
 but we address both of these challenges by choosing $\mu_H =1\in \R^d$. \textcolor{red}{TB: what do we think about using bold or some other distinguishing notation for a 0 or 1 vector?}
 We note that our standardization choice ($\mu_K=0,\mu_H=1$) is
-always possible as long as $\mu_K \neq \mu_H$ (see \cref{lemma:units}), and find similar results by simulation without this standardization choice (see TODO).
+always possible as long as $\mu_K \neq \mu_H$ (see \cref{lemma:units}).
 
 In the theory that follows, we will find it convenient to restrict our focus to a bounded range of parameters. Namely, we
 assume that, for some $M > 0$ and all groups $g$, the entries of $\beta_g$ and $\alpha_g$ lie in $[-M,M]$.
@@ -167,6 +167,10 @@ We see that for even modest dimension $d$, the fraction of parameter space leadi
     \label{fig:prob_unexplained}
 \end{figure}
 
+While our results above assume the standardization $\mu_K=0, \mu_H=1$, 
+we are able to confirm by simulations that we expect similar results when we take each $\mu_g$ uniform
+in the range $[-M,M]$ as well. See \textcolor{red}{appendix} for details. \textcolor{red}{TB: note that i moved these results here.}
+
 \subsection{Are sign flips common in practice?}
 \label{sec:sign_flips_practice}
 
@@ -175,9 +179,8 @@ However, we here observe that empirical evidence suggests sign flips in practice
 We discuss resolutions to this apparent contradiction in \cref{sec:no_sign_flips}.
 
 An exhaustive search of the literature applying the OBD is beyond the scope of the present paper;
-particular Stata and R implementations of the OBD have hundreds of citations alone \citep{jann2008, Hlavac2022oaxaca}, 
-and the paper introducing the Stata implementation has thousands of citations \citep{jann2008}.
-Moreover, many papers performing the OBD do not even cite particular software implementations. \textcolor{red}{check we agree with that last claim}
+a paper corresponding to a particular Stata implementation of the OBD has thousands of citations alone \citep{jann2008}. Moreover, there are implementations
+in other languages \citep{Hlavac2022oaxaca}, and many papers performing the OBD do not even cite particular software implementations. \textcolor{red}{check we agree with that last claim}
 Without trying to form a representative sample, we examined a selection of papers performing the OBD. 
 Of the particular papers we examined, many did not report both directions of the OBD.
 Of the papers that did report both directions \citep{ONeill2006, fortinLemieuxFirpo2011, sharafRashad2016, rahimiNazari2021},

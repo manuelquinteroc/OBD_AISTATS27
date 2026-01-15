@@ -24,11 +24,11 @@ More generally, we might ask:
 or 
 (B) \emph{How much would Group $K$'s mean outcome ($Y$) change if group $K$ kept its outcome--covariate relationship ($Y|X$) but had the covariate ($X$) distribution of group $H$?}
 
-In the general case, we can compute the mean of a counterfactual $Y$ that has group $H$'s outcome--covariate relationship ($Y|X$) and group $K$'s covariate ($X$) distribution as follows. In particular, by using
-the law of total expectation, we have
+To address the general questions, it will be useful to compute the mean of a counterfactual $Y$ that has group $H$'s outcome--covariate relationship ($Y|X$) and group $K$'s covariate ($X$) distribution. In particular, by using
+the law of total expectation, this mean becomes
 $\E_K [ \E_H  [ Y | X ] ]$, with an analogous formula when the groups are reversed.
 
-Then the difference in mean outcomes between the two groups can be expressed as the distance between each group's mean
+Then the difference in mean outcomes between the two groups can be expressed as the difference between each group's mean
 and the chosen counterfactual mean. The decomposition corresponding to question (A) above is:
 %
 \begin{align}

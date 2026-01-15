@@ -20,6 +20,7 @@ extreme case where we are able to flip to the opposite sign by choosing a differ
 Recall from \cref{eq:ob_decomp_ref_group} the two possible explained components, each corresponding to a different reference.
 With this notation in hand, we can define changing a signed conclusion at the population level.
 \begin{definition}
+	\label{defn:sign_flip_explained}
 	We say the OBD \emph{sign flips the explained component} if the sign of the explained term, $\Delta\mu^T \beta_g$, depends on the reference group. That is,
 	\begin{equation}
         \label{eq:sign_flip_condition_explained_neq}
@@ -145,7 +146,7 @@ See \cref{proof:explained_fraction} for the proof.
 Second, for the unexplained component, we find that the proportion of parameter space corresponding to sign flips nears 1/2 as the dimension of the covariate vector grows.
 \begin{proposition} 
 \label{prop:unexplained_fraction}
-	Suppose $\mu_K = 0$ and $\mu_H = 1 \in \R^d$.
+	Suppose $\mu_K = 0 \in \R^d$ and $\mu_H = 1 \in \R^d$.
 	Let $C_M \subset \R^{2d+2}$ be a cube with side length $2M > 0$ centered at the origin, and suppose $(\beta_K, \beta_H, \alpha_K, \alpha_H)$ jointly lie in this cube.
 	Let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent random variables.
 	The fraction of $C_M$ for which a sign flip occurs in the unexplained component is given by:
@@ -205,20 +206,29 @@ their existence is still possible.
 
 \subsection{Understanding the sign-flip gap}
 \label{sec:no_sign_flips}
-\cref{sec:sign_flip_fraction} shows that, as a fraction of parameter space, a large number of parameters lead to sign flips.
 
-However, this seems to contradict empirical evidence.
-In particular, in \cref{appendix:icu_details,appendix:us_labor_force}, only a small number of problems lead to sign flips.
-And, while not all applications of the OBD in the literature report both choices of reference group $g$, those that we found to report both do not exhibit a sign flip \citep{ONeill2006, fortinLemieuxFirpo2011, sharafRashad2016, rahimiNazari2021}.
-One explanation for this tension is that the theoretical analysis places a uniform distribution over the linear regression parameters, while true data-generating processes may be non-uniform.
+How can it be that sign flips appear to be rare in practice (\cref{sec:sign_flips_practice}) but common in terms of parameter-space volume (\cref{sec:sign_flip_fraction})?
+A key resolution is that regression parameters observed in practice need not be uniformly distributed over parameter space; in fact, we generally expect they are not.
 
-%While \cref{thm:explained_ordering_sensitivity,thm:ordering_sensitivity} characterizes when sign reversals can arise, it is also useful to understand when they do \emph{not} occur. 
-%For the explained component, although differences in coefficients can in principle offset differences in covariate means, the most immediate condition under which no sign reversal occurs is when the covariate mean difference loads in the same direction under both reference models.
+\textbf{Explained component.} First, consider the explained component. Under the standardization we used in \cref{sec:sign_flip_fraction},
+we can simplify the characterization of when a sign flip happens.
+%
+\begin{remark} \label{rmk:no_explained_sign_flip}
+	Suppose $\mu_K = 0 \in \R^d$ and $\mu_H = 1 \in \R^d$.
+	Then there is a sign flip if and only if $\sign (\sum_{i=1}^d \beta_{H,i}) \neq \sign( \sum_{i=1}^d \beta_{K,i})$.
+\end{remark}
+%
+This observation follows immediately from \cref{defn:sign_flip_explained}.
+In practice, we expect that the general direction of trends largely agrees, at least in sign, in each of the two groups.
+For instance, consider the SBP--BMI example in \cref{sec:example}. We expect a positive relationship between BMI and SBP for both the higher-resource group $H$ and the lower-resource group $K$;
+i.e., we expect $\beta_H, \beta_K > 0$.
+So, by \cref{rmk:no_explained_sign_flip}, we do not expect to see a sign flip.
 
-For the unexplained component, a sign flip intuitively requires the intercept and slope effects to pull in opposite directions across groups. When both move in the same direction, so that the group with higher baseline outcomes also has higher returns to covariates, the unexplained component preserves its sign regardless of the chosen reference group.
+Similarly, \cref{rmk:no_explained_sign_flip} helps us see why few of the hospital mortality analyses (\cref{sec:sign_flips_practice} and \cref{appendix:icu_details}) show explained sign flips. A priori, we might expect that the association between any particular factor and mortality has a different magnitude for men than it does for women. But there is little a priori reason to think that any single factor might cause men's mortality to decrease but women's to increase (or vice versa).
+Indeed, this observation makes the sign flip in \cref{sec:real_example} even more surprising.
 
-We formalize this idea in the following assumption. 
-
+\textbf{Unexplained component.} Next, consider the unexplained component. In this case, a sign flip intuitively requires the intercept and slope effects to pull in opposite directions across groups. When both move in the same direction, so that the group with higher baseline outcomes also exhibits higher returns to covariates, the unexplained component preserves its sign regardless of the chosen reference group.
+We formalize these ideas in \cref{ass:no_sign_flip} and \cref{prop:no_sign_flip} next.
 \begin{assumption}[Aligned intercept--slope effects]
 \label{ass:no_sign_flip}
 \[
@@ -235,32 +245,13 @@ We formalize this idea in the following assumption.
     Under \cref{ass:no_sign_flip}, the unexplained components 
     \( U^{(H)}\) and  \(U^{(K)}\) share the same sign.
 \end{proposition}
+See \cref{proof:no_sign_flip} for the proof.
 
-\begin{proof}
-See \cref{proof:no_sign_flip}.
-\end{proof}
+It seems plausible that in practice we might often encounter cases where both intercept and slope advantages move in the same direction; 
+\cref{prop:no_sign_flip} confirms there is no sign flip in such cases.
+As an illustration, recall the gender wage gap example introduced in \cref{sec:counterfactual_example}.
+\cref{ass:no_sign_flip} corresponds to settings where the group earning higher baseline wages ($\alpha_g$) also experiences higher returns to skills and education ($\beta_g$). 
+When both intercept and slope advantages move in the same direction, there is no sign flip.
 
-Under \Cref{ass:no_sign_flip} both unexplained components share the same sign and the OBD cannot exhibit a sign reversal. 
-This assumption requires that the group with higher baseline outcomes ($\alpha_g$) also benefits more from the covariates ($\beta_g$) for \(g \in \{H,K\}\).
-
-For example, in terms of the gender wage example introduced in \cref{sec:counterfactual_example}, \cref{ass:no_sign_flip} corresponds to settings where the group earning higher baseline wages ($\alpha_g$) also experiences higher returns to skills and education ($\beta_g$). 
-Here, both intercept and slope advantages move in the same direction, so the unexplained component, presents consistent sign between reference groups. 
-
-Similarly, for the SBP--BMI example in \cref{sec:example}, \cref{ass:no_sign_flip} would correspond to a case where the higher-resource group exhibits both a higher baseline SBP and a stronger SBP--BMI relationship than the lower-resource group. However, in the simulated data, the lower-resource group shows a steeper SBP--BMI slope while having a lower baseline, violating \cref{ass:no_sign_flip}.
-
-We can similarly identify conditions under which a sign flip cannot occur in the explained components. 
-Recall that, by definition, there is a sign flip in the explained component if $\sign(\Delta\mu^T \beta_H) \neq \sign(\Delta\mu^T \beta_K)$. The following proposition follows immediately:
-%
-\begin{proposition} \label{prop:no_explained_sign_flip}
-	Assume that $\mu_K \neq \mu_H$ elementwise.
-	Then we may choose units for $X$ such that there is no sign flip in the explained components if and only if $\sign (\sum_{i=1}^d \beta_{H,i}) \neq \sign( \sum_{i=1}^d \beta_{K,i})$.
-\end{proposition}
-%
-\begin{proof}
-See \cref{proof:no_explained_sign_flip}.
-\end{proof}
-\cref{prop:no_explained_sign_flip} helps us understand why sign flips in the explained component are unusual in the settings considered in this paper.
-In both the SBP--BMI example in \cref{sec:example}, it is expected that any subpopulation will have a positive relationship between BMI and SBP; i.e., we expect $\beta_H, \beta_K > 0$ for any choice of $H, K$.
-
-Similarly, \cref{prop:no_explained_sign_flip} helps us see why few of the hospital mortality analyses from \cref{appendix:icu_details} show explained sign flips: while we might expect the same factor to affect in-mortality in men and women with different magnitudes, there is little a-priori reason to think that the same factor will cause mens' mortality to decrease but womens' to increase (or vice-versa).
-Indeed, this makes the sign flip in \cref{sec:real_example} even more surprising.
+On the other hand, sign flips remain plausible for the unexplained component. 
+Consider the SBP--BMI example in \cref{sec:example}, \cref{ass:no_sign_flip} would correspond to a case where the higher-resource group exhibits both a higher baseline SBP and a stronger SBP--BMI relationship than the lower-resource group. However, in the simulated data, the lower-resource group shows a steeper SBP--BMI slope while having a lower baseline; that is, the SBP--BMI example violates \cref{ass:no_sign_flip}, and indeed we see a sign flip in the unexplained component.

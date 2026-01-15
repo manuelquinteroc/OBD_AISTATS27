@@ -242,7 +242,7 @@ Apply \cref{lemma:units} so that \( \E_K[X] = 0 \), \( \E_H[X] = 1 \), and there
 \cref{eq:sign_flip_condition_explained_neq} now simplifies to 
 \[ \sign\!\left(1^\top \beta_{H}\right) \neq \sign\!\left(1^\top \beta_{K}\right). \]
 A Uniform$(-M, M)$ distribution on \( \beta_H \) and \( \beta_K \) corresponds to distributions on \( 1^\top \beta_{H} \) and \( 1^\top \beta_{K} \) that are identical and symmetric around zero.
-As such, the signs of \( 1^\top \beta_{H} \) and \( 1^\top \beta_{H} \) will disagree in 50\% of the parameter space.
+As such, the signs of \( 1^\top \beta_{H} \) and \( 1^\top \beta_{K} \) will disagree in 50\% of the parameter space.
 
 \subsubsection{Proof of \cref{prop:unexplained_fraction}}
 \label{proof:unexplained_fraction}
@@ -309,6 +309,27 @@ For larger \( d \), the combinatorial terms in the CDF become difficult to evalu
 In those cases the central limit theorem allows us to approximate an Irwin-Hall(2d) distribution with a \( N(d, \frac{d}{6})\) distribution.
 We compute the probabilities in \cref{sec:sign_flip_fraction} for $d \leq 40$ using the exact CDF in \cref{eq:exact_irwin_hall}, and we use the normal approximation for $d > 40$.
 \end{remark}
+
+\subsubsection{Volume of Sign Flip Region Without Covariate Standardization}
+
+The preceding analysis calculates the volume of the sign-flip region when covariates are standardized via \cref{lemma:units}.
+Here, we repeat the exercise without standardizing any of the covariates.
+Let each of \( \alpha_H, \alpha_K, \beta_H, \beta_K, \mu_H \) and \( \mu_K \) lie inside a cube of appropriate dimension, with side length \( 2M > 0 \) and center at the origin.
+Deriving a closed form expression for the volume of the sign flip region is challenging, so we estimate this volume by simulation.
+For each \( d \in \{1, \dots, 100 \} \) and \( 2M \in \{2, 20, 200\} \), we draw each regression parameter independently from an appropriate Uniform distribution, and then determine whether the unexplained component flips signs.
+We simulate 1,000 draws for each combination of \( d \) and \( M \), and plot the proportion of unexplained component sign flips for each combination in \cref{fig:prob_unexplained_simulated}.
+
+For the explained component, the percentage of the parameter space with sign flips appears constant at 50 \%, regardless of \( d \) or \( M \). 
+This is consistent with the result for covariates standardized via \cref{lemma:units}.
+For the unexplained component, the percentage of the parameter space with sign flips is nonzero for even small \( d \) and \( M \), and appears to approach \( 50\% \) as each of \( d \) and \( M \) grow.
+This behavior is similar to the result for standardized covariates.
+Together, these findings suggest that the conclusions from \cref{proof:explained_fraction,prop:unexplained_fraction} are not simply a result of our choice of units.
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/prob_flip_simulated.pdf}}
+    \caption{Percentage of parameter space leading to unexplained component sign flips, without covariate standardization.}
+    \label{fig:prob_unexplained_simulated}
+\end{figure}
 
 \subsection{Proofs from \cref{sec:no_sign_flips}}
 

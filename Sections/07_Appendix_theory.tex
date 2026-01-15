@@ -172,8 +172,8 @@ Even though \cref{thm:unexplained_ordering_sensitivity} does not restrict the ma
 
 
 \subsection{Relationship Between Unexplained Component Sign Flips and Omitted Variables}
-\label{sec:ovb}
-Since unexplained component sign flips require \( | 1^T \Delta \beta | > | \Delta \alpha | \), any data-generating processes that jointly produces large \( | 1^T \Delta \beta | \) and \( \Delta \alpha \) would make sign flips less likely than \cref{prop:unexplained_fraction} suggests.
+\label{appendix:ovb}
+Since unexplained component sign flips require \( | \mathbf{1}^T \Delta \beta | > | \Delta \alpha | \), any data-generating processes that jointly produces large \( | \mathbf{1}^T \Delta \beta | \) and \( \Delta \alpha \) would make sign flips less likely than \cref{prop:unexplained_fraction} suggests.
 
 A candidate explanation is that the researcher's dataset omits important covariates, which are related to both \( X \) and \( Y \).
 For example, hospital records only contain measurements that doctors have ordered, not the results of important tests a doctor may have skipped.
@@ -218,71 +218,71 @@ We can use this formula to express the difference in slopes and intercepts acros
   \Delta \beta  &= \Delta \theta + \Delta \Psi^\top \Delta \gamma.
 \end{align}
 These equations show that \( \Delta \alpha \) and \( \Delta \beta \) depend on the role of omitted covariates in the data-generating process.
-Crucially, they provide a mechanism to produce \( \Delta \alpha \) and \( 1^\top \Delta \beta \) that are jointly large.
-If both the Z-X and Z-Y relationships change in complementary ways, then both \( \Delta \zeta^\top \Delta \gamma \) and \( 1^\top \Delta \Psi^\top \Delta \gamma \) will be large.
+Crucially, they provide a mechanism to produce \( \Delta \alpha \) and \( \mathbf{1}^\top \Delta \beta \) that are jointly large.
+If both the Z-X and Z-Y relationships change in complementary ways, then both \( \Delta \zeta^\top \Delta \gamma \) and \( \mathbf{1}^\top \Delta \Psi^\top \Delta \gamma \) will be large.
 
 
 \subsection{Volume of the Sign-Flip Parameter Region}
-We first show how to choose units for the covariates conveniently, so that \( \Delta \mu = 1 \).
+We first show how to choose units for the covariates conveniently, so that \( \Delta \mu = \mathbf{1} \).
 This will simplify volume calculations for the regions of parameter space that flip the explained and unexplained components of the OBD.
 \begin{lemma}
   \label{lemma:units}
-  If \( \mu_H \neq \mu_K \) elementwise, we can choose units for \( X \) such that \( \mu_K := \E_K[X] = 0 \) and \( \mu_H := \E_H[X] = 1 \).
+  If \( \mu_H \neq \mu_K \) elementwise, we can choose units for \( X \) such that \( \mu_K := \E_K[X] = \mathbf{0} \) and \( \mu_H := \E_H[X] = \mathbf{1} \).
   \begin{proof}  
   Consider the transformation \( \tilde{X} = (X - \mu_K) / (\mu_H - \mu_K) \), where the division is elementwise.
   This is well-defined as long as \( \mu_H \neq \mu_K \) elementwise.
   Since \( \tilde{X} \) is a linear transformation of \( X \), it corresponds to a change in units.
-  Under these new units, \( \E_K[\tilde{X}] = 0 \) and \( \E_H[\tilde{X}] = 1 \).  
+  Under these new units, \( \E_K[\tilde{X}] = \mathbf{0} \) and \( \E_H[\tilde{X}] = \mathbf{1} \).  
   \end{proof}
 \end{lemma}
 
 \subsubsection{Proof of \cref{prop:explained_fraction}}
 \label{proof:explained_fraction}
-Apply \cref{lemma:units} so that \( \E_K[X] = 0 \), \( \E_H[X] = 1 \), and therefore \( \Delta \mu = 1 \).
+Apply \cref{lemma:units} so that \( \E_K[X] = \mathbf{0} \), \( \E_H[X] = \mathbf{1} \), and therefore \( \Delta \mu = \mathbf{1} \).
 \cref{eq:sign_flip_condition_explained_neq} now simplifies to 
-\[ \sign\!\left(1^\top \beta_{H}\right) \neq \sign\!\left(1^\top \beta_{K}\right). \]
-A Uniform$(-M, M)$ distribution on \( \beta_H \) and \( \beta_K \) corresponds to distributions on \( 1^\top \beta_{H} \) and \( 1^\top \beta_{K} \) that are identical and symmetric around zero.
-As such, the signs of \( 1^\top \beta_{H} \) and \( 1^\top \beta_{K} \) will disagree in 50\% of the parameter space.
+\[ \sign\!\left(\mathbf{1}^\top \beta_{H}\right) \neq \sign\!\left(\mathbf{1}^\top \beta_{K}\right). \]
+A Uniform$(-M, M)$ distribution on \( \beta_H \) and \( \beta_K \) corresponds to distributions on \( \mathbf{1}^\top \beta_{H} \) and \( \mathbf{1}^\top \beta_{K} \) that are identical and symmetric around zero.
+As such, the signs of \( \mathbf{1}^\top \beta_{H} \) and \( \mathbf{1}^\top \beta_{K} \) will disagree in 50\% of the parameter space.
 
 \subsubsection{Proof of \cref{prop:unexplained_fraction}}
 \label{proof:unexplained_fraction}
-Apply \cref{lemma:units} so that \( \E_K[X] = 0 \), \( \E_H[X] = 1 \), and therefore \( \Delta \mu = 1 \).
+Apply \cref{lemma:units} so that \( \E_K[X] = \mathbf{0} \), \( \E_H[X] = \mathbf{1} \), and therefore \( \Delta \mu = \mathbf{1} \).
 For the rescaled covariates, the conditions in \cref{thm:unexplained_ordering_sensitivity} simplify.
-In particular, the unexplained component flips sign if and only if \( 1^T \Delta \beta \neq 0 \), \( \sign (\Delta \alpha) \neq \sign (1^\top \Delta \beta) \), and \( | 1^T \Delta \beta | > |\Delta \alpha| \).
+In particular, the unexplained component flips sign if and only if \( \mathbf{1}^\top \Delta \beta \neq 0 \), \( \sign (\Delta \alpha) \neq \sign (\mathbf{1}^\top \Delta \beta) \), and \( | \mathbf{1}^\top \Delta \beta | > |\Delta \alpha| \).
 
 To compute the fraction of $C_M$ for which there are sign flips, we equivalently compute the probability of a sign flip under an independent $\mathrm{Uniform}(-M,M)$ measure on each element of the vector $(\beta_H, \beta_K, \alpha_H, \alpha_K) \in \R^{2d+2}$.
-The condition \( 1^T \Delta \beta \neq 0 \) holds almost surely under the assumed Uniform$(-M,M)$ measure, since \( 1^\top \Delta \beta \) is a non-degenerate linear combination of continuously distributed random variables, so we can focus on the latter two conditions.
-To do so, we will determine the distributions of  \( \Delta \alpha \) and \( 1^\top \Delta \beta \).
+The condition \( \mathbf{1}^\top \Delta \beta \neq 0 \) holds almost surely under the assumed Uniform$(-M,M)$ measure, since \( \mathbf{1}^\top \Delta \beta \) is a non-degenerate linear combination of continuously distributed random variables, so we can focus on the latter two conditions.
+To do so, we will determine the distributions of  \( \Delta \alpha \) and \( \mathbf{1}^\top \Delta \beta \).
 
 The sum of \( n \) Uniform$(0,1)$ random variables is sometimes called the Irwin-Hall(\(n\)) distribution.%
 \footnote{For \(n = 2\) this is a familiar triangular distribution.}
-When we place a Uniform$(-M, M)$ measure on the \( \alpha \)'s and \( \beta \)'s, there is a straightforward relationship between \( \Delta \alpha \), \( 1^\top \Delta \beta \), and appropriately defined Irwin-Hall random variables.
+When we place a Uniform$(-M, M)$ measure on the \( \alpha \)'s and \( \beta \)'s, there is a straightforward relationship between \( \Delta \alpha \), \( \mathbf{1}^\top \Delta \beta \), and appropriately defined Irwin-Hall random variables.
 The difference \( \Delta \alpha \) is the sum of two Uniform$(-M, M)$ variables, which is equivalent to an Irwin-Hall($2$) distribution, rescaled from $[0,2]$ to $[-2M, 2M]$.
-Similarly, \( 1^T \Delta \beta \) is the sum of \( 2 d \) Uniform$(-M, M)$ variables, and its distribution is an Irwin-Hall($2 d$) distribution, rescaled from $[0,2d]$ to \( [-2dM, 2dM] \).
+Similarly, \( \mathbf{1}^\top \Delta \beta \) is the sum of \( 2 d \) Uniform$(-M, M)$ variables, and its distribution is an Irwin-Hall($2 d$) distribution, rescaled from $[0,2d]$ to \( [-2dM, 2dM] \).
 
 That is, let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent.
 We can represent
 \begin{align*}
-    &1^T\Delta \alpha = 2M (I_2 - 1) 
-    &1^T\Delta \beta  = 2M (J_{2d} - d)
+    &\mathbf{1}^\top\Delta \alpha = 2M (I_2 - 1) 
+    &\mathbf{1}^\top\Delta \beta  = 2M (J_{2d} - d)
 \end{align*}
 
 We can use this correspondence to translate the event 
 \[
-\{ |1^\top \Delta \beta| > |\Delta \alpha| \}
+\{ |\mathbf{1}^\top \Delta \beta| > |\Delta \alpha| \}
 \cap
-\{ \sign(\Delta \alpha) \neq \sign(1^\top \Delta \beta) \}.
+\{ \sign(\Delta \alpha) \neq \sign(\mathbf{1}^\top \Delta \beta) \}.
 \]
 into an equivalent event in terms independent Irwin-Hall random variables:
 \begin{align*}
-    Pr& \left( \{ |1^\top \Delta \beta| > |\Delta \alpha| \}
+    Pr& \left( \{ |\mathbf{1}^\top \Delta \beta| > |\Delta \alpha| \}
     \cap
-    \{ \sign(\Delta \alpha) \neq \sign(1^\top \Delta \beta) \} \right) \\
+    \{ \sign(\Delta \alpha) \neq \sign(\mathbf{1}^\top \Delta \beta) \} \right) \\
     =& 
-    Pr \left( \{ \Delta \alpha > 0 \} \cap \{ 1^T \Delta \beta < - \Delta \alpha \} \right)
+    Pr \left( \{ \Delta \alpha > 0 \} \cap \{ \mathbf{1}^\top \Delta \beta < - \Delta \alpha \} \right)
     +
     Pr \left(
-    \{ \Delta \alpha < 0 \} \cap \{ 1^T\Delta \beta > - \Delta \alpha \} \right) \\
+    \{ \Delta \alpha < 0 \} \cap \{ \mathbf{1}^\top\Delta \beta > - \Delta \alpha \} \right) \\
     =& 
     Pr \left( \{ 2M (I_2 - 1)  > 0 \} \cap \{ 2M (J_{2d} - d) < - 2M (I_2 - 1)  \} \right)  \\
     &+
@@ -311,7 +311,7 @@ We compute the probabilities in \cref{sec:sign_flip_fraction} for $d \leq 40$ us
 \end{remark}
 
 \subsubsection{Volume of Sign Flip Region Without Covariate Standardization}
-
+\label{appendix:sign_flip_simulation}
 The preceding analysis calculates the volume of the sign-flip region when covariates are standardized via \cref{lemma:units}.
 Here, we repeat the exercise without standardizing any of the covariates.
 Let each of \( \alpha_H, \alpha_K, \beta_H, \beta_K, \mu_H \) and \( \mu_K \) lie inside a cube of appropriate dimension, with side length \( 2M > 0 \) and center at the origin.
@@ -343,7 +343,7 @@ $$
 By assumption, $\sign(\Delta\alpha) = \sign(\mu_H^T\Delta\beta) = \sign(\mu_K^T\Delta\beta)$, and thus $\sign(\UH) = \sign(\UK)$.
 \subsubsection{Proof of \cref{prop:no_explained_sign_flip}}
 \label{proof:no_explained_sign_flip}
-As $\mu_K \neq \mu_H$ by assumption, \cref{lemma:units} applies to imply that we can fix units such that $\mu_K = 0$ and $\mu_H = 1$. Then $\Delta\mu = 1$, and the condition for the explained component to not sign flip, $\sign(\Delta\mu^T\beta_K) \neq \sign(\Delta\mu^T \beta_H)$ reduces to:
+As $\mu_K \neq \mu_H$ by assumption, \cref{lemma:units} applies to imply that we can fix units such that $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$. Then $\Delta\mu = \mathbf{1}$, and the condition for the explained component to not sign flip, $\sign(\Delta\mu^T\beta_K) \neq \sign(\Delta\mu^T \beta_H)$ reduces to:
 \begin{equation}
 	\sign\left( \sum_{i=1}^d \beta_{K,i} \right) \neq \sign\left( \sum_{i=1}^d \beta_{H,i} \right),
 \end{equation}

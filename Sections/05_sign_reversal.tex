@@ -114,10 +114,9 @@ An immediate challenge with talking about volume within a parameter space is tha
 its dimension units from the covariates and response; in particular, any individual unit choice is somewhat
 arbitrary (consider a choice of centimeters vs.\ millimeters for a length scale), but also different covariates need not be 
 comparable (consider comparing a temperature to a weight). To alleviate this potential incompatibility between dimensions,
-we first make a common standardization choice in one population: we transform the covariate means to be zero,
-$\mu_K=0 \in \R^d$. How to standardize population spread and how to handle the second group are less obvious,
-but we address both of these challenges by choosing $\mu_H =1\in \R^d$. \textcolor{red}{TB: what do we think about using bold or some other distinguishing notation for a 0 or 1 vector?}
-We note that our standardization choice ($\mu_K=0,\mu_H=1$) is
+we first make a common standardization choice in one population: we transform the covariate means to be zero, $\mu_K = \mathbf{0}$, where \( \mathbf{0} \) is a vector of zeros with appropriate length. How to standardize population spread and how to handle the second group are less obvious,
+but we address both of these challenges by choosing $\mu_H = \mathbf{1}$, where \( \mathbf{1} \) is a vector of ones with appropriate length.
+We note that our standardization choice ($\mu_K= \mathbf{0},\mu_H=\mathbf{1}$) is
 always possible as long as $\mu_K \neq \mu_H$ (see \cref{lemma:units}).
 
 In the theory that follows, we will find it convenient to restrict our focus to a bounded range of parameters. Namely, we
@@ -133,7 +132,7 @@ As the next two results demonstrate, under these choices, the fraction of parame
 %
 First, for the explained component, we find that, under our conditions, half of the parameter space $(\beta_H, \beta_K, \alpha_H, \alpha_K)$ corresponds to sign flips.
 \begin{proposition} \label{prop:explained_fraction}
-	Suppose $\mu_K = 0 \in \R^d$ and $\mu_H = 1 \in \R^d$.
+	Suppose $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$.
 	Choose any $M > 0$.
 	Let $C_M \subset \R^{2d}$ be a cube with side length $2M > 0$ centered at the origin, and suppose $(\beta_H, \beta_K)$ jointly lie in this cube. Let $C_{flip} \subset C_M$ be the settings of $(\beta_H, \beta_K)$ that lead to a sign flip in the explained component.
 	Then
@@ -146,7 +145,7 @@ See \cref{proof:explained_fraction} for the proof.
 Second, for the unexplained component, we find that the proportion of parameter space corresponding to sign flips nears 1/2 as the dimension of the covariate vector grows.
 \begin{proposition} 
 \label{prop:unexplained_fraction}
-	Suppose $\mu_K = 0 \in \R^d$ and $\mu_H = 1 \in \R^d$.
+	Suppose $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$.
 	Let $C_M \subset \R^{2d+2}$ be a cube with side length $2M > 0$ centered at the origin, and suppose $(\beta_K, \beta_H, \alpha_K, \alpha_H)$ jointly lie in this cube.
 	Let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent random variables.
 	The fraction of $C_M$ for which a sign flip occurs in the unexplained component is given by:
@@ -167,9 +166,9 @@ We see that for even modest dimension $d$, the fraction of parameter space leadi
     \label{fig:prob_unexplained}
 \end{figure}
 
-While our results above assume the standardization $\mu_K=0, \mu_H=1$, 
-we are able to confirm by simulations that we expect similar results when we take each $\mu_g$ uniform
-in the range $[-M,M]$ as well. See \textcolor{red}{appendix} for details. \textcolor{red}{TB: note that i moved these results here.}
+While our results above assume the standardization $\mu_K=\mathbf{0}, \mu_H=\mathbf{1}$, 
+we confirm by simulations that we expect similar results when we take each coordinate of $\mu_g$ uniform
+in the range $[-M,M]$ as well. See \cref{appendix:sign_flip_simulation} for details.
 
 \subsection{Are sign flips common in practice?}
 \label{sec:sign_flips_practice}
@@ -198,7 +197,7 @@ The HR quartile two example in \cref{sec:real_example} was one such example. We 
 \cref{appendix:icu_details}.
 
 We ran a similar search on U.S.\ labor force data; in particular,
-the raw data come from the 2016 American Community Survey 1-Year Public Use Microdata Sample \textcolor{red}{cite}.
+the raw data come from the 2016 American Community Survey 1-Year Public Use Microdata Sample \cite{uscensus_acs_pums_2016}.
 We again purposely constructed a large set of data analyses to search for sign flips in different subsets of the data, comprising all combinations of the factors in Appendix \cref{tab:us_census_design}.
 Out of the 355 comparisons we examined, we found 0 cases where the explained component flipped signs and 1 case where the unexplained component flipped signs.
 See \cref{appendix:us_labor_force} for details of this data set and our search procedure.
@@ -216,7 +215,7 @@ A key resolution is that regression parameters observed in practice need not be 
 we can simplify the characterization of when a sign flip happens.
 %
 \begin{remark} \label{rmk:no_explained_sign_flip}
-	Suppose $\mu_K = 0 \in \R^d$ and $\mu_H = 1 \in \R^d$.
+	Suppose $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$.
 	Then there is a sign flip if and only if $\sign (\sum_{i=1}^d \beta_{H,i}) \neq \sign( \sum_{i=1}^d \beta_{K,i})$.
 \end{remark}
 %
@@ -250,12 +249,22 @@ We formalize these ideas in \cref{ass:no_sign_flip} and \cref{prop:no_sign_flip}
 \end{proposition}
 See \cref{proof:no_sign_flip} for the proof.
 
-\textcolor{red}{TB: seems like this area would be a good place to point to Appendix A.4 and describe a bit of the argument.}
-It seems plausible that in practice we might often encounter cases where both intercept and slope advantages move in the same direction; 
+Researchers in some domains might often encounter cases where both intercept and slope advantages move in the same direction; 
 \cref{prop:no_sign_flip} confirms there is no sign flip in such cases.
 As an illustration, recall the gender wage gap example introduced in \cref{sec:counterfactual_example}.
 \cref{ass:no_sign_flip} corresponds to settings where the group earning higher baseline wages ($\alpha_g$) also experiences higher returns to skills and education ($\beta_g$). 
 When both intercept and slope advantages move in the same direction, there is no sign flip.
+This is one explanation for why sign flips are rare in our analysis of U.S. labor force data, described in \cref{appendix:us_labor_force}.
+\cref{ass:no_sign_flip} holds in 230 out of the 355 comparisons we search (64.8\%), ruling out the possibility of an unexplained component sign flip in these cases.
 
-On the other hand, sign flips remain plausible for the unexplained component. 
-Consider the SBP--BMI example in \cref{sec:example}, \cref{ass:no_sign_flip} would correspond to a case where the higher-resource group exhibits both a higher baseline SBP and a stronger SBP--BMI relationship than the lower-resource group. However, in the simulated data, the lower-resource group shows a steeper SBP--BMI slope while having a lower baseline; that is, the SBP--BMI example violates \cref{ass:no_sign_flip}, and indeed we see a sign flip in the unexplained component.
+However, \cref{ass:no_sign_flip} is not plausible in all domains.
+Consider the ICU data exercise from \cref{sec:real_example} where we compare mortality rates between various populations.
+In our search  across 139 comparisons, \cref{ass:no_sign_flip} never holds, meaning it can't explain the relative rarity of unexplained component sign flips.
+In this setting, \cref{ass:no_sign_flip} corresponds to one population having a mortality rate that is both higher at baseline and more sensitive to covariates than the other population. 
+This might not be the case if the observed covariates provide weaker explanations for mortality than \textit{unobserved} covariates.
+For example, the high-mortality population may have a family history of disease, greater exposure to environmental risk factors, or chronic health conditions.
+If these unobserved factors are strong drivers of their mortality, one population may have a mortality rate that is higher but \textit{less} sensitive to the observed covariates.
+We develop this example with more rigor in \cref{appendix:ovb}, explicitly showing how the regression parameters \( \alpha \) and \( \beta \) are jointly influenced by unobserved covariates.
+
+% On the other hand, sign flips remain plausible for the unexplained component. 
+% Consider the SBP--BMI example in \cref{sec:example}, \cref{ass:no_sign_flip} would correspond to a case where the higher-resource group exhibits both a higher baseline SBP and a stronger SBP--BMI relationship than the lower-resource group. However, in the simulated data, the lower-resource group shows a steeper SBP--BMI slope while having a lower baseline; that is, the SBP--BMI example violates \cref{ass:no_sign_flip}, and indeed we see a sign flip in the unexplained component.

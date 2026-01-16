@@ -1,9 +1,13 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-Even though it is well-known that the OBD depends on the choice of reference group, we show that this dependence can be highly consequential, leading to sign reversals in both the explained and unexplained components.
-We present real and simulated examples in which such a reversal occurs.%We present a simple healthcare example, inspired by real-world data, as well as a real clinical case study, in which one OBD direction suggests that quality of care improves patient outcomes, while the other suggests it worsens them. 
-We further prove that such sign reversals are not isolated phenomena, but can occur in a wide variety of scenarios. 
-However, we demonstrate that while the set of regression parameters $(\beta_g, \alpha_g, \mu_g), g \in \{K, H\}$ leading to sign flips is substrantial, there is reason to believe sign flips will be rare in practice.
-We therefore believe that practitioners should be cautiously optimistic about use of the OBD: it is likely to provide robust and useful insights about differences between populations, but it is critical that practitioners compute and report its robustness to the choice of reference group, less they be mislead by an arbitrary choice of the reference group.
+It is well known that the OBD depends on the choice of reference group. We here demonstrate that this asymmetry can result in substantively different conclusions between the two reference choices.
+We present real and simulated examples as existence proofs. We show that sign reversals can occur in either the explained or unexplained component and are not solely products of model misspecification or a small sample size. We find that the fraction of parameter space representing sign reversals is large. But our empirical evidence suggests sign reversals may be rare in practice --- since the fitted linear regression parameters  in real data analyses are not well modeled by a uniform distribution over parameter space. We recommend that data analysts using the OBD always report both directions --- to accurately convey the degree of support behind substantive conclusions arising from the OBD.
+
+
+%Even though it is well-known that the OBD depends on the choice of reference group, we show that this dependence can be highly consequential, leading to sign reversals in both the explained and unexplained components.
+%We present real and simulated examples in which such a reversal occurs.%We present a simple healthcare example, inspired by real-world data, as well as a real clinical case study, in which one OBD direction suggests that quality of care improves patient outcomes, while the other suggests it worsens them. 
+%We further prove that such sign reversals are not isolated phenomena, but can occur in a wide variety of scenarios. 
+%However, we demonstrate that while the set of regression parameters $(\beta_g, \alpha_g, \mu_g), g \in \{K, H\}$ leading to sign flips is substrantial, there is reason to believe sign flips will be rare in practice.
+%We therefore believe that practitioners should be cautiously optimistic about use of the OBD: it is likely to provide robust and useful insights about differences between populations, but it is critical that practitioners compute and report its robustness to the choice of reference group, less they be mislead by an arbitrary choice of the reference group.
 %Practitioners should therefore be cautious optimistic when using the OBD, at least in settings where no reference group is clearly justified.

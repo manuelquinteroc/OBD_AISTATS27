@@ -24,26 +24,30 @@ More generally, we might ask:
 or 
 (B) \emph{How much would Group $K$'s mean outcome ($Y$) change if group $K$ kept its outcome--covariate relationship ($Y|X$) but had the covariate ($X$) distribution of group $H$?}
 
-To address the general questions, it will be useful to compute the mean of a counterfactual $Y$ that has group $H$'s outcome--covariate relationship ($Y|X$) and group $K$'s covariate ($X$) distribution. In particular, by using
-the law of total expectation, this mean becomes
-$\E_K [ \E_H  [ Y | X ] ]$, with an analogous formula when the groups are reversed.
+To address the general questions, it will be useful to compute the mean of a counterfactual $Y$ that has the outcome--covariate relationship ($Y|X$) of group $g$ and the covariate ($X$) distribution of group $g'$. By the law of total expectation, this mean equals
+$M_{g',g} := \E_{g'} [ \E_g  [ Y | X ] ]$.
 
-Then the difference in mean outcomes between the two groups can be expressed as the difference between each group's mean
-and the chosen counterfactual mean. The decomposition corresponding to question (A) above is:
+Then the difference in mean outcomes between the two groups can be decomposed into differences between each group's mean
+and the chosen counterfactual mean. The decompositions corresponding to questions (A) and (B) above are, respectively, 
+\cref{eq:OB_H_Counterfactual} and \cref{eq:OB_K_Counterfactual} below.
 %
 \begin{align}
+	\nonumber
+    &\Delta_Y := \E_H[Y] - \E_K[Y] \\ 
     \label{eq:OB_H_Counterfactual}
-    &\E_H[Y] - \E_K[Y] = \\ 
-    &\underbrace{\Big(\E_H[Y] - \E_K [ \E_H  [ Y | X ] ] \Big)}_{E^{(H)}} \nonumber 
-     + \underbrace{\Big(\E_K [ \E_H  [ Y | X ] ] - \E_K[Y]\Big)}_{U^{(H)} }.
+    &=\underbrace{\Big(\E_H[Y] - M_{K,H} \Big)}_{E^{(H)}} 
+     + \underbrace{\Big( M_{K,H} - \E_K[Y]\Big)}_{U^{(H)} } \\
+     \label{eq:OB_K_Counterfactual}
+     &=\underbrace{\Big(\E_H[Y] - M_{H,K} \Big)}_{U^{(K)}} 
+     + \underbrace{\Big(M_{H,K} - \E_K[Y]\Big)}_{E^{(K)}}.
 \end{align} 
-Alternatively, the decomposition corresponding to question (B) above is:
-\begin{align}
-    \label{eq:OB_K_Counterfactual}
-    &\E_H[Y] - \E_K[Y]= \\
-    &\underbrace{\Big(\E_H[Y] - \E_H [ \E_K  [ Y | X ] ] \Big)}_{U^{(K)}} \nonumber 
-     + \underbrace{\Big(\E_H [ \E_K  [ Y | X ] ] - \E_K[Y]\Big)}_{E^{(K)}}.
-\end{align}
+%Alternatively, the decomposition corresponding to question (B) above is:
+%\begin{align}
+%    \label{eq:OB_K_Counterfactual}
+%    &\E_H[Y] - \E_K[Y]= \\
+%    &\underbrace{\Big(\E_H[Y] - M_{H,K} \Big)}_{U^{(K)}} \nonumber 
+%     + \underbrace{\Big(M_{H,K} - \E_K[Y]\Big)}_{E^{(K)}}.
+%\end{align}
 %
 Traditionally the term corresponding to changing the covariate distribution is called the
 ``explained component'' since this part of the difference is explained by the observed

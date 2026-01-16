@@ -1,39 +1,75 @@
 \section{Introduction}
-As a motivating example, suppose a public health worker in City $K$ notices that the mean systolic blood pressure (SBP) is concerningly higher than in a neighboring city, City $H$.
+As a motivating example, suppose a public health worker in City $K$ notices that her city's mean systolic blood pressure (SBP) is concerningly higher than a neighboring city, City $H$.
 She notices that the medical literature shows a relation between body mass index (BMI, $X$) and SBP ($Y$).
-The observed differences in mean SBP could be due to differences in the populations of the cities (distribution of $X$) or to differences in medical care access that determine how SBP is affected by BMI (distribution of $Y|X$).
+The observed differences in mean SBP could be due to differences in citizens' BMI (distribution of $X$) or to differences in medical care access that determine how SBP is affected by BMI (distribution of $Y|X$).
 If she can figure out how much each of these factors is driving her city's increased SBP, she could propose policy changes to improve the health of her city.
 Before committing to a potentially costly causal analysis, can she use the available information to develop hypotheses for what drives the difference in SBP?
 
 %Many scientific questions reduce to comparisons between two populations. A common follow-up question to observing differences is why they occur. One reason might be that the populations differ on meaningful traits. In our example, perhaps the distribution of \(X\) is unequal: say, both training programs are best for people who have never been employed, but city K's program enrolled more trainees with past jobs than city H's program. In this case, covariates \(X\) drive the difference. Or, perhaps jobs in city \(K\) may pay less than those in city \(H\)'s for trainees without a high school diploma. In this case, outcomes given covariates \(Y \mid X\) drive the difference. A useful explanation for mean differences between populations would distinguish between these possibilities, as well as describe which aspects of the covariates or outcomes given covariates explain the difference.
 
-The Oaxaca--Blinder decomposition (OBD)\footnote{Sometimes referred to as the Kitagawa--Oaxaca--Blinder (KOB) decomposition \citealp{kitagawa1955})} \citep{oaxaca1973,blinder1973} is a widely used statistical tool in the econometrics literature to analyze disparities between groups as in the motivating example. 
+The Oaxaca--Blinder decomposition (OBD)\footnote{Sometimes referred to as the Kitagawa--Oaxaca--Blinder (KOB) decomposition \citep{kitagawa1955}} \citep{oaxaca1973,blinder1973} is widely used to analyze disparities between groups. 
 Studied disparities include gender wage gaps \citep{paradaContzen2025}, educational attainment differences \citep{barhaim2023}, and diabetes health disparities \citep{cartwright2021}.
 In particular, the OBD decomposes the difference in outcome (\(Y\)) means between two populations into a component that captures the differences in covariates (\(X\)) and a component that captures the differences in outcomes-given-covariates (\(Y \mid X\)). 
-In the economics literature, the former is known as the ``explained component'' and the latter as the ``unexplained component'' (also referred to as the discrimination or structural component) \citep[p.~5]{fortinLemieuxFirpo2011}.
+%In the economics literature, the former is known as the ``explained component'' and the latter as the ``unexplained component'' (also referred to as the discrimination or structural component) \citep[p.~5]{fortinLemieuxFirpo2011}.
 
 % \textcolor{red}{TB: right now i think the paragraph below isn't clear that the asymmetry we care about is the asymmetry in the populations. would be super to make that more clear. also i think we can be more clear about the steelman argument about counterfactuals and to what extent it is already made in the literature and to what extent it is not}
 % \textcolor{blue}{AS: I tried to clarify both. For the counterfactual ordering, the cited paper is studying the effects of unionization and the minimum wage (among other things) on wage inequality. They're most interested in unionization and the minimum wage, so they make them the first elements of the decomposition.}
 
-Since the original paper, \citep{oaxaca1973}, it has been noted that the numerical values of the OBD components depend on the choice of reference group, sometimes called the \textit{index-number problem}.
-This asymmetry arises because the OBD evaluates differences in covariate means using the regression coefficients of a chosen reference group; selecting one population or the other as the benchmark determines how the same covariate differences are translated into outcome differences, and typically yields different results.
-Several responses to this asymmetry dominate the literature. 
-One line of work chooses a reference based on the substantive question at hand \citep{fortinLemieuxFirpo2011,jann2008}. 
-In some cases, this involves couching the computed differences as comparing counterfactual worlds, and appealing to contextual arguments to justify the choice of reference groups.
-For instance, \citet{dinardoFortinLemieux1996} study the effects of unionization and the minimum wage on economic inequality, and choose reference groups that emphasize the contributions of these factors.
-In other cases, this can involves setting a benchmark by pooling the groups to approximate a competitive wage structure \citep{neumark1988,oaxacaRansom1994}.
-However, in many applications there will be no obvious or preferred choice of reference group.
-A second line of work handles such cases by either treating both choices of reference group as equally 
-and reporting two decompositions that bracket a plausible range for the true component value \citep{oaxaca1973,blinder1973}, choosing a symmetric average and reporting a point estimate \citep{reimers1983}, or weighting by group shares to emphasize the disadvantaged group \citep{cotton1988}. 
+Since the original paper \citep{oaxaca1973}, it has been well known that the OBD requires choosing one of the two groups (City $K$ or City $H$ in our example) as a reference, and the numerical result returned by the OBD can change with the choice of reference; this dependence on the reference choice is sometimes known as the ``index-number problem.''
+Several responses to this asymmetry occur in the literature. Some argue that, in certain cases,
+a single reference group makes the most sense to use in context; e.g. \citet{dinardoFortinLemieux1996} take this approach in a study of the effects of unionization and the minimum wage on economic inequality.
+Or in other cases, authors construct their own new reference group by pooling across the original two groups \citep{neumark1988,oaxacaRansom1994}.
+
+However, in many applications, there will be no clear choice of reference group. Moreover, there is no consensus on the appropriate resolution.
+Some papers report results for both OBD directions \citep{oaxaca1973,blinder1973,ONeill2006, sharafRashad2016,rahimiNazari2021}. \textcolor{red}{TB: why did this originally say "at least two references" instead of two references? also why does this citation list not include some cited as reporting both below?}
+Some report a (potentially weighted) average of the two results \citep{reimers1983,cotton1988,sharafRashad2016,rahimiNazari2021,Allen2022}. \textcolor{red}{TB: this originally said "some form of aggregation; we should discuss what that means precisely and whether the rephrasing here is ok}
+Some report results for just one reference, with no argument for excluding the other reference \citep{zhang_2019, ayubiShahbaziKhazaei2024,paradaContzen2025,singleton2016,lamJamiesonMittinty2021, alHanawiNjagi2022}. \textcolor{red}{TB: previously said "without proper justification" for some of these. what counts as proper justification?}
+
+A priori, it is possible that, despite the index number problem, the OBD directions always yield the same substantive conclusions;
+e.g., in our example, both directions might say the SBP difference between cities is driven in part by BMI and just differ in how much.
+In this case, all of the approaches above should at least yield the same general conclusions.
+However, if the OBD directions could yield different substantive conclusions, the distinction in approaches \emph{would} matter;
+e.g., suppose one OBD direction tells us that 
+the SBP difference is driven by BMI and the other says it is not.
+While the index-number problem states that the two OBD directions can give different numerical answers, we are not aware of a systematic investigation
+into whether the two different directions can yield different \emph{substantive} conclusions. We fill this gap.
+
+In what remains, we start by reviewing the index-number problem and OBD in more detail in \cref{sec:counterfactual_OBD}, and we formalize
+a form of substantive conclusion.
+We give an existence proof that a real-data problem can yield two substantively different conclusions (\cref{sec:real_example}).
+And we show that differences in substantive conclusions need not be driven solely by model misspecification or small sample sizes (\cref{sec:example}).
+In \cref{sec:signflips}, we demonstrate that certain types of conclusion changes are common in parameter space but uncommon empirically.
+We resolve this seeming disparity by observing that typical data analyses are not uniformly distributed in parameter
+space --- and provide intuition for when these changes might occur (\cref{sec:no_sign_flips}). We suggest best practices for data analysts in \cref{sec:conclusion}.
 
 
-Despite the longstanding awareness of the index-number problem and the many proposed responses to it, there is no consensus on a single best approach across domains. 
-Even more concerningly, many applied papers in health and social sciences still fall short or completely fail to acknowledge the problem, reporting only one direction of the decomposition \citep{zhang_2019, ayubiShahbaziKhazaei2024,paradaContzen2025}. 
-Others acknowledge the problem but report only one reference without proper justification \citep{singleton2016,lamJamiesonMittinty2021, alHanawiNjagi2022}. 
-Finally, some studies, which we believe follow best practices for validating the robustness of the OBD to reference changes, acknowledge the problem and present the decomposition for at least two references \citep{ONeill2006, sharafRashad2016,rahimiNazari2021} or some form of aggregation \citep{sharafRashad2016,rahimiNazari2021,Allen2022}.
-We further believe that, at a minimum, both natural directions should be presented, particularly when there is no pre-established consensus on which direction to take.  
-For instance, some labor economists argue that either men or a benchmark wage between women and men represents the non-discriminatory wage in the gender wage gap problem and thus use men as the reference group \citep{oaxaca1973,blinder1973, fortinLemieuxFirpo2011}; yet some studies report women as the reference group \citep{paradaContzen2025}. 
-Because of the lack of clarity and consensus on which direction to take, we argue that both references should be reported in order to validate conclusions against changes in the reference group and to assess whether substantial differences in interpretation arise.
+
+
+
+
+
+
+
+
+%noted that the numerical values of the OBD components depend on the choice of reference group, sometimes called the \textit{index-number problem}.
+%This asymmetry arises because the OBD evaluates differences in covariate means using the regression coefficients of a chosen reference group; selecting one population or the other as the benchmark determines how the same covariate differences are translated into outcome differences, and typically yields different results.
+%Several responses to this asymmetry dominate the literature. 
+%One line of work chooses a reference based on the substantive question at hand \citep{fortinLemieuxFirpo2011,jann2008}. 
+%In some cases, this involves couching the computed differences as comparing counterfactual worlds, and appealing to contextual arguments to justify the choice of reference groups.
+%For instance, \citet{dinardoFortinLemieux1996} study the effects of unionization and the minimum wage on economic inequality, and choose reference groups that emphasize the contributions of these factors.
+%In other cases, this can involves setting a benchmark by pooling the groups to approximate a competitive wage structure \citep{neumark1988,oaxacaRansom1994}.
+%However, in many applications there will be no obvious or preferred choice of reference group.
+%A second line of work handles such cases by either treating both choices of reference group as equally 
+%and reporting two decompositions that bracket a plausible range for the true component value \citep{oaxaca1973,blinder1973}, choosing a symmetric average and reporting a point estimate \citep{reimers1983}, or weighting by group shares to emphasize the disadvantaged group \citep{cotton1988}. 
+
+
+%Despite the longstanding awareness of the index-number problem and the many proposed responses to it, there is no consensus on a single best approach across domains. 
+%Even more concerningly, many applied papers in health and social sciences still fall short or completely fail to acknowledge the problem, reporting only one direction of the decomposition \citep{zhang_2019, ayubiShahbaziKhazaei2024,paradaContzen2025}. 
+%Others acknowledge the problem but report only one reference without proper justification \citep{singleton2016,lamJamiesonMittinty2021, alHanawiNjagi2022}. 
+%Finally, some studies, which we believe follow best practices for validating the robustness of the OBD to reference changes, acknowledge the problem and present the decomposition for at least two references \citep{ONeill2006, sharafRashad2016,rahimiNazari2021} or some form of aggregation \citep{sharafRashad2016,rahimiNazari2021,Allen2022}.
+%We further believe that, at a minimum, both natural directions should be presented, particularly when there is no pre-established consensus on which direction to take.  
+%For instance, some labor economists argue that either men or a benchmark wage between women and men represents the non-discriminatory wage in the gender wage gap problem and thus use men as the reference group \citep{oaxaca1973,blinder1973, fortinLemieuxFirpo2011}; yet some studies report women as the reference group \citep{paradaContzen2025}. 
+%Because of the lack of clarity and consensus on which direction to take, we argue that both references should be reported in order to validate conclusions against changes in the reference group and to assess whether substantial differences in interpretation arise.
 
 % The OB decomposition swaps components of each population in a particular order: first the distribution of $X$ and then the distribution of $Y\mid X$ or vice versa. 
 % Previous authors have noted that results depend on the chosen order of swaps \citep{blinder1973,oaxaca1973}.
@@ -42,20 +78,20 @@ Because of the lack of clarity and consensus on which direction to take, we argu
 % For example, \citet{fortinLemieuxFirpo2011} consider a labor economics problem and argue that only one ordering is plausible.
 % A second approach is to simply treat the two orders as equally valid and report both to bracket a range \citep{oaxaca1973,blinder1973} or compute a (weighted) average over different orderings \citep{sloczynski2015,firpoWoL2017}.
 
-Our major contribution is to demonstrate that the choice of reference group is not a mere technical detail; it can flip the substantive conclusion and thus failing to account for such sensitivity can lead to misleading interpretations.
-We show that there are realistic scenarios in which different choices of reference groups yield substantively different conclusions.
-As an extreme example, the sign of the unexplained ($Y|X$) ---or explained--- component can flip from negative to positive depending on the reference population.
-Taking a weighted average in such scenarios can return contradictory conclusions based on the arbitrary choice of weights in the average.
+%Our major contribution is to demonstrate that the choice of reference group is not a mere technical detail; it can flip the substantive conclusion and thus failing to account for such sensitivity can lead to misleading interpretations.
+%We show that there are realistic scenarios in which different choices of reference groups yield substantively different conclusions.
+%As an extreme example, the sign of the unexplained ($Y|X$) ---or explained--- component can flip from negative to positive depending on the reference population.
+%Taking a weighted average in such scenarios can return contradictory conclusions based on the arbitrary choice of weights in the average.
 % \textcolor{red}{TB: I think the argument about weighted averages not being meaningful can be made more clear}. \textcolor{blue}{AS: Gave it a shot!}
-We illustrate these findings with a synthetic healthcare example inspired by real data analyses and with a real clinical case study, and provide a complete set of interpretable conditions under which such sign flipping --- and subsequent ambiguity of the OBD --- will occur.
-We demonstrate that these conditions are not unusual in that they are met by a large fraction of possible population parameters.
-However, we argue that in many practical applications of the OBD, such population parameters are rare.
-We conclude that there is significant need to check the robustness of the OBD to the choice of reference group, but there is good reason to believe it will often be robust -- and therefore usable -- in practice.
+%We illustrate these findings with a synthetic healthcare example inspired by real data analyses and with a real clinical case study, and provide a complete set of interpretable conditions under which such sign flipping --- and subsequent ambiguity of the OBD --- will occur.
+%We demonstrate that these conditions are not unusual in that they are met by a large fraction of possible population parameters.
+%However, we argue that in many practical applications of the OBD, such population parameters are rare.
+%We conclude that there is significant need to check the robustness of the OBD to the choice of reference group, but there is good reason to believe it will often be robust -- and therefore usable -- in practice.
 
 
 
-The paper is organized as follows. 
-\cref{sec:counterfactual_OBD} illustrates the index-number problem and reviews the OBD. 
-\cref{sec:real_example} provides a real clinical case study in ICU mortality that exhibits a sign-reversal in the explained component and 
-\cref{sec:example} presents a simulated healthcare example that illustrates a sign-reversal in the unexplained component even under correctly specified linear models. Then, \cref{sec:signflips} establishes theoretical conditions under which sign reversals can occur and \cref{sec:no_sign_flips} complements this with conditions under which sign reversals cannot occur. 
+%The paper is organized as follows. 
+%\cref{sec:counterfactual_OBD} illustrates the index-number problem and reviews the OBD. 
+%\cref{sec:real_example} provides a real clinical case study in ICU mortality that exhibits a sign-reversal in the explained component and 
+%\cref{sec:example} presents a simulated healthcare example that illustrates a sign-reversal in the unexplained component even under correctly specified linear models. Then, \cref{sec:signflips} establishes theoretical conditions under which sign reversals can occur and \cref{sec:no_sign_flips} complements this with conditions under which sign reversals cannot occur. 
 

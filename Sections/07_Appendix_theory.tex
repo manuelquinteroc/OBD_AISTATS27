@@ -133,8 +133,9 @@ Note that the sign flip is symmetric by construction, but the magnitude of the d
 
 \subsection{Decision Tree Representation of \cref{eq:sign_flip_condition}}
 
-To further illustrate how we can use \cref{thm:unexplained_ordering_sensitivity}, we represent the condition in \cref{eq:sign_flip_condition} as a decision tree in \cref{alg:decision_tree} and use it to scrutinize the healthcare example in \cref{sec:example}.
-In this example, $\mu_H$ and $\mu_K$ denote mean BMIs, both of which are positive by definition and thus $\sign{(\mu_H \Delta\beta)} = \sign{(\mu_K \Delta\beta)} = \sign{(\Delta\beta)}$. Therefore, following \Cref{alg:decision_tree}, a sign flip will occur only if $\sign{(\Delta\alpha)} \neq \sign{(\mu_H \Delta\beta)} = \sign{(\Delta\beta)}$; equivalently, it must hold that one group has a larger $\beta_g$ (more sensitive to higher BMI) but lower $\alpha_g$ (lower SBP on average).
+To illustrate \cref{thm:unexplained_ordering_sensitivity}, we represent the condition in \cref{eq:sign_flip_condition} as a decision tree in \cref{alg:decision_tree} and use it to scrutinize the healthcare example in \cref{sec:example}.
+In this example, $\mu_H$ and $\mu_K$ denote mean BMIs, both of which are positive by definition and thus $\sign{(\mu_H \Delta\beta)} = \sign{(\mu_K \Delta\beta)} = \sign{(\Delta\alpha)}$. 
+Therefore, following \Cref{alg:decision_tree}, a sign flip will occur only if $\sign{(\Delta\alpha)} \neq \sign{(\mu_H \Delta\beta)} = \sign{(\Delta\beta)}$; equivalently, it must hold that one group has a larger $\beta_g$ (more sensitive to higher BMI) but lower $\alpha_g$ (lower SBP on average).
 This might occur if one group has better access to treatment but worse genetic factors, as in \cref{sec:example}.
 Furthermore, a sign-flip will occur if either $\abs{\mu_H \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K \Delta\beta}$ or $\abs{\mu_K \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_H \Delta\beta}$. This condition implies a range of values over which sign flips will occur; that is, there will be at least one choice of reference group under which improved healthcare appears to help in lowering mean SBP and another ordering under which improved healthcare appears to \emph{hurt} mean SBP.
 

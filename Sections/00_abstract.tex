@@ -1,12 +1,17 @@
 \begin{abstract}
     Scientists often want to explain why an outcome is different in two
-populations.
-For instance, if mean patient outcomes are different across two neighborhoods, the outcome difference could be due to differences in the patients themselves (covariates) or differences in medical care access (outcomes given covariates).
-The Oaxaca--Blinder decomposition (OBD) is a standard tool in statistics and econometrics that explains the difference in the mean outcome
-across two populations. Since the inception of the OBD, it has been well known that the OBD is not symmetric with respect to the two populations; depending on the choice of a reference population, it is possible to derive numerically different answers. In the present paper, we provide what is, to the best of our knowledge, the first examples illustrating that major conclusions can change between the two natural directions of the OBD. 
-In a simulation inspired by real-life health data and a real clinical case study, we illustrate a sign reversal: one choice of reference group suggests that observed clinical factors are associated with improved patient outcomes and lower mortality risk, while the other suggests that these same factors are associated with worse patient outcomes, leading to qualitatively contradictory interpretations. 
-We provide supporting theory that suggests this sign change is possible in a wide variety of scenarios and not specific to our concrete examples.
-
-
+groups.
+For instance, if mean patient outcomes are different across two cities, the outcome difference could be due to differences in the patients themselves (covariates) or differences in medical care access (outcomes given covariates).
+The Oaxaca--Blinder decomposition (OBD) is a standard tool to address this problem.
+Since the inception of the OBD, it has been well known that the OBD requires choosing one of the groups as a reference, and the numerical answer can vary with the reference.
+To the best of our knowledge, there has not been a systematic investigation into whether the two OBD references can yield different substantive conclusions and how common this issue is.
+In the present paper, we give existence proofs in real and simulated data that the OBD references can yield substantively different conclusions
+and that these differences need not be entirely driven by model misspecification or low sample sizes.
+We show that parameter settings yielding substantively different conclusions are common, but 
+empirically we find this discrepancy rare; we believe the empirical rarity is explained by the 
+observation that real-life data analyses are not well-modeled by a uniform distribution over parameters.
+%. Since the inception of the OBD, it has been well known that the OBD is not symmetric with respect to the two populations; depending on the choice of a reference population, it is possible to derive numerically different answers. In the present paper, we provide what is, to the best of our knowledge, the first examples illustrating that major conclusions can change between the two natural directions of the OBD. 
+%In a simulation inspired by real-life health data and a real clinical case study, we illustrate a sign reversal: one choice of reference group suggests that observed clinical factors are associated with improved patient outcomes and lower mortality risk, while the other suggests that these same factors are associated with worse patient outcomes, leading to qualitatively contradictory interpretations. 
+%We provide supporting theory that suggests this sign change is possible in a wide variety of scenarios and not specific to our concrete examples.
 % In a simulation inspired by real-life health data and a real clinical case study, we illustrate a sign difference: one direction concludes that quality of healthcare improves patient outcomes, and the other concludes quality of care worsens patient outcomes. While model misspecification is a potential concern with the OBD, our use of a simulation together with real data demonstrates the problem can arise even under correct specification. Our supporting theory suggests that this sign change is possible in a wide variety of scenarios and not specific to our concrete example.
 \end{abstract}

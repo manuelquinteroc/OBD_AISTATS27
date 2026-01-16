@@ -71,6 +71,35 @@ plt.savefig("Figures/bmi_sbp_comparison.pdf", format='pdf', bbox_inches='tight',
 # ----------------------------
 # Population (true) lines version
 # ----------------------------
+from matplotlib.lines import Line2D
+
+# True model parameters from simulate_bmi_sbp.py
+alpha_H_pop = 110.4
+beta_H_pop  = 1.0
+alpha_K_pop = 100.0
+beta_K_pop  = 1.4
+
+# Custom legend handles (ONLY affects legend appearance)
+legend_handles = [
+    Line2D(
+        [], [], marker='o', linestyle='None',
+        markersize=10, markerfacecolor=color_H, markeredgecolor='none',
+        alpha=1.0, label="Group H data"
+    ),
+    Line2D(
+        [], [], marker='o', linestyle='None',
+        markersize=10, markerfacecolor=color_K, markeredgecolor='none',
+        alpha=1.0, label="Group K data"
+    ),
+    Line2D(
+        [], [], color=color_H, linewidth=2.5,
+        label=f"Group H (β={beta_H_pop:.2f})"
+    ),
+    Line2D(
+        [], [], color=color_K, linewidth=2.5,
+        label=f"Group K (β={beta_K_pop:.2f})"
+    )
+]
 
 # True model parameters from simulate_bmi_sbp.py
 alpha_H_pop = 110.4
@@ -103,7 +132,12 @@ ax.set_ylim(sbp_min, sbp_max)
 
 # Grid + legend + ticks (same)
 ax.grid(True, alpha=0.2)
-ax.legend(fontsize=20, loc="upper left", frameon=False)
+ax.legend(
+    handles=legend_handles,
+    fontsize=20,
+    loc="upper left",
+    frameon=False
+)
 ax.tick_params(axis="both", which="major", labelsize=20)
 plt.tight_layout()
 

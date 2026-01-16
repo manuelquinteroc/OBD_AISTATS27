@@ -295,18 +295,21 @@ into an equivalent event in terms independent Irwin-Hall random variables:
 That is, unexplained component sign flips have the same volume as the region where \( I_2 \) falls above its median and \( J_{2d} \) falls sufficiently far in its left tail, or vice versa.
 
 Finally, as \( d \to \infty \), sign flips have a volume equal to
-\[ Pr \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d \}  \right) +
-    Pr \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d \} \right).  \] 
+\begin{equation}
+\label{eq:irwin_hall_pr}
+ Pr \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d \}  \right) +
+    Pr \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d \} \right).
+\end{equation}
 Since the median of \( I_2 \) is $1$ and the median of \( J_{2d} \) is $d$, and the two random variables are independent, each probability equals \( 0.25 \).
 The corresponding fraction of $C_M$ leading to sign flips is therefore \( 0.5 \) as claimed.
 
 \begin{remark} \label{remark:computing_irwin_hall}
-We can calculate this exactly for small \( d \) by using the Irwin-Hall(n) cumulative distribution function (CDF),
+We can calculate the probabilities in \cref{eq:irwin_hall_pr} exactly for small \( d \) by using the Irwin-Hall$(n)$ cumulative distribution function (CDF),
 \begin{equation}
 F(x) = \frac{1}{n!} \sum_{k=0}^{\lfloor x \rfloor} (-1)^k \binom{n}{k} (x - k)^n. \label{eq:exact_irwin_hall}
 \end{equation}
-For larger \( d \), the combinatorial terms in the CDF become difficult to evaluate.
-In those cases the central limit theorem allows us to approximate an Irwin-Hall(2d) distribution with a \( N(d, \frac{d}{6})\) distribution.
+However, for larger \( d \), the combinatorial terms in the CDF become difficult to evaluate numerically.
+In those cases the central limit theorem allows us to approximate an Irwin-Hall$(2d)$ distribution with a \( N(d, \frac{d}{6})\) distribution.
 We compute the probabilities in \cref{sec:sign_flip_fraction} for $d \leq 40$ using the exact CDF in \cref{eq:exact_irwin_hall}, and we use the normal approximation for $d > 40$.
 \end{remark}
 
@@ -341,11 +344,13 @@ $$
 	\UK := \mu_H^T \Delta\beta + \Delta\alpha, \quad \quad \UH := \mu_K^T \Delta\beta + \Delta\alpha.
 $$
 By assumption, $\sign(\Delta\alpha) = \sign(\mu_H^T\Delta\beta) = \sign(\mu_K^T\Delta\beta)$, and thus $\sign(\UH) = \sign(\UK)$.
-\subsubsection{Proof of \cref{prop:no_explained_sign_flip}}
-\label{proof:no_explained_sign_flip}
-As $\mu_K \neq \mu_H$ by assumption, \cref{lemma:units} applies to imply that we can fix units such that $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$. Then $\Delta\mu = \mathbf{1}$, and the condition for the explained component to not sign flip, $\sign(\Delta\mu^T\beta_K) \neq \sign(\Delta\mu^T \beta_H)$ reduces to:
-\begin{equation}
-	\sign\left( \sum_{i=1}^d \beta_{K,i} \right) \neq \sign\left( \sum_{i=1}^d \beta_{H,i} \right),
-\end{equation}
-as claimed.
+
+% WTS 1-16-2026: removed this section as it's obvious (leading us to downgrade the proposition to a remark)
+%\subsubsection{Proof of \cref{prop:no_explained_sign_flip}}
+%\label{proof:no_explained_sign_flip}
+%As $\mu_K \neq \mu_H$ by assumption, \cref{lemma:units} applies to imply that we can fix units such that $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$. Then $\Delta\mu = \mathbf{1}$, and the condition for the explained component to not sign flip, $\sign(\Delta\mu^T\beta_K) \neq \sign(\Delta\mu^T \beta_H)$ reduces to:
+%\begin{equation}
+%	\sign\left( \sum_{i=1}^d \beta_{K,i} \right) \neq \sign\left( \sum_{i=1}^d \beta_{H,i} \right),
+%\end{equation}
+%as claimed.
 

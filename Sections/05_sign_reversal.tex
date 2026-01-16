@@ -113,11 +113,17 @@ One formalization of this question is to ask what proportion of the volume of pa
 An immediate challenge with talking about volume within a parameter space is that the parameter space inherits
 its dimension units from the covariates and response; in particular, any individual unit choice is somewhat
 arbitrary (consider a choice of centimeters vs.\ millimeters for a length scale), but also different covariates need not be 
-comparable (consider comparing a temperature to a weight). To alleviate this potential incompatibility between dimensions,
-we first make a common standardization choice in one population: we transform the covariate means to be zero, $\mu_K = \mathbf{0}$, where \( \mathbf{0} \) is a vector of zeros with appropriate length. How to standardize population spread and how to handle the second group are less obvious,
-but we address both of these challenges by choosing $\mu_H = \mathbf{1}$, where \( \mathbf{1} \) is a vector of ones with appropriate length.
+comparable (consider comparing a temperature to a weight). 
+The usual way to alleviate this incompatibility in one population is to center the covariates and set their scale (i.e., standard deviation) to be 1. 
+We can use similar normalization to center the covariates such that $\mu_K = \mathbf{0} \in \R^d$ and scale the covariates such that $\Delta\mu = \mathbf{1} \in \R^d$ (i.e., $\mu_H = \mathbf{1}$).
+%To alleviate this potential incompatibility between dimensions,
+%we first make a common standardization choice in one population: we transform the covariate means to be zero, $\mu_K = \mathbf{0}$, where \( \mathbf{0} \) is a vector of zeros with appropriate length. How to standardize population spread and how to handle the second group are less obvious,
+%but we address both of these challenges by choosing $\mu_H = \mathbf{1}$, where \( \mathbf{1} \) is a vector of ones with appropriate length.
 We note that our standardization choice ($\mu_K= \mathbf{0},\mu_H=\mathbf{1}$) is
 always possible as long as $\mu_K \neq \mu_H$ (see \cref{lemma:units}).
+
+
+
 
 In the theory that follows, we will find it convenient to restrict our focus to a bounded range of parameters. Namely, we
 assume that, for some $M > 0$ and all groups $g$, the entries of $\beta_g$ and $\alpha_g$ lie in $[-M,M]$.

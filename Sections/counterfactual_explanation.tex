@@ -8,16 +8,16 @@ We consider an observed outcome $Y \in \mathbb{R}$ and covariates $X$ in some sp
 For the moment, we assume we have access to population-level quantities, including all expectations of interest.
 
 To analyze this gap, we might construct a counterfactual world driven only by differences in covariates.
-Consider again our example, where $Y$ represents systolic blood pressure, and $X$ represents body mass index. Suppose we think the conditional distribution $Y|X$ is attributable to city-specific public health and medical care at each BMI level.
+Consider again our example, where $Y$ represents mortality, and $X$ represents heart rate. Suppose we think the conditional distribution $Y|X$ is attributable to the quality of medical care at any given heart rate.
 Then we might ask:
-(A) \emph{How much would city $H$'s mean SBP change if city $H$ kept its current health care but had the BMI distribution of city $K$?}
-But we notice this question starts from City $H$ as a reference. We could instead start from City $K$ and ask:
-(B) \emph{How much would city $K$'s mean SBP change if city $K$ kept its current health care but had the BMI distribution of city $H$?}
+(A) \emph{How much would patient group $H$'s mortality rate change if they stayed at the same hospital but had the heart rate distribution of patient group $K$?}
+But we notice this question starts from group $H$ as a reference. We could instead start from group $K$ and ask:
+(B) \emph{How much would patient group $K$'s mortality rate change if they stayed at the same hospital but had the heart rate distribution of patient group $K$?}
 
-Analogously, the gender wage gap forms a classic example \citep{oaxaca1973, blinder1973} with $Y$ as wages and $X$ as education. We might ask:
-(A) \emph{How much would women's ($H$) mean wages change if women kept their current remuneration relationship with education but had the educational distribution of men ($K$)?}
-or instead 
-(B) \emph{How much would men's ($K$) mean wages change if men kept their current remuneration relationship with education but had the educational distribution of women ($H$)?}
+% Analogously, the gender wage gap forms a classic example \citep{oaxaca1973, blinder1973} with $Y$ as wages and $X$ as education. We might ask:
+% (A) \emph{How much would women's ($H$) mean wages change if women kept their current remuneration relationship with education but had the educational distribution of men ($K$)?}
+% or instead 
+% (B) \emph{How much would men's ($K$) mean wages change if men kept their current remuneration relationship with education but had the educational distribution of women ($H$)?}
 
 More generally, we might ask:
 (A) \emph{How much would Group $H$'s mean outcome ($Y$) change if group $H$ kept its outcome--covariate relationship ($Y|X$) but had the covariate ($X$) distribution of group $K$?}
@@ -62,7 +62,7 @@ that in general, $E^{(K)} \neq E^{(H)}$ and $U^{(K)} \neq U^{(H)}$.
 
 \textbf{A conceptual resolution?}
 Before proceeding, we observe that there is not an immediate and general conceptual resolution of the index number problem.
-It is not clear to us in the SBP--BMI example above that one direction is more natural --- or even that the two
+It is not clear to us in the mortality--heart rate example above that one direction is more natural --- or even that the two
 directions represent clearly distinguishable policy questions.
 There may be resolutions in particular areas of study.
 Many papers on the gender wage gap seem to favor taking men as the reference \citep{oaxaca1973,blinder1973, fortinLemieuxFirpo2011}; this tendency might suggest a consensus.

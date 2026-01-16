@@ -69,8 +69,8 @@ gg = ggplot(gg_tb,
   facet_grid(cols = vars(component)) +
   labs(x = "Dimensionality of Covariates (d)",
        y = "Percentage of Parameter Space\nWith Sign Flip",
-       color = "Cube Side Length (2M)") +
-  theme_bw(base_size = 18) +
+       color = "Cube Length (2M)") +
+  theme_bw(base_size = 24) +
   theme(axis.text       = element_text(color = 'black'),
         strip.background = element_rect(color = 'black', fill = NA),
         legend.position = "inside",
@@ -80,8 +80,8 @@ gg = ggplot(gg_tb,
                         end = 0.9) +
   scale_y_continuous(labels = scales::percent) +
   geom_line(linewidth = 1.5)
-gg
+
 
 ggsave(here('Sections', 'Figures', 'prob_flip_simulated.pdf'),
        gg, 
-       width = 8, height = 5, units = "in")
+       width = 9, height = 6.5, units = "in")

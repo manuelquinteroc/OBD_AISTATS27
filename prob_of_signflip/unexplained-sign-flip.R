@@ -85,10 +85,10 @@ gg = ggplot(tb,
   labs(x     = "Dimensionality of Covariates (d)",
        y     = "Percentage of Parameter Space",
        color = "Sign Flip in...") +
-  theme_bw(base_size = 30) +
+  theme_bw(base_size = 28) +
   theme(axis.text       = element_text(color = 'black'),
         legend.position = "inside",
-        legend.position.inside = c(0.775, 0.15),
+        legend.position.inside = c(0.7, 0.2),
         legend.background = element_rect(colour = "black")) +
   scale_color_manual(values = c('Explained Component'   = '#785EF0',
                                 'Unexplained Component' = '#FE6100')) +
@@ -97,4 +97,4 @@ gg = ggplot(tb,
 
 ggsave(here('Sections', 'Figures', 'prob_unexplained.pdf'),
        gg, 
-       width = 11, height = 8, units = "in")
+       width = 9, height = 6.5, units = "in")

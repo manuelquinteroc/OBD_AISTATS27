@@ -8,15 +8,15 @@ Given the results in \cref{sec:real_example}, natural questions arise. For examp
 \textbf{Motivation.}
 While our example is purely simulated, it is motivated by the following real-life concerns and observations.
 Body mass index (BMI) is a widely recognized and routinely measured marker of wellness \cite{heymsfield2016} and is strongly linked to cardiometabolic outcomes, such as elevated blood pressure \cite{brown2000body}.
-A researcher studying cardiac health may use commonly observed covariates like BMI to investigate whether differences in blood pressure between two populations are explainable by differences in basic markers of health between the populations, or differences in how these markers map to blood pressure.
+A researcher studying cardiac health may use commonly observed covariates like BMI to investigate whether differences in blood pressure between two groups are explainable by differences in basic markers of health between the groups, or differences in how these markers map to blood pressure.
 
-Our example imagines two populations of adults in primary care being followed for elevated blood pressure, using systolic blood pressure (SBP) at a standardized follow-up visit as the outcome $Y$. The BMI ($X$) of each adult is measured at an intake visit.
-The first population, Group $H$, comes from a higher-resource setting, such as an urban neighborhood with structured care pathways, frequent follow up, and better access to healthy food and physical activity options. 
-The second population, Group $K$, comes from a lower-resource setting, where patients face barriers such as longer travel distances to clinics, infrequent follow up, delayed medication titration, and limited access to nutritious food.
+Our example imagines two groups of adults in primary care being followed for elevated blood pressure, using systolic blood pressure (SBP) at a follow-up visit as the outcome $Y$. The BMI ($X$) of each adult is measured at an intake visit.
+The first, Group $H$, comes from a higher-resource setting, such as an urban neighborhood with structured care pathways, frequent follow up, and better access to healthy food options. 
+The second, Group $K$, comes from a lower-resource setting, where patients face barriers such as longer travel to clinics, infrequent follow up, and limited access to nutritious food.
 These factors shape both the composition of each group (including average BMI) and the structure of the SBP--BMI relationship. We follow a clinical literature finding an approximately linear relationship between BMI and SBP \cite{kaufman1997, cappuccio2008, chen2023}; in particular, we assume a separate linear relationship in each group.
 
-While an OBD cannot establish causality without further assumptions, it can suggest where one might look for potential drivers of observed disparities between the two groups.
-If the explained component is effectively zero and the unexplained component (differences in $Y|X$) dominates (with a sign in the direction of the observed outcome difference), it may highlight the need to investigate differences in medical care, such as medication titration practices, adherence support, or access to antihypertensives.
+While an OBD cannot establish causality without further assumptions, it can suggest where one might look for potential drivers of observed inter-group disparities.
+If the explained component is effectively zero and the unexplained component (differences in $Y|X$) dominates (with a sign in the direction of the observed outcome difference), it may highlight the need to investigate differences in medical care, such as adherence support or access to antihypertensives.
 If the unexplained component is effectively zero and the explained component (differences in $X$) dominates (with a sign in the direction of the observed outcome difference), it may be most impactful to target interventions on weight management, nutrition, and physical activity. 
 
 \textbf{Simulated data.}

@@ -1,4 +1,4 @@
-\subsection{Difference in means problem: A counterfactual exercise} 
+\subsection{Differences in means a counterfactual exercise} 
 \label{sec:counterfactual_example}
 
 As a first step toward describing the OBD, we illustrate the index-number problem by framing it as a counterfactual exercise as in \citet{fortinLemieuxFirpo2011}.
@@ -7,12 +7,12 @@ As a first step toward describing the OBD, we illustrate the index-number proble
 We consider an observed outcome $Y \in \mathbb{R}$ and covariates $X$ in some space $\mathcal{X}$. We consider two groups, $H$ and $K$. We assume that the tuple $(X,Y)$ is independently and identically distributed across members of group $g$, with corresponding expectation $\E_g$. We suppose we observe a gap in the mean outcomes, $\E_H[Y]$ and $\E_K[Y]$, and would like to understand to what extent the gap is due to differences in covariates between the two groups. 
 For the moment, we assume we have access to population-level quantities, including all expectations of interest.
 
-To analyze this gap, we might construct a counterfactual world driven only by differences in covariates.
-Consider again our example, where $Y$ represents mortality, and $X$ represents heart rate. Suppose we think the conditional distribution $Y|X$ is attributable to the quality of medical care at any given heart rate.
+To analyze the gap between $\E_H[Y]$ and $\E_K[Y]$, we might construct a counterfactual driven only by differences in covariates.
+Consider again our example, where $Y$ represents mortality and $X$ represents risk factors. Suppose we think the conditional distribution $Y|X$ is attributable to the quality of medical care for the given risk factors.
 Then we might ask:
-(A) \emph{How much would Patient Group $H$'s mortality rate change if they stayed at the same hospital but had the heart rate distribution of Patient Group $K$?}
+(A) \emph{How would Patient Group $H$'s mortality rate change if they stayed at the same hospital but had the risk factor distribution of  Group $K$?}
 But we notice this question starts from group $H$ as a reference. We could instead start from group $K$ and ask:
-(B) \emph{How much would Patient Group $K$'s mortality rate change if they stayed at the same hospital but had the heart rate distribution of Patient Group $K$?}
+(B) \emph{How would Patient Group $K$'s mortality rate change if they stayed at the same hospital but had the risk factor distribution of Patient Group $K$?}
 
 % Analogously, the gender wage gap forms a classic example \citep{oaxaca1973, blinder1973} with $Y$ as wages and $X$ as education. We might ask:
 % (A) \emph{How much would women's ($H$) mean wages change if women kept their current remuneration relationship with education but had the educational distribution of men ($K$)?}
@@ -20,9 +20,9 @@ But we notice this question starts from group $H$ as a reference. We could inste
 % (B) \emph{How much would men's ($K$) mean wages change if men kept their current remuneration relationship with education but had the educational distribution of women ($H$)?}
 
 More generally, we might ask:
-(A) \emph{How much would Group $H$'s mean outcome ($Y$) change if group $H$ kept its outcome--covariate relationship ($Y|X$) but had the covariate ($X$) distribution of Patient Group $K$?}
+(A) \emph{How much would Group $H$'s mean outcome ($Y$) change if Group $H$ kept its outcome--covariate relationship ($Y|X$) but had the covariate ($X$) distribution of Group $K$?}
 or 
-(B) \emph{How much would Group $K$'s mean outcome ($Y$) change if group $K$ kept its outcome--covariate relationship ($Y|X$) but had the covariate ($X$) distribution of Patient Group $H$?}
+(B) \emph{How much would Group $K$'s mean outcome ($Y$) change if Group $K$ kept its outcome--covariate relationship ($Y|X$) but had the covariate ($X$) distribution of Group $H$?}
 
 To address the general questions, it will be useful to compute the mean of a counterfactual $Y$ that has the outcome--covariate relationship ($Y|X$) of group $g$ and the covariate ($X$) distribution of group $g'$. By the law of total expectation, this mean equals
 $M_{g',g} := \E_{g'} [ \E_g  [ Y | X ] ]$.

@@ -1,10 +1,10 @@
-\subsection{Differences in means a counterfactual exercise} 
+\subsection{Differences in means as a counterfactual exercise} 
 \label{sec:counterfactual_example}
 
 As a first step toward describing the OBD, we illustrate the index-number problem by framing it as a counterfactual exercise as in \citet{fortinLemieuxFirpo2011}.
 % Unlike \citet{fortinLemieuxFirpo2011}, we observe that this counterfactual exercise need not invoke a linear model, which we leave off until \ref{sec:ob} below.
 
-We consider an observed outcome $Y \in \mathbb{R}$ and covariates $X$ in some space $\mathcal{X}$. We consider two groups, $H$ and $K$. We assume that the tuple $(X,Y)$ is independently and identically distributed across members of group $g$, with corresponding expectation $\E_g$. We suppose we observe a gap in the mean outcomes, $\E_H[Y]$ and $\E_K[Y]$, and would like to understand to what extent the gap is due to differences in covariates between the two groups. 
+We consider an observed outcome $Y \in \mathbb{R}$ and covariates $X$ in some space $\mathcal{X}$. We consider two groups, $H$ and $K$. We assume that the tuple $(X,Y)$ is independently and identically distributed within each group $g$ with corresponding expectation $\E_g$. We suppose we observe a gap in the mean outcomes, $\E_H[Y]$ and $\E_K[Y]$, and would like to understand to what extent the gap is due to differences in covariates between the two groups. 
 For the moment, we assume we have access to population-level quantities, including all expectations of interest.
 
 To analyze the gap between $\E_H[Y]$ and $\E_K[Y]$, we might construct a counterfactual driven only by differences in covariates.
@@ -26,7 +26,6 @@ or
 
 To address the general questions, it will be useful to compute the mean of a counterfactual $Y$ that has the outcome--covariate relationship ($Y|X$) of group $g$ and the covariate ($X$) distribution of group $g'$. By the law of total expectation, this mean equals
 $M_{g',g} := \E_{g'} [ \E_g  [ Y | X ] ]$.
-
 Then the difference in mean outcomes between the two groups can be decomposed into differences between each group's mean
 and the chosen counterfactual mean. The decompositions corresponding to questions (A) and (B) above are, respectively, 
 \cref{eq:OB_H_Counterfactual} and \cref{eq:OB_K_Counterfactual} below.

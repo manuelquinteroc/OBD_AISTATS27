@@ -13,8 +13,7 @@ We start by concretizing the type of decision we will focus on.
 In particular, we will consider a conclusion based on the sign of either the explained or unexplained component of the OBD.
 We will assume we are working with full population information so that a sign flip alone is enough to change conclusions.
 In practice, flipping from a signed value to zero, or a statistically significant value to an insignificant one can also be considered to change conclusions. 
-
-we here focus on the more
+We focus here on the more
 extreme case where we are able to flip to the opposite sign by choosing a different reference.
 
 \textbf{Explained component.}
@@ -75,11 +74,6 @@ The following alternative characterization for sign flips of the unexplained com
     \end{gather}
 \end{restatable}    
 See \cref{sec:sign_flip_proof} for the proof.
-
-%\begin{remark}
-%    If $-\Delta\alpha \in \{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}$, then one unexplained term equals zero.
-%\end{remark}
-
 From \cref{thm:unexplained_ordering_sensitivity}, we see that group-specific slopes serve a different role in sign flips in the unexplained case relative to the explained case.
 Suppose we hold fixed the covariate means $\mu_H$ and $\mu_K$. Then scaling up the magnitude of the vector change-in-slopes ($\Delta \beta$) induces sign flips for a greater range of values 
 of the scalar change-in-intercepts ($\Delta \alpha$).
@@ -112,9 +106,9 @@ That is, larger magnitudes of \( \Delta \beta \) create ``more room'' for sign f
 After characterizing sign flips in \cref{sec:sign_flip_characterizations}, we can ask how likely they are.
 One formalization of this question is to ask what proportion of the volume of parameter space corresponds to sign flips.
 An immediate challenge with talking about volume within a parameter space is that the parameter space inherits
-its dimension units from the covariates and response; in particular, any individual unit choice is somewhat
-arbitrary (consider a choice of centimeters vs.\ millimeters for a length scale), but also different covariates need not be 
-comparable (consider comparing a temperature to a weight). 
+its units from the covariates and response; in particular, any individual unit choice is somewhat
+arbitrary (e.g.,\ centimeters vs.\ millimeters), but also different covariates need not be 
+comparable (e.g.\ temperature vs.\ weight). 
 The usual way to alleviate this incompatibility in one group is to center the covariates and set their scale (e.g., standard deviation) to be 1. 
 We can use similar normalization to center the covariates such that $\mu_K = \mathbf{0} \in \R^d$ and scale the covariates such that $\Delta\mu = \mathbf{1} \in \R^d$ (i.e., $\mu_H = \mathbf{1}$).
 %To alleviate this potential incompatibility between dimensions,
@@ -128,7 +122,7 @@ always possible as long as $\mu_K \neq \mu_H$ (see \cref{lemma:units}).
 
 In the theory that follows, we will find it convenient to restrict our focus to a bounded range of parameters. Namely, we
 assume that, for some $M > 0$ and all groups $g$, the entries of $\beta_g$ and $\alpha_g$ lie in $[-M,M]$.
-Importantly, we do not restrict the choice of $M$; it can be arbitrarily large. And notably, the proportions we compute in all
+Note, however, that we do not restrict the choice of $M$, and the proportions we compute in all
 cases end up having no dependence on $M$.
 
 %To do so, we must choose a region of parameter space we are interested in and then compute the volume of this region that leads to sign flips.
@@ -164,9 +158,8 @@ where the probability $\mathrm{Pr}$ is over the independent random variables $I_
 Moreover, as $d \to \infty$, $P_d \rightarrow 1/2$.
 \end{proposition}
 See \cref{proof:unexplained_fraction} for the proof.
-
 The joint Irwin-Hall probability in \cref{eq:unexplained_fraction} is hard to evaluate analytically, so in \cref{fig:prob_unexplained} we evaluate it numerically for various values of the dimension $d$.
-We see that for even modest dimension $d$, the fraction of parameter space leading to sign flips exceeds 40\%.
+For even modest dimension $d$, the fraction of parameter space leading to sign flips exceeds 40\%.
 \begin{figure}
     \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/prob_unexplained.pdf}}
     \caption{Percentage of parameter space leading to sign flips. See \cref{remark:computing_irwin_hall} for how we compute the percentage for the unexplained component.}
@@ -184,23 +177,24 @@ In \cref{sec:sign_flip_fraction}, we show that a large fraction of parameter spa
 However, we here observe that empirical evidence suggests sign flips in practice may be rare.
 We discuss resolutions to this apparent contradiction in \cref{sec:no_sign_flips}.
 
-An exhaustive search of the literature applying the OBD is beyond the scope of the present paper;
-a paper corresponding to a particular Stata implementation of the OBD has thousands of citations alone \citep{jann2008}. Moreover, there are implementations
-in other languages \citep{Hlavac2022oaxaca}.
+An exhaustive search of the literature using the OBD is beyond the scope of the present paper;
+a paper corresponding to a Stata implementation of the OBD has thousands of citations alone \citep{jann2008}, and there are implementations
+in other languages as well \citep{Hlavac2022oaxaca}.
 Without trying to form a representative sample, we examined a selection of papers performing the OBD. 
-Of the particular papers we examined, many did not report both directions of the OBD.
-Of the papers that did report both directions \citep{ONeill2006, fortinLemieuxFirpo2011, sharafRashad2016, rahimiNazari2021},
+Of the papers we examined, many did not report both directions of the OBD.
+Of the papers that reported both directions \citep{ONeill2006, fortinLemieuxFirpo2011, sharafRashad2016, rahimiNazari2021},
 none exhibited a sign flip.
 
 Publication or other biases could affect the published literature. To avoid these concerns and also offer a more systematic investigation,
 we examined collections
-of OBD analyses one might potentially run on two rich, publicly available datasets. 
+of OBD analyses one might potentially run on two publicly available datasets. 
 In each case, our systematic search for sign flips turned up few examples.
 First, we examined the PhysioNet ICU cohort collected for the study of in-hospital mortality \citep{goldberger2000physiobank}.
-We started by evaluating the OBD across nine predefined data subsets: the full cohort, each ICU type category, two broad age groups (patients younger than $65$ and patients aged $65$ or older), and two groups defined by a median split of the SAPS--I score. For each of these subsets, we fit gender-specific linear models and computed the OBD. We did not find any sign flips.
+We started by evaluating the OBD across nine predefined data subsets: the full cohort, each ICU type category, two age groups (patients younger than $65$ and patients aged $65$ or older), and two groups defined by a median split of the SAPS--I score. For each of these subsets, we fit gender-specific linear models and computed the OBD. 
+We found no sign flips.
 We then expanded our analysis to a larger and more heterogeneous collection of subpopulations.
 Across all $139$ data subsets, we found that $27$ exhibited at least one sign reversal -- a far cry from the number predicted by \cref{prop:explained_fraction,prop:unexplained_fraction}.
-The HR quartile two example in \cref{sec:real_example} was one such example. We describe the data and our search procedure in more detail in 
+The HR quartile two example in \cref{sec:real_example} was one such example. We describe the data and our search procedure fully in 
 \cref{appendix:icu_details}.
 
 We ran a similar search on U.S.\ labor force data; in particular,
@@ -217,7 +211,7 @@ their existence is still possible.
 \label{sec:no_sign_flips}
 
 How can it be that sign flips appear to be rare in practice (\cref{sec:sign_flips_practice}) but common in terms of parameter-space volume (\cref{sec:sign_flip_fraction})?
-A key resolution is that regression parameters observed in practice need not be uniformly distributed over parameter space; in fact, we generally expect they are not.
+Our resolution is that regression parameters seen in practice need not be uniformly distributed over parameter space; in fact, we generally expect they are not.
 
 \textbf{Explained component.} First, consider the explained component. Under the standardization from \cref{sec:sign_flip_fraction},
 we can simplify the characterization of when a sign flip happens.
@@ -232,7 +226,6 @@ In practice, we expect that the general direction of $\beta$'s largely agrees, a
 For instance, consider the SBP--BMI example in \cref{sec:example}. We expect a positive relationship between BMI and SBP for both the higher-resource group $H$ and the lower-resource group $K$;
 i.e., we expect $\beta_H, \beta_K > 0$.
 So, by \cref{rmk:no_explained_sign_flip}, we do not expect to see a sign flip.
-
 Similarly, \cref{rmk:no_explained_sign_flip} helps us see why few of the hospital mortality analyses (\cref{sec:sign_flips_practice} and \cref{appendix:icu_details}) show explained component sign flips. 
 While we may expect risk factors to have different effect sizes for men and women a priori, there is little reason to think that many factors would increase men's mortality to decrease women's (or vice versa).
 Indeed, this observation makes the explained component sign flip in \cref{sec:real_example} more surprising, as it implies substantive differences in mortality risk in this subpopulation of men and women.
@@ -245,9 +238,9 @@ We now formalize these ideas.
 %    (\mu_H^T \Delta\beta)(\mu_K^T \Delta\beta) > 0 
 %\quad \text{and}  
 %\]
-\[
-    \sign(\Delta\alpha) = \sign(\mu_H^T \Delta\beta) = \sign(\mu_K^T \Delta\beta),
-\]
+$
+    \sign(\Delta\alpha) = \sign(\mu_H^T \Delta\beta) = \sign(\mu_K^T \Delta\beta)
+$
 \end{assumption}
 
 \begin{proposition}
@@ -256,7 +249,6 @@ We now formalize these ideas.
     \( U^{(H)}\) and  \(U^{(K)}\) share the same sign.
 \end{proposition}
 See \cref{proof:no_sign_flip} for the proof.
-
 In some domains, intercept and slope advantages might often move in the same direction; 
 \cref{prop:no_sign_flip} rules out sign flips in such cases.
 As an illustration, consider an analysis of the gender wage gap that decomposes differences in the average earnings between men and women into a component based on covariates (e.g., work experience) and outcomes given covariates (i.e., how experience is remunerated).

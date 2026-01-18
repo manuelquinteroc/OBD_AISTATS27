@@ -24,7 +24,7 @@ The modern explainability literature in machine learning (ML) provides a number 
 % \textcolor{red}{TB: right now i think the paragraph below isn't clear that the asymmetry we care about is the asymmetry in the populations. would be super to make that more clear. also i think we can be more clear about the steelman argument about counterfactuals and to what extent it is already made in the literature and to what extent it is not}
 % \textcolor{blue}{AS: I tried to clarify both. For the counterfactual ordering, the cited paper is studying the effects of unionization and the minimum wage (among other things) on wage inequality. They're most interested in unionization and the minimum wage, so they make them the first elements of the decomposition.}
 
-Since the original paper \citep{oaxaca1973}, it has been well known that the OBD requires choosing one of the two groups (Patients Groups $K$ or $H$ in our example) as a reference, and that the choice of reference affects the numerical result of the OBD.
+Since the original paper \citep{oaxaca1973}, it has been well known that the OBD requires choosing one of the two groups (Patients Groups $K$ or $H$ in our example) as a reference, and that this choice affects the numerical result of the OBD.
 This dependence on the reference choice is sometimes known as the ``index-number problem.''
 %And generalizations of the OBD to non-linear models of $Y \mid X$ do not seem to escape this issue -- e.g., \textcolor{red}{TODO: cite our workshop paper} consider one fixed reference group.
 Several responses to this asymmetry occur in the OBD literature. 
@@ -36,14 +36,14 @@ However, in many applications, there will be no clear choice of reference group.
 Some papers report results for both references \citep{ONeill2006,fortinLemieuxFirpo2011,sharafRashad2016,rahimiNazari2021}. 
 Some report results for just one reference, with no argument for excluding the other reference \citep{zhang_2019, ayubiShahbaziKhazaei2024,paradaContzen2025,singleton2016,lamJamiesonMittinty2021, alHanawiNjagi2022}.
 
-A priori, it is possible that, despite the index number problem, both references always yield the same substantive conclusions;
+It is possible that, despite the index number problem, both references always yield the same substantive conclusions;
 e.g., in our example, both references might attribute the mortality differences partly to the distribution of risk factors, differing only in magnitude.
 In this case, all of the approaches above should yield similar qualitative conclusions.
 However, if the choice of reference could yield different substantive conclusions, the distinction in approaches \emph{would} matter;
 e.g., suppose one reference attributes the mortality difference to the difference in risk factors and the other does not.
-While the index-number problem states allows for different numerical answers, we are not aware of a systematic investigation
+While the index-number problem allows for different numerical answers, we are not aware of an investigation
 into whether the choice of reference groups can yield different \emph{substantive} conclusions. 
-We fill this gap with a characterization of when the OBD's substantive conclusions are sensitive to the reference group, and a theoretical and empirical investigation of how common such sensitivity is.
+We fill this gap with a characterization of when the OBD's substantive conclusions are sensitive to the reference group and a theoretical and empirical investigation of how common such sensitivity is.
 
 In what remains, we start by reviewing the index-number problem and OBD in more detail in \cref{sec:counterfactual_OBD}, and we formalize
 a form of substantive conclusion.

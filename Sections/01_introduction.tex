@@ -1,11 +1,11 @@
 \section{Introduction}
-As a motivating example, suppose a data scientist at a hospital notices that mortality rates are noticeably higher in Patient Group $H$ than in Patient Group $K$.
+As a motivating example, suppose a data scientist at Hospital $H$ notices that mortality rates are noticeably higher at Hospital $H$ than at Hospital $K$.
 She knows the medical literature links many risk factors ($X$), such as high blood pressure, to mortality ($Y$).
-The observed differences in mortality could be due to differences in these risk factors between the two groups (distribution of $X$) or to differences in how well the hospital manages these risk factors (distribution of $Y|X$).
-If she can figure out how much each of these factors is driving the difference in mortality rates, the hospital may be able to change its policy to improve patient care.
+The observed differences in mortality could be due to differences in these risk factors between the two groups of patients (distribution of $X$) or to differences in how well each hospital manages these risk factors (distribution of $Y|X$).
+If she can figure out how much each of these factors is driving the difference in mortality rates, her hospital may be able to change its policy to improve patient care.
 Before committing to a potentially costly causal analysis, can she use the available information to develop hypotheses for what drives the difference in mortality?
 
-The modern explainability literature in machine learning (ML) provides a number of methods for attributing outcome behavior to covariates \citep{Dwivedi2023}. These include Shapley values \citep{Shapley1953, Lundberg2017}, Functional ANOVA \citep{stone1994, hooker2004discovering, hookerGeneralizedFunctionalANOVA2007, lengerich2020purifying}, Accumulated Local Effects \citep{apley2020}, and partial dependence plots \citep{friedman2001greedy}. However, these methods all focus on decompositions within a single group, not on attributing differences across groups. By contrast, the Oaxaca--Blinder decomposition (OBD) exactly attributes disparities between groups to $X$ and $Y|X$. The OBD was traditionally developed for linear models \citep{oaxaca1973,blinder1973} and remains widely used in this form to the present day --- e.g., to analyze gender wage gaps \citep{paradaContzen2025}, educational attainment differences \citep{barhaim2023}, and diabetes health disparities \citep{cartwright2021}. Moreover, recent work suggests the OBD might be applied in conjunction with flexible ML decompositions \citep{bach2024heterogeneity,quintas2024multiply,quintero2025}.
+The modern explainability literature in machine learning (ML) provides a number of methods for attributing outcome behavior to covariates \citep{Dwivedi2023}. These include Shapley values \citep{Shapley1953, Lundberg2017}, Functional ANOVA \citep{stone1994, hooker2004discovering, hookerGeneralizedFunctionalANOVA2007, lengerich2020purifying}, Accumulated Local Effects \citep{apley2020}, and partial dependence plots \citep{friedman2001greedy}. However, these methods all focus on decompositions within a single group, not on attributing differences across groups. By contrast, the Oaxaca--Blinder decomposition (OBD) exactly attributes disparities between two groups to $X$ and $Y|X$. The OBD was traditionally developed for linear models \citep{oaxaca1973,blinder1973} and remains widely used in this form to the present day --- e.g., to analyze gender wage gaps \citep{paradaContzen2025}, educational attainment differences \citep{barhaim2023}, and diabetes health disparities \citep{cartwright2021}. Moreover, recent work suggests the OBD might be applied in conjunction with flexible ML decompositions \citep{bach2024heterogeneity,quintas2024multiply,quintero2025}.
 
 %Modern machine learning explainability tools seem well-suited for this task.
 %Flexible regression models like neural networks and random forests are widely used to fit distributions $Y \mid X$, and functional decomposition methods like Accumulated Local Effects (ALE) \textcolor{red}{TODO: cite} and functional ANOVA (FANOVA) \textcolor{red}{TODO: cite} help practitioners gain fine-grained understanding of these models.
@@ -24,8 +24,8 @@ The modern explainability literature in machine learning (ML) provides a number 
 % \textcolor{red}{TB: right now i think the paragraph below isn't clear that the asymmetry we care about is the asymmetry in the populations. would be super to make that more clear. also i think we can be more clear about the steelman argument about counterfactuals and to what extent it is already made in the literature and to what extent it is not}
 % \textcolor{blue}{AS: I tried to clarify both. For the counterfactual ordering, the cited paper is studying the effects of unionization and the minimum wage (among other things) on wage inequality. They're most interested in unionization and the minimum wage, so they make them the first elements of the decomposition.}
 
-Since the original paper \citep{oaxaca1973}, it has been well known that the OBD requires choosing one of the two groups (Patients Groups $K$ or $H$ in our example) as a reference, and that this choice affects the numerical result of the OBD.
-This dependence on the reference choice is sometimes known as the ``index-number problem.''
+Since the original paper \citep{oaxaca1973}, it has been well known that the OBD requires choosing one of the two groups (the patient group at Hospital $K$ or $H$ in our example) as a reference, and that this choice affects the numerical result of the OBD.
+This dependence on the reference choice is sometimes known as the ``index number problem.''
 %And generalizations of the OBD to non-linear models of $Y \mid X$ do not seem to escape this issue -- e.g., \textcolor{red}{TODO: cite our workshop paper} consider one fixed reference group.
 Several responses to this asymmetry occur in the OBD literature. 
 Some argue that a single reference group makes the most sense to use in context, as in \citet{dinardoFortinLemieux1996}'s study of unionization, the minimum wage, and economic inequality.
@@ -41,11 +41,11 @@ e.g., in our example, both references might attribute the mortality differences 
 In this case, all of the approaches above should yield similar qualitative conclusions.
 However, if the choice of reference could yield different substantive conclusions, the distinction in approaches \emph{would} matter;
 e.g., suppose one reference attributes the mortality difference to the difference in risk factors and the other does not.
-While the index-number problem allows for different numerical answers, we are not aware of an investigation
+While the index number problem allows for different numerical answers, we are not aware of an investigation
 into whether the choice of reference groups can yield different \emph{substantive} conclusions. 
 We fill this gap with a characterization of when the OBD's substantive conclusions are sensitive to the reference group and a theoretical and empirical investigation of how common such sensitivity is.
 
-In what remains, we start by reviewing the index-number problem and OBD in more detail in \cref{sec:counterfactual_OBD}, and we formalize
+In what remains, we start by reviewing the index number problem and OBD in more detail in \cref{sec:counterfactual_OBD}, and we formalize
 a form of substantive conclusion.
 We give an existence proof that a real-data problem can yield two substantively different conclusions (\cref{sec:real_example}).
 And we show that differences in substantive conclusions need not be driven solely by model misspecification or small sample sizes (\cref{sec:example}).

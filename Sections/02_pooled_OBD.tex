@@ -23,11 +23,11 @@ slope values for each $\alpha, \beta$ and the empirical mean covariate vectors f
 In our own experiments below, we use ordinary least squares (OLS) linear regression in each group.
 
 It is common to draw substantive conclusions based on the signs of the empirical explained and unexplained components, often coupled with
-statistical significance \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. For instance, consider the example with covariate blood pressure and outcome mortality. 
-Suppose Patient Group $H$ has lower mortality ($\Delta_Y < 0$), and suppose we take $H$ as the reference. 
-If the OBD explained component has a negative sign, we might conclude that Patient Group $H$ can attribute
-its lower mortality rate in part to its a healthier blood pressure. In real data, we might additionally require that the observed sign be statistically significant in order to form a conclusion;
+statistical significance \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. For instance, consider the hospital example. 
+Suppose now that Hospital $H$ has lower mortality ($\Delta_Y < 0$), and suppose we take $H$ as the reference. 
+If the OBD explained component has a negative sign, we might conclude that group $H$ can attribute
+its lower mortality rate in part to its risk factors, such as lower blood pressure. In real data, we might additionally require that the observed sign be statistically significant in order to form a conclusion;
 without significance, we might
-instead hesitate to conclude that blood pressure is driving any difference in mortality.
+instead hesitate to conclude that risk factors are driving any difference in mortality.
 Analogous to the explained component, if the OBD unexplained component has a negative sign, we might attribute group $H$'s lower
-mortality in part to institutional factors, such as medical care.
+mortality in part to the quality of hospital care.

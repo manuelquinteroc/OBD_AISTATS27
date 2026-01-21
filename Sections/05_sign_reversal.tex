@@ -158,7 +158,7 @@ where the probability $\mathrm{Pr}$ is over the independent random variables $I_
 Moreover, as $d \to \infty$, $P_d \rightarrow 1/2$.
 \end{proposition}
 See \cref{proof:unexplained_fraction} for the proof.
-The joint Irwin-Hall probability in \cref{eq:unexplained_fraction} is hard to evaluate analytically, so in \cref{fig:prob_unexplained} we evaluate it numerically for various values of the dimension $d$.
+The joint Irwin-Hall probability in \cref{eq:unexplained_fraction} is hard to evaluate analytically, so in \cref{fig:prob_unexplained} we evaluate it numerically for various values of $d$.
 For even modest dimension $d$, the fraction of parameter space leading to sign flips exceeds 40\%.
 \begin{figure}
     \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/prob_unexplained.pdf}}
@@ -193,7 +193,7 @@ First, we examined the PhysioNet ICU cohort collected for the study of in-hospit
 We started by evaluating the OBD across nine predefined data subsets: the full cohort, each ICU type category, two age groups (patients younger than $65$ and patients aged $65$ or older), and two groups defined by a median split of the SAPS--I score. For each of these subsets, we fit gender-specific linear models and computed the OBD. 
 We found no sign flips.
 We then expanded our analysis to a larger and more heterogeneous collection of subpopulations.
-Across all $139$ data subsets, we found that $27$ exhibited at least one sign reversal -- a far cry from the number predicted by \cref{prop:explained_fraction,prop:unexplained_fraction}.
+Across all $139$ data subsets, we found that $27$ exhibited at least one sign reversal --- a far cry from the number predicted by \cref{prop:explained_fraction,prop:unexplained_fraction}.
 The HR quartile two example in \cref{sec:real_example} was one such example. We describe the data and our search procedure fully in 
 \cref{appendix:icu_details}.
 
@@ -202,7 +202,7 @@ the raw data come from the 2016 American Community Survey 1-Year Public Use Micr
 We again purposely constructed a large set of data analyses to search for sign flips in different subsets of the data, comprising all combinations of the factors in Appendix \cref{tab:us_census_design}.
 Out of the 355 comparisons we examined, we found 0 cases where the explained component flipped signs and 1 case where the unexplained component flipped signs.
 See \cref{appendix:us_labor_force} for details of this data set and our search procedure.
-Again, this is substantially lower than the number predicted by \cref{prop:explained_fraction,prop:unexplained_fraction}.
+Again, these numbers are substantially lower than those predicted by \cref{prop:explained_fraction,prop:unexplained_fraction}.
 
 We conclude from these two searches that we do not expect sign flips to be more than empirically rare, but
 their existence is still possible.
@@ -253,12 +253,12 @@ In some domains, intercept and slope advantages might often move in the same dir
 \cref{prop:no_sign_flip} rules out sign flips in such cases.
 As an illustration, consider an analysis of the gender wage gap that decomposes differences in the average earnings between men and women into a component based on covariates (e.g., work experience) and outcomes given covariates (i.e., how experience is remunerated).
 \cref{ass:no_sign_flip} corresponds to the group with higher baseline wages ($\alpha_g$) also having higher returns to experience ($\beta_g$). 
-\cref{prop:no_sign_flip} is one explanation for why sign flips are rare in our analysis of U.S. labor force data (\cref{appendix:us_labor_force}): \cref{ass:no_sign_flip} holds in 230 out of the 355 comparisons we search (64.8\%), ruling out unexplained component sign flip in those cases.
+\cref{prop:no_sign_flip} is one explanation for why sign flips are rare in our analysis of U.S. labor force data (\cref{appendix:us_labor_force}): \cref{ass:no_sign_flip} holds in 230 out of the 355 comparisons we search (64.8\%), ruling out unexplained component sign flips in those cases.
 
 However, \cref{ass:no_sign_flip} is not plausible in all domains.
 In the ICU data exercise from \cref{sec:real_example}, \cref{ass:no_sign_flip} never holds across 139 comparisons.
 Here, \cref{ass:no_sign_flip} requires the population with a higher mortality rate to also be more sensitive to observed covariates. 
-This might not be the case if the dataset does not include covariates important for predicting mortality, such as family history of disease, exposure to environmental risk factors, or chronic health conditions.
+This relation might not hold if the dataset does not include covariates important for predicting mortality, such as family history of disease, exposure to environmental risk factors, or chronic health conditions.
 If such \textit{unobserved} covariates are strong drivers of mortality, one population may have a mortality rate that is higher but \textit{less} sensitive to the \textit{observed} covariates.
 We develop this argument with more rigor in \cref{appendix:ovb}, explicitly showing how the regression parameters \( \alpha \) and \( \beta \) are jointly influenced by unobserved covariates.
 

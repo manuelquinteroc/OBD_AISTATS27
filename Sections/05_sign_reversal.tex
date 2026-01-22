@@ -256,11 +256,11 @@ As an illustration, consider an analysis of the gender wage gap that decomposes 
 \cref{prop:no_sign_flip} is one explanation for why sign flips are rare in our analysis of U.S. labor force data (\cref{appendix:us_labor_force}): \cref{ass:no_sign_flip} holds in 230 out of the 355 comparisons we search (64.8\%), ruling out unexplained component sign flips in those cases.
 
 However, \cref{ass:no_sign_flip} is not plausible in all domains.
-In the ICU data exercise from \cref{sec:real_example}, \cref{ass:no_sign_flip} never holds across 139 comparisons.
-Here, \cref{ass:no_sign_flip} requires the population with a higher mortality rate to also be more sensitive to observed covariates. 
-This relation might not hold if the dataset does not include covariates important for predicting mortality, such as family history of disease, exposure to environmental risk factors, or chronic health conditions.
-If such \textit{unobserved} covariates are strong drivers of mortality, one population may have a mortality rate that is higher but \textit{less} sensitive to the \textit{observed} covariates.
-In \cref{appendix:ovb}, we explore how the presence of such unobserved covariates can naturally lead to parameter differences $\Delta\beta$ and $\Delta\alpha$ that do not allow for sign flips.
+In the ICU setting from \cref{sec:real_example}, the assumption requires the higher mortality population to also be more sensitive to observed covariates.
+This relationship may fail to hold when important factors, such as environmental exposure, chronic conditions, or family history of disease, are not recorded in a researcher's dataset.
+If such \textit{omitted covariates} are strong predictors of mortality, a population may have a high mortality rate that is less sensitive to \textit{observed covariates}.
+Consistent with this intuition, \cref{ass:no_sign_flip} never holds across the 139 comparisons in the ICU data exercise.
+In \cref{appendix:ovb}, we explore how the presence of omitted covariates can generate parameter differences $\Delta\beta$ and $\Delta\alpha$ that do preclude sign flips, without invoking \cref{ass:no_sign_flip}.
 %We develop this argument with more rigor in \cref{appendix:ovb}, explicitly showing how the regression parameters \( \alpha \) and \( \beta \) are jointly influenced by unobserved covariates.
 
 % On the other hand, sign flips remain plausible for the unexplained component. 

@@ -174,7 +174,8 @@ Even though \cref{thm:unexplained_ordering_sensitivity} does not restrict the ma
 
 \subsection{Relationship Between Unexplained Component Sign Flips and Omitted Variables}
 \label{appendix:ovb}
-Since unexplained component sign flips require \( | \mathbf{1}^T \Delta \beta | > | \Delta \alpha | \), any data-generating processes that jointly produces large \( | \mathbf{1}^T \Delta \beta | \) and \( | \Delta \alpha | \) would make sign flips less likely than \cref{prop:unexplained_fraction} suggests.
+Here, we assume the same standardization of covariates as in \cref{sec:sign_flip_fraction}; that is, we assume $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$.
+Under this normalization, unexplained component sign flips require \( | \mathbf{1}^T \Delta \beta | > | \Delta \alpha | \), so any data-generating processes that jointly produces large \( | \mathbf{1}^T \Delta \beta | \) and \( | \Delta \alpha | \) would make sign flips less likely than \cref{prop:unexplained_fraction} suggests.
 In this section, we present a mechanism that can jointly produce large \( | \mathbf{1}^T \Delta \beta | \) and \( | \Delta \alpha | \) without invoking \cref{ass:no_sign_flip}.
 
 The mechanism involves the researcher's dataset omitting covariates that are related to both \( X \) and \( Y \).
@@ -190,8 +191,9 @@ To establish a simple example, we will assume that both are linear and satisfy
   \label{eq:y_on_x_z}
   \E_g[Y \mid X, Z] &= \omega_g + X^\top \theta_g + Z^\top \gamma_g, \\
   \label{eq:z_on_x}
-  \E_g[Z \mid X] &= \zeta_g + \Psi_g X.
+  \E_g[Z \mid X] &= \zeta_g + \Psi_g X,
 \end{align}
+where $\omega_g \in \R$, $\theta_g \in \R^d$, $\gamma_g \in \R^{d'}$, $\zeta_g \in \R^{d'}$, and $\Psi_g \in \R^{d' \times d}$.
 Relaxing these assumptions may lead to other non-uniform relationships between \( \Delta \beta \) and \( \Delta \alpha \).
 
 Recall that the OBD is based on regressing the outcome against the observed covariates for each group \(g \in \{H, K\}\) via

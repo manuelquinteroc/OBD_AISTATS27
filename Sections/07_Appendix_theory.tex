@@ -176,7 +176,7 @@ Even though \cref{thm:unexplained_ordering_sensitivity} does not restrict the ma
 \label{appendix:ovb}
 Since unexplained component sign flips require \( | \mathbf{1}^T \Delta \beta | > | \Delta \alpha | \), any data-generating processes that jointly produces large \( | \mathbf{1}^T \Delta \beta | \) and \( \Delta \alpha \) would make sign flips less likely than \cref{prop:unexplained_fraction} suggests.
 
-A candidate explanation is that the researcher's dataset omits important covariates, which are related to both \( X \) and \( Y \).
+A candidate explanation for why this might occur is that the researcher's dataset omits important covariates, which are related to both \( X \) and \( Y \).
 For example, hospital records only contain measurements that doctors have ordered, not the results of important tests a doctor may have skipped.
 Similarly, census data used for studying wage gaps typically lack detailed information about skills and experience from a worker's resume and work history.
 Finally, in practice, nonlinear transformations of the covariates are also effectively omitted from analysis, like when a researcher does not include polynomial terms in a regression specification.
@@ -218,7 +218,7 @@ We can use this formula to express the difference in slopes and intercepts acros
   \label{eq:delta_beta_gamma}
   \Delta \beta  &= \Delta \theta + \Delta \Psi^\top \Delta \gamma,
 \end{align}
-where \( \Delta \) takes the ; for example, \( \Delta \omega := \omega_H - \omega_K \).
+where \( \Delta \) takes the $H-K$ difference in the quantity that follows; for example, \( \Delta \omega := \omega_H - \omega_K \).
 These equations show that \( \Delta \alpha \) and \( \Delta \beta \) depend on the role of omitted covariates in the data-generating process.
 Crucially, they provide a mechanism to produce \( \Delta \alpha \) and \( \mathbf{1}^\top \Delta \beta \) that are jointly large.
 If both the Z-X and Z-Y relationships change in complementary ways, then both \( \Delta \zeta^\top \Delta \gamma \) and \( \mathbf{1}^\top \Delta \Psi^\top \Delta \gamma \) will be large.

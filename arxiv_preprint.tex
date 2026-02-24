@@ -1,0 +1,159 @@
+\pdfoutput=1
+%%%%%%%% ICML 2026 SUBMISSION FILE - Oaxaca-Blinder Decomposition %%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % for professional tables
+
+% hyperref makes hyperlinks in the resulting PDF.
+\usepackage[hypertexnames=false]{hyperref}
+
+% Attempt to make hyperref and algorithmic work together better:
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% For arXiv preprint, use:
+\usepackage[preprint]{icml2026}
+
+% If you want the blind submission version instead, use:
+% \usepackage{icml2026}
+
+% If accepted, instead use the following line for the camera-ready submission:
+% \usepackage[accepted]{icml2026}
+
+% Load algpseudocode after icml2026 to provide additional algorithm commands
+\usepackage{algpseudocode}
+
+% Math packages
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{thmtools}
+\usepackage[capitalise]{cleveref}
+\input{mathnotation}
+
+% Additional packages
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{url}            % simple URL typesetting
+\usepackage{float}          % tables and figures
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{xcolor}         % colors
+\usepackage{thm-restate}
+
+% Algorithm packages
+\usepackage{algorithm}
+\floatname{algorithm}{Decision tree}
+% Note: icml2026 already loads algorithmic.sty, so we use that instead of algpseudocode
+% If your sections use algpseudocode syntax, you may need to adjust the algorithm code
+% or load algpseudocode after icml2026 (may cause conflicts)
+
+% List and table packages
+\usepackage{enumitem}   % for nested and customized enumerate labels
+\usepackage{makecell}
+\usepackage{multirow}
+
+% Note: natbib is already loaded by icml2026.sty, no need to load it again
+
+% Cleveref for cross-references
+\crefname{equation}{Equation}{Equations}
+\crefformat{equation}{Equation~#2#1#3}   % Only the number is hyperlinked
+\Crefformat{equation}{Equation~#2#1#3}   % Only the number is hyperlinked (capitalized)
+\crefname{figure}{Figure}{Figures}
+\Crefname{figure}{Figure}{Figures}
+\crefname{table}{Table}{Tables}
+\Crefname{table}{Table}{Tables}
+
+% Theorem styles
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}[section]
+\crefname{assumption}{Assumption}{Assumptions}
+\Crefname{assumption}{Assumption}{Assumptions}
+
+% Custom editing and comment commands
+\newcommand{\mqedit}[1]{\textcolor{orange}{#1}}
+\newcommand{\mqcomment}[1]{\textcolor{orange}{[\textbf{MQ:} #1]}}
+
+
+\icmltitlerunning{The choice of reference group can reverse conclusions in the Oaxaca-Blinder decomposition}
+
+\begin{document}
+
+\twocolumn[
+  \icmltitle{Do covariates explain why these groups differ? The choice of reference group can reverse conclusions in the Oaxaca-Blinder decomposition}
+
+  \icmlsetsymbol{equal}{*}
+
+  \begin{icmlauthorlist}
+    \icmlauthor{Manuel Quintero}{inst1}
+    \icmlauthor{Advik Shreekumar}{inst2}
+    \icmlauthor{William T.\ Stephenson}{inst1}
+    \icmlauthor{Tamara Broderick}{inst1}
+  \end{icmlauthorlist}
+
+  \icmlaffiliation{inst1}{Massachusetts Institute of Technology, Cambridge, MA, USA}
+  \icmlaffiliation{inst2}{University of California, Berkeley,Berkeley, CA, USA}
+
+  \icmlcorrespondingauthor{Manuel Quintero}{mquint@mit.edu}
+
+  \icmlkeywords{Machine Learning, ICML}
+
+  \vskip 0.3in
+]
+
+\printAffiliationsAndNotice{DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.} 
+
+% Abstract
+\input{Sections/00_abstract}
+
+% Main sections
+\input{Sections/01_introduction}
+\input{Sections/02_pooled_OBD.tex}
+% \input{Sections/counterfactual_explanation.tex}
+% \input{Sections/setup}
+\input{Sections/03_real_healthcare_example}
+\input{Sections/04_illustrative_example}
+\input{Sections/05_sign_reversal}
+\input{Sections/06_conclusion}
+
+\section*{Acknowledgements}
+
+Manuel Quintero was supported in part by the Fortunato and Catalina Brescia Fellowship at the Institute for Data, Systems, and Society (IDSS), Massachusetts Institute of Technology.
+
+DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited. This material is
+based upon work supported by the Combatant Commands under Air Force Contract No. FA8702-15-D-0001
+or FA8702-25-D-B001. Any opinions, findings, conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the Combatant Commands.
+
+\section*{Impact Statement}
+
+The Oaxaca-Blinder decomposition (OBD) is widely used to draw conclusions and influence policy.
+Our work shows that the choice of reference group in the OBD can reverse substantive conclusions and characterizes conditions under which such reversals can occur.
+We highlight the importance of reporting results for both references, even though this step is currently sometimes omitted in published papers
+and government reports.
+Thus, our work has the potential to improve decisions that arise from using the OBD.
+
+\section*{Software and Data}
+
+The code to reproduce all experiments, simulations, and figures in this paper is publicly available at: \url{https://github.com/manuelquinteroc/ReferenceOaxacaBlinder}
+
+% Bibliography
+\bibliographystyle{icml2026}
+\bibliography{OBD_signflip}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\appendix
+\onecolumn
+
+% Supplementary material
+\section*{Supplementary Materials}
+
+\input{Sections/07_Appendix_theory}
+\input{Sections/08_Appendix_example}
+\input{Sections/09_icu_details}
+
+\end{document}

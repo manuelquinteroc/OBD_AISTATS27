@@ -3,10 +3,11 @@ Scientists often want to explain why an outcome is different in two groups.
 For instance, differences in patient mortality rates across two hospitals could be due to differences in the patients themselves (covariates) or differences in medical care (outcomes given covariates).
 The Oaxaca--Blinder decomposition (OBD) is a standard tool to tease apart these factors.
 It is well known that the OBD requires choosing one of the groups as a reference, and the numerical answer can vary with the reference.
-To the best of our knowledge, there has not been a systematic investigation into whether the choice of OBD reference can yield different substantive conclusions and how common this issue is.
-In the present paper, we give existence proofs in real and simulated data that the OBD references can yield substantively different conclusions and that these differences are not entirely driven by model misspecification or small data.
-We prove that substantively different conclusions occur in up to half of the parameter space, but find these discrepancies rare in the real-data analyses we study.
-We explain this empirical rarity by examining how realistic data-generating processes can be biased towards parameters that do not change conclusions under the OBD.
+To the best of our knowledge, there has been no systematic investigation into whether the choice of OBD reference can yield different substantive conclusions and how common this issue is.
+In the present paper, we give existence proofs in real and simulated data that the OBD references can yield substantively different conclusions. 
+We establish that these differences are not entirely driven by model misspecification or small data.
+\textcolor{red}{Our empirical exercises find that this sensitivity is particularly common when the OBD is paired with frontier machine learning models.}
+We explain this by proving that substantively different conclusions occupy a larger volume in the parameter space as the covariate dimension grows.
 %. Since the inception of the OBD, it has been well known that the OBD is not symmetric with respect to the two populations; depending on the choice of a reference population, it is possible to derive numerically different answers. In the present paper, we provide what is, to the best of our knowledge, the first examples illustrating that major conclusions can change between the two natural directions of the OBD. 
 %In a simulation inspired by real-life health data and a real clinical case study, we illustrate a sign reversal: one choice of reference group suggests that observed clinical factors are associated with improved patient outcomes and lower mortality risk, while the other suggests that these same factors are associated with worse patient outcomes, leading to qualitatively contradictory interpretations. 
 %We provide supporting theory that suggests this sign change is possible in a wide variety of scenarios and not specific to our concrete examples.

@@ -3,7 +3,6 @@
 
 As a first step toward describing the OBD, we illustrate the index number problem by framing it as a counterfactual exercise as in \citet{fortinLemieuxFirpo2011}.
 % Unlike \citet{fortinLemieuxFirpo2011}, we observe that this counterfactual exercise need not invoke a linear model, which we leave off until \ref{sec:ob} below.
-
 We consider an observed outcome $Y \in \mathbb{R}$ and covariates $X$ in some space $\mathcal{X}$. We take two groups, $H$ and $K$. We assume that the tuple $(X,Y)$ is independently and identically distributed within each group $g$ with corresponding expectation $\E_g$. We suppose we observe a gap in the mean outcomes, $\E_H[Y]$ and $\E_K[Y]$, and would like to understand to what extent the gap is due to differences in the distribution of $X$ versus differences in the distribution of $Y\mid X$ between the two groups. 
 For the moment, we assume we have access to population-level quantities, including all expectations.
 
@@ -25,7 +24,7 @@ or
 (B) \emph{How much would Group $K$'s mean outcome ($Y$) change if Group $K$ kept its outcome--covariate relationship ($Y|X$) but had the covariate ($X$) distribution of Group $H$?}
 
 To address the general questions, it will be useful to compute the mean of a counterfactual $Y$ that has the outcome--covariate relationship ($Y|X$) of group $g$ and the covariate ($X$) distribution of group $g'$. By the law of total expectation, this mean equals
-$M_{g',g} := \E_{g'} [ \E_g  [ Y | X ] ]$.
+$\E_{g'} [ M_g(X) ] := \ \E_{g'} [ \E_g  [ Y | X ] ]$.
 Then the difference in mean outcomes between the two groups can be decomposed into differences between each group's mean
 and the chosen counterfactual mean. The decompositions corresponding to questions (A) and (B) above are, respectively, 
 \cref{eq:OB_H_Counterfactual} and \cref{eq:OB_K_Counterfactual} below.
@@ -34,11 +33,11 @@ and the chosen counterfactual mean. The decompositions corresponding to question
 	\nonumber
     &\Delta_Y := \E_H[Y] - \E_K[Y] \\ 
     \label{eq:OB_H_Counterfactual}
-    &=\underbrace{\Big(\E_H[Y] - M_{K,H} \Big)}_{E^{(H)}} 
-     + \underbrace{\Big( M_{K,H} - \E_K[Y]\Big)}_{U^{(H)} } \\
+    &=\underbrace{\E_H[Y] - \E_{K} [ M_H(X) ] }_{E^{(H)}} 
+     + \underbrace{\E_{K} [ M_H(X) ] - \E_K[Y]}_{U^{(H)} } \\
      \label{eq:OB_K_Counterfactual}
-     &=\underbrace{\Big(\E_H[Y] - M_{H,K} \Big)}_{U^{(K)}} 
-     + \underbrace{\Big(M_{H,K} - \E_K[Y]\Big)}_{E^{(K)}}.
+     &=\underbrace{\E_H[Y] - \E_{H} [ M_K(X) ] }_{U^{(K)}} 
+     + \underbrace{\E_{H} [ M_K(X) ] - \E_K[Y] }_{E^{(K)}}.
 \end{align} 
 %Alternatively, the decomposition corresponding to question (B) above is:
 %\begin{align}
@@ -61,8 +60,11 @@ that in general, $E^{(K)} \neq E^{(H)}$ and $U^{(K)} \neq U^{(H)}$.
 
 \textbf{A conceptual resolution?}
 Before proceeding, we observe that there is not an immediate and general conceptual resolution of the index number problem.
-It is not clear to us in the hospital example above that one direction is more natural --- or even that the two
-directions represent clearly distinguishable policy questions.
+It is not clear to us in the hospital example above that one direction is more natural --- or even that the two directions represent clearly distinguishable policy questions.
+
 There may be resolutions in particular areas of study.
-For instance, many papers on the gender wage gap seem to favor constructing a new reference group \citep{reimers1983,cotton1988,neumark1988,kassenboehmer2014distributional,bachan2022genderchancellor}.
+For instance, in economic analyses of wage gaps, some argue that a single reference group makes the most sense to use in context, as in \citet{dinardoFortinLemieux1996}'s study of unionization, the minimum wage, and economic inequality.
+Others effectively construct a new reference group by aggregating the original two groups in various ways \citep{neumark1988,oaxacaRansom1994,reimers1983,cotton1988,kassenboehmer2014distributional,sharafRashad2016,rahimiNazari2021,Allen2022,bachan2022genderchancellor}.
 This tendency might suggest a consensus; however, we also observe published work that takes either men or women as the reference group \citep{nielsen2000wage,piazzalunga2019increase,leythienne2021paygapeu,tao2024gender,paradaContzen2025}.
+Some papers report results for both references \citep{ONeill2006,fortinLemieuxFirpo2011,sharafRashad2016,rahimiNazari2021}. 
+Still others report results for just one reference, with no argument for excluding the other reference \citep{zhang_2019, ayubiShahbaziKhazaei2024,paradaContzen2025,singleton2016,lamJamiesonMittinty2021,leythienne2021paygapeu,alHanawiNjagi2022,tao2024gender}.

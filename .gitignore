@@ -95,6 +95,9 @@ ipython_config.py
 # pyenv
 .python-version
 
+# R
+**/.Rhistory
+
 # Environments
 .env
 .venv
@@ -115,7 +118,7 @@ venv.bak/
 Kaggle_ICU_mortality/archive/
 
 # macOS
-.DS_Store
+**/.DS_Store
 .AppleDouble
 .LSOverride
 

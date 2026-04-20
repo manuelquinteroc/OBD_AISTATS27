@@ -1,12 +1,24 @@
 \section{Introduction}
+% Para 1: set up data analysis problem
 As a motivating example, suppose a data scientist at Hospital $H$ notices that mortality rates are noticeably higher at Hospital $H$ than at Hospital $K$.
 She knows the medical literature links many risk factors ($X$), such as high blood pressure, to mortality ($Y$).
 The observed differences in mortality could be due to differences in these risk factors between the two groups of patients (distribution of $X$) or to differences in how well each hospital manages these risk factors (distribution of $Y|X$).
 If she can figure out how much each of these factors is driving the difference in mortality rates, her hospital may be able to change its policy to improve patient care.
-Before committing to a potentially costly causal analysis, can she use the available information to develop hypotheses for what drives the difference in mortality?
+How can she use the available information to form hypotheses about what drives the difference in mortality?
 
-The modern explainability literature in machine learning (ML) provides many methods for attributing outcome behavior to covariates \citep{Dwivedi2023}. These include Shapley values \citep{Shapley1953, Lundberg2017, chen2025shapley}, Functional ANOVA \citep{stone1994, hooker2004discovering, hookerGeneralizedFunctionalANOVA2007, lengerich2020purifying, fumagalli2025fanova}, Accumulated Local Effects \citep{apley2020}, and partial dependence plots \citep{friedman2001greedy, liu2025trees}. 
-However, these methods all focus on decompositions within one group, not on attributing differences across groups. By contrast, the Oaxaca--Blinder decomposition (OBD) attributes disparities between two groups to $X$ and $Y|X$. The OBD was developed for linear models \citep{oaxaca1973,blinder1973} and remains widely used in this form --- e.g., to analyze gender wage gaps \citep{paradaContzen2025}, educational attainment differences \citep{barhaim2023}, and health disparities \citep{cartwright2021}. Moreover, recent work suggests the OBD might be applied in conjunction with flexible ML decompositions \citep{bach2024heterogeneity,quintas2024multiply,quintero2025}.
+% Para 2: Connect to ML / AI and reject existing explainability tools
+The modern explainability literature in machine learning boast a bevy of methods for attributing outcome behavior to covariates \citep{Dwivedi2023}.
+These include Shapley values \citep{Shapley1953, Lundberg2017, chen2025shapley}, Functional ANOVA \citep{stone1994, hooker2004discovering, hookerGeneralizedFunctionalANOVA2007, lengerich2020purifying, fumagalli2025fanova}, Accumulated Local Effects \citep{apley2020}, and partial dependence plots \citep{friedman2001greedy, liu2025trees}.
+\textcolor{red}{However, such methods are not designed to answer this data scientist's question.
+They attribute variation in outcomes within in a single population to the covariates, holding the conditional distribution $Y|X$ fixed. 
+But, the data scientist is interested in why an outcome varies between two populations, where the $Y|X$ may vary.}
+% For example, a Shapley value analysis of $Y|X$ might suggest that that patients with severe chronic conditions have higher mortality in each of hospital $H$ and $K$. 
+% But if hospitals $H$ and $K$ both treat similar patient populations, chronic health conditions cannot explain why mortality rates differ between them.
+
+% Part 3: Introduce OBD
+Instead, the data scientist might adapt the Oaxaca--Blinder decomposition (OBD), which attributes disparities between two groups to $X$ and $Y|X$. 
+The OBD was developed for linear models \citep{oaxaca1973,blinder1973} and remains widely used in this form --- e.g., to analyze gender wage gaps \citep{paradaContzen2025}, educational attainment differences \citep{barhaim2023}, and health disparities \citep{cartwright2021}. 
+Recent work has explored pairing the OBD with flexible ML decompositions \citep{quintero2025}, with a particular focus on statistical inference \citep{bach2024heterogeneity,quintas2024multiply,flachaire2025decomposing}.
 
 %Modern machine learning explainability tools seem well-suited for this task.
 %Flexible regression models like neural networks and random forests are widely used to fit distributions $Y \mid X$, and functional decomposition methods like Accumulated Local Effects (ALE) \textcolor{red}{TODO: cite} and functional ANOVA (FANOVA) \textcolor{red}{TODO: cite} help practitioners gain fine-grained understanding of these models.
@@ -28,32 +40,21 @@ However, these methods all focus on decompositions within one group, not on attr
 Since the original paper \citep{oaxaca1973}, it has been well known that the OBD requires choosing one of the two groups (Hospital $K$ or $H$ in our example) as a reference, and that this choice affects the numerical result.
 This dependence on the reference choice is known as the ``index number problem.''
 %And generalizations of the OBD to non-linear models of $Y \mid X$ do not seem to escape this issue -- e.g., \textcolor{red}{TODO: cite our workshop paper} consider one fixed reference group.
-Several responses to this asymmetry occur in the OBD literature. 
-Some argue that a single reference group makes the most sense to use in context, as in \citet{dinardoFortinLemieux1996}'s study of unionization, the minimum wage, and economic inequality.
 %Or in other cases, authors construct their own new reference group by pooling across the original two groups \citep{neumark1988,oaxacaRansom1994}.
-Others effectively construct a new reference group by aggregating the original two groups in various ways \citep{neumark1988,oaxacaRansom1994,reimers1983,cotton1988,kassenboehmer2014distributional,sharafRashad2016,rahimiNazari2021,Allen2022,bachan2022genderchancellor}.
-
-However, in many applications, there will be no clear choice of reference group. Moreover, there is no consensus on the appropriate resolution.
-Some papers report results for both references \citep{ONeill2006,fortinLemieuxFirpo2011,sharafRashad2016,rahimiNazari2021}. 
-Some report results for just one reference, with no argument for excluding the other reference \citep{zhang_2019, ayubiShahbaziKhazaei2024,paradaContzen2025,singleton2016,lamJamiesonMittinty2021,leythienne2021paygapeu,alHanawiNjagi2022,tao2024gender}.
-
-It is possible that, despite the index number problem, both references always yield the same substantive conclusions;
-e.g., in our example, both references might attribute the mortality differences partly to the distribution of risk factors, differing only in magnitude.
-In this case, all of the approaches above should yield similar qualitative conclusions.
-However, if the choice of reference could yield different substantive conclusions, the distinction in approaches \emph{would} matter;
-e.g., suppose one reference attributes the mortality difference to the difference in risk factors and the other does not.
-%While the index number problem allows for different numerical answers, we are not aware of an investigation
-We are not aware of an investigation
-into whether the choice of reference groups can yield different \emph{substantive} conclusions. 
-We fill this gap with a characterization of when the OBD's substantive conclusions are sensitive to the reference group and a theoretical and empirical investigation of how common such sensitivity is.
+The index number problem would be less concerning if both references always yield the same substantive conclusions;
+in our example, if both indicate that differences in the distribution of risk factors widen the mortality gap between the two hospitals.
+But if one reference choice finds that risk factors widens the gap while the other finds that they narrow it, the choice of reference \emph{would} matter for qualitative conclusions and subsequent decision making.
+We are not aware of an investigation into whether the choice of reference groups can yield different \emph{substantive} conclusions. 
+\textcolor{red}{We fill this gap by characterizing when the OBD's substantive conclusions are sensitive to the reference group, empirically documenting this sensitivity grows for ML models, and providing theory to explain this sensitivity.}
 
 In what remains, we start by reviewing the index number problem and OBD in more detail in \cref{sec:counterfactual_OBD}, and we formalize
 a form of substantive conclusion.
 We give an existence proof that a real-data problem can yield two substantively different conclusions (\cref{sec:real_example}).
-And we show that differences in substantive conclusions need not be driven solely by model misspecification or small sample sizes (\cref{sec:example}).
-In \cref{sec:signflips}, we demonstrate that certain types of conclusion changes are common in parameter space but uncommon empirically.
-We resolve this seeming disparity by observing that typical data analyses are not uniformly distributed in parameter
-space --- and provide intuition for when this non-uniformity might occur (\cref{sec:no_sign_flips}). We suggest best practices for data analysts in \cref{sec:conclusion}.
+% And we show that differences in substantive conclusions need not be driven solely by model misspecification or small sample sizes (\cref{sec:example}).
+\textcolor{red}{We show that pairing the OBD is more sensitive to reference choice when paired with ML models (Section TODO).}
+\textcolor{red}{In \cref{sec:signflips}, we demonstrate a relationship between the size of the parameter space and the sensitivity of the OBD.}
+% We resolve this seeming disparity by observing that typical data analyses are not uniformly distributed in parameter space --- and provide intuition for when this non-uniformity might occur (\cref{sec:no_sign_flips}). 
+We suggest best practices for data analysts in \cref{sec:conclusion}.
 
 
 

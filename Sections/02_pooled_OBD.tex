@@ -18,11 +18,7 @@ all variables of interest. Then we describe how to proceed with real data.
 \label{sec:ob_real}
 
 In general, data analysts will have access to real data for each of the two groups. 
-We assume they estimate $\mathbb{E}_g[Y|X]$ separately in each group with $\hat{M}_g(X)$, such as ordinary least squares (OLS) or an ML algorithm.
-
-apply \cref{eq:OB_H_decomp,eq:OB_K_decomp} with the fitted intercept and 
-slope values for each $\alpha, \beta$ and the empirical mean covariate vectors for each $\mu$.
-In our own experiments below, we use ordinary least squares (OLS) linear regression in each group.
+\textcolor{red}{We assume they estimate $\mathbb{E}_g[Y|X]$ separately in each group with $\hat{M}_g(X)$, such as ordinary least squares (OLS) or an ML algorithm, and estimate by $\mathbb{E}_{g'}[\mathbb{E}_g[Y|X]]$ by taking the sample average of $\hat{M}_g(X)$ in data from $g'$.}
 
 It is common to draw substantive conclusions based on the signs of the empirical explained and unexplained components, often coupled with
 statistical significance \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. For instance, consider the hospital example. 

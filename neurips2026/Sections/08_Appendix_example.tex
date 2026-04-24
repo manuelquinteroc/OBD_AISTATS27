@@ -1,0 +1,24 @@
+
+\section{Healthcare example: data generating process} % All headings should be lower case (except for first word and proper nouns)
+\label{appendix:dgp}
+We simulate \( N = 5000 \) individuals, divided across two groups. Body mass index (BMI) is drawn from normal distributions reflecting realistic population profiles:
+\begin{align*}
+    \text{BMI}_g &\sim \mathcal{N}(\mu_g ,\, \sigma_g^2) \quad \text{kg/m}^2,
+\end{align*}
+where \( \mu_H = 25 \), \( \mu_K = 27 \), and \( \sigma_H = \sigma_K = 4 \). Within each group, systolic blood pressure is modeled as a linear function of BMI:
+\begin{align}
+    \text{SBP}_g &= \alpha_g + \beta_g \times \text{BMI}_g + \varepsilon_g.
+\end{align}
+
+We set \( \varepsilon_g \sim \mathcal{N}(0,\, 5^2) \)~mmHg, and specify the remaining parameters as shown in \cref{tab:dgp_short}.
+
+\noindent The noise term \( \varepsilon_g \) captures unobserved individual-level variation within each group, such as daily measurement fluctuations, dietary salt intake, or transient stress. 
+Group~H (higher-resource settings) has a lower mean BMI, consistent with greater access to healthy food, safe environments for physical activity, and preventive care. 
+In contrast, Group~K (lower-resource or marginalized settings) has a mean BMI two units higher, reflecting structural disparities related to nutrition, transportation, and economic constraints. 
+The shared standard deviation of 4~kg/m\(^2\) reflects typical within-group heterogeneity in adult primary care populations \citep{block2013population}.
+
+We assume \( \beta_K > \beta_H \), reflecting that in Group~K, each additional unit of BMI increases SBP more steeply, due to slower titration, less frequent follow up, greater adherence variability, and fewer lifestyle resources.
+In contrast, the flatter slope in Group~H reflects partial buffering through timely medication adjustments, consistent coverage, and access to lifestyle support.
+The intercepts \( \alpha_H \) and \( \alpha_K \) are chosen so that the regression lines intersect near the midpoint of the BMI range, ensuring that mean SBP differences are primarily driven by BMI distribution and slope disparity.
+Figure~\ref{fig:bmi_sbp} shows the fitted linear models to the synthetic data.
+

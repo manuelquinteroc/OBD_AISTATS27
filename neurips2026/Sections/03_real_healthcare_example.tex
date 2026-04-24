@@ -130,10 +130,23 @@ And as $\Delta\mu_c$ has the same sign for all of these covariates, each one pus
 In aggregate, these changes add enough to cause a sign flip in the explained component.
 In \cref{sec:simulated_example}, we show that these phenomenon are not artifacts of finite-samples or model mis-specification -- indeed, they can occur for well-specified linear models with infinite data.
 
-\begin{figure}[h]
-    \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/hr_quartile2_mortality_lines.pdf}}
-    \caption{Linear fit of mortality on admission heart rate for each group when holding all other covariates fixed at their group means.}
-    \label{fig:hr_quartile2}
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Sections/Figures/hr_quartile2_mortality_lines.pdf}
+        \caption{Linear fit of mortality on admission heart rate for each group when holding all other covariates fixed at their group means.}
+        \label{fig:hr_quartile2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Sections/Figures/prob_unexplained.pdf}
+        \caption{Percentage of parameter space leading to sign flips. See \cref{remark:computing_irwin_hall} for how we compute the percentage for the unexplained component.}
+        \label{fig:prob_unexplained}
+    \end{subfigure}
+    \caption{(a) A concrete sign reversal in the HR quartile two subgroup: the fitted slopes of mortality on admission heart rate differ in sign between men and women. (b) The fraction of parameter space leading to a sign flip in the unexplained component, as a function of covariate dimension $d$.}
+    \label{fig:sign_flip_overview}
 \end{figure}
 
 

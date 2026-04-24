@@ -187,13 +187,14 @@ where the probability $\mathrm{Pr}$ is over the independent random variables $I_
 Moreover, as $d \to \infty$, $P_d \rightarrow 1/2$.
 \end{proposition}
 See \cref{proof:unexplained_fraction} for the proof.
-The joint Irwin-Hall probability in \cref{eq:unexplained_fraction} is hard to evaluate analytically, so in \cref{fig:prob_unexplained} we evaluate it numerically for various values of $d$.
+The joint Irwin-Hall probability in \cref{eq:unexplained_fraction} is hard to evaluate analytically, so we evaluate it numerically for various values of $d$; see \cref{fig:prob_unexplained}.
 For even modest dimension $d$, the fraction of parameter space leading to sign flips exceeds 40\%.
-\begin{figure}
-    \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/prob_unexplained.pdf}}
-    \caption{Percentage of parameter space leading to sign flips. See \cref{remark:computing_irwin_hall} for how we compute the percentage for the unexplained component.}
-    \label{fig:prob_unexplained}
-\end{figure}
+% Figure moved to \cref{fig:sign_flip_overview} (panel b) in \cref{sec:real_example}.
+% \begin{figure}
+%     \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/prob_unexplained.pdf}}
+%     \caption{Percentage of parameter space leading to sign flips. See \cref{remark:computing_irwin_hall} for how we compute the percentage for the unexplained component.}
+%     \label{fig:prob_unexplained}
+% \end{figure}
 
 While our results above assume the standardization $\mu_K=\mathbf{0}, \mu_H=\mathbf{1}$, 
 we confirm by simulations that we expect similar results when we take each coordinate of $\mu_g$ uniform

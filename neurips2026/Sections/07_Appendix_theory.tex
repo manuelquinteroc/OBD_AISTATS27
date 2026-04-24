@@ -133,43 +133,43 @@ Note that the sign flip is symmetric by construction, but the magnitude of the d
 
 \subsection{Decision Tree Representation of \cref{eq:sign_flip_condition}}
 
-To illustrate \cref{thm:unexplained_ordering_sensitivity}, we represent the condition in \cref{eq:sign_flip_condition} as a decision tree in \cref{alg:decision_tree} and use it to scrutinize the healthcare example in \cref{sec:example}.
+To illustrate \cref{thm:unexplained_ordering_sensitivity}, we represent the condition in \cref{eq:sign_flip_condition} as a decision tree in \cref{alg:decision_tree} and use it to scrutinize the healthcare example in \cref{sec:simulated_example}.
 In this example, $\mu_H$ and $\mu_K$ denote mean BMIs, both of which are positive by definition and thus $\sign{(\mu_H \Delta\beta)} = \sign{(\mu_K \Delta\beta)} = \sign{(\Delta\alpha)}$. 
 Therefore, following \Cref{alg:decision_tree}, a sign flip will occur only if $\sign{(\Delta\alpha)} \neq \sign{(\mu_H \Delta\beta)} = \sign{(\Delta\beta)}$; equivalently, it must hold that one group has a larger $\beta_g$ (more sensitive to higher BMI) but lower $\alpha_g$ (lower SBP on average).
-This might occur if one group has better access to treatment but worse genetic factors, as in \cref{sec:example}.
+This might occur if one group has better access to treatment but worse genetic factors, as in \cref{sec:simulated_example}.
 Furthermore, a sign flip will occur if either $\abs{\mu_H \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K \Delta\beta}$ or $\abs{\mu_K \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_H \Delta\beta}$. This condition implies a range of values over which sign flips will occur; that is, there will be at least one choice of reference group under which improved healthcare appears to help in lowering mean SBP and another ordering under which improved healthcare appears to \emph{hurt} mean SBP.
 
 Even though \cref{thm:unexplained_ordering_sensitivity} does not restrict the magnitude of the parts of the unexplained components, in \cref{ex:unbounded} we provide an example to illustrate that these sign flips are not relegated to settings in which $\mu_g^T\Delta\beta$ are small in magnitude; in fact, we show that they can be arbitrarily large in magnitude.
 
-%   \begin{algorithm}[H]
-%     \caption{Unexplained component sign flip}
-%     \label{alg:decision_tree}
-%     \begin{algorithmic}  
-%         \If{$\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$}
-%             \If{$\sign(\mu_H^T \Delta\beta) = \sign(\mu_K^T \Delta\beta)$}
-%                 \If{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$}
-%                     \If{$|\mu_H^T \Delta\beta| < |\Delta\alpha| < |\mu_K^T \Delta\beta|$ \textbf{or} $|\mu_K^T \Delta\beta| < |\Delta\alpha| < |\mu_H^T \Delta\beta|$}
-%                         \State A sign flip occurs.
-%                     \Else
-%                     	\State There is no sign flip.
-%                     \EndIf
-%                 \Else
-%                 	\State There is no sign flip.
-%                 \EndIf
-%             \ElsIf{$\sign(\mu_H^T \Delta\beta) \neq \sign(\mu_K^T \Delta\beta)$}
-%                 \If{$\sign(\Delta\alpha) = \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_K^T \Delta\beta| > |\Delta\alpha|$}
-%                     \State A sign flip occurs.
-%                 \ElsIf{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_H^T \Delta\beta| > |\Delta\alpha|$}
-%                     \State A sign flip occurs.
-%                 \Else
-%                     \State There is no sign flip.
-%                 \EndIf
-%             \EndIf
-%         \Else
-%             \State There is no sign flip.
-%         \EndIf
-%     \end{algorithmic}
-% \end{algorithm}
+  \begin{algorithm}
+    \caption{Unexplained component sign flip}
+    \label{alg:decision_tree}
+    \begin{algorithmic}  
+        \If{$\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$}
+            \If{$\sign(\mu_H^T \Delta\beta) = \sign(\mu_K^T \Delta\beta)$}
+                \If{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$}
+                    \If{$|\mu_H^T \Delta\beta| < |\Delta\alpha| < |\mu_K^T \Delta\beta|$ \textbf{or} $|\mu_K^T \Delta\beta| < |\Delta\alpha| < |\mu_H^T \Delta\beta|$}
+                        \State A sign flip occurs.
+                    \Else
+                    	\State There is no sign flip.
+                    \EndIf
+                \Else
+                	\State There is no sign flip.
+                \EndIf
+            \ElsIf{$\sign(\mu_H^T \Delta\beta) \neq \sign(\mu_K^T \Delta\beta)$}
+                \If{$\sign(\Delta\alpha) = \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_K^T \Delta\beta| > |\Delta\alpha|$}
+                    \State A sign flip occurs.
+                \ElsIf{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_H^T \Delta\beta| > |\Delta\alpha|$}
+                    \State A sign flip occurs.
+                \Else
+                    \State There is no sign flip.
+                \EndIf
+            \EndIf
+        \Else
+            \State There is no sign flip.
+        \EndIf
+    \end{algorithmic}
+\end{algorithm}
 
 
 \subsection{Relationship Between Unexplained Component Sign Flips and Omitted Variables}

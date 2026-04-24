@@ -1,10 +1,10 @@
 \section{How common are sign flips?} 
 \label{sec:signflips}
 
-Our examples above serve as existence proofs that conclusion reversals are possible when using the OBD with different references.
+Our examples above serve as an existence proof that conclusion reversals are possible when using the OBD with different references.
 In what follows, we focus on conclusions based on sign flips.
 We show that sign reversals (of either the explained or unexplained component) represent a large proportion of the parameter space, in a sense we make precise below.
-These theoretical results show that the sign-flip phenomenon is not a finite-sample artifact or driven by noise, and establishes that our earlier examples are not mathematically adversarial (i.e., ``measure zero'' in some sense).
+These theoretical results show that the sign-flip phenomenon is not a finite-sample artifact or driven by noise, and establish that our earlier examples are not mathematically adversarial (i.e., ``measure zero'' in some sense).
 Further, our analysis of the parameter space is relevant to frontier work on the OBD that enriches the covariate space using machine learning models \citep{bach2024heterogeneity,quintero2025,flachaire2025decomposing}.
 
 \subsection{Signed conclusions}
@@ -17,37 +17,37 @@ In practice, flipping from a signed value to zero, or a statistically significan
 We focus here on the more
 extreme case where we are able to flip to the opposite sign by choosing a different reference.
 
-Typically the OBD represents the special case of \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} 
-where the conditional expectation of the outcome given the covariate is linear, as we describe next.
-We maintain focus on linear models for the following reasons:
-(1) The linear model version of the OBD remains the one widely used in practice in the present day.
-(2) Extensions involving penalized regression (e.g., lasso) maintain the same linear-in-features structure.
-(3) Linearity gives us a tractable way of measuring model complexity in terms of the number of included features.
-As we identify substantive problems with correctly specified linear models; we expect practical issues only compound beyond this relatively simple case.
+% Typically the OBD represents the special case of \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} 
+% where the conditional expectation of the outcome given the covariate is linear, as we describe next.
+% We maintain focus on linear models for the following reasons:
+% (1) The linear model version of the OBD remains the one widely used in practice in the present day.
+% (2) Extensions involving penalized regression (e.g., lasso) maintain the same linear-in-features structure.
+% (3) Linearity gives us a tractable way of measuring model complexity in terms of the number of included features.
+% As we identify substantive problems with correctly specified linear models; we expect practical issues only compound beyond this relatively simple case.
 
-We now restrict to $X \in \mathbb{R}^d$. For each group $g$, we assume that $\mathbb{E}_g[Y \mid X] = \alpha_g + X^\top \beta_g$
+We will need more OLS-specific notation. We let $X \in \mathbb{R}^d$. For each group $g$, we assume a linear model for $\mathbb{E}_g[Y \mid X]$: $\alpha_g + X^\top \beta_g$
 for some intercept $\alpha_g \in \mathbb{R}$ and slope $\beta_g \in \mathbb{R}^d$.
-Then, for groups $g,g'$, we observe $\E_{g'} [ \E_g  [ Y | X ] ] = \alpha_g + \E_{g'}[X]^\top \beta_g$.
-We also introduce the notation
+Throughout, we will assume an infinite data limit, where $\alpha_g, \beta_g$ are the parameters of the population-level best linear fit to $\mathbb{E}_g[Y\mid X]$.
+%Then, for groups $g,g'$, we observe $\E_{g'} [ \E_g  [ Y | X ] ] = \alpha_g + \E_{g'}[X]^\top \beta_g$.
+We introduce the notation
 $\mu_g := \mathbb{E}_g[X],
 \Delta \mu := \mu_H - \mu_K,
 \Delta \beta := \beta_H - \beta_K,
 \Delta \alpha := \alpha_H - \alpha_K.
 $
-With these choices,
-\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} respectively become
+With these choices, the OBD
+(\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}) becomes
 \begin{align}   	 
     \label{eq:OB_H_decomp}
 	\Delta_Y &= \underbrace{\Delta \mu^\top \beta_H}_{E^{(H)}} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{U^{(H)}} \\
     \label{eq:OB_K_decomp}
 	&= \underbrace{\Delta \mu^\top \beta_K}_{E^{(K)}} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{U^{(K)}}
 \end{align}
-\Cref{eq:OB_H_decomp} is the \textbf{Oaxaca--Blinder decomposition (OBD)} with reference group $H$, and \cref{eq:OB_K_decomp}
+\Cref{eq:OB_H_decomp} is the OBD with reference group $H$, and \cref{eq:OB_K_decomp}
 is the OBD with reference group $K$.
 
 \textbf{Explained component.}
-Recall from \cref{eq:OB_K_decomp,eq:OB_H_decomp} the two possible explained components, each corresponding to a different reference.
-With this notation in hand, we can define changing a signed conclusion at the population level.
+We now study when each of the explained component can flip sign.
 \begin{definition}
 	\label{defn:sign_flip_explained}
 	We say the OBD \emph{sign flips the explained component} if the sign of the explained term, $\Delta\mu^T \beta_g$, depends on the reference group. That is,

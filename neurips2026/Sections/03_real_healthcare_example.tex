@@ -122,7 +122,7 @@ Second, consider men as the reference. The explained component is negative ($-0.
 \textbf{How does the sign flip arise?}
 %Recall that the explained component is given by $\EHOB := \Delta\mu^T \beta_H$ when $H$ is the reference group, and $\EKOB := \Delta\mu^T \beta_K$ when $K$ is the reference group.
 Since $\Delta\mu$ is fixed between $\EHOB$ and $\EKOB$, it must be that some components of $\beta_H$ and $\beta_K$ are changing sign to give $\EHOB := \Delta\mu^T \beta_H$ and $\EKOB := \Delta\mu^T \beta_K$ opposite signs.
-In \cref{fig:hr_quartile2}, we show the fitted linear models of in-hospital mortality on admission heart rate, holding all other covariates fixed at their group means.
+In \cref{fig:sign_flip_overview} (left), we show the fitted linear models of in-hospital mortality on admission heart rate, holding all other covariates fixed at their group means.
 We see that the signs of the slopes differ.
 In Appendix \cref{tab:delta_mu_betas}, we report values for all elements of each vector $\beta_{g}$ in the full analysis. 
 We see that there are multiple covariates $c$ for which $\beta_{\textrm{men},c} < 0 < \beta_{\textrm{women},c}$.
@@ -135,17 +135,15 @@ In \cref{sec:simulated_example}, we show that these phenomenon are not artifacts
     \begin{subfigure}[t]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Sections/Figures/hr_quartile2_mortality_lines.pdf}
-        \caption{Linear fit of mortality on admission heart rate for each group when holding all other covariates fixed at their group means.}
         \label{fig:hr_quartile2}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Sections/Figures/prob_unexplained.pdf}
-        \caption{Percentage of parameter space leading to sign flips. See \cref{remark:computing_irwin_hall} for how we compute the percentage for the unexplained component.}
         \label{fig:prob_unexplained}
     \end{subfigure}
-    \caption{(a) A concrete sign reversal in the HR quartile two subgroup: the fitted slopes of mortality on admission heart rate differ in sign between men and women. (b) The fraction of parameter space leading to a sign flip in the unexplained component, as a function of covariate dimension $d$.}
+    \caption{Left: Linear fit of mortality on admission heart rate for each group when holding all other covariates fixed at their group means. Right: Percentage of parameter space leading to sign flips. See \cref{remark:computing_irwin_hall} for how we compute the percentage for the unexplained component.}
     \label{fig:sign_flip_overview}
 \end{figure}
 

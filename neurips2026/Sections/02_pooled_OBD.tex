@@ -81,9 +81,10 @@ Still others report results for just one reference, with no argument for excludi
 
 \subsection{Real-data Oaxaca--Blinder decomposition and drawing conclusions} 
 \label{sec:ob_real}
-\textcolor{red}{Practitioners typically implement \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} 
-by computing an estimator $\hat{M}_g(X)$ for $\mathbb{E}_g[Y|X]$, and taking its sample average in data from $g'$.
-For example,}
+\textcolor{red}{ Implementing \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} requires estimating observed means $\E_g[Y]$, typically with the sample mean; and counterfactual means $\E_{g'} [ \E_g  [ Y | X ] ]$, which require more thought.
+Practitioners typically estimate counterfactual means by first computing an estimator of conditional expectation $\mathbb{E}_g[Y|X]$ in data from $g$, and taking the sample average of the estimator in data from $g'$.
+For example, suppose we have $N_g$ observations of $\{X_i, Y_i\}$ for populations $g \in {\{H, K\}}$, and let $\hat{M}_g(X)$ be an estimator for $\E_g  [ Y | X ]$.
+Then}
 {\color{red}
 \begin{align}	
     \hat{\Delta}_Y
@@ -94,10 +95,10 @@ For example,}
 }
 \textcolor{red}{implements \cref{eq:OB_H_Counterfactual}.}
 
-\textcolor{red}{It is common practice to choose linear regression models for $\hat{M}_g(X)$, and refer to the decomposition as the OBD regardless of reference group choice.
-We emphasize that the use of linear regression is a modeling choice, rather than a restriction on the data generating process.
-It is possible, and may even be desirable, to choose nonlinear estimators for $\hat{M}_g(X)$.
-To distinguish the choice of nonlinear estimator from typical practice, we will refer to it as the nonlinear Oaxaca-Blinder decomposition (NOBD).}
+\textcolor{red}{It is common to choose linear regression models for $\hat{M}_g(X)$, and refer to the decomposition as the OBD regardless of reference group choice.
+We emphasize that the use of linear regression is a modeling choice, and that it is possible, and may even be desirable, to choose nonlinear estimators for $\E_g  [ Y | X ]$.
+For instance, \citet{quintas2024multiply,flachaire2025decomposing,mao2025double} explore generalizations of the OBD that use machine learning estimators for $\E_g  [ Y | X ]$, and derive asymptotic properties for such procedures.
+To distinguish the practice of using nonlinear estimators from typical choice of linear regression, we will refer to it as the nonlinear Oaxaca-Blinder decomposition (NOBD).}
 
 It is common to draw substantive conclusions based on the signs of the empirical explained and unexplained components, often coupled with
 statistical significance \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. For instance, consider the hospital example. 

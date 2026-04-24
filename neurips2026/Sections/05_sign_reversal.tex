@@ -252,7 +252,7 @@ we can simplify the characterization of when a sign flip happens.
 %
 This observation follows immediately from \cref{defn:sign_flip_explained}.
 In practice, we expect that the general direction of $\beta$'s largely agrees, at least in sign, in each of the two groups.
-For instance, consider the SBP--BMI example in \cref{sec:example}. We expect a positive relationship between BMI and SBP for both the higher-resource group $H$ and the lower-resource group $K$;
+For instance, consider the SBP--BMI example in \cref{sec:simulated_example}. We expect a positive relationship between BMI and SBP for both the higher-resource group $H$ and the lower-resource group $K$;
 i.e., we expect $\beta_H, \beta_K > 0$.
 So, by \cref{rmk:no_explained_sign_flip}, we do not expect to see a sign flip.
 Similarly, \cref{rmk:no_explained_sign_flip} helps us see why few of the hospital mortality analyses (\cref{sec:sign_flips_practice} and \cref{appendix:icu_details}) show explained component sign flips. 
@@ -293,4 +293,4 @@ In \cref{appendix:ovb}, we explore how the presence of omitted covariates can ge
 %We develop this argument with more rigor in \cref{appendix:ovb}, explicitly showing how the regression parameters \( \alpha \) and \( \beta \) are jointly influenced by unobserved covariates.
 
 % On the other hand, sign flips remain plausible for the unexplained component. 
-% Consider the SBP--BMI example in \cref{sec:example}, \cref{ass:no_sign_flip} would correspond to a case where the higher-resource group exhibits both a higher baseline SBP and a stronger SBP--BMI relationship than the lower-resource group. However, in the simulated data, the lower-resource group shows a steeper SBP--BMI slope while having a lower baseline; that is, the SBP--BMI example violates \cref{ass:no_sign_flip}, and indeed we see a sign flip in the unexplained component.
+% Consider the SBP--BMI example in \cref{sec:simulated_example}, \cref{ass:no_sign_flip} would correspond to a case where the higher-resource group exhibits both a higher baseline SBP and a stronger SBP--BMI relationship than the lower-resource group. However, in the simulated data, the lower-resource group shows a steeper SBP--BMI slope while having a lower baseline; that is, the SBP--BMI example violates \cref{ass:no_sign_flip}, and indeed we see a sign flip in the unexplained component.

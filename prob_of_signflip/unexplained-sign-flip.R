@@ -7,12 +7,9 @@ library(glue)
 library(ggplot2)
 
 # Helpers -----------------------------------------------------------------
+# Irwin-Hall CDF (approximate for large n)
 pirwinhall = function(x, n) {
-  if (n > 80) {
-    pirwinhall_approx(x, n)
-  } else {
-    pirwinhall_exact(x, n)
-  }
+  if (n > 80) { pirwinhall_approx(x, n) } else { pirwinhall_exact(x, n) }
 }
 
 pirwinhall_exact = function(x, n) {
@@ -24,10 +21,10 @@ pirwinhall_exact = function(x, n) {
          })
 }
 
-pirwinhall_approx = function(x, n) {
-  pnorm(x, mean = n / 2, sd = sqrt(n / 12))
-}
+# Gaussian approximation to Irwin-Hall distribution
+pirwinhall_approx = function(x, n) { pnorm(x, mean = n / 2, sd = sqrt(n / 12)) }
 
+# Irwin-Hall PDF (approximate for large n)
 dirwinhall = function(x, n) {
   if (n > 50) {
     dirwinhall_approx(x, n)
@@ -49,7 +46,7 @@ dirwinhall_approx = function(x, n) {
   dnorm(x, mean = n / 2, sd = sqrt(n / 12))
 }
 
-
+# Sign flip is probability for falling in either tail
 pr_signflip = function(d, m) {
   
   lower = integrate(\(i) (1 - pirwinhall(x = d + 1 - i, n = 2*d)) * dirwinhall(x = i, n = 2),
@@ -67,9 +64,9 @@ pr_signflip = function(d, m) {
 # Setup --------------------------------------------------------------------
 design = tidyr::crossing(d = 1:100,
                          m = 10)
-tb = dplyr::mutate(design,
-                   pr_unexplained = purrr::pmap_dbl(design, pr_signflip),
-                   pr_explained   = 0.5) |> 
+gg_tb = dplyr::mutate(design,
+                      pr_unexplained = purrr::pmap_dbl(design, pr_signflip),
+                      pr_explained   = 0.5) |> 
   pivot_longer(c(pr_explained, pr_unexplained),
                names_prefix = 'pr_',
                names_to = 'component',
@@ -80,7 +77,7 @@ tb = dplyr::mutate(design,
 
 
 # Plot ---------------------------------------------------------------------
-gg = ggplot(tb,
+gg = ggplot(gg_tb,
             aes(x = d, y = pr, color = component)) +
   labs(x     = "Dimensionality of Covariates (d)",
        y     = "Percentage of Parameter Space",

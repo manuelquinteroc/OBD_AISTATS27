@@ -37,14 +37,10 @@ $\mu_g := \mathbb{E}_g[X],
 $
 With these choices, the OBD
 (\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}) becomes
-\begin{align}   	 
-    \label{eq:OB_H_decomp}
-	\Delta_Y &= \underbrace{\Delta \mu^\top \beta_H}_{E^{(H)}} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{U^{(H)}} \\
-    \label{eq:OB_K_decomp}
-	&= \underbrace{\Delta \mu^\top \beta_K}_{E^{(K)}} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{U^{(K)}}
-\end{align}
-\Cref{eq:OB_H_decomp} is the OBD with reference group $H$, and \cref{eq:OB_K_decomp}
-is the OBD with reference group $K$.
+\begin{equation}
+    \Delta_Y = \underbrace{\Delta \mu^\top \beta_H}_{E^{(H)}} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{U^{(H)}} = \underbrace{\Delta \mu^\top \beta_K}_{E^{(K)}} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{U^{(K)}}.
+\end{equation}
+The first equality is the OBD with reference group $H$, and the second equality is the OBD with reference group $K$.
 
 \textbf{Explained component.}
 We now study when each of the explained component can flip sign.
@@ -62,14 +58,10 @@ From the definition, we can immediately see the following alternative characteri
 \begin{remark}
     \label{rmk:explained_ordering_sensitivity}
     The OBD sign flips the explained component if and only if the following two conditions hold:
-    \begin{gather}
-    	\nonumber
-    	\Delta\mu^T \beta_H \neq \Delta\mu^T \beta_K \\
+    \begin{equation}
     \label{eq:sign_flip_condition_explained}
-        \min\{\Delta\mu^T \beta_H,\ \Delta\mu^T \beta_K\}
-        < 0 <
-        \max\{\Delta\mu^T \beta_H,\ \Delta\mu^T \beta_K\}.
-    \end{gather}
+        \Delta\mu^T \beta_H \neq \Delta\mu^T \beta_K, \quad \min\{\Delta\mu^T \beta_H,\ \Delta\mu^T \beta_K\} < 0 < \max\{\Delta\mu^T \beta_H,\ \Delta\mu^T \beta_K\}.
+    \end{equation}
 \end{remark}
 Since $\Delta\mu$ is constant across analyses, sign flips in the explained component are straightforwardly driven
 by differences in sign in the slope between groups.
@@ -95,12 +87,10 @@ The following alternative characterization for sign flips of the unexplained com
 \begin{restatable}[OBD unexplained sign flips]{proposition}{OBSignFlips}
     \label{thm:unexplained_ordering_sensitivity}
     The OBD sign flips the unexplained component if and only if the following two conditions hold:
-    \begin{gather}
-    	\nonumber
-    	\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta \\
+    \begin{equation}
     \label{eq:sign_flip_condition}
-   	 \min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\} < -\Delta\alpha < \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
-    \end{gather}
+        \mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta, \quad \min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\} < -\Delta\alpha < \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
+    \end{equation}
 \end{restatable}    
 See \cref{sec:sign_flip_proof} for the proof.
 From \cref{thm:unexplained_ordering_sensitivity}, we see that group-specific slopes serve a different role in sign flips in the unexplained case relative to the explained case.
@@ -180,8 +170,7 @@ Second, for the unexplained component, we find that the proportion of parameter 
 	Let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent random variables.
 	The fraction of $C_M$ for which a sign flip occurs in the unexplained component is given by:
 \begin{align} \label{eq:unexplained_fraction}
-    P_d := \mathrm{Pr} \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d + 1 - I_2 \}  \right) + \nonumber \\
-    \mathrm{Pr} \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d + 1 - I_2 \} \right),
+    P_d := \mathrm{Pr} \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d + 1 - I_2 \}  \right) + \mathrm{Pr} \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d + 1 - I_2 \} \right),
 \end{align}
 where the probability $\mathrm{Pr}$ is over the independent random variables $I_2, J_{2d}$.
 Moreover, as $d \to \infty$, $P_d \rightarrow 1/2$.

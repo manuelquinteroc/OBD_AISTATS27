@@ -5,9 +5,9 @@ This appendix expands on the discussion in the introduction of why standard expl
 
 \subsection{Explainability methods for attributing outcome behavior to covariates}
 
-A common feature of modern explainability methods, including Shapley values \citep{Shapley1953, Lundberg2017, chen2025shapley}, Functional ANOVA \citep{stone1994, hooker2004discovering, hookerGeneralizedFunctionalANOVA2007, lengerich2020purifying, fumagalli2025fanova}, Accumulated Local Effects \citep{apley2020}, and partial dependence plots \citep{friedman2001greedy, liu2025trees}, is that they take as their target a fitted outcome model, or more generally a conditional mean function $x \mapsto \E[Y|X=x]$.
+A common feature of modern explainability methods, including Shapley values \citep{Shapley1953, Lundberg2017, chen2025shapley}, Functional ANOVA \citep{stone1994, hooker2004discovering, hookerGeneralizedFunctionalANOVA2007, lengerich2020purifying, fumagalli2025fanova}, Accumulated Local Effects \citep{apley2020}, and partial dependence plots \citep{friedman2001greedy, liu2025trees}, is that they take as their input a fitted outcome model, or more generally a conditional mean function $x \mapsto \E[Y|X=x]$.
 They ask how this function changes as one or more covariates change, or how much variation in the function can be attributed to particular covariates and interactions.
-This target is well-suited to many tasks in machine learning explainability, but does not, by itself, separate differences between two populations into differences in the distribution of $X$ versus differences in the distribution of $Y|X$.
+This input is well-suited to many tasks in machine learning explainability, but does not, by itself, separate differences between two populations into differences in the distribution of $X$ versus differences in the distribution of $Y|X$.
 We elaborate on this distinction below, class by class.
 
 Functional ANOVA measures the importance of features in determining the output of a function $f$ and identifies underlying additive interactions between subsets of covariates \citep{hooker2004discovering, hookerGeneralizedFunctionalANOVA2007}.

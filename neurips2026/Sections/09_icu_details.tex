@@ -51,7 +51,7 @@ $P$-values are computed using a normal approximation,
     p = 2\left(1 - \Phi\left(\frac{|\hat\theta|}{\widehat{\operatorname{se}}(\hat\theta)}\right)\right).
 \]
 
-We say that a sign flip is significant at level $\alpha$ if, in addition to having opposite signs across reference groups, at least one of the two reference-specific estimates has $p < \alpha$. We summarize the total number of subgroups exhibiting any sign flip under each model in \cref{tab:flip_summary_main} in \textcolor{red}{which section}. Here, \cref{tab:flip_summary_explained,tab:flip_summary_unexplained} below report the same counts separately for the explained and unexplained components.
+We say that a sign flip is significant at level $\alpha$ if, in addition to having opposite signs across reference groups, at least one of the two reference-specific estimates has $p < \alpha$. We summarize the total number of subgroups exhibiting any sign flip under each model in \cref{tab:flip_summary_main} in \cref{sec:real_example}. Here, \cref{tab:flip_summary_explained,tab:flip_summary_unexplained} below report the same counts separately for the explained and unexplained components.
 
 We observed that empirically, the count of subgroups exhibiting a sign flip grows with model complexity for this particular data analysis. With the linear and logistic models showing the least amount of sign flips and only a couple remain significant at conventional thresholds. While the neural network and XGBoost show a substantial fraction of subgroups exhibits significant flips even at the $5\%$ level. Importantly, many of the flipped subgroups arise within the random subsamples, indicating that the OBD can yield unstable conclusions even when applied to simple resampled partitions of the same population. Several physiologically interpretable groups also displayed sign changes. The HR quartile two subgroup examined in Section~\ref{sec:real_example} is one such case, and serves as a concrete illustration of how these reversals can appear in clinically meaningful settings.
 
@@ -261,7 +261,7 @@ The linear and logistic OBD exhibit a consistent explained-component sign flip t
 
 \cref{fig:hr_quartile2_hist} presents the histogram for the $816$ patients in HR quartile two, showing the distribution of mortality outcomes used in the linear probability models displayed in \cref{fig:sign_flip_overview} (left). \cref{tab:delta_mu_betas} shows the covariate mean differences and group-specific coefficients for HR quartile two that underlie the sign reversal documented in Section~\ref{sec:real_example}.
 
-\begin{figure}[H]
+\begin{figure}[!ht]
     \centerline{\includegraphics[width=0.5\linewidth]{Sections/Figures/hr_quartile2_mortality_y_hist.pdf}}
     \caption{Mortality outcome histogram for HR quartile two subgroup.}
     \label{fig:hr_quartile2_hist}
@@ -304,16 +304,17 @@ We purposely construct a large set of analyses to search for sign flips in diffe
     \caption{Settings for sign flip search in the U.S.\ labor force dataset.}
     \label{tab:us_census_design}
     \centering
-    \small
-    \begin{tabular}{l l l l}
+    \footnotesize
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}llll@{}}
     \toprule
-    Subset \( S \)          & Outcome \( Y \)            & Group (\( H, K \))                     & Covariate (\(X\))        \\ 
+    Subset \( S \) & Outcome \( Y \) & Group (\( H, K \)) & Covariate (\(X\)) \\
     \midrule
-    50 states + DC          & Income           (\$)      & Sex  (male, female)                 & Has Bachelor's degree (0/1) \\
+    50 states + DC          & Income (\$)                & Sex (male, female)                   & Has Bachelor's degree (0/1) \\
     26 industries (NAICS 2) & Has health insurance (0/1) & Race (black, white)                  & Currently married (0/1)     \\
                             &                            & Nativity (native born, foreign born) & \\
-    \bottomrule                         
-\end{tabular}
+    \bottomrule
+    \end{tabular}
 \end{table}
 
 There are \( 77 \times 2 \times 3 \times 2 = 924\) combinations of these factors, each corresponding to a particular OBD that an analyst could compute.

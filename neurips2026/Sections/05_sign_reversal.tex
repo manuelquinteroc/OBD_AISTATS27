@@ -1,21 +1,23 @@
 \section{How common are sign flips?} 
 \label{sec:signflips}
 
-Our examples above serve as an existence proof that conclusion reversals are possible when using the OBD with different references.
-In what follows, we focus on conclusions based on sign flips.
-We show that sign reversals (of either the explained or unexplained component) represent a large proportion of the parameter space, in a sense we make precise below.
+Our examples above serve as an existence proof that reference group choice can reverse the OBD's substantive conclusions.
+In what follows, we study reversals that involve the explained or unexplained component changing signs from positive to negative, or vice versa.
+In practice, flipping from a signed value to zero may be considered substantive; we focus on the more extreme case where signs fully reverse.
+Practitioners may also regard flipping from a statistically significant value to an insignificant one as changing their conclusions.
+Our analysis abstracts away questions of statistical inference, studying when sign flips occur for full-population quantities.
+
+We show that sign flips of both components represent a large proportion of the parameter space, in a sense we make precise below.
 These theoretical results show that the sign-flip phenomenon is not a finite-sample artifact or driven by noise, and establish that our earlier examples are not mathematically adversarial (i.e., ``measure zero'' in some sense).
-Further, our analysis of the parameter space is relevant to frontier work on the OBD that enriches the covariate space using machine learning models \citep{bach2024heterogeneity,quintero2025,flachaire2025decomposing}.
+Our analysis of the parameter space is also relevant to frontier work on the OBD that enriches the covariate space using machine learning models \citep{bach2024heterogeneity,quintero2025,flachaire2025decomposing}.
 
 \subsection{Signed conclusions}
 \label{sec:sign_flip_characterizations}
 
-We start by concretizing the type of decision we will focus on. 
-In particular, we will consider a conclusion based on the sign of either the explained or unexplained component of the OBD.
-We will assume we are working with full population information so that a sign flip alone is enough to change conclusions.
-In practice, flipping from a signed value to zero, or a statistically significant value to an insignificant one can also be considered to change conclusions. 
-We focus here on the more
-extreme case where we are able to flip to the opposite sign by choosing a different reference.
+We start by deriving population-level restrictions on the parameters that induce 
+% We start by concretizing the type of decision we will focus on. 
+% In particular, we will consider a conclusion based on the sign of either the explained or unexplained component of the OBD.
+% We will assume we are working with full population information so that a sign flip alone is enough to change conclusions.
 
 % Typically the OBD represents the special case of \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} 
 % where the conditional expectation of the outcome given the covariate is linear, as we describe next.

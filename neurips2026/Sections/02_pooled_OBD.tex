@@ -36,11 +36,10 @@ To address the general questions, it will be useful to compute the mean of a cou
 $\E_{g'} [ \E_g  [ Y | X ] ]$.
 Then the difference in mean outcomes between the two groups can be decomposed into differences between each group's mean
 and the chosen counterfactual mean. The decompositions corresponding to questions (A) and (B) above are, respectively, 
-\cref{eq:OB_H_Counterfactual} and \cref{eq:OB_K_Counterfactual} below.
+\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} below.
 %
 \begin{align}
-	\nonumber
-    &\Delta_Y := \E_H[Y] - \E_K[Y] \\ 
+\Delta_Y := \E_H[Y] - \E_K[Y] 
     \label{eq:OB_H_Counterfactual}
     &=\underbrace{\E_H[Y] - \E_{K} [ \E_H[Y | X] ] }_{E^{(H)}} 
      + \underbrace{\E_{K} [ \E_H[Y | X] ] - \E_K[Y]}_{U^{(H)} } \\
@@ -81,24 +80,22 @@ Still others report results for just one reference, with no argument for excludi
 
 \subsection{Real-data Oaxaca--Blinder decomposition and drawing conclusions} 
 \label{sec:ob_real}
-\textcolor{red}{ Implementing \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} requires estimating observed means $\E_g[Y]$, typically with the sample mean; and counterfactual means $\E_{g'} [ \E_g  [ Y | X ] ]$, which require more thought.
-Practitioners typically estimate counterfactual means by first computing an estimator of conditional expectation $\mathbb{E}_g[Y|X]$ in data from $g$, and taking the sample average of the estimator in data from $g'$.
-For example, suppose we have $N_g$ observations of $\{X_i, Y_i\}$ for populations $g \in {\{H, K\}}$, and let $\hat{M}_g(X)$ be an estimator for $\E_g  [ Y | X ]$.
-Then}
-{\color{red}
+In practice, practitioners do not have access to population quantities and must instead draw conclusions from finite-data estimates.
+In particular, implementing \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} requires estimating $\E_g[Y]$, typically with the sample mean, and the counterfactual mean $\E_{g'} [ \E_g  [ Y | X ] ]$, which requires more thought. 
+Practitioners typically estimate counterfactual means by (1) using data from $g$ to compute an estimator of $\mathbb{E}_g[Y|X]$ (essentially a regression), and (2) using data from $g'$ to take the sample average across the estimator from the first step.
+Concretely, suppose that, for each $g \in {\{H, K\}}$, suppose we have $N_g$ observations of $\{X_n, Y_n\}$. Let $\hat{M}_g(X)$ be an estimator for $\E_g  [ Y | X ]$.
+Then the following equation implements \cref{eq:OB_H_Counterfactual}:
 \begin{align}	
     \hat{\Delta}_Y
     \label{eq:NOBD_H_estimated}
     &=\underbrace{ \frac{1}{N_H} \sum_{i=1}^{N_H} Y_i - \frac{1}{N_K} \sum_{i=1}^{N_K} \hat{M}_H(X_i)}_{\hat{E}^{(H)}} 
-     + \underbrace{\frac{1}{N_K} \sum_{i=1}^{N_K} \hat{M}_H(X_i) - \frac{1}{N_H} \sum_{i=1}^{N_H} Y_i}_{\hat{U}^{(H)} },
+     + \underbrace{\frac{1}{N_K} \sum_{i=1}^{N_K} \hat{M}_H(X_i) - \frac{1}{N_H} \sum_{i=1}^{N_H} Y_i}_{\hat{U}^{(H)} }.
 \end{align}
-}
-\textcolor{red}{implements \cref{eq:OB_H_Counterfactual}.}
 
-\textcolor{red}{It is common to choose linear regression models for $\hat{M}_g(X)$, and refer to the decomposition as the OBD regardless of reference group choice.
-We emphasize that the use of linear regression is a modeling choice, and that it is possible, and may even be desirable, to choose nonlinear estimators for $\E_g  [ Y | X ]$.
-For instance, \citet{quintas2024multiply,flachaire2025decomposing,mao2025double} explore generalizations of the OBD that use machine learning estimators for $\E_g  [ Y | X ]$, and derive asymptotic properties for such procedures.
-To distinguish the practice of using nonlinear estimators from typical choice of linear regression, we will refer to it as the nonlinear Oaxaca-Blinder decomposition (NOBD).}
+In the literature, the term \emph{OBD} typically refers to using \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with the further choice of linear regression to compute $\hat{M}_g(X)$.
+We emphasize that the use of linear regression is a modeling choice, and that it is possible to choose nonlinear estimators for $\E_g  [ Y | X ]$.
+For instance, \citet{quintas2024multiply,flachaire2025decomposing,mao2025double} explore generalizations of the OBD that use machine learning methods to estimate $\E_g  [ Y | X ]$, and derive asymptotic properties for such procedures.
+To distinguish from the standard OBD, we will refer to the case where $\hat{M}_g(X)$ is a nonlinear estimator as the \emph{nonlinear Oaxaca-Blinder decomposition} (NOBD).
 
 It is common to draw substantive conclusions based on the signs of the empirical explained and unexplained components, often coupled with
 statistical significance \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. For instance, consider the hospital example. 

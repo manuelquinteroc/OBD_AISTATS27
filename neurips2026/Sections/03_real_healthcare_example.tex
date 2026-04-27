@@ -42,15 +42,16 @@ Concerningly, we see that \emph{every} model contains at least one sign flip, an
 \subsection{A deeper dive on one data subset}
 
 \cref{tab:flip_summary_main} shows that sign flips are common.
-But do these sign flips actually flip meaningful decisions? And are they merely an artifact of noise or a structural phenomenon?
+But what do these flips really mean in practice?
+And are they merely an artifact of noise or instead a structural phenomenon?
 As is often the case in studying complex machine learning models, studying linear regression provides a tractable proxy problem.
 In the present study, linear regression is also of direct interest since the OBD (with linear regression) is widely used in practice.
 So, for the rest of the paper, we focus on \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with linear regression (i.e., the OBD instead of NOBD).
-As a first pass at answering our questions, we examine one particular data subset from \cref{tab:flip_summary_main}.
-We will see that sign flips do indeed flip meaningful conclusions and have a natural structural interpretation.
+To start answering our questions, we examine one particular data subset leading to a significant sign flip for linear regression in \cref{tab:flip_summary_main}.
+We will see what it means for sign flips to change meaningful conclusions and also see that flips have a natural structural interpretation.
 
 The particular data subset we consider covers patients with an elevated heart rate.
-Medical practitioners often look at moderate elevations in heart rate as a first indication of stress, infection, or concerning changes in blood flow and circulation. In the present example, we restrict our analysis to patients whose admission heart rate lies between the $50$th and $75$th percentiles. This patient set, which we refer to as HR quartile two, reflects a clinical presentation in which the heart rate is elevated but not extreme.
+Medical practitioners often look at moderate elevations in heart rate as a first indication of stress, infection, or concerning changes in blood flow and circulation. In the present example, we consider patients whose admission heart rate lies between the $50$th and $75$th percentiles. This patient set, which we refer to as HR quartile two, reflects a clinical presentation in which the heart rate is elevated but not extreme.
 
 \textbf{Two different conclusions.} 
 We report the OBD for each reference group in \cref{tab:hr_q2_decomposition}. We next interpret the substantive conclusions
@@ -128,7 +129,7 @@ In Appendix \cref{tab:delta_mu_betas}, we report values for all elements of each
 We see that there are multiple covariates $c$ for which $\beta_{\textrm{men},c} < 0 < \beta_{\textrm{women},c}$.
 And as $\Delta\mu_c$ has the same sign for all of these covariates, each one pushes towards a sign flip. %, and additionally, $\Delta\mu$ is positive for all of these covariates.
 In aggregate, these changes add enough to cause a sign flip in the explained component.
-In \cref{sec:simulated_example}, we show that these phenomenon are not artifacts of finite-samples or model mis-specification; in fact, we show that sign flips can occur for well-specified linear models with infinite data.
+In \cref{sec:simulated_example}, we show that these phenomenon are not artifacts of finite-samples or model misspecification; in fact, we show that sign flips can occur for well-specified linear models with infinite data.
 
 \begin{figure}[!ht]
     \centering

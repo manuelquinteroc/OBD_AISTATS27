@@ -53,7 +53,7 @@ $P$-values are computed using a normal approximation,
 
 We say that a sign flip is significant at level $\alpha$ if, in addition to having opposite signs across reference groups, at least one of the two reference-specific estimates has $p < \alpha$. We summarize the total number of subgroups exhibiting any sign flip under each model in \cref{tab:flip_summary_main} in \textcolor{red}{which section}. Here, \cref{tab:flip_summary_explained,tab:flip_summary_unexplained} below report the same counts separately for the explained and unexplained components.
 
-We observed that empirically, the count of subgroups exhibiting a sign flip grows with model complexity for this particular data analysis. With the linear and logistic models showing the least amount of sign flips and only a couple remain significant at conventional thresholds. While the neural network and XGBoost show a substantial fraction of subgroups exhibit significant flips even at the $5\%$ level. Improtantly, many of the flipped subgroups arise within the random subsamples, indicating that the OBD can yield unstable conclusions even when applied to simple resampled partitions of the same population. Several physiologically interpretable groups also displayed sign changes. The HR quartile two subgroup examined in Section~\ref{sec:real_example} is one such case, and serves as a concrete illustration of how these reversals can appear in clinically meaningful settings.
+We observed that empirically, the count of subgroups exhibiting a sign flip grows with model complexity for this particular data analysis. With the linear and logistic models showing the least amount of sign flips and only a couple remain significant at conventional thresholds. While the neural network and XGBoost show a substantial fraction of subgroups exhibits significant flips even at the $5\%$ level. Importantly, many of the flipped subgroups arise within the random subsamples, indicating that the OBD can yield unstable conclusions even when applied to simple resampled partitions of the same population. Several physiologically interpretable groups also displayed sign changes. The HR quartile two subgroup examined in Section~\ref{sec:real_example} is one such case, and serves as a concrete illustration of how these reversals can appear in clinically meaningful settings.
 
 \begin{table}[!ht]
     \caption{Number of subgroups (out of $139$) exhibiting a sign flip in the explained component, by model. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped subgroups that are significant at the corresponding level.}
@@ -68,12 +68,13 @@ We observed that empirically, the count of subgroups exhibiting a sign flip grow
     Logistic    &  9 &  2 &  2 &  1 \\
     Neural net  & 42 & 26 & 17 &  6 \\
     XGBoost     & 33 & 17 & 10 & 3 \\
+    TabPFN      & 33 & 21 & 19 & 5 \\
     \bottomrule
     \end{tabular}
 \end{table}
 
 \begin{table}[!ht]
-    \caption{Number of subgroups (out of $139$) exhibiting a sign flip in the \emph{unexplained} component, by model. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped subgroups that are significant at the corresponding level.}
+    \caption{Number of subgroups (out of $139$) exhibiting a sign flip in the unexplained component, by model. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped subgroups that are significant at the corresponding level.}
     \label{tab:flip_summary_unexplained}
     \centering
     \small
@@ -85,6 +86,7 @@ We observed that empirically, the count of subgroups exhibiting a sign flip grow
     Logistic    & 21 &  0 &  0 &  0 \\
     Neural net  & 49 & 10 &  6 &  1 \\
     XGBoost     & 47 & 3 &  1 &  0 \\
+    TabPFN      & 56 & 2 &  0 &  0 \\
     \bottomrule
     \end{tabular}
 \end{table}
@@ -246,8 +248,11 @@ A substantial number of these sign reversals are significant at conventional thr
         & \makecell{$0.006$ \\ $(0.021)$} \\[0.3em]
 
     TabPFN
-        & --- & --- & --- & --- & --- \\
-
+        & \makecell{$0.035$ \\ $(0.023)$}
+        & \makecell{$0.012$ \\ $(0.016$}                                                                                                                                                                                                                                                                              
+        & \makecell{$0.023$ \\ $(0.026)$}
+        & \makecell{$0.023^{*}$ \\ $(0.013)$} 
+        & \makecell{$0.012$ \\ $(0.021)$} \\[0.3em]
     \bottomrule
     \end{tabular}
 \end{table}

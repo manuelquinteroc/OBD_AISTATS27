@@ -34,7 +34,7 @@ Concerningly, we see that \emph{every} model contains at least one sign flip, an
     Logistic    & 29 &  2 &  2 &  1 \\
     Neural net  & 62 & 29 & 17 &  6 \\
     XGBoost     & 62 & 17 & 10 & 3 \\
-    TabPFN     & 89 & 23 & 19 & 5 \\
+    TabPFN     & 76 & 22 & 19 & 5 \\
     \bottomrule
     \end{tabular}
 \end{table}
@@ -88,7 +88,7 @@ Second, consider men as the reference. The explained component is negative ($-0.
 %    \end{center}
 %\end{table}
 
-\begin{table}[t]
+\begin{table}[!ht]
   \caption{Oaxaca--Blinder decompositions for HR quartile two. The total gap is men's mean minus women's mean. We compute standard errors (in parentheses) via bootstrap resampling with $1{,}000$ replications. 
     We calculate p-values using a normal approximation (Wald test), where the test statistic is the coefficient divided by its bootstrap standard error. 
     Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$.}

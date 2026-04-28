@@ -5,8 +5,7 @@ We describe the approach of these options here and discuss how they do not resol
 
 \textbf{Shapley Values.} Shapley values \citep{Shapley1953} are widely used in the machine learning literature to understand a models' predictions.
 A straightforward use of them would be to estimate ``explained'' or ``unexplained'' contributions to $\Delta_Y$.
-\textcolor{red}{TODO explain how we get to the following.}
-For the explained component, the Shapley proposal is $E = (1/2)E^{(H)} + (1/2) E^{(K)}$.
+\textcolor{red}{This follows from the standard Shapley construction, which treats each reference-based decomposition as a ``player'' and assigns contributions by averaging marginal effects over all orderings; with two ``players'' (the two reference directions $H$ and $K$), there are two equally weighted permutations, $(H,K)$ and $(K,H)$, so the Shapley value reduces to the simple average}, for the explained component, $E = \tfrac{1}{2}E^{(H)} + \tfrac{1}{2}E^{(K)}$.
 However, one might see our paper as questioning the meaningfulness of $E^{(H)}$ and $E^{(K)}$. Then the Shapley proposal averages two questionable quantities!
 
 \textbf{Pooled approaches.}

@@ -1,14 +1,17 @@
 \section{How common are sign flips?} 
 \label{sec:signflips}
 
-Our examples above serve as an existence proof that reference group choice can reverse the OBD's substantive conclusions.
-In what follows, we study reversals that involve the explained or unexplained component changing signs from positive to negative, or vice versa.
-In practice, flipping from a signed value to zero may be considered substantive; we focus on the more extreme case where signs fully reverse.
-Practitioners may also regard flipping from a statistically significant value to an insignificant one as changing their conclusions.
-Our analysis abstracts away statistical inference, studying when sign flips occur for full-population quantities that the practitioner is estimating.
+Our examples above serve as an existence proof that reference group choice can reverse the (N)OBD's substantive conclusions by flipping signs of the explained or unexplained components.
+However, a few major questions remain.
+First, do these conclusion reversals occur in the absence of finite sample noise; i.e., do practitioners with large-scale datasets still need to worry about them?
+Second, even if conclusion reversals can occur, do they occur outside of mathematically adversarial examples (i.e., ``measure zero'' in some sense)?
+In \cref{sec:simulated_example}, we empirically demonstrate that the answer to the first question is yes.
+In this section, instead of relying on empirical evidence, we mathematically prove the answer to both questions is yes.
+For mathematical tractability and applicibility to practical usage, we focus on the OBD (i.e., using linear models in \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}).
 
-We show that sign flips of both components represent a large proportion of the parameter space, in a sense we make precise below.
-These theoretical results show that the sign-flip phenomenon is not a finite-sample artifact or driven by noise, and establish that our earlier examples are not mathematically adversarial (i.e., ``measure zero'' in some sense).
+In what follows, we study conclusion reversals that involve the explained or unexplained component changing signs from positive to negative, or vice versa.
+To show that sign flipping is not an artifact of finite samples, we work in the population limit.
+And to show that sign flipping is not a ``measure zero'' phenomenon, we show that sign flips of both components represent a large proportion of the parameter space, in a sense we make precise below.
 % We use our analysis of the parameter space to interpret our empirical exercises and discuss frontier work on the OBD that enriches the covariate space using machine learning models \citep{bach2024heterogeneity,quintero2025,flachaire2025decomposing}.
 
 \subsection{Characterizing sign flips}

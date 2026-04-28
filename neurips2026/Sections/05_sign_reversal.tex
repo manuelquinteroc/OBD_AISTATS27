@@ -9,7 +9,7 @@ Our analysis abstracts away statistical inference, studying when sign flips occu
 
 We show that sign flips of both components represent a large proportion of the parameter space, in a sense we make precise below.
 These theoretical results show that the sign-flip phenomenon is not a finite-sample artifact or driven by noise, and establish that our earlier examples are not mathematically adversarial (i.e., ``measure zero'' in some sense).
-We use our analysis of the parameter space to interpret our empirical exercises and discuss frontier work on the OBD that enriches the covariate space using machine learning models \citep{bach2024heterogeneity,quintero2025,flachaire2025decomposing}.
+% We use our analysis of the parameter space to interpret our empirical exercises and discuss frontier work on the OBD that enriches the covariate space using machine learning models \citep{bach2024heterogeneity,quintero2025,flachaire2025decomposing}.
 
 \subsection{Characterizing sign flips}
 \label{sec:sign_flip_characterizations}
@@ -193,13 +193,11 @@ we confirm by simulations that we expect similar results when we take each coord
 in the range $[-M,M]$ as well. See \cref{appendix:sign_flip_simulation} for details.
 
 \subsection{Reconciling the theoretical and empirical prevalence of sign flips}
-\label{sec:sign_flips_practice}
+\label{sec:reconciling_theory_empirics}
 
-In \cref{sec:sign_flip_fraction}, we show that a large fraction of parameter space corresponds to sign flips.
-Our earlier empirical exercise from \cref{tab:flip_summary_main} finds that sign flips are less common than a direct application of theory would suggest (occurring in 19\% of tested subsets). 
-Below, we develop a resolution, observing that regression parameters seen in practice need not be uniformly distributed over parameter space; in fact, we generally expect they are not.
-\textcolor{red}{\cref{tab:flip_summary_main} also shows that sign flips are more common for nonlinear machine learning models than for OLS.
-We offer an explanation that links model complexity to the dimensionality of the covariate space.}
+In \cref{sec:sign_flip_fraction}, we show that a large fraction of parameter space produces sign flips in both OBD components.
+Our earlier empirical exercise from \cref{tab:flip_summary_main} finds that sign flips are less common than a direct application of theory would suggest, occurring in 19\% of tested subsets.
+Below, we develop a resolution, observing that regression parameters seen in practice need not be uniformly distributed over parameter space as our theoretical results assume; in fact, we generally expect they are not.
 
 % An exhaustive search of the literature using the OBD is beyond the scope of the present paper;
 % a paper corresponding to a Stata implementation of the OBD has thousands of citations alone \citep{jann2008}, and there are implementations
@@ -242,13 +240,12 @@ we can simplify the characterization of when a sign flip happens.
 \end{remark}
 %
 This observation follows immediately from \cref{defn:sign_flip_explained}.
-In practice, we expect that the general direction of $\beta$'s largely agrees, at least in sign, in each of the two groups.
-For instance, consider the SBP--BMI example in \cref{sec:simulated_example}. We expect a positive relationship between BMI and SBP for both the higher-resource group $H$ and the lower-resource group $K$;
-i.e., we expect $\beta_H, \beta_K > 0$.
-So, by \cref{rmk:no_explained_sign_flip}, we do not expect to see a sign flip.
-Similarly, \cref{rmk:no_explained_sign_flip} helps us see why few of the hospital mortality analyses (\cref{sec:sign_flips_practice} and \cref{appendix:icu_details}) show explained component sign flips. 
+In some contexts, we may expect the elements of $\beta_g$ to be of the same sign in both groups.
+Consider the ICU mortality example from \cref{sec:real_example}.
 While we may expect risk factors to have different effect sizes for men and women a priori, there is little reason to think that many factors that increase men's mortality would decrease women's (or vice versa).
-Indeed, this observation makes the explained component sign flip in \cref{sec:real_example} more surprising, as it implies substantive differences in mortality risk in this subpopulation of men and women.
+\cref{rmk:no_explained_sign_flip} could then explain why we observe explained component sign flips in only 11 out of the 139 subgroups we test \cref{tab:flip_summary_explained}.
+% AS: the flips could also reflect noise — the subgroups we test might be small, so that they _don't_ present much evidence about population-level differences (in line with few statistically significant flips)
+% Indeed, this observation makes the explained component sign flip in \cref{sec:real_example} more surprising, as it implies substantive differences in mortality risk in this subpopulation of men and women.
 
 \textbf{Unexplained component.} Next, consider the unexplained component. In this case, a sign flip intuitively requires the intercept and slope effects to pull in opposite directions across groups. When both move in the same direction, so that the group with higher baseline outcomes also exhibits higher returns to covariates, the unexplained component preserves its sign regardless of the chosen reference group.
 We now formalize these ideas.

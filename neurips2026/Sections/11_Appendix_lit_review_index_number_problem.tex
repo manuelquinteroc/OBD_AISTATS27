@@ -11,7 +11,7 @@ However, one might see our paper as questioning the meaningfulness of $E^{(H)}$ 
 \textbf{Pooled approaches.}
 Another approach to eliminate the index number problem is to define some ``pooled'' group and then measure deviations from this group in a three-term decomposition. For example, in the case of the (linear) OBD, one defines a pooled $\beta^*$ and then computes:
 \begin{equation}
-  \mathbb{E}_H[Y] - \mathbb{E}_K[Y] = (\mu_H - \mu_K)^T \beta^* + \mu_H^T (\beta_H - \beta^*) + \mu_K^T(\beta^* - \beta_K).
+  \E_H[Y] - \E_K[Y] = (\mu_H - \mu_K)^T \beta^* + \mu_H^T (\beta_H - \beta^*) + \mu_K^T(\beta^* - \beta_K).
 \end{equation}
 The first term is interpreted as differences due differences in covariates, the second differences due to differences in $H$'s $Y \mid X$ from the baseline, and the third differences due to differences in $K$'s $Y \mid X$ from the baseline.
 
@@ -30,8 +30,8 @@ We leave experimentation along these lines for future work.
 Both cases define a number of intermediate distributions over covariates $P_1, \dots, P_I$, where $P_1 = K_X$ and $P_I = H_X$. E.g., in the case of \citet{quintero2025}, $P_2$ is equal to $K$, except that the marginal of the first covariate is equal to the marginal of $H_X$.
 In either case, for each $i = 2, \dots, I$, intermediate explained components are defined as one of:
 \begin{align}
-  \mathbb{E}_{X \sim P_i}[ \mathbb{E}_{Y \sim H}[Y \mid X] ] - \mathbb{E}_{X \sim P_{i-1}} [ \mathbb{E}_{Y \sim H} [Y \mid X]] \\
-  \mathbb{E}_{X \sim P_i}[ \mathbb{E}_{Y \sim K}[Y \mid X] ] - \mathbb{E}_{X \sim P_{i-1}} [ \mathbb{E}_{Y \sim K} [Y \mid X]].
+  \E_{X \sim P_i}[ \E_{Y \sim H}[Y \mid X] ] - \E_{X \sim P_{i-1}} [ \E_{Y \sim H} [Y \mid X]] \\
+  \E_{X \sim P_i}[ \E_{Y \sim K}[Y \mid X] ] - \E_{X \sim P_{i-1}} [ \E_{Y \sim K} [Y \mid X]].
 \end{align}  
 There are two issues with such approaches.
 First, \citet{dinardoFortinLemieux1996} does not change how the the unexplained component is computed over the OBD, so the same exact index number problems with the unexplained component detailed here apply to the decomposition of \citet{dinardoFortinLemieux1996}.

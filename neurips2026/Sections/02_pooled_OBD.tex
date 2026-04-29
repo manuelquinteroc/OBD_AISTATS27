@@ -88,7 +88,7 @@ But, as our results call into question the validity of the explained and unexpla
 \label{sec:ob_real}
 In practice, practitioners do not have access to population quantities and must instead draw conclusions from finite-data estimates.
 In particular, implementing \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} requires estimating $\E_g[Y]$, typically with the sample mean, and the counterfactual mean $\E_{g'} [ \E_g  [ Y \mid X ] ]$, which requires more thought. 
-Practitioners typically estimate counterfactual means by (1) using data from $g$ to compute an estimator of $\mathbb{E}_g[Y \mid X]$ (essentially a regression), and (2) using data from $g'$ to take the sample average across the estimator from the first step.
+Practitioners typically estimate counterfactual means by (1) using data from $g$ to compute an estimator of $\E_g[Y \mid X]$ (essentially a regression), and (2) using data from $g'$ to take the sample average across the estimator from the first step.
 Concretely, suppose that, for each $g \in {\{H, K\}}$, suppose we have $N_g$ observations of $\{X_n, Y_n\}$. Let $\hat{M}_g(X)$ be an estimator for $\E_g  [ Y \mid X ]$.
 Then the following equation implements \cref{eq:OB_H_Counterfactual}:
 \begin{align}	

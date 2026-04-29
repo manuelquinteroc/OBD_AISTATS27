@@ -98,9 +98,9 @@ Then the following equation implements \cref{eq:OB_H_Counterfactual}:
      + \underbrace{\frac{1}{N_K} \sum_{n=1}^{N_K} \hat{M}_H(X_n) - \frac{1}{N_H} \sum_{i=1}^{N_H} Y_n}_{\hat{U}^{(H)} }.
 \end{align}
 
-In the literature, the term \emph{OBD} typically refers to using \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with the further choice of linear regression to compute $\hat{M}_g(X)$.
-We emphasize that the use of linear regression is a modeling choice, and that it is possible to choose nonlinear estimators for $\E_g[Y \mid X]$.
-For instance, \citet{quintas2024multiply,flachaire2025decomposing,mao2025double} explore generalizations of the OBD that use machine learning methods to estimate $\E_g[Y \mid X]$, and derive asymptotic properties for such procedures.
+In the literature, the term \emph{OBD} historically refers to using \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with the further choice of linear regression to compute $\hat{M}_g(X)$.
+We emphasize that the use of linear regression is a modeling choice, and that it is possible to choose nonlinear estimators for $\E_g  [ Y | X ]$.
+For instance, \citet{quintas2024multiply,flachaire2025decomposing,mao2025double} explore generalizations of the OBD that use machine learning methods to estimate $\E_g  [ Y | X ]$, and derive asymptotic properties for such procedures.
 To distinguish from the standard OBD, we will refer to the case where $\hat{M}_g(X)$ is a nonlinear estimator as the \emph{nonlinear Oaxaca-Blinder decomposition} (NOBD).
 
 \textbf{Drawing conclusions from the (N)OBD.}

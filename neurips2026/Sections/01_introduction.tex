@@ -10,9 +10,9 @@ How can she use the available information to form hypotheses about what drives t
 % Para 2: Connect to ML / AI and reject existing explainability tools
 The modern explainability literature in machine learning boast a bevy of methods for attributing outcome behavior to covariates \citep{Dwivedi2023}.
 These include Shapley values \citep{Shapley1953, Lundberg2017, chen2025shapley}, Functional ANOVA \citep{stone1994, hooker2004discovering, hookerGeneralizedFunctionalANOVA2007, lengerich2020purifying, fumagalli2025fanova}, Accumulated Local Effects \citep{apley2020}, and partial dependence plots \citep{friedman2001greedy, liu2025trees}.
-\textcolor{red}{However, such methods are not designed to answer this data scientist's question.
-They attribute variation in outcomes within in a single population to the covariates, holding the conditional distribution $Y|X$ fixed. 
-But, the data scientist is interested in why an outcome varies between two populations, where the $Y|X$ may vary.}
+However, such methods are not designed to answer this data scientist's question.
+They attribute variation in outcomes within in a single population to the covariates, holding the conditional distribution $Y|X$ fixed.
+But, the data scientist is interested in why an outcome varies between two populations, where the $Y|X$ may vary.
 See \cref{appendix:xAI} for more discussion on why these methods do not solve the data scientists' question.
 % For example, a Shapley value analysis of $Y|X$ might suggest that that patients with severe chronic conditions have higher mortality in each of hospital $H$ and $K$. 
 % But if hospitals $H$ and $K$ both treat similar patient populations, chronic health conditions cannot explain why mortality rates differ between them.
@@ -47,14 +47,14 @@ The index number problem would be less concerning if both references always yiel
 in our example, if both indicate that differences in the distribution of risk factors widen the mortality gap between the two hospitals.
 But if one reference choice finds that risk factors widens the gap while the other finds that they narrow it, the choice of reference \emph{would} matter for qualitative conclusions and subsequent decision making.
 We are not aware of an investigation into whether the choice of reference groups can yield different \emph{substantive} conclusions. 
-\textcolor{red}{We fill this gap by characterizing when the OBD's substantive conclusions are sensitive to the reference group, empirically documenting this sensitivity grows when the OBD is paired with more flexible regression models, and providing theory to explain this sensitivity.\footnote{We release all of our code to replicate the experiments at \url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}.}}
+We fill this gap by characterizing when the OBD's substantive conclusions are sensitive to the reference group, empirically documenting this sensitivity grows when the OBD is paired with more flexible regression models, and providing theory to explain this sensitivity.\footnote{We release all of our code to replicate the experiments at \url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}.}
 
 In what remains, we start by reviewing the index number problem and OBD in more detail in \cref{sec:counterfactual_OBD}, and we formalize
 a form of substantive conclusion.
 We give an existence proof that a real-data problem can yield two substantively different conclusions
 % And we show that differences in substantive conclusions need not be driven solely by model misspecification or small sample sizes (\cref{sec:example}).
-\textcolor{red}{ and show that the OBD is more sensitive to reference choice when paired with flexible regression models (\cref{sec:real_example}).}
-\textcolor{red}{In \cref{sec:signflips}, we demonstrate a relationship between the size of the parameter space and the sensitivity of the OBD.}
+and show that the OBD is more sensitive to reference choice when paired with flexible regression models (\cref{sec:real_example}).
+In \cref{sec:signflips}, we demonstrate a relationship between the size of the parameter space and the sensitivity of the OBD.
 % We resolve this seeming disparity by observing that typical data analyses are not uniformly distributed in parameter space --- and provide intuition for when this non-uniformity might occur (\cref{sec:no_sign_flips}). 
 We suggest best practices for data analysts in \cref{sec:conclusion}.
 

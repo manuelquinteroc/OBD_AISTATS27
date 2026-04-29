@@ -1,6 +1,6 @@
 \section{Real-data example: Gender gap in ICU data}
 \label{sec:real_example}
-The index number problem reflects that the two reference choices for the (N)OBD could yield two different sets of values for the explained and unexplained components. We are not aware of an illustration in the literature that the two directions (for either the OBD or NOBD) can lead to \emph{substantively} different conclusions. We supply such an illustration next for a real-data analysis in healthcare. In \cref{appendix:us_labor_force}, we provide a second illustration, which arises from analyzing differences in income as well as health insurance status using U.S.\ Census data.
+The index number problem reflects that the two reference choices for the (N)OBD could yield two different sets of values for the explained and unexplained components. We are not aware of an illustration in the literature that the two directions (for either the OBD or NOBD) can lead to \emph{substantively} different conclusions. We supply such an illustration next for a real-data analysis in healthcare.
 
 \textbf{Data.} To construct an example, we examine data from the PhysioNet cohort of intensive care unit (ICU) patients collected for a study of in-hospital mortality \citep{goldberger2000physiobank}, where the outcome $Y$ is binary, indicating whether the patient died in the hospital or not. The dataset contains routine measurements taken at admission, including heart rate (HR), mean arterial pressure, temperature, and urine output. These values are recorded for every patient at the time of entry into the ICU and provide a description of their initial physiological state. To simulate various real-data analyses where practitioners might have access to only a subset of these patients, we construct $139$ versions of this dataset with various patient subsets; see \cref{appendix:icu_details}.
 For reference groups, we consider males and females.
@@ -166,4 +166,9 @@ In aggregate, these changes add enough to cause a sign flip in the explained com
 \end{figure}
 
 
-
+\textbf{Limitations}
+Our analysis reveals that sign flips in the explained and unexplained components of the (N)OBD in a real dataset.
+It is possible that this dataset or our analysis are unusual, and that sign flips may not occur in other settings.
+To address this possibility, we provide a second illustration analyzing differences in income as well as health insurance status using U.S.\ Census data in \cref{appendix:us_labor_force}.
+The data have previously been analyzed by \citet{bach2024heterogeneity}, reducing the concern that our empirical results are due to atypical choices.
+We also give a theoretical account of sign flips in \cref{sec:signflips}, establishing that they correspond to a nontrivial region of the parameter space.

@@ -20,9 +20,11 @@ A typical choice is to use some sort of ``average'' of the two groups.
 One approach from \citet{oaxacaRansom1998}, defines some $w \in [0,1]$ and sets $\beta^* = (1-w)\beta_K + w\beta_H$.
 A second approach, from \citet{neumark1988}, is to create a pooled dataset consisting of all samples from $H$ and $K$, and estimate $\beta^*$ from this dataset.
 However, these approaches suffer from issues of arbitrariness as well.
-First, how does one pick $w$ in the Oxaca-Ransom approach?
+First, how does one pick $w$ in the Oaxaca-Ransom approach?
 Second, why is defining $\beta^*$ one way more reasonable than the other?
 If we assume both are equally reasonable, then, given our results for the OBD, we feel that one should be highly suspicious of substantive conclusions being robust to the choice of $\beta^*$.
+Finally, justifications for a choice of $w$ or $\beta^*$ in one research setting may not apply in others.
+For example, in analyses of the labor market, $\beta^*$ sometimes represents the $Y \mid X$ relationship in the absence of wage discrimination \citep{neumark1988}; there may be no similarly-defined object to estimate, or feasible approach to estimate it in other contexts. 
 We leave experimentation along these lines for future work.
 
 \textbf{Intermediate covariate distributions.}

@@ -337,11 +337,8 @@ The models are:
 \end{itemize}
 We attempted to implement neural networks for regression (both outcomes) and classification (health insurance status only), but faced repeated software errors while optimizing model weights.
 
-Out of the 355 comparisons we examined, we found 0 cases where the explained component flipped signs and 1 case where the unexplained component flipped signs.
-The sign flip occurs when comparing the explanatory power of education levels for explaining the foreign-native wage gap in Michigan, which we summarize in \cref{tab:us_census_flips}.
-Regardless of the reference group, differences in education levels appear to explain most of the wage gap between the two groups.
-However, taking the foreign-born population as the reference group, differences in how employers remunerate more educated workers seems to reduce the foreign-native gap ($p < 0.1$).
-Taking the native-born population as the reference group, differences in remuneration seem to expand the gap, though the difference is statistically indistinguishable from zero.
+\cref{tab:flips_census_income, tab:flips_census_insurance} report the number of sign flips for the log income and health insurance status outcomes, respectively.
+Sign flips occur in both the explained and unexplained components for all tested model types.
 
 % Insurance
 \begin{table}[!ht]
@@ -364,14 +361,14 @@ Taking the native-born population as the reference group, differences in remuner
 % 
 \begin{table}[!ht]
     \caption{Number of subgroups (out of $183$) exhibiting a sign flip in the explained and unexplained component, for the health insurance outcome.}
-    \label{tab:flips_census_income}
+    \label{tab:flips_census_insurance}
     \centering
     \small
     \begin{tabular}{lccc}
     \toprule
           & \multicolumn{1}{c}{Either Component} & \multicolumn{1}{c}{Explained Component} & \multicolumn{1}{c}{Unxplained Component} \\
           \cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4}
-    Model & Total flips & Total flips \\
+    Model & Total flips & Total flips & Total flips \\
     \midrule
     Linear      & 60  & 44 & 17 \\
     Logistic    & 77  & 60 & 25 \\

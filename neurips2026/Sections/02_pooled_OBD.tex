@@ -67,26 +67,26 @@ that in general, $E^{(K)} \neq E^{(H)}$ and $U^{(K)} \neq U^{(H)}$.
 
 \textbf{A conceptual resolution?}
 Before proceeding, we observe that there is not an immediate and general conceptual resolution of the index number problem.
-It is not clear to us in the hospital example above that one direction is more natural, or even that the two directions represent clearly distinguishable policy questions.
+It is not clear to us in the hospital example above that one direction is more natural, or even that the two directions represent distinct policy questions.
 
-There may be resolutions in particular areas of study.
+Generic responses to the index number problem do not resolve it without relying on arbitrary choices or compromising the interpretation of results; see \cref{sec:existing_index_number} for detailed discussion, which we summarize here.
+First, approaches like those of \citet{oaxacaRansom1998,neumark1988} define a new reference group by aggregating $H$ and $K$. However, there are many ways to perform this aggregation, introducing a new, still-arbitrary choice.
+Second, use of Shapley values \citep{Shapley1953} could call for averaging the explained or unexplained components for each reference group.
+However, we show that the choice of reference group can reverse the sign of either component, complicating their interpretation. 
+Shapley-style approaches thus average two questionable quantities and obscure information when the averaged components have opposite signs.
+
+In practice, we do not see a consensus approach, even within fields of study.
 For instance, in economic analyses of wage gaps, some argue that a single reference group makes the most sense to use in context, as in \citet{dinardoFortinLemieux1996}'s study of unionization, the minimum wage, and economic inequality.
-%Others effectively construct a new reference group by aggregating the original two groups in various ways \citep{neumark1988,oaxacaRansom1994,reimers1983,cotton1988,kassenboehmer2014distributional,sharafRashad2016,rahimiNazari2021,Allen2022,bachan2022genderchancellor}; however, there are multiple such ways to construct this reference group.
-This tendency might suggest a consensus; however, we also observe published work that takes either men or women as the reference group \citep{nielsen2000wage,piazzalunga2019increase,leythienne2021paygapeu,tao2024gender,paradaContzen2025}.
+Often, the choice is a single reference group that aggregates the two original references in some way \citep{oaxacaRansom1994,reimers1983,cotton1988,kassenboehmer2014distributional,sharafRashad2016,rahimiNazari2021,Allen2022,bachan2022genderchancellor}.
+However, we also observe published work that takes either men or women as the reference group \citep{nielsen2000wage,piazzalunga2019increase,leythienne2021paygapeu,tao2024gender,paradaContzen2025}.
 Some papers report results for both references \citep{ONeill2006,fortinLemieuxFirpo2011,sharafRashad2016,rahimiNazari2021}. 
 Still others report results for just one reference, with no argument for excluding the other reference \citep{zhang_2019, ayubiShahbaziKhazaei2024,paradaContzen2025,singleton2016,lamJamiesonMittinty2021,leythienne2021paygapeu,alHanawiNjagi2022,tao2024gender}.
-
-Other solutions to the index number problem beyond fixing a reference group have been proposed; see \cref{sec:existing_index_number} for a detailed discussion, which we overview here.
-First, approaches like those of \citet{oaxacaRansom1998,neumark1988} define a new reference group by aggregating $H$ and $K$; however, there are many ways to perform this aggregation. So while this removes the choice of $H$ versus $K$ as the reference group, it introduces a new arbitrary choice.
-Second, use of Shapley values \citep{Shapley1953} could call for averaging the explained or unexplained components for each reference group.
-This does remove the choice of reference group.
-But, as our results call into question the interpretation of the explained and unexplained components for either reference group, this is merely an average of two questionable quantities.
 
 % \input{Sections/02b_setup}
 
 \subsection{Real-data Oaxaca--Blinder decomposition and drawing conclusions} 
 \label{sec:ob_real}
-In practice, practitioners do not have access to population quantities and must instead draw conclusions from finite-data estimates.
+In practice, researchers do not have access to population quantities and must instead draw conclusions from finite-data estimates.
 In particular, implementing \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} requires estimating $\E_g[Y]$, typically with the sample mean, and the counterfactual mean $\E_{g'}[\E_g[Y \mid X]]$, which requires more thought. 
 Practitioners typically estimate counterfactual means by (1) using data from $g$ to compute an estimator of $\E_g[Y \mid X]$ (essentially a regression), and (2) using data from $g'$ to take the sample average across the estimator from the first step.
 Concretely, for each $g \in {\{H, K\}}$, suppose we have $N_g$ observations of $\{X_n, Y_n\}$. Let $\hat{M}_g(X)$ be an estimator for $\E_g[Y \mid X]$.

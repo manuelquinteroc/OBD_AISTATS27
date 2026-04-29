@@ -4,11 +4,12 @@
 It is well known that the OBD depends on the choice of reference group. 
 We here demonstrate that this asymmetry can result in substantively different conclusions between the two reference choices.
 We present examples from real datasets as existence proofs. 
-We show that sign reversals can occur in either the explained or unexplained component and are not solely products of model misspecification or a small sample size. 
-We find that the fraction of parameter space representing sign reversals is large for linear models and grows with the dimension of the feature space.
-Our empirical exercises find that sign reversals are rarer than our theoretical results suggest, as fitted linear regression parameters in real data analyses may not be well modeled by a uniform distribution over parameter space. 
-Future work can determine to what extent these conclusions hold for non-uniform parameter distributions, other measures of model complexity, and nonlinear models. 
+We show that sign reversals can occur in either the explained or unexplained component and are not solely products of model misspecification, small sample size, or an adversarially chosen data generating process. 
 As a practical conclusion, we recommend that data analysts using the (N)OBD always report results using both reference groups to accurately convey the degree of support behind substantive conclusions arising from the (N)OBD.
+
+Our theoretical results show that the fraction of parameter space representing sign reversals is large for linear models and grows with the dimension of the feature space.
+However, our empirical exercises reveal fewer sign reversals than our theoretical results suggest, implying that fitted linear regression parameters in real data analyses may not be well modeled by a uniform distribution over the parameter space. 
+Future work can determine to what extent our theoretical findings hold for non-uniform parameter distributions, other measures of model complexity, and nonlinear models. 
 
 \textbf{Broader impacts.}
 The (N)OBD is widely used to draw conclusions and influence policy.
@@ -16,7 +17,10 @@ Our work shows that the choice of reference group in the (N)OBD can reverse subs
 We highlight the importance of reporting results for both references, even though this step is currently sometimes omitted in published papers
 and government reports.
 Thus, our work has the potential to improve decisions that arise from using the (N)OBD.
-Our work does have one potential negative societal impact: that a malicious researcher could aim to use the choice of reference group to cherry-pick results; however we suspect (or, hope) that the majority of mis-use of the (N)OBD is from researchers unaware of its problems, and so hope that the net impact from our paper will be positive.
+Our work does have one potential negative societal impact: that researchers learn they may be able to cherry-pick results through the choice of (N)OBD reference group.
+However, a researcher with an agenda can also influence results through sample selection, feature engineering, and model choice; we think it unlikely that reference group choice is the only means to their end.
+If one wishes to cherry-pick, there are already more than enough trees to harvest from, so to speak.
+Further, we suspect (or, hope) that the majority of mis-use of the (N)OBD is from researchers unaware of its problems, and so hope that the net impact from our paper will be positive. 
 
 
 %Even though it is well-known that the OBD depends on the choice of reference group, we show that this dependence can be highly consequential, leading to sign reversals in both the explained and unexplained components.

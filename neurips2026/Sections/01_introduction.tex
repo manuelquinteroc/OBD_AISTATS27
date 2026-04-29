@@ -11,7 +11,7 @@ How can she use the available information to form hypotheses about what drives t
 The modern explainability literature in machine learning boasts a bevy of methods for attributing outcome behavior to covariates \citep{Dwivedi2023}.
 These include Shapley values \citep{Shapley1953, Lundberg2017, chen2025shapley}, Functional ANOVA \citep{stone1994, hooker2004discovering, hookerGeneralizedFunctionalANOVA2007, lengerich2020purifying, fumagalli2025fanova}, Accumulated Local Effects \citep{apley2020}, and partial dependence plots \citep{friedman2001greedy, liu2025trees}.
 However, such methods are not designed to answer this data scientist's question.
-They attribute variation in outcomes within in a single population to the covariates, holding the conditional distribution $Y|X$ fixed.
+They attribute variation in outcomes within a single population to the covariates, holding the conditional distribution $Y|X$ fixed.
 But, the data scientist is interested in why an outcome varies between two populations, where the $Y|X$ may vary.
 See \cref{appendix:xAI} for more discussion on why these methods do not solve the data scientists' question.
 % For example, a Shapley value analysis of $Y|X$ might suggest that that patients with severe chronic conditions have higher mortality in each of hospital $H$ and $K$. 

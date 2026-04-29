@@ -292,7 +292,7 @@ The linear and logistic OBD exhibit a consistent explained-component sign flip t
     
 \subsection{U.S.\ Labor Force Example}
 \label{appendix:us_labor_force}
-This appendix provides full details on how we constructed the U.S.\ labor force data subsets, prepared the analytic dataset, estimated the OBD, identified sign reversals, and computed bootstrap standard errors for all data subsets. 
+This appendix provides full details on how we constructed the U.S.\ labor force subgroups, prepared the analytic dataset, estimated the (N)OBD, identified sign reversals, and computed bootstrap standard errors for all subgroups. 
 The raw data come from the 2016 American Community Survey 1-Year Public Use Microdata Sample, which contains 1,625,282 observations.
 We apply the same sample construction as \citet{bach2024heterogeneity}, who study the gender wage gap.
 We restrict the sample to adults between the ages of 25 and 65, who were employed and at work as civilians, worked at least 35 hours per week, at least 50 weeks per year, and with both earnings and income above \$12,687.50 (which corresponds conservatively to an hourly wage of \$7.25).
@@ -308,27 +308,32 @@ We purposely construct a large set of analyses to search for sign flips in diffe
     \setlength{\tabcolsep}{4pt}
     \begin{tabular}{@{}llll@{}}
     \toprule
-    Subset \( S \) & Outcome \( Y \) & Group (\( H, K \)) & Covariate (\(X\)) \\
+    Subset \( S \) & Group (\( H, K \)) & Outcome ($Y$) & Model Choice \\
     \midrule
-    50 states + DC          & Income (\$)                & Sex (male, female)                   & Has Bachelor's degree (0/1) \\
-    26 industries (NAICS 2) & Has health insurance (0/1) & Race (black, white)                  & Currently married (0/1)     \\
-                            &                            & Nativity (native born, foreign born) & \\
+    50 states + DC          & Sex (male, female)                   & Income (natural log)   & OLS                       \\
+    26 industries (NAICS 2) & Race (black, white)                  & Insurance status (0/1) & Logistic (for binary $Y$) \\
+                            & Nativity (native born, foreign born) &                        & lightgbm                  \\
     \bottomrule
     \end{tabular}
 \end{table}
 
-There are \( 77 \times 2 \times 3 \times 2 = 924\) combinations of these factors, each corresponding to a particular OBD that an analyst could compute.
-We restrict our attention to cases where both groups have at least 50 observations within the subset (e.g., not computing a male-female OBD if there are fewer than 50 male and 50 female observations in that industry); \( | \Delta Y | > 0.01 \), and similarly for the explained and unexplained components.
-These restrictions are intended to focus on cases where there is enough data to be informative,  and sign flips may be large in practical terms; they result in 355 comparisons.
+There are \( 77 \times 3 \times 2 = 462 \) combinations of these factors for continuous outcomes and \( 77 \times 3 \times 3 = 693 \) for binary outcomes, each corresponding to a particular (N)OBD that an analyst could compute.
+For each analysis, we assemble a candidate feature set from state of residence, industry of occupation (NAICS 2 code), sex, race (black, white, or other), nativity, completion of a Bachelor's degree, and marital status.
+We exclude features that define the particular subset and group at hand, to produce a feature set for model fitting.
+For example, when examining male-female differences in the state of Wyoming, we remove sex and state from the feature set.
+We consider two outcomes: the natural logarithm of income (the outcome from \citet{bach2024heterogeneity}), and a binary indicator for having health insurance.
 
-For each comparison, we model the conditional expectation of the outcome as
-\[
-    \E[Y \mid X, g, s] \;=\; \alpha_{g,s} + X \beta_{g,s},
-\]
-where \( Y \) and \( X \) are the outcome and the covariate;
+For each comparison, we perform the (N)OBD by estimating $\E[Y \mid X, g, s]$ with the specified model, 
+where \( Y \) and \( X \) are the outcome and covariates, 
 \( g \) indexes the group (i.e. male or female sex);
 and \( s \) indicates a subset of the data (i.e., the state of Utah).
-The parameters $(\alpha_{g,s},\beta_{g,s})$ are estimated using ordinary least squares.
+The models are:
+\begin{itemize}
+    \item Ordinary least squares regression.
+    \item Logistic regression (when $Y$ is binary), unpenalized.
+    \item lightgbm (gradient-boosted trees). We set a learning rate of 0.25, number of leaves to 7, and select the number of trees by 3-fold cross-validation with early stopping at 10 rounds; we then re-fit the estimator in sample with the selected number of trees.
+\end{itemize}
+We attempted to implement neural networks for regression (both outcomes) and classification (health insurance status only), but faced repeated software errors while optimizing model weights.
 
 Out of the 355 comparisons we examined, we found 0 cases where the explained component flipped signs and 1 case where the unexplained component flipped signs.
 The sign flip occurs when comparing the explanatory power of education levels for explaining the foreign-native wage gap in Michigan, which we summarize in \cref{tab:us_census_flips}.
@@ -336,24 +341,40 @@ Regardless of the reference group, differences in education levels appear to exp
 However, taking the foreign-born population as the reference group, differences in how employers remunerate more educated workers seems to reduce the foreign-native gap ($p < 0.1$).
 Taking the native-born population as the reference group, differences in remuneration seem to expand the gap, though the difference is statistically indistinguishable from zero.
 
+% Insurance
 \begin{table}[!ht]
-    \caption{Outcome decomposition for subsets exhibiting sign reversals in the U.S.\ labor force. Standard errors in parentheses are computed via bootstrap resampling with $20{,}000$ replications. $p$-values are based on a normal approximation. Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$.}
-    \label{tab:us_census_flips}
+    \caption{Number of subgroups (out of $462$) exhibiting a sign flip in the explained and unexplained component, for the earnings outcome.}
+    \label{tab:flips_census_income}
     \centering
-    \scriptsize
-    \begin{tabular}{@{}lc*{5}{c}@{}}
+    \small
+    \begin{tabular}{lcc}
     \toprule
-    \multirow{2}{*}{Subset} &
-    \multirow{2}{*}{Observations} &
-    Gap &
-    \multicolumn{2}{c}{Foreign Born Reference} &
-    \multicolumn{2}{c}{Native Reference} \\
-    \cmidrule(lr){3-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
-    State &  & (F–N) & Expl. & Unexp. & Expl. & Unexp. \\
+          & \multicolumn{1}{c}{Explained Component} & \multicolumn{1}{c}{Unxplained Component} \\
+          \cmidrule(lr){2-2}\cmidrule(lr){3-3}
+    Model & Total flips & Total flips \\
     \midrule
-    
-    Michigan & 25,724 & 0.117$^{***}$ & 0.148$^{***}$  & \(-0.032\)$^{*}$ & 0.101$^{***}$ & 0.016   \\
-             &        & (0.019)       & (0.011)        & (0.017)          & (0.007)       & (0.017) \\ [0.3em]
+    Linear      & &  \\
+    Logistic    & &  \\
+    lightgbm    & &  \\
     \bottomrule
-    \end{tabular}    
+    \end{tabular}
+\end{table}
+
+% 
+\begin{table}[!ht]
+    \caption{Number of subgroups (out of $693$) exhibiting a sign flip in the explained and unexplained component, for the health insurance outcome.}
+    \label{tab:flips_census_income}
+    \centering
+    \small
+    \begin{tabular}{lcc}
+    \toprule
+          & \multicolumn{1}{c}{Explained Component} & \multicolumn{1}{c}{Unxplained Component} \\
+          \cmidrule(lr){2-2}\cmidrule(lr){3-3}
+    Model & Total flips & Total flips \\
+    \midrule
+    Linear      & &  \\
+    Logistic    & &  \\
+    lightgbm    & &  \\
+    \bottomrule
+    \end{tabular}
 \end{table}

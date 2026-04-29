@@ -9,7 +9,7 @@ For reference groups, we consider males and females.
 
 \textbf{Analysis.}
 As discussed in \cref{sec:ob_real}, practitioners often draw conclusions based on the sign and statistical significance of the (N)OBD explained and unexplained components.
-To explore whether these conclusions can be robust to the choice of reference group, we compute the explained and unexplained components for each of our $139$ data subsets across one foundation model and four classic models. The foundation model is TabPFN, a $25$ million parameter, transformer-based model, pre-trained to map training datasets to predictive distributions $Y|X$ \citep{hollmann2023tabpfn}\footnote{TabPFN uses a custom license: \url{https://huggingface.co/Prior-Labs/tabpfn_2_6/blob/main/LICENSE}}. The other four models are linear regression,\footnote{Despite the binary outcome $Y$, it is common practice in applied health and policy research to fit separate linear models (via OLS) for the relationship between a binary outcome and covariates in each group, and then apply the OBD \citep{jann2008, edokaChangesCatastrophicHealth2017, sujin_LPM_OB, mweembaGapSelfRatedHealth2023}. In fact, this use of the linear model for a binary outcome is so common that it has a name, the ``linear probability model.''} logistic regression, XGBoost \citep{chen2016xgboost}, and a two-layer fully-connected neural network.
+To explore whether these conclusions can be robust to the choice of reference group, we compute the explained and unexplained components for each of our $139$ data subsets across one foundation model and four classic models. The foundation model is TabPFN, a $25$ million parameter, transformer-based model, pre-trained to map training datasets to predictive distributions $Y|X$ \citep{hollmann2023tabpfn}. The other four models are linear regression,\footnote{Despite the binary outcome $Y$, it is common practice in applied health and policy research to fit separate linear models (via OLS) for the relationship between a binary outcome and covariates in each group, and then apply the OBD \citep{jann2008, edokaChangesCatastrophicHealth2017, sujin_LPM_OB, mweembaGapSelfRatedHealth2023}. In fact, this use of the linear model for a binary outcome is so common that it has a name, the ``linear probability model.''} logistic regression, XGBoost \citep{chen2016xgboost}, and a two-layer fully-connected neural network.
 %To examine a more modern, transformer-based model, we also consider TabPFN, a $25$ million parameter, pre-trained model trained to map training datasets to predictive distributions $Y|X$ \citep{hollmann2023tabpfn}.
 We assess statistical significance using $1{,}000$ bootstrap replications.
 \cref{tab:flip_summary_main} counts the number of sign flips across these models at various levels of statistical significance.
@@ -166,9 +166,9 @@ In aggregate, these changes add enough to cause a sign flip in the explained com
 \end{figure}
 
 
-\textbf{Limitations}
-Our analysis reveals that sign flips in the explained and unexplained components of the (N)OBD in a real dataset.
-It is possible that this dataset or our analysis are unusual, and that sign flips may not occur in other settings.
+\textbf{Limitations.}
+Our analysis reveals sign flips in the explained and unexplained components of the (N)OBD in a real dataset.
+At this point, it is possible that some of our choices may be unusual; these choices include the dataset itself, our choice of covariates, our choice of outcome, or our particular subset of data. And it is possible that sign flips may not occur in other settings.
 To address this possibility, we provide a second illustration analyzing differences in income as well as health insurance status using U.S.\ Census data in \cref{appendix:us_labor_force}.
-The data have previously been analyzed by \citet{bach2024heterogeneity}, reducing the concern that our empirical results are due to atypical choices.
-We also give a theoretical account of sign flips in \cref{sec:signflips}, establishing that they correspond to a nontrivial region of the parameter space.
+The latter data have previously been analyzed by \citet{bach2024heterogeneity}, reducing the concern that our empirical results are due to atypical choices.
+We also give a theoretical account of sign flips in \cref{sec:signflips}, where we establish that they correspond to a nontrivial region of the parameter space.

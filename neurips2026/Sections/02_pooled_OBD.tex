@@ -33,7 +33,7 @@ or
 (B) \emph{How much would Group $K$'s mean outcome ($Y$) change if Group $K$ kept its outcome--covariate relationship ($Y \mid X$) but had the covariate ($X$) distribution of Group $H$?}
 
 To address the general questions, it will be useful to compute the mean of a counterfactual $Y$ that has the outcome--covariate relationship ($Y \mid X$) of group $g$ and the covariate ($X$) distribution of group $g'$. By the law of total expectation, this mean equals
-$\E_{g'} [ \E_g  [ Y \mid X ] ]$.
+$\E_{g'}[\E_g[Y \mid X]]$.
 Then the difference in mean outcomes between the two groups can be decomposed into differences between each group's mean
 and the chosen counterfactual mean. The decompositions corresponding to questions (A) and (B) above are, respectively, 
 \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} below.
@@ -41,11 +41,11 @@ and the chosen counterfactual mean. The decompositions corresponding to question
 \begin{align}
 \Delta_Y := \E_H[Y] - \E_K[Y] 
     \label{eq:OB_H_Counterfactual}
-    &=\underbrace{\E_H[Y] - \E_{K} [ \E_H[Y \mid X] ] }_{E^{(H)}} 
-     + \underbrace{\E_{K} [ \E_H[Y \mid X] ] - \E_K[Y]}_{U^{(H)} } \\
+    &=\underbrace{\E_H[Y] - \E_K[\E_H[Y \mid X]] }_{E^{(H)}} 
+     + \underbrace{\E_K[\E_H[Y \mid X]] - \E_K[Y]}_{U^{(H)} } \\
      \label{eq:OB_K_Counterfactual}
-     &=\underbrace{\E_H[Y] - \E_{H} [ \E_K[Y \mid X] ] }_{U^{(K)}} 
-     + \underbrace{\E_{H} [ \E_K[Y \mid X] ] - \E_K[Y] }_{E^{(K)}}.
+     &=\underbrace{\E_H[Y] - \E_H[\E_K[Y \mid X]] }_{U^{(K)}} 
+     + \underbrace{\E_H[\E_K[Y \mid X]] - \E_K[Y] }_{E^{(K)}}.
 \end{align} 
 %Alternatively, the decomposition corresponding to question (B) above is:
 %\begin{align}
@@ -87,9 +87,9 @@ But, as our results call into question the validity of the explained and unexpla
 \subsection{Real-data Oaxaca--Blinder decomposition and drawing conclusions} 
 \label{sec:ob_real}
 In practice, practitioners do not have access to population quantities and must instead draw conclusions from finite-data estimates.
-In particular, implementing \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} requires estimating $\E_g[Y]$, typically with the sample mean, and the counterfactual mean $\E_{g'} [ \E_g  [ Y \mid X ] ]$, which requires more thought. 
+In particular, implementing \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} requires estimating $\E_g[Y]$, typically with the sample mean, and the counterfactual mean $\E_{g'}[\E_g[Y \mid X]]$, which requires more thought. 
 Practitioners typically estimate counterfactual means by (1) using data from $g$ to compute an estimator of $\E_g[Y \mid X]$ (essentially a regression), and (2) using data from $g'$ to take the sample average across the estimator from the first step.
-Concretely, suppose that, for each $g \in {\{H, K\}}$, suppose we have $N_g$ observations of $\{X_n, Y_n\}$. Let $\hat{M}_g(X)$ be an estimator for $\E_g  [ Y \mid X ]$.
+Concretely, suppose that, for each $g \in {\{H, K\}}$, suppose we have $N_g$ observations of $\{X_n, Y_n\}$. Let $\hat{M}_g(X)$ be an estimator for $\E_g[Y \mid X]$.
 Then the following equation implements \cref{eq:OB_H_Counterfactual}:
 \begin{align}	
     \hat{\Delta}_Y
@@ -99,8 +99,8 @@ Then the following equation implements \cref{eq:OB_H_Counterfactual}:
 \end{align}
 
 In the literature, the term \emph{OBD} typically refers to using \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with the further choice of linear regression to compute $\hat{M}_g(X)$.
-We emphasize that the use of linear regression is a modeling choice, and that it is possible to choose nonlinear estimators for $\E_g  [ Y \mid X ]$.
-For instance, \citet{quintas2024multiply,flachaire2025decomposing,mao2025double} explore generalizations of the OBD that use machine learning methods to estimate $\E_g  [ Y \mid X ]$, and derive asymptotic properties for such procedures.
+We emphasize that the use of linear regression is a modeling choice, and that it is possible to choose nonlinear estimators for $\E_g[Y \mid X]$.
+For instance, \citet{quintas2024multiply,flachaire2025decomposing,mao2025double} explore generalizations of the OBD that use machine learning methods to estimate $\E_g[Y \mid X]$, and derive asymptotic properties for such procedures.
 To distinguish from the standard OBD, we will refer to the case where $\hat{M}_g(X)$ is a nonlinear estimator as the \emph{nonlinear Oaxaca-Blinder decomposition} (NOBD).
 
 \textbf{Drawing conclusions from the (N)OBD.}

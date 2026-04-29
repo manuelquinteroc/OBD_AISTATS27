@@ -3,7 +3,7 @@
 
 Our examples above serve as an existence proof that reference group choice can reverse the (N)OBD's substantive conclusions by flipping signs of the explained or unexplained components.
 However, a few major questions remain.
-First, do these conclusion reversals occur in the absence of finite sample noise; i.e., do practitioners with large-scale datasets still need to worry about them?
+First, do these conclusion reversals occur in the absence of finite-sample noise; i.e., do practitioners with large-scale datasets still need to worry about them?
 Second, even if conclusion reversals can occur, do they occur outside of mathematically adversarial examples (i.e., ``measure zero'' in some sense)?
 
 In this section, we mathematically prove the answer to both questions is yes.
@@ -286,7 +286,7 @@ As an illustration, consider an analysis of the gender wage gap that decomposes 
 
 However, \cref{ass:no_sign_flip} is not plausible in all domains.
 In the ICU setting from \cref{sec:real_example}, the assumption requires the higher mortality population to also be more sensitive to observed covariates.
-This relationship may fail to hold when important factors, such as environmental exposure, chronic conditions, or family history of disease, are not recorded in a researcher's dataset.
+This relationship may fail to hold when important factors --- such as environmental exposure, chronic conditions, or family history of disease --- are not recorded in a researcher's dataset.
 If such \textit{omitted covariates} are strong predictors of mortality, a population may have a high mortality rate that is less sensitive to \textit{observed covariates}.
 Consistent with this intuition, \cref{ass:no_sign_flip} never holds across the 139 comparisons in the ICU data exercise.
 In \cref{appendix:ovb}, we explore how the presence of omitted covariates can generate parameter differences $\Delta\beta$ and $\Delta\alpha$ that do preclude sign flips, without invoking \cref{ass:no_sign_flip}.

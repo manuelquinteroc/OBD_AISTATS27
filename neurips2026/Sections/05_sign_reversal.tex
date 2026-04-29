@@ -203,9 +203,13 @@ in the range $[-M,M]$ as well. See \cref{appendix:sign_flip_simulation} for deta
 \subsection{Reconciling the theoretical and empirical prevalence of sign flips}
 \label{sec:reconciling_theory_empirics}
 
-In \cref{sec:sign_flip_fraction}, we show that a large fraction of parameter space produces sign flips in both OBD components.
-Our earlier empirical exercise from \cref{tab:flip_summary_main} finds that sign flips are less common than a direct application of theory would suggest, occurring in 19\% of tested subsets.
-Below, we develop a resolution, observing that regression parameters seen in practice need not be uniformly distributed over parameter space as our theoretical results assume; in fact, we generally expect they are not.
+Our main focus in \cref{sec:sign_flip_fraction} was establishing that a non-zero proportion of parameter
+space yielded sign flips.
+In fact, our theoretical results suggest a large fraction of parameter space produces sign flips in both OBD components.
+We might compare this result with 
+our earlier empirical exercise from \cref{tab:flip_summary_main}, where we find that sign flips are less common than a direct application of theory would suggest. In particular,
+even if we count total flips (and ignore significance), we see sign flips in 19\% of (i.e., 27 of 139) tested subsets for the OBD.
+Below, we suggest a resolution. In particular, we observe that regression parameters seen in practice need not be uniformly distributed over parameter space as our theoretical results assume; in fact, we generally expect they are not.
 
 % An exhaustive search of the literature using the OBD is beyond the scope of the present paper;
 % a paper corresponding to a Stata implementation of the OBD has thousands of citations alone \citep{jann2008}, and there are implementations
@@ -251,7 +255,7 @@ This observation follows immediately from \cref{defn:sign_flip_explained}.
 In some contexts, we may expect the elements of $\beta_g$ to be of the same sign in both groups.
 Consider the ICU mortality example from \cref{sec:real_example}.
 While we may expect risk factors to have different effect sizes for men and women a priori, there is little reason to think that many factors that increase men's mortality would decrease women's (or vice versa).
-\cref{rmk:no_explained_sign_flip} could then explain why we observe explained component sign flips in only 11 out of the 139 subgroups we test \cref{tab:flip_summary_explained}.
+\cref{rmk:no_explained_sign_flip} could then explain why we observe explained component sign flips in only 11 out of the 139 subgroups we test (\cref{tab:flip_summary_explained}).
 % AS: the flips could also reflect noise — the subgroups we test might be small, so that they _don't_ present much evidence about population-level differences (in line with few statistically significant flips)
 % Indeed, this observation makes the explained component sign flip in \cref{sec:real_example} more surprising, as it implies substantive differences in mortality risk in this subpopulation of men and women.
 
@@ -276,7 +280,7 @@ $
 See \cref{proof:no_sign_flip} for the proof.
 In some domains, intercept and slope advantages might often move in the same direction; 
 \cref{prop:no_sign_flip} rules out sign flips in such cases.
-As an illustration, consider an analysis of the gender wage gap that decomposes differences in the average earnings between men and women into a component based on covariates (e.g., work experience) and outcomes given covariates (i.e., how experience is remunerated).
+As an illustration, consider an analysis of the gender wage gap that decomposes differences in the average earnings between men and women into a component based on covariates (e.g., work experience) and outcomes given covariates (e.g., how experience is remunerated).
 \cref{ass:no_sign_flip} corresponds to the group with higher baseline wages ($\alpha_g$) also having higher returns to experience ($\beta_g$). 
 \cref{prop:no_sign_flip} is one explanation for why sign flips are rare in our analysis of U.S. labor force data (\cref{appendix:us_labor_force}): \cref{ass:no_sign_flip} holds in 230 out of the 355 comparisons we search (64.8\%), ruling out unexplained component sign flips in those cases.
 

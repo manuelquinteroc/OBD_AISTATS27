@@ -5,12 +5,13 @@ Our examples above serve as an existence proof that reference group choice can r
 However, a few major questions remain.
 First, do these conclusion reversals occur in the absence of finite sample noise; i.e., do practitioners with large-scale datasets still need to worry about them?
 Second, even if conclusion reversals can occur, do they occur outside of mathematically adversarial examples (i.e., ``measure zero'' in some sense)?
+
 In \cref{sec:simulated_example}, we empirically demonstrate that the answer to the first question is yes.
 In this section, instead of relying on empirical evidence, we mathematically prove the answer to both questions is yes.
-For mathematical tractability and applicibility to practical usage, we focus on the OBD (i.e., using linear models in \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}).
+For mathematical tractability and applicability to practical usage, we continue our focus on the OBD (vs.\ NOBD). % (i.e., using linear models in \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}).
 
 In what follows, we study conclusion reversals that involve the explained or unexplained component changing signs from positive to negative, or vice versa.
-To show that sign flipping is not an artifact of finite samples, we work in the population limit.
+To show that sign flipping is not an artifact of finite samples, we work in the population limit; since we work in the population limit, significance is no longer a concern.
 And to show that sign flipping is not a ``measure zero'' phenomenon, we show that sign flips of both components represent a large proportion of the parameter space, in a sense we make precise below.
 % We use our analysis of the parameter space to interpret our empirical exercises and discuss frontier work on the OBD that enriches the covariate space using machine learning models \citep{bach2024heterogeneity,quintero2025,flachaire2025decomposing}.
 
@@ -31,28 +32,31 @@ And to show that sign flipping is not a ``measure zero'' phenomenon, we show tha
 % (3) Linearity gives us a tractable way of measuring model complexity in terms of the number of included features.
 % As we identify substantive problems with correctly specified linear models; we expect practical issues only compound beyond this relatively simple case.
 
-Our goal is to study conditions on population-level quantities that produce sign flips in the explained and unexplained components.
-For tractability, we begin by assuming finite-dimensional covariates, $X \in \mathbb{R}^d$, and a linear model for $\mathbb{E}_g[Y \mid X]$: $\alpha_g + X^\top \beta_g$
-for some intercept $\alpha_g \in \mathbb{R}$ and slope $\beta_g \in \mathbb{R}^d$.
-\textcolor{red}{Throughout, we will assume an infinite data limit}, where $\alpha_g, \beta_g$ are the parameters of the population-level best linear fit to $\mathbb{E}_g[Y\mid X]$.
-\textcolor{red}{In addition to being theoretically tractable, the linearity assumption is practically relevant, as the OBD is often estimated using OLS to model $\mathbb{E}_g[Y\mid X]$, and OLS coefficients converge to $\alpha_g, \beta_g$ if an appropriate law of large numbers applies.}
+%Our goal is to study conditions on population-level quantities that produce sign flips in the explained and unexplained components.
+%For tractability, we begin by assuming finite-dimensional covariates, $X \in \mathbb{R}^d$, and a linear model for $\mathbb{E}_g[Y \mid X]$: $\alpha_g + X^\top \beta_g$
+%for some intercept $\alpha_g \in \mathbb{R}$ and slope $\beta_g \in \mathbb{R}^d$.
+%\textcolor{red}{Throughout, we will assume an infinite data limit}, where $\alpha_g, \beta_g$ are the parameters of the population-level best linear fit to $\mathbb{E}_g[Y\mid X]$.
+%\textcolor{red}{In addition to being theoretically tractable, the linearity assumption is practically relevant, as the OBD is often estimated using OLS to model $\mathbb{E}_g[Y\mid X]$, and OLS coefficients converge to $\alpha_g, \beta_g$ if an appropriate law of large numbers applies.}
 %Then, for groups $g,g'$, we observe $\E_{g'} [ \E_g  [ Y | X ] ] = \alpha_g + \E_{g'}[X]^\top \beta_g$.
 
-We introduce the notation
-$\mu_g := \mathbb{E}_g[X],
-\Delta \mu := \mu_H - \mu_K,
-\Delta \beta := \beta_H - \beta_K,
-\Delta \alpha := \alpha_H - \alpha_K.
-$
-With these choices, the OBD
-(\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}) becomes
-\begin{equation}
-    \Delta_Y = \underbrace{\Delta \mu^\top \beta_H}_{E^{(H)}} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{U^{(H)}} = \underbrace{\Delta \mu^\top \beta_K}_{E^{(K)}} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{U^{(K)}}.
-\end{equation}
-The first equality is the OBD with reference group $H$, and the second with reference group $K$.
+%We introduce the notation
+%$\mu_g := \mathbb{E}_g[X],
+%\Delta \mu := \mu_H - \mu_K,
+%\Delta \beta := \beta_H - \beta_K,
+%\Delta \alpha := \alpha_H - \alpha_K.
+%$
+%With these choices, the OBD
+%(\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}) becomes
+%\begin{equation}
+%    \Delta_Y = \underbrace{\Delta \mu^\top \beta_H}_{E^{(H)}} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{U^{(H)}} = \underbrace{\Delta \mu^\top \beta_K}_{E^{(K)}} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{U^{(K)}}.
+%\end{equation}
+%The first equality is the OBD with reference group $H$, and the second with reference group $K$.
 
-\textbf{Explained component.}
-We now study when each of the explained component can flip sign.
+We start by characterizing sign flips in the explained and unexplained components, respectively; these characterizations will help us later establish
+that sign flips of either component are common in parameter space.
+
+\textbf{Explained component.} Explained component sign flips are relatively straightforward to characterize.
+%We now study when each of the explained component can flip sign.
 \begin{definition}
 	\label{defn:sign_flip_explained}
 	We say the OBD \emph{sign flips the explained component} if the sign of the explained term, $\Delta\mu^T \beta_g$, depends on the reference group. That is,
@@ -128,11 +132,12 @@ That is, larger magnitudes of \( \Delta \beta \) create ``more room'' for sign f
 %It may be tempting to wonder whether this sensitivity is somehow bounded by the observed outcome gap \(\Delta_Y\). \Cref{cor:unbounded_sensitivity} in the Appendix addresses this question directly: even when \(\Delta_Y\) is held fixed, the ordering-induced swing in the structural component can be made arbitrarily large. That is, no a priori bound ties the magnitude of ordering sensitivity to the magnitude of the empirical gap itself.
 
 
-\subsection{How many parameters lead to sign flips?}
+\subsection{Are sign flips an adversarial phenomenon?}
 \label{sec:sign_flip_fraction}
 
-After characterizing sign flips in \cref{sec:sign_flip_characterizations}, we can ask how likely they are.
-One formalization of this question is to ask what proportion of the volume of parameter space corresponds to sign flips.
+After characterizing sign flips in \cref{sec:sign_flip_characterizations}, we can ask whether they occur only for adversarially chosen parameters.
+One formalization of this question is to ask what proportion of the volume of parameter space corresponds to sign flips --- and in particular, whether that proportion is non-zero.
+
 An immediate challenge with talking about volume within a parameter space is that the parameter space inherits
 its units from the covariates and response; in particular, any individual unit choice is somewhat
 arbitrary (e.g., centimeters vs.\ millimeters), but also different covariates need not be 

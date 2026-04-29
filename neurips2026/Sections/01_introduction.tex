@@ -3,7 +3,7 @@
 % Para 1: set up data analysis problem
 As a motivating example, suppose a data scientist at Hospital $H$ notices that mortality rates are noticeably higher at Hospital $H$ than at Hospital $K$.
 She knows the medical literature links many risk factors ($X$), such as high blood pressure, to mortality ($Y$).
-The observed differences in mortality could be due to differences in these risk factors between the two groups of patients (distribution of $X$) or to differences in how well each hospital manages these risk factors (distribution of $Y|X$).
+The observed differences in mortality could be due to differences in these risk factors between the two groups of patients (distribution of $X$) or to differences in how well each hospital manages these risk factors (distribution of $Y \mid X$).
 If she can figure out how much each of these factors is driving the difference in mortality rates, her hospital may be able to change its policy to improve patient care.
 How can she use the available information to form hypotheses about what drives the difference in mortality?
 
@@ -11,14 +11,14 @@ How can she use the available information to form hypotheses about what drives t
 The modern explainability literature in machine learning (ML) boasts a bevy of methods for attributing outcome behavior to covariates \citep{Dwivedi2023}.
 These include Shapley values \citep{Shapley1953, Lundberg2017, chen2025shapley}, Functional ANOVA \citep{stone1994, hooker2004discovering, hookerGeneralizedFunctionalANOVA2007, lengerich2020purifying, fumagalli2025fanova}, Accumulated Local Effects \citep{apley2020}, and partial dependence plots \citep{friedman2001greedy, liu2025trees}.
 However, such methods are not designed to answer this data scientist's question.
-They attribute variation in outcomes within a single population to the covariates, holding the conditional distribution $Y|X$ fixed.
-But, the data scientist is interested in why an outcome varies between two populations, where the $Y|X$ may vary.
+They attribute variation in outcomes within a single population to the covariates, holding the conditional distribution $Y \mid X$ fixed.
+But, the data scientist is interested in why an outcome varies between two populations, where the $Y \mid X$ may vary.
 See \cref{appendix:lit_review_xAI} for more discussion on why these methods do not solve the data scientists' question.
-% For example, a Shapley value analysis of $Y|X$ might suggest that that patients with severe chronic conditions have higher mortality in each of hospital $H$ and $K$. 
+% For example, a Shapley value analysis of $Y \mid X$ might suggest that that patients with severe chronic conditions have higher mortality in each of hospital $H$ and $K$. 
 % But if hospitals $H$ and $K$ both treat similar patient populations, chronic health conditions cannot explain why mortality rates differ between them.
 
 % Part 3: Introduce OBD
-Instead, the data scientist might adapt the Oaxaca--Blinder decomposition (OBD), which attributes disparities between two groups to $X$ and $Y|X$. 
+Instead, the data scientist might adapt the Oaxaca--Blinder decomposition (OBD), which attributes disparities between two groups to $X$ and $Y \mid X$. 
 The OBD was developed for linear models \citep{oaxaca1973,blinder1973} and remains widely used in this form --- e.g., to analyze gender wage gaps \citep{paradaContzen2025}, educational attainment differences \citep{barhaim2023}, and health disparities \citep{cartwright2021}. 
 Recent work has explored pairing the OBD with flexible functional decompositions \citep{quintero2025,bach2024heterogeneity,quintas2024multiply,mao2025double,flachaire2025decomposing}, but has not engaged with the index number problem; see \cref{appendix:obd_generalized} for more discussion.
 
@@ -90,13 +90,13 @@ We suggest best practices for data analysts in \cref{sec:conclusion}.
 % The OB decomposition swaps components of each population in a particular order: first the distribution of $X$ and then the distribution of $Y\mid X$ or vice versa. 
 % Previous authors have noted that results depend on the chosen order of swaps \citep{blinder1973,oaxaca1973}.
 % There are two possible methods for dealing with this issue.
-% First, considering the intermediate populations (i.e., $K$'s distribution of $X$ with $H$'s $Y|X$ or $H$'s distribution of $X$ with $K$'s $Y|X$) as possible counterfactual worlds that could have occurred, one could argue that only certain counterfactuals are reasonable \citep{jann2008,fortinLemieuxFirpo2011}.
+% First, considering the intermediate populations (i.e., $K$'s distribution of $X$ with $H$'s $Y \mid X$ or $H$'s distribution of $X$ with $K$'s $Y \mid X$) as possible counterfactual worlds that could have occurred, one could argue that only certain counterfactuals are reasonable \citep{jann2008,fortinLemieuxFirpo2011}.
 % For example, \citet{fortinLemieuxFirpo2011} consider a labor economics problem and argue that only one ordering is plausible.
 % A second approach is to simply treat the two orders as equally valid and report both to bracket a range \citep{oaxaca1973,blinder1973} or compute a (weighted) average over different orderings \citep{sloczynski2015,firpoWoL2017}.
 
 %Our major contribution is to demonstrate that the choice of reference group is not a mere technical detail; it can flip the substantive conclusion and thus failing to account for such sensitivity can lead to misleading interpretations.
 %We show that there are realistic scenarios in which different choices of reference groups yield substantively different conclusions.
-%As an extreme example, the sign of the unexplained ($Y|X$) ---or explained--- component can flip from negative to positive depending on the reference population.
+%As an extreme example, the sign of the unexplained ($Y \mid X$) ---or explained--- component can flip from negative to positive depending on the reference population.
 %Taking a weighted average in such scenarios can return contradictory conclusions based on the arbitrary choice of weights in the average.
 % \textcolor{red}{TB: I think the argument about weighted averages not being meaningful can be made more clear}. \textcolor{blue}{AS: Gave it a shot!}
 %We illustrate these findings with a synthetic healthcare example inspired by real data analyses and with a real clinical case study, and provide a complete set of interpretable conditions under which such sign flipping --- and subsequent ambiguity of the OBD --- will occur.

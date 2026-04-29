@@ -16,7 +16,7 @@ The second, Group $K$, comes from a lower-resource setting, where patients face 
 These factors shape both the composition of each group (including average BMI) and the structure of the SBP--BMI relationship. We follow a clinical literature finding an approximately linear relationship between BMI and SBP \cite{kaufman1997, cappuccio2008, chen2023}; in particular, we assume a separate linear relationship in each group.
 
 While an OBD cannot establish causality without further assumptions, it can suggest where one might look for potential drivers of observed inter-group disparities.
-If the explained component is effectively zero and the unexplained component (differences in $Y|X$) dominates (with a sign in the direction of the observed outcome difference), it may highlight the need to investigate differences in medical care, such as adherence support or access to antihypertensives.
+If the explained component is effectively zero and the unexplained component (differences in $Y \mid X$) dominates (with a sign in the direction of the observed outcome difference), it may highlight the need to investigate differences in medical care, such as adherence support or access to antihypertensives.
 If the unexplained component is effectively zero and the explained component (differences in $X$) dominates (with a sign in the direction of the observed outcome difference), it may be most impactful to target interventions on weight management, nutrition, and physical activity. 
 
 \textbf{Simulated data.}
@@ -60,7 +60,7 @@ However, Group $H$ has a higher baseline SBP ($\alpha_H$), perhaps reflecting ge
 
 \textbf{Analysis.} Since we have access to all population quantities in this example, there is no need to fit models or check statistical significance.
 We can compute the OBD directly from the known population distributions.
-%In principle, the OBD should provide a transparent framework to separate the difference in mean SBP into an explained component (differences in BMI distribution, $X$) and an unexplained component (differences in SBP given BMI, $Y|X$)
+%In principle, the OBD should provide a transparent framework to separate the difference in mean SBP into an explained component (differences in BMI distribution, $X$) and an unexplained component (differences in SBP given BMI, $Y \mid X$)
 
 \textbf{Two different conclusions.}
 \cref{tab:ob_decomp} summarizes the OBD results under each reference group.

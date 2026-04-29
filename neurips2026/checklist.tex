@@ -31,9 +31,9 @@
 
 \item {\bf Claims}
     \item[] Question: Do the main claims made in the abstract and introduction accurately reflect the paper's contributions and scope?
-    \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Answer: \answerYes{} % Replace by \answerYes{},  \answerNo{}, or \answerNA{}.
     \item[] Justification: The abstract claims we demonstrate empirically that the OBD can suffer from conclusion reversals under the choice of reference group -- especially when using non-linear regression models -- and then prove theoretically that these reversals are not driven by model misspecification, small data, or mathematically adversarial problem setups.
-      Section 3 demonstrates the empirical issues and Section 4 demonstrates the claimed theoretical contributions.
+      \cref{sec:real_example} demonstrates the empirical issues and \cref{sec:signflips} demonstrates the claimed theoretical contributions.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the abstract and introduction do not include the claims made in the paper.
@@ -45,8 +45,7 @@
 \item {\bf Limitations}
     \item[] Question: Does the paper discuss the limitations of the work performed by the authors?
     \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: The empirical analysis in the main text uses one dataset, which the conclusion of \cref{sec:real_example} acknowledges. Our theoretical results assume a linear model and a uniform measure over the parameter space. \cref{sec:reconciling_theory_empirics} reflects on violations of the uniformity assumption, and what the implications are for the prevalence of sign flips in practical settings. The conclusion also notes that this paper leaves questions about nonlinear models open for future work.
-    \justificationTODO{}
+    \item[] Justification: The empirical analysis in the main text uses one dataset, which the conclusion of \cref{sec:real_example} acknowledges. Our theoretical results assume a linear model and a uniform measure over the parameter space. \cref{sec:reconciling_theory_empirics} reflects on violations of the uniformity assumption, and what the implications are for the prevalence of sign flips in practical settings. The conclusion also notes that this paper leaves questions about nonlinear models open for future work.    
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper has no limitation while the answer \answerNo{} means that the paper has limitations, but those are not discussed in the paper. 

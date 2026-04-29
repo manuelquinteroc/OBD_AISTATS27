@@ -205,11 +205,11 @@ in the range $[-M,M]$ as well. See \cref{appendix:sign_flip_simulation} for deta
 
 Our main focus in \cref{sec:sign_flip_fraction} was establishing that a non-zero proportion of parameter
 space yielded sign flips.
-In fact, our theoretical results suggest a large fraction of parameter space produces sign flips in both OBD components.
-We might compare this result with 
-our earlier empirical exercise from \cref{tab:flip_summary_main}, where we find that sign flips are less common than a direct application of theory would suggest. In particular,
-even if we count total flips (and ignore significance), we see sign flips in 19\% of (i.e., 27 of 139) tested subsets for the OBD.
-Below, we suggest a resolution. In particular, we observe that regression parameters seen in practice need not be uniformly distributed over parameter space as our theoretical results assume; in fact, we generally expect they are not.
+% In fact, our theoretical results suggest a large fraction of parameter space produces sign flips in both OBD components.
+One limitation of this theory is that it assumes regression parameters are uniformly distributed, when in practice we may expect they follow non-uniform distributions.
+Indeed, our earlier empirical exercise from \cref{tab:flip_summary_main}, finds that sign flips are less common than a direct application of theory would suggest. 
+Even if we count total flips and ignore statistical significance, we see sign flips in 19\% of (i.e., 27 of 139) tested subsets for the OBD.
+We now describe and interpret constraints on the parameter space that may produce fewer sign flips than implied by our theoretical results.
 
 % An exhaustive search of the literature using the OBD is beyond the scope of the present paper;
 % a paper corresponding to a Stata implementation of the OBD has thousands of citations alone \citep{jann2008}, and there are implementations

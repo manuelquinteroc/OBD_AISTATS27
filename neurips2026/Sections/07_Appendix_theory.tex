@@ -108,18 +108,18 @@ If the first one holds, then $\mu_H^T \Delta\beta + \Delta\alpha <0$ and $\mu_K^
  \label{ex:unbounded}
 In this section we present a toy example where we can have arbitrarily large flip magnitudes. Consider the following example in dimension \( 1 \), where we assume we have a parameter \( L > 0 \) which controls the magnitude of the covariate shift, and \( \varepsilon > 0 \) which controls the deviation in slope coefficients. We assume the mean vector is given by \( (\mu_K, \mu_H) = (0, L) \), and the slope parameters deviate symmetrically from \( \frac{1}{L} \), so that \( \beta_H = \frac{1}{L} + \frac{\varepsilon}{2} \), \( \beta_K = \frac{1}{L} - \frac{\varepsilon}{2} \). Then, the explained and unexplained components under both reference groups are:
 \begin{align*}
-    \EHOB &= \Delta\mu \cdot \beta_H = L\left(\frac{1}{L} + \frac{\varepsilon}{2}\right) = 1 + \frac{L\varepsilon}{2}, \quad \UH = \mu_K \cdot \Delta\beta = -\frac{L\varepsilon}{2}, \\
-    \EKOB &= \Delta\mu \cdot \beta_K = L\left(\frac{1}{L} - \frac{\varepsilon}{2}\right) = 1 - \frac{L\varepsilon}{2}, \quad \UK = \mu_H \cdot \Delta\beta = +\frac{L\varepsilon}{2}.
+    E^{(H)} &= \Delta\mu \cdot \beta_H = L\left(\frac{1}{L} + \frac{\varepsilon}{2}\right) = 1 + \frac{L\varepsilon}{2}, \quad U^{(H)} = \mu_K \cdot \Delta\beta = -\frac{L\varepsilon}{2}, \\
+    E^{(K)} &= \Delta\mu \cdot \beta_K = L\left(\frac{1}{L} - \frac{\varepsilon}{2}\right) = 1 - \frac{L\varepsilon}{2}, \quad U^{(K)} = \mu_H \cdot \Delta\beta = +\frac{L\varepsilon}{2}.
 \end{align*}
 
-Hence, the difference between the two decompositions is \( \EHOB - \EKOB = L\varepsilon \), which can be made arbitrarily large as \( L \to \infty \), even though the total mean gap is always fixed at \( \Delta_Y = 1 \). Similarly, the unexplained components differ by \( \UK - \UH = L\varepsilon \).
+Hence, the difference between the two decompositions is \( E^{(H)} - E^{(K)} = L\varepsilon \), which can be made arbitrarily large as \( L \to \infty \), even though the total mean gap is always fixed at \( \Delta_Y = 1 \). Similarly, the unexplained components differ by \( U^{(K)} - U^{(H)} = L\varepsilon \).
 
 \begin{center}
 \begin{tabular}{ccccccc}
 \toprule
 \(L\) & \(\varepsilon\) 
-& \(\EHOB\) & \(\EKOB\) 
-& \(\UH\) & \(\UK\) 
+& \(E^{(H)}\) & \(E^{(K)}\) 
+& \(U^{(H)}\) & \(U^{(K)}\) 
 & Flip? \\
 \midrule
 20    & 0.1  & \(2\)     & \(0\)      & \(-1\)    & \(1\)     & \checkmark \\
@@ -347,9 +347,9 @@ Together, these findings suggest that the conclusions from \cref{proof:explained
 \label{proof:no_sign_flip}
 Recall that by definition
 $$
-	\UK := \mu_H^T \Delta\beta + \Delta\alpha, \quad \quad \UH := \mu_K^T \Delta\beta + \Delta\alpha.
+	U^{(K)} := \mu_H^T \Delta\beta + \Delta\alpha, \quad \quad U^{(H)} := \mu_K^T \Delta\beta + \Delta\alpha.
 $$
-By assumption, $\sign(\Delta\alpha) = \sign(\mu_H^T\Delta\beta) = \sign(\mu_K^T\Delta\beta)$, and thus $\sign(\UH) = \sign(\UK)$.
+By assumption, $\sign(\Delta\alpha) = \sign(\mu_H^T\Delta\beta) = \sign(\mu_K^T\Delta\beta)$, and thus $\sign(U^{(H)}) = \sign(U^{(K)})$.
 
 % WTS 1-16-2026: removed this section as it's obvious (leading us to downgrade the proposition to a remark)
 %\subsubsection{Proof of \cref{prop:no_explained_sign_flip}}

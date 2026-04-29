@@ -75,7 +75,7 @@
     \item {\bf Experimental result reproducibility}
     \item[] Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)?
     \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: We mention and reference the datasets used in the main paper; in the appendix we describe in detail the experimental setup, the construction of subsets, model parameter specifications, and the compute resources (e.g., GPU). In addition, we include an anonymous repository with instructions to reproduce the main findings in this paper.
+    \item[] Justification: Details of experiments appear in \cref{appendix:icu_details,sec:simulated_example,appendix:sign_flip_simulation}. Anonymized code is available at \url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include experiments.
@@ -95,7 +95,7 @@
 \item {\bf Open access to data and code}
     \item[] Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material?
     \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: Yes, we provide an anonymous repository at \url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}.
+    \item[] Justification: Yes, we provide an anonymous repository at \url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}. We do not generate new datasets. All datasets are publicly available and we provide instructions for downloading them in the repository. 
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that paper does not include experiments requiring code.
@@ -123,7 +123,7 @@
 \item {\bf Experiment statistical significance}
     \item[] Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments?
     \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: Results throughout the paper report statistical significance using a bootstrap procedure, as defined in \cref{appendix:icu_details}. For the main results, we report statistical significance at the 1\%, 5\%, and 10\% levels.
+    \item[] Justification: Results throughout the paper report statistical significance using a bootstrap procedure to capture sample variability, as defined in \cref{appendix:icu_details}. For the main results, we report statistical significance at the 1\%, 5\%, and 10\% levels. 
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include experiments.
@@ -141,7 +141,7 @@
     \item[] Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments?
     % AS: I think this should be \answerNo{}, as we do not estimate compute time.
     \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \cref{appendix:icu_details} details the computing resources used. We do not estimate the amount of compute required. However, we provide information on the type of compute workers used (e.g., GPU), the memory and storage used when relevant.
+    \item[] Justification: \cref{appendix:icu_details} details the computing resources used, including the type of compute (e.g., GPU), as well as memory and storage where relevant.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include experiments.
@@ -191,7 +191,7 @@
 \item {\bf Licenses for existing assets}
     \item[] Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected?
     \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: We list every software package used in our experiments, along with the pinned version and license, in \cref{appendix:licenses}. The PhysioNet ICU cohort \citep{goldberger2000physiobank} and the U.S.\ Census ACS PUMS data \citep{uscensus_acs_pums_2016} are cited in the main text where they are used.
+    \item[] Justification: We list every software package used in our experiments, along with the pinned version and license, in \cref{appendix:licenses} and anonymous repository. The PhysioNet ICU cohort \citep{goldberger2000physiobank} and the U.S.\ Census ACS PUMS data \citep{uscensus_acs_pums_2016} are cited in the main text where they are used.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not use existing assets.

@@ -8,18 +8,18 @@ If she can figure out how much each of these components is driving the differenc
 How can she use the available information to form hypotheses about what drives the difference in mortality?
 
 % Para 2: Connect to ML / AI and reject existing explainability tools
-The modern explainability literature in machine learning (ML) boasts a bevy of methods for attributing outcome behavior to covariates \citep{Dwivedi2023}.
+The modern explainability literature in machine learning boasts a bevy of methods for attributing outcome behavior to covariates \citep{Dwivedi2023}.
 These include Shapley values \citep{Shapley1953, Lundberg2017, chen2025shapley}, Functional ANOVA \citep{stone1994, hooker2004discovering, hookerGeneralizedFunctionalANOVA2007, lengerich2020purifying, fumagalli2025fanova}, Accumulated Local Effects \citep{apley2020}, and partial dependence plots \citep{friedman2001greedy, liu2025trees}.
 However, such methods are not designed to answer this data scientist's question.
 They attribute variation in outcomes within a single population to the covariates, holding the conditional distribution $Y \mid X$ fixed.
 But, the data scientist is interested in why an outcome varies between two populations, where the $Y \mid X$ may vary.
-See \cref{appendix:lit_review_xAI} for more discussion on why these methods do not solve the data scientists' question.
+See \cref{appendix:xAI} for more discussion on why these methods do not solve the data scientist's question.
 % For example, a Shapley value analysis of $Y \mid X$ might suggest that that patients with severe chronic conditions have higher mortality in each of hospital $H$ and $K$. 
 % But if hospitals $H$ and $K$ both treat similar patient populations, chronic health conditions cannot explain why mortality rates differ between them.
 
 % Part 3: Introduce OBD
 Instead, the data scientist might adapt the Oaxaca--Blinder decomposition (OBD), which attributes disparities between two groups to $X$ and $Y \mid X$. 
-The OBD was developed for linear models \citep{oaxaca1973,blinder1973} and remains widely used in this form --- e.g., to analyze gender wage gaps \citep{paradaContzen2025}, educational attainment differences \citep{barhaim2023}, and health disparities \citep{cartwright2021}. 
+The OBD was developed for linear models \citep{oaxaca1973,blinder1973} and remains widely used in this form --- e.g., to analyze gender wage gaps \citep{paradaContzen2025}, educational attainment differences \citep{barhaim2023}, and health disparities \citep{cartwright2021}. Recent work has explored pairing the OBD with flexible functional decompositions \citep{quintero2025,bach2024heterogeneity,quintas2024multiply,mao2025double,flachaire2025decomposing}; see \cref{appendix:obd_generalized} for more discussion of these methods.
 
 %Modern machine learning explainability tools seem well-suited for this task.
 %Flexible regression models like neural networks and random forests are widely used to fit distributions $Y \mid X$, and functional decomposition methods like Accumulated Local Effects (ALE) \textcolor{red}{TODO: cite} and functional ANOVA (FANOVA) \textcolor{red}{TODO: cite} help practitioners gain fine-grained understanding of these models.
@@ -46,18 +46,28 @@ The index number problem would be less concerning if both references always yiel
 in our example, if both indicate that differences in the distribution of risk factors widen the mortality gap between the two hospitals.
 But if one reference choice finds that risk factors widens the gap while the other finds that they narrow it, the choice of reference \emph{would} matter for qualitative conclusions and subsequent decision making.
 
-We are not aware of an investigation into whether the choice of reference groups can yield different \emph{substantive} conclusions.
-While recent work has explored pairing the OBD with flexible functional decompositions \citep{quintero2025,bach2024heterogeneity,quintas2024multiply,mao2025double,flachaire2025decomposing}, it has not engaged with the index number problem; see \cref{appendix:obd_generalized} for more discussion.
-We fill this gap by characterizing when the OBD's substantive conclusions are sensitive to the reference group, empirically documenting this sensitivity grows when the OBD is paired with more flexible regression models, and providing theory to explain this sensitivity.\footnote{We release all of our code to replicate the experiments at \url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}.}
-
-In what remains, we start by reviewing the index number problem and OBD in more detail in \cref{sec:counterfactual_OBD}, and we formalize
-a form of substantive conclusion.
-We give an existence proof that a real-data problem can yield two substantively different conclusions
-% And we show that differences in substantive conclusions need not be driven solely by model misspecification or small sample sizes (\cref{sec:example}).
-and show that the OBD is more sensitive to reference choice when paired with more complex regression models (\cref{sec:real_example}).
-In \cref{sec:signflips}, we demonstrate a relationship between the size of the parameter space and the sensitivity of the OBD.
-% We resolve this seeming disparity by observing that typical data analyses are not uniformly distributed in parameter space --- and provide intuition for when this non-uniformity might occur (\cref{sec:no_sign_flips}). 
+We are not aware of an investigation into whether the choice of reference groups can yield different \emph{substantive} conclusions, either
+for the original OBD with linear regression or for recent extensions to more complex, nonlinear regression models.
+In the present work, after reviewing the OBD and the index number problem (\cref{sec:counterfactual_OBD}), we 
+give an existence proof (with real data) that the OBD \emph{can} yield two substantively different conclusions (\cref{sec:real_example}).\footnote{We release all of our code to replicate the experiments at an anonymized repository, \url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}.}
+We analyze a range of data (healthcare and U.S.\ Census data), and we show that the problem persists for the more complex, nonlinear extensions of the OBD.
+In fact, we show that these extensions, including one with a recent foundation model, seem to suffer much more frequently from the issue than
+a simple linear model.
+Our real-data example establishes that this conclusion-changing phenomenon is not merely an artifact of model misspecification.
+In \cref{sec:signflips}, we further demonstrate theoretically that this phenomenon is not an artifact of 
+small data size or adversarial parameter choices.
 We suggest best practices for data analysts in \cref{sec:conclusion}.
+
+%We fill this gap by characterizing when the OBD's substantive conclusions are sensitive to the reference group, empirically documenting this sensitivity grows when the OBD is paired with more flexible regression models, and providing theory to explain this sensitivity.\footnote{We release all of our code to replicate the experiments at \url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}.}
+
+%In what remains, we start by reviewing the index number problem and OBD in more detail in \cref{sec:counterfactual_OBD}, and we formalize
+%a form of substantive conclusion.
+%We give an existence proof that a real-data problem can yield two substantively different conclusions
+% And we show that differences in substantive conclusions need not be driven solely by model misspecification or small sample sizes (\cref{sec:example}).
+%and show that the OBD is more sensitive to reference choice when paired with more complex regression models (\cref{sec:real_example}).
+%In \cref{sec:signflips}, we demonstrate a relationship between the size of the parameter space and the sensitivity of the OBD.
+% We resolve this seeming disparity by observing that typical data analyses are not uniformly distributed in parameter space --- and provide intuition for when this non-uniformity might occur (\cref{sec:no_sign_flips}). 
+%We suggest best practices for data analysts in \cref{sec:conclusion}.
 
 
 

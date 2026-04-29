@@ -6,7 +6,12 @@ We describe the approach of these options here and discuss how they do not resol
 \textbf{Shapley Values.} Shapley values \citep{Shapley1953} are widely used in the machine learning literature to understand a models' predictions.
 A straightforward use of them would be to estimate ``explained'' or ``unexplained'' contributions to $\Delta_Y$.
 This follows from the standard Shapley construction, which treats each reference-based decomposition as a ``player'' and assigns contributions by averaging marginal effects over all orderings; with two ``players'' (the two reference directions $H$ and $K$), there are two equally weighted permutations, $(H,K)$ and $(K,H)$, so the Shapley value reduces to the simple average, for the explained component, $E = \tfrac{1}{2}E^{(H)} + \tfrac{1}{2}E^{(K)}$.
-However, one might see our paper as questioning the meaningfulness of $E^{(H)}$ and $E^{(K)}$. Then the Shapley proposal averages two questionable quantities!
+
+However, our paper complicates the interpretation of $E^{(H)}$ and $E^{(K)}$ (and likewise for the unexplained components). 
+If the explained component can take on opposite signs depending on the reference group, it is ambiguous whether the distributions of covariates widen or shrink the gap in outcomes between $H$ and $K$.
+It is not clear that averaging across the reference groups appropriately resolves this ambiguity; for instance, if $E^{(H)}$ and $E^{(K)}$ can take opposite signs, averaging them destroys information about their magnitude.
+For example, $\tfrac{1}{2}E^{(H)} + \tfrac{1}{2}E^{(K)}$ can take on small positive values if $E^{(H)}$ and $E^{(K)}$ are both small and positive, or both large but and of opposing signs. 
+A researcher may wish to distinguish between these scenarios, but the Shapley proposal above does not.
 
 \textbf{Pooled approaches.}
 Another approach to eliminate the index number problem is to define some ``pooled'' group and then measure deviations from this group in a three-term decomposition. For example, in the case of the (linear) OBD, one defines a pooled $\beta^*$ and then computes:
@@ -24,8 +29,8 @@ First, how does one pick $w$ in the Oaxaca-Ransom approach?
 Second, why is defining $\beta^*$ one way more reasonable than the other?
 If we assume both are equally reasonable, then, given our results for the OBD, we feel that one should be highly suspicious of substantive conclusions being robust to the choice of $\beta^*$.
 Finally, justifications for a choice of $w$ or $\beta^*$ in one research setting may not apply in others.
-For example, in analyses of the labor market, $\beta^*$ sometimes represents the $Y \mid X$ relationship in the absence of wage discrimination \citep{neumark1988}; there may be no similarly-defined object to estimate, or feasible approach to estimate it in other contexts. 
-We leave experimentation along these lines for future work.
+For example, in analyses of the labor market, $\beta^*$ is sometimes intended to represent the $Y \mid X$ relationship in the absence of wage discrimination \citep{neumark1988}. 
+There may be no corresponding concept to serve as a reference point in other research contexts; or, there may be no feasible approach for estimating such a reference point.
 
 \textbf{Intermediate covariate distributions.}
 \citet{dinardoFortinLemieux1996} propose a variant of the OBD with a more fine-grained decomposition of the explained component, and \citet{quintero2025} propose a NOBD with a similarly fine-grained explained decomposition (\citet{quintero2025} also decomposes the unexplained component).
@@ -39,4 +44,4 @@ There are two issues with such approaches.
 First, \citet{dinardoFortinLemieux1996} does not change how the the unexplained component is computed over the OBD, so the same exact index number problems with the unexplained component detailed here apply to the decomposition of \citet{dinardoFortinLemieux1996}.
 Second, one now has to justify not just a choice of $H$ or $K$ as a reference group, but instead a whole ordering of the $P_i$.
 This problem is explicitly called out by \citet{quintero2025}, who choose to fix an arbitrary order.
-Given our results here, we strongly suspect that conclusions will not be robust to the ordering of the $P_i$, and we leave such investigation for future work.
+Given our results here, we suspect that conclusions may not be robust to the ordering of the $P_i$, and we leave such investigation for future work.

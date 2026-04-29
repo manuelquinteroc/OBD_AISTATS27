@@ -96,7 +96,7 @@
 \item {\bf Open access to data and code}
     \item[] Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material?
     \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: We provide an anonymous repository with code and detailed instructions to reproduce the main experimental results, including commands and environment setup. The repository also includes guidance on data access and preparation, as well as scripts to run the experiments described in the paper and pointers to Figures and Tables.
+    \item[] Justification: Yes, we provide an anonymous repository at \url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that paper does not include experiments requiring code.
@@ -113,7 +113,7 @@
 \item {\bf Experimental setting/details}
     \item[] Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer) necessary to understand the results?
     \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: We describe the main models and reference them in the core text, and point to the appendix for full model specification. The appendix provides complete information on hyperparameters and optimizer choices. 
+    \item[] Justification: We describe the models used and reference them in \cref{sec:real_example}, and point to \cref{appendix:icu_details} for the full model specification, including complete information on hyperparameters and optimizer choices.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include experiments.
@@ -124,7 +124,7 @@
 \item {\bf Experiment statistical significance}
     \item[] Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments?
     \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: Results throughout the paper report statistical significance using a bootstrap procedure, as defined in Appendix B. For the main results, we report statistical significance at the 1\%, 5\%, and 10\% levels.
+    \item[] Justification: Results throughout the paper report statistical significance using a bootstrap procedure, as defined in \cref{appendix:icu_details}. For the main results, we report statistical significance at the 1\%, 5\%, and 10\% levels.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include experiments.
@@ -190,8 +190,8 @@
 
 \item {\bf Licenses for existing assets}
     \item[] Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: We list every software package used in our experiments, along with the pinned version and license, in \cref{appendix:licenses}. The PhysioNet ICU cohort \citep{goldberger2000physiobank} and the U.S.\ Census ACS PUMS data \citep{uscensus_acs_pums_2016} are cited in the main text where they are used.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not use existing assets.

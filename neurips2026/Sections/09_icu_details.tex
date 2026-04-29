@@ -20,7 +20,7 @@ with the group-specific intercept $\alpha_{g}$ and slope $\beta_{g}$ estimated b
 
 \textbf{XGBoost.} We fit a gradient-boosted tree classifier with $250$ estimators, maximum depth $3$, learning rate $0.05$, row subsampling rate $0.9$, column subsampling rate $0.9$, $L_2$ leaf regularization $\lambda = 1.0$, histogram tree method, and the logistic (log-loss) objective.
 
-\textbf{TabPFN.} We use a modern transformer-based tabular model, TabPFN \citep{hollmann2023tabpfn}\footnote{We note that TabPFN uses a custom license: \url{https://huggingface.co/Prior-Labs/tabpfn_2_6/blob/main/LICENSE}}, a pre-trained in-context classifier that maps a training set directly to a predictive distribution for $Y \mid X$. We use the publicly released v2.6 weights and use the v7.1.1 TabPFN code for inference. We run the model locally on a single NVIDIA A100 GPU with $80$~GB of vRAM.
+\textbf{TabPFN.} We use a modern transformer-based tabular model, TabPFN \citep{hollmann2023tabpfn}\footnote{TabPFN uses a custom license: \url{https://huggingface.co/Prior-Labs/tabpfn_2_6/blob/main/LICENSE}}, a pre-trained in-context classifier that maps a training set directly to a predictive distribution for $Y \mid X$. We use the publicly released v2.6 weights and use the v7.1.1 TabPFN code for inference. We run the model locally on a single NVIDIA A100 GPU with $80$~GB of vRAM.
 
 For all five models, we take the predicted probability of in-hospital death as $\hat{M}_g(X)$ and estimate each NOBD counterfactual mean $\E_{g'}[\E_g[Y \mid X]]$ by the within-sample average $\frac{1}{|g'|}\sum_{i \in g'} \hat{M}_g(X_i)$.
 
@@ -292,7 +292,7 @@ The linear and logistic OBD exhibit a consistent explained-component sign flip t
     
 \subsection{U.S.\ Labor Force Example}
 \label{appendix:us_labor_force}
-This appendix provides full details on how we constructed the U.S.\ labor force subgroups, prepared the analytic dataset, estimated the (N)OBD, identified sign reversals, and computed bootstrap standard errors for all subgroups. 
+This appendix provides full details on how we constructed the U.S.\ labor force subgroups, prepared the analytic dataset, estimated the (N)OBD, and identified sign reversals for all subgroups. 
 The raw data come from the 2016 American Community Survey 1-Year Public Use Microdata Sample, which contains 1,625,282 observations.
 We apply the same sample construction as \citet{bach2024heterogeneity}, who study the gender wage gap.
 We restrict the sample to adults between the ages of 25 and 65, who were employed and at work as civilians, worked at least 35 hours per week, at least 50 weeks per year, and with both earnings and income above \$12,687.50 (which corresponds conservatively to an hourly wage of \$7.25).
@@ -306,24 +306,26 @@ We purposely construct a large set of analyses to search for sign flips in diffe
     \centering
     \footnotesize
     \setlength{\tabcolsep}{4pt}
-    \begin{tabular}{@{}llll@{}}
+    \begin{tabular}{@{}ll@{}}
     \toprule
-    Subset \( S \) & Group (\( H, K \)) & Outcome ($Y$) & Model Choice \\
+    Subset \( S \) & Group (\( H, K \)) \\
     \midrule
-    50 states + DC          & Sex (male, female)                   & Income (natural log)   & OLS                       \\
-    26 industries (NAICS 2) & Race (black, white)                  & Insurance status (0/1) & Logistic (for binary $Y$) \\
-                            & Nativity (native born, foreign born) &                        & lightgbm                  \\
+    26 industries (NAICS 2) & Race (black, white)                  \\
+    50 states + D.C,        & Sex (male, female)                   \\
+                            & Nativity (native born, foreign born) \\
     \bottomrule
     \end{tabular}
 \end{table}
 
-There are \( 77 \times 3 \times 2 = 462 \) combinations of these factors for continuous outcomes and \( 77 \times 3 \times 3 = 693 \) for binary outcomes, each corresponding to a particular (N)OBD that an analyst could compute.
+There are \( 77 \times 3 = 231 \) combinations of subsets and groups, each corresponding to a particular subgroup an analyst could perform the (N)OBD within.
+We consider two outcomes: the natural logarithm of income (the outcome from \citet{bach2024heterogeneity}), and a binary indicator for having health insurance.
+We exclude 11 cases where there are fewer than 50 observations in either $H$ or $K$ (), or $|\Delta Y| < 50$; this intended to focus more on analyses where the data may be informative and differences in outcomes may be practically meaningful.
+The result is 217 subgroups for log-income, and 183 subgroups for health insurance status.
 For each analysis, we assemble a candidate feature set from state of residence, industry of occupation (NAICS 2 code), sex, race (black, white, or other), nativity, completion of a Bachelor's degree, and marital status.
 We exclude features that define the particular subset and group at hand, to produce a feature set for model fitting.
 For example, when examining male-female differences in the state of Wyoming, we remove sex and state from the feature set.
-We consider two outcomes: the natural logarithm of income (the outcome from \citet{bach2024heterogeneity}), and a binary indicator for having health insurance.
 
-For each comparison, we perform the (N)OBD by estimating $\E[Y \mid X, g, s]$ with the specified model, 
+We then perform the (N)OBD by estimating $\E[Y \mid X, g, s]$ with the specified model, 
 where \( Y \) and \( X \) are the outcome and covariates, 
 \( g \) indexes the group (i.e. male or female sex);
 and \( s \) indicates a subset of the data (i.e., the state of Utah).
@@ -343,38 +345,37 @@ Taking the native-born population as the reference group, differences in remuner
 
 % Insurance
 \begin{table}[!ht]
-    \caption{Number of subgroups (out of $462$) exhibiting a sign flip in the explained and unexplained component, for the earnings outcome.}
+    \caption{Number of subgroups (out of $217$) exhibiting a sign flip in the explained and unexplained component, for the earnings outcome.}
     \label{tab:flips_census_income}
     \centering
     \small
-    \begin{tabular}{lcc}
+    \begin{tabular}{lccc}
     \toprule
-          & \multicolumn{1}{c}{Explained Component} & \multicolumn{1}{c}{Unxplained Component} \\
-          \cmidrule(lr){2-2}\cmidrule(lr){3-3}
-    Model & Total flips & Total flips \\
+          & \multicolumn{1}{c}{Either Component} & \multicolumn{1}{c}{Explained Component} & \multicolumn{1}{c}{Unxplained Component} \\
+          \cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4}
+    Model & Total flips & Total flips & Total flips \\
     \midrule
-    Linear      & &  \\
-    Logistic    & &  \\
-    lightgbm    & &  \\
+    Linear      & 35 & 24 & 11 \\    
+    lightgbm    & 29 & 23 & 6  \\
     \bottomrule
     \end{tabular}
 \end{table}
 
 % 
 \begin{table}[!ht]
-    \caption{Number of subgroups (out of $693$) exhibiting a sign flip in the explained and unexplained component, for the health insurance outcome.}
+    \caption{Number of subgroups (out of $183$) exhibiting a sign flip in the explained and unexplained component, for the health insurance outcome.}
     \label{tab:flips_census_income}
     \centering
     \small
-    \begin{tabular}{lcc}
+    \begin{tabular}{lccc}
     \toprule
-          & \multicolumn{1}{c}{Explained Component} & \multicolumn{1}{c}{Unxplained Component} \\
-          \cmidrule(lr){2-2}\cmidrule(lr){3-3}
+          & \multicolumn{1}{c}{Either Component} & \multicolumn{1}{c}{Explained Component} & \multicolumn{1}{c}{Unxplained Component} \\
+          \cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4}
     Model & Total flips & Total flips \\
     \midrule
-    Linear      & &  \\
-    Logistic    & &  \\
-    lightgbm    & &  \\
+    Linear      & 60  & 44 & 17 \\
+    Logistic    & 77  & 60 & 25 \\
+    lightgbm    & 97  & 73 & 34 \\
     \bottomrule
     \end{tabular}
 \end{table}

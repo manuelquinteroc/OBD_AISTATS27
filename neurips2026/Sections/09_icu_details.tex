@@ -333,46 +333,49 @@ The models are:
 \begin{itemize}
     \item Ordinary least squares regression.
     \item Logistic regression (when $Y$ is binary), unpenalized.
-    \item lightgbm (gradient-boosted trees). We set a learning rate of 0.25, number of leaves to 7, and select the number of trees by 3-fold cross-validation with early stopping at 10 rounds; we then re-fit the estimator in sample with the selected number of trees.
+    \item lightgbm (gradient-boosted trees). We set a learning rate of 0.25, number of leaves to 7, and select the number of trees by 3-fold cross-validation with early stopping at 10 rounds. All other parameters are set to default values.
 \end{itemize}
 We attempted to implement neural networks for regression (both outcomes) and classification (health insurance status only), but faced repeated software errors while optimizing model weights.
+We use the same bootstrap inference procedure as in \cref{appendix:icu_details} for ordinary least squares and logistic regression. 
+We do not perform inference for lightgbm due to computational costs of bootstrapping; future work can assess the statistical significance of the results with appropriate resources.
+All computation was performed on an Apple M2 Max chip with 32GB ram.
 
 \cref{tab:flips_census_income,tab:flips_census_insurance} report the number of sign flips for the log income and health insurance status outcomes, respectively.
 Sign flips occur in both the explained and unexplained components for all tested model types.
 
 % Insurance
 \begin{table}[!ht]
-    \caption{Number of subgroups (out of $217$) exhibiting a sign flip in the explained and unexplained component, for the earnings outcome.}
+    \caption{Number of subgroups (out of $217$) exhibiting a sign flip in the explained and unexplained component, for the earnings outcome. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped data subsets that are significant at the corresponding level. No significance testing was performed for lightgbm due to computational costs of bootstrap inference.}
     \label{tab:flips_census_income}
     \centering
     \small
-    \begin{tabular}{lccc}
+    \begin{tabular}{l*{12}{c}}
     \toprule
-          & \multicolumn{1}{c}{Either Component} & \multicolumn{1}{c}{Explained Component} & \multicolumn{1}{c}{Unxplained Component} \\
-          \cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4}
-    Model & Total flips & Total flips & Total flips \\
+          & \multicolumn{4}{c}{Either Component} & \multicolumn{4}{c}{Explained Component} & \multicolumn{4}{c}{Unxplained Component} \\
+          \cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
+    Model       & Total & $10\%$ & $5\%$ & $1\%$ & Total & $10\%$ & $5\%$ & $1\%$ & Total & $10\%$ & $5\%$ & $1\%$ \\
     \midrule
-    Linear      & 35 & 24 & 11 \\    
-    lightgbm    & 29 & 23 & 6  \\
+    Linear      & 35 & 14 & 11 & 7 & 24 & 10 & 8 & 5 & 11 & 4 & 3 & 2 \\
+    lightgbm    & 29 & -  & -  & - & 23 & -  & - & - & 6  & - & - & - \\
     \bottomrule
     \end{tabular}
 \end{table}
 
 % 
 \begin{table}[!ht]
-    \caption{Number of subgroups (out of $183$) exhibiting a sign flip in the explained and unexplained component, for the health insurance outcome.}
+    \caption{Number of subgroups (out of $183$) exhibiting a sign flip in the explained and unexplained component, for the (binary) health insurance status outcome. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped data subsets that are significant at the corresponding level. No significance testing was performed for lightgbm due to computational costs of bootstrap inference.}
     \label{tab:flips_census_insurance}
     \centering
     \small
-    \begin{tabular}{lccc}
+    \begin{tabular}{l*{12}{c}}
     \toprule
-          & \multicolumn{1}{c}{Either Component} & \multicolumn{1}{c}{Explained Component} & \multicolumn{1}{c}{Unxplained Component} \\
-          \cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4}
-    Model & Total flips & Total flips & Total flips \\
+          & \multicolumn{4}{c}{Either Component} & \multicolumn{4}{c}{Explained Component} & \multicolumn{4}{c}{Unxplained Component} \\
+          \cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
+    Model       & Total & $10\%$ & $5\%$ & $1\%$ & Total & $10\%$ & $5\%$ & $1\%$ & Total & $10\%$ & $5\%$ & $1\%$ \\
     \midrule
-    Linear      & 60  & 44 & 17 \\
-    Logistic    & 77  & 60 & 25 \\
-    lightgbm    & 97  & 73 & 34 \\
+    Linear      & 60 & 35 & 33 & 24 & 44 & 33 & 31 & 23 & 17 & 2 & 2 & 1 \\
+    Logistic    & 77 & 23 & 16 & 10 & 60 & 23 & 16 & 10 & 25 & 1 & 0 & 0 \\
+    lightgbm    & 97 & -  & -  & -  & 23 & -  & - & - & 6  & - & - & - \\
     \bottomrule
     \end{tabular}
 \end{table}

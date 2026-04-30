@@ -104,13 +104,10 @@ For instance, \citet{quintas2024multiply,flachaire2025decomposing,mao2025double}
 To distinguish from the standard OBD, we will refer to the case where $\hat{M}_g(X)$ is a nonlinear estimator as the \emph{nonlinear Oaxaca-Blinder decomposition} (NOBD).
 
 \textbf{Drawing conclusions from the (N)OBD.}
-It is common to draw substantive conclusions based on the signs of the empirical explained and unexplained components, often coupled with
-statistical significance \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. For instance, consider the hospital example from above. 
-Suppose Hospital $H$ has lower mortality ($\Delta_Y < 0$), and suppose we take $H$ as the reference. 
-If the (N)OBD explained component has a negative sign, we might conclude that group $H$ can attribute
-its lower mortality rate in part to its risk factors, such as lower blood pressure. In real data, we might additionally require that the observed sign be statistically significant in order to form a conclusion;
-without significance, we might
-instead hesitate to conclude that risk factors are driving any difference in mortality.
-Analogous to the explained component, if the (N)OBD unexplained component has a significant negative sign, we might attribute group $H$'s lower
+It is common to draw substantive conclusions based on the signs (and statistical significance) of the empirical explained and unexplained components \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. Returning to the hospital example from above, suppose Hospital $H$ has lower mortality ($\Delta_Y < 0$), and serves as the reference group. 
+If the (N)OBD explained component has a negative sign, we might conclude that $H$ can attribute
+its lower mortality rate in part to patient characteristics, such as healthier blood pressure. 
+Analogously, if the (N)OBD unexplained component has a significant negative sign, we might attribute group $H$'s lower
 mortality in part to the quality of hospital care.
+In either case, we might also require that the observed components be statistically distinguishable from zero to form a conclusion; without significance, we might hesitate to attribute differences in mortality to covariates or care quality. 
 For the rest of the paper, we will consider a practitioner drawing their conclusions based on the (statistically significant) sign of the explained or unexplained component.

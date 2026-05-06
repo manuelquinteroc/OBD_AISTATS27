@@ -105,7 +105,7 @@
 
 
 \author{%
-  Manuel Quintero\thanks{Equal contribution} \\
+  Manuel Quintero\thanks{Equal contribution.} \\
   Massachusetts Institute of Technology, Cambridge, MA, USA
   \And
   Advik Shreekumar$^*$ \\
@@ -147,12 +147,21 @@
   % \texttt{email} \\
 }
 
+% ----------------------------
+% Affiliation marker:
+\newcommand\blfootnote[1]{%
+    \begingroup
+    \renewcommand\thefootnote{}\footnote{#1}%
+    \addtocounter{footnote}{-1}%
+    \endgroup
+  }
+
+% -----------------------------
 
 \begin{document}
 
-
 \maketitle
-
+\blfootnote{DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.}
 
 \begin{abstract}
 Scientists often want to explain why an outcome is different in two groups. For instance, differences in patient mortality rates across two hospitals could be due to differences in the patients themselves (covariates) or differences in medical care (outcomes given covariates). The Oaxaca–Blinder decomposition (OBD) is a standard tool to tease apart these factors. It is well known that the OBD requires choosing one of the groups as a reference, and the numerical answer can vary with the reference. To the best of our knowledge, there has been no systematic investigation into whether the choice of OBD reference can yield different substantive conclusions and how common this issue is. In the present paper, we give existence proofs in real and simulated data that the OBD references can in fact yield substantively different conclusions. Our empirical exercises find that this sensitivity is more common when the OBD is extended to more complex regression models, including a pretrained transformer. Our theoretical and empirical results together establish that these conclusion reversals are not entirely driven by model misspecification, small data, or adversarial parameter choices. Our results suggest that practitioners should always report both directions of the OBD; that modern machine learning and large datasets do not automatically resolve the conclusion reversal problem; and that further work on this problem is needed.
@@ -165,6 +174,11 @@ Scientists often want to explain why an outcome is different in two groups. For 
 \input{Sections/05_sign_reversal}
 \input{Sections/06_conclusion}
 
+\section*{Acknowledgements}
+
+DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited. This material is based upon work supported by the Combatant Commands under Air Force Contract No. FA8702-15-D-0001 or FA8702-25-D-B002. Any opinions, findings, conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the Combatant Commands.
+
+Manuel Quintero was supported in part by the Fortunato and Catalina Brescia Fellowship at the Institute for Data, Systems, and Society (IDSS), Massachusetts Institute of Technology.
 \bibliographystyle{icml2026}
 \bibliography{OBD_signflip}
 

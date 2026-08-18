@@ -1,0 +1,56 @@
+% ---------------------------------------------------------------------------
+% Shared body for both workshop submissions.
+% Everything between MAIN TEXT BEGINS / MAIN TEXT ENDS counts against the page
+% limit (6 pages for ATTRIB, 8 for TAE). References and appendices do not.
+% ---------------------------------------------------------------------------
+\maketitle
+
+% ANONYMITY: the distribution statement names the funding contract, so it is
+% commented out for the double-blind submission. Restore for the camera-ready.
+%\blfootnote{DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.}
+
+\begin{abstract}
+Scientists often want to explain why an outcome is different in two groups. For instance, differences in patient mortality rates across two hospitals could be due to differences in the patients themselves (covariates) or differences in medical care (outcomes given covariates). The Oaxaca–Blinder decomposition (OBD) is a standard tool to tease apart these factors. It is well known that the OBD requires choosing one of the groups as a reference, and the numerical answer can vary with the reference. To the best of our knowledge, there has been no systematic investigation into whether the choice of OBD reference can yield different substantive conclusions and how common this issue is. In the present paper, we give existence proofs in real and simulated data that the OBD references can in fact yield substantively different conclusions. Our empirical exercises find that this sensitivity is more common when the OBD is extended to more complex regression models, including a pretrained transformer. Our theoretical and empirical results together establish that these conclusion reversals are not entirely driven by model misspecification, small data, or adversarial parameter choices. Our results suggest that practitioners should always report both directions of the OBD; that modern machine learning and large datasets do not automatically resolve the conclusion reversal problem; and that further work on this problem is needed.
+\end{abstract}
+
+% ======================= MAIN TEXT BEGINS =======================
+\input{Sections/01_introduction}
+\input{Sections/02_pooled_OBD.tex}
+\input{Sections/03_real_healthcare_example}
+\input{Sections/05_sign_reversal}
+\input{Sections/06_conclusion}
+% ======================= MAIN TEXT ENDS =========================
+
+% ANONYMITY: acknowledgements identify the authors and their funding.
+% Restore verbatim from ../neurips_2026.tex for the camera-ready.
+%\section*{Acknowledgements}
+%DISTRIBUTION STATEMENT A. ...
+
+\bibliographystyle{icml2026}
+\bibliography{OBD_signflip}
+
+%%% MOVED OUT OF THE MAIN TEXT (was the last paragraph of the Conclusion).
+%%% Red marks relocated/edited material while we trim to the 6-page limit.
+\section*{\textcolor{red}{Broader impacts}}
+\textcolor{red}{The (N)OBD is widely used to draw conclusions and influence policy.
+Our work shows that the choice of reference group in the (N)OBD can reverse substantive conclusions and characterizes conditions under which such reversals can occur.
+We highlight the importance of reporting results for both references, even though this step is currently sometimes omitted in published papers
+and government reports.
+Thus, our work has the potential to improve decisions that arise from using the (N)OBD.
+Our work does have one potential negative societal impact: that researchers learn they may be able to cherry-pick results through the choice of (N)OBD reference group.
+However, a researcher with an agenda can also influence results through sample selection, feature engineering, and model choice; we think it unlikely that reference group choice is the only means to their end.
+If one wishes to cherry-pick, there are already more than enough trees to harvest from, so to speak.
+Further, we suspect (or, hope) that the majority of mis-use of the (N)OBD is from researchers unaware of its problems, and so hope that the net impact from our paper will be positive.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Appendices: unlimited length at both workshops. Material trimmed from the
+% main text should land here rather than being deleted.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\input{Sections/10_Appendix_lit_review_xAI.tex}
+\input{Sections/11_Appendix_lit_review_index_number_problem.tex}
+\input{Sections/09_icu_details}
+%%% REORDERED so the theory appendix follows the main-text discussion (now Appendix C).
+\input{Sections/07_Appendix_theory}
+\input{Sections/08_Appendix_example}
+\input{Sections/12_licenses.tex}

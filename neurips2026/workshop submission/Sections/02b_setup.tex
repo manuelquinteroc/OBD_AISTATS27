@@ -1,0 +1,49 @@
+\subsection{Population Oaxaca--Blinder decomposition} 
+\label{sec:ob}
+
+Typically the OBD represents the special case of \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} 
+where the conditional expectation of the outcome given the covariate is linear, as we describe next.
+
+We now restrict to $X \in \mathbb{R}^d$. For each group $g$, we assume that $\mathbb{E}_g[Y \mid X] = \alpha_g + X^\top \beta_g$
+for some intercept $\alpha_g \in \mathbb{R}$ and slope $\beta_g \in \mathbb{R}^d$.
+Then, for groups $g,g'$, we observe $\E_{g'} [ \E_g  [ Y | X ] ] = \alpha_g + \E_{g'}[X]^\top \beta_g$.
+We also introduce the notation
+$\mu_g := \mathbb{E}_g[X],
+\Delta \mu := \mu_H - \mu_K,
+\Delta \beta := \beta_H - \beta_K,
+\Delta \alpha := \alpha_H - \alpha_K.
+$
+With these choices,
+\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} respectively become
+\begin{align}
+   	 % \Delta_Y := \E_H[Y] - \E_K[Y] \nonumber \\[2pt]
+    \label{eq:OB_H_decomp}
+%    &= \underbrace{(\mu_H - \mu_K)^\top \beta_H}_{E^{(H)}} 
+%     + \underbrace{\mu_K^\top(\beta_H - \beta_K) + (\alpha_H - \alpha_K)}_{U^{(H)}} \\[2pt]
+	\Delta_Y &= \underbrace{\Delta \mu^\top \beta_H}_{E^{(H)}} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{U^{(H)}} \\
+    \label{eq:OB_K_decomp}
+%    &= \underbrace{\mu_H^\top(\beta_H - \beta_K) + (\alpha_H - \alpha_K)}_{U^{(K)}} 
+%     \!+ \!\underbrace{(\mu_H - \mu_K)^\top \beta_K}_{E^{(K)}}.
+	&= \underbrace{\Delta \mu^\top \beta_K}_{E^{(K)}} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{U^{(K)}}
+\end{align}
+\Cref{eq:OB_H_decomp} is the \textbf{Oaxaca--Blinder decomposition (OBD)} with reference group $H$, and \cref{eq:OB_K_decomp}
+is the OBD with reference group $K$.
+
+Recent work suggests that the OBD can be layered with flexible machine learning models to provide 
+an analogous decomposition beyond linear models \citep{bach2024heterogeneity,quintas2024multiply,quintero2025}. In the present work, we maintain focus on linear models for the following reasons:
+(1) The linear model version of the OBD remains the one widely used in practice in the present day.
+(2) We identify substantive problems with correctly specified linear models; we expect practical issues only compound beyond this relatively simple case.
+
+
+%Now further let
+%\[
+%    \Delta \mu := \mu_H - \mu_K, \quad
+%    \Delta \beta := \beta_H - \beta_K, \quad
+%    \Delta \alpha := \alpha_H - \alpha_K.
+%\]
+%With this notation, we can write the two possible decompositions, one for each choice of reference group, as:
+%\begin{align}
+%    \label{eq:ob_decomp_ref_group}
+%    \Delta_Y &= \underbrace{\Delta \mu^\top \beta_H}_{E^{(H)}} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{U^{(H)}} \nonumber \\
+%             &= \underbrace{\Delta \mu^\top \beta_K}_{E^{(K)}} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{U^{(K)}}.
+%\end{align}

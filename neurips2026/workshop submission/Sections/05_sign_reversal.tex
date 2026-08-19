@@ -2,12 +2,13 @@
 \label{sec:signflips}
 
 Our examples above serve as an existence proof that reference group choice can reverse the (N)OBD's substantive conclusions by flipping signs of the explained or unexplained components.
-However, a few major questions remain.
-First, do these conclusion reversals occur in the absence of finite-sample noise; i.e., do practitioners with large-scale datasets still need to worry about them?
-Second, even if conclusion reversals can occur, do they occur outside of mathematically adversarial examples (i.e., ``measure zero'' in some sense)?
-
-In this section, we mathematically prove the answer to both questions is yes.
-\cref{sec:simulated_example} complements our argument with an example where a sign flip occurs even without sampling noise.
+% However, a few major questions remain.
+% First, do these conclusion reversals occur in the absence of finite-sample noise; i.e., do practitioners with large-scale datasets still need to worry about them?
+% Second, even if conclusion reversals can occur, do they occur outside of mathematically adversarial examples (i.e., ``measure zero'' in some sense)?
+In this section, we mathematically prove two related results.
+First, we show that sign flips can occur in the absence of finite-sample noise; i.e., may be worrisome even with large-scale datasets.
+\cref{sec:simulated_example} complements our argument with an example where a sign flip occurs without sampling noise.
+Second, we show that conclusions reversals can occur outside of mathematically adversarial examples (i.e., are not ``measure zero'' in some sense).
 
 In what follows, we study conclusion reversals that involve the explained or unexplained component changing signs from positive to negative, or vice versa.
 For mathematical tractability and applicability to practical usage, we continue our focus on the OBD (vs.\ NOBD). % (i.e., using linear models in \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}).

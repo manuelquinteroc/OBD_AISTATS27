@@ -218,24 +218,7 @@ A substantial number of these sign reversals are significant at conventional thr
 \subsubsection{How does the sign flip arise?}
 \label{appendix:how-does-flip-arise}
 %Recall that the explained component is given by $\EHOB := \Delta\mu^T \beta_H$ when $H$ is the reference group, and $\EKOB := \Delta\mu^T \beta_K$ when $K$ is the reference group.
-To understand how the sign flip arises, it will help to introduce more notation for the linear regression case.
-We now restrict to real-valued covariates $X \in \mathbb{R}^d$, and we assume we fit a linear regression to each group $g$: $\alpha_g + X^\top \beta_g$
-with intercept $\alpha_g \in \mathbb{R}$ and slope $\beta_g \in \mathbb{R}^d$. We let
-$\mu_g := \E_g[X],
-\Delta \mu := \mu_H - \mu_K,
-\Delta \beta := \beta_H - \beta_K,
-\Delta \alpha := \alpha_H - \alpha_K,
-$
-and use a hat to denote estimators of these quantities (cf.\ \cref{sec:ob_real}).
-
-With these choices, the OBD
-(\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}) becomes
-\begin{equation}
-    \Delta_Y = \underbrace{\Delta \mu^\top \beta_H}_{E^{(H)}} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{U^{(H)}} = \underbrace{\Delta \mu^\top \beta_K}_{E^{(K)}} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{U^{(K)}}.
-\end{equation}
-The first equality is the OBD with reference group $H$, and the second with reference group $K$.
-
-With this notation in hand, we observe that $\Delta\hat{\mu}$ is fixed between $\hat{E}^{(H)}$ and $\hat{E}^{(K)}$. So it must be that some components of $\hat{\beta}_H$ and $\hat{\beta}_K$ are changing sign to give $\hat{E}^{(H)} := \Delta\hat{\mu}^T \hat{\beta}_H$ and $\hat{E}^{(K)} := \Delta\hat{\mu}^T \hat{\beta}_K$ opposite signs.
+We observe that $\Delta\hat{\mu}$ is fixed between $\hat{E}^{(H)}$ and $\hat{E}^{(K)}$. So it must be that some components of $\hat{\beta}_H$ and $\hat{\beta}_K$ are changing sign to give $\hat{E}^{(H)} := \Delta\hat{\mu}^T \hat{\beta}_H$ and $\hat{E}^{(K)} := \Delta\hat{\mu}^T \hat{\beta}_K$ opposite signs.
 In \cref{fig:sign_flip_overview} (left), we show the fitted linear models of in-hospital mortality on admission heart rate, holding all other covariates fixed at their group means.
 We see that the signs of the slopes differ.
 In Appendix \cref{tab:delta_mu_betas}, we report values for all elements of each vector $\hat{\beta}_{g}$ in the full analysis. 

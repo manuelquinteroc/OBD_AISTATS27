@@ -16,6 +16,21 @@ To show that sign flipping is not an artifact of finite samples, we work in the 
 And to show that sign flipping is not a ``measure zero'' phenomenon, we show that sign flips of both components represent a large proportion of the parameter space, in a sense we make precise below.
 % We use our analysis of the parameter space to interpret our empirical exercises and discuss frontier work on the OBD that enriches the covariate space using machine learning models \citep{bach2024heterogeneity,quintero2025,flachaire2025decomposing}.
 
+We restrict to real-valued covariates $X \in \mathbb{R}^d$, and we assume we fit a linear regression to each group $g$: $\alpha_g + X^\top \beta_g$
+with intercept $\alpha_g \in \mathbb{R}$ and slope $\beta_g \in \mathbb{R}^d$. We let
+$\mu_g := \E_g[X],
+\Delta \mu := \mu_H - \mu_K,
+\Delta \beta := \beta_H - \beta_K,
+\Delta \alpha := \alpha_H - \alpha_K,
+$
+and use a hat to denote estimators of these quantities (cf.\ \cref{sec:ob_real}).
+With these choices, the OBD
+(\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}) becomes
+\begin{equation}
+    \Delta_Y = \underbrace{\Delta \mu^\top \beta_H}_{E^{(H)}} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{U^{(H)}} = \underbrace{\Delta \mu^\top \beta_K}_{E^{(K)}} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{U^{(K)}}.
+\end{equation}
+The first equality is the OBD with reference group $H$, and the second with reference group $K$.
+
 
 \textbf{Characterizing sign flips.}
 \textcolor{red}{We say that a component \emph{flips signs} if its sign depends on the reference group (\cref{defn:sign_flip_explained,def:unexplained_sign_flip}).}

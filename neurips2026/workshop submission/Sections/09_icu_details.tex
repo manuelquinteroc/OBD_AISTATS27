@@ -213,7 +213,62 @@ A substantial number of these sign reversals are significant at conventional thr
 \subsection*{HR quartile 2: results across models}
 \label{appendix:hrq2}
 
-\cref{sec:real_example} focuses on the HR quartile two data subset under the OBD. In \cref{tab:hrq2_bootstrap_models}, we report the corresponding decomposition under each of the five models in our model class. The linear, logistic, neural-network, and XGBoost results are obtained from the bootstrap procedure described above with $B = 1{,}000$ replications.
+\cref{sec:real_example} presents a sign flip in HR quartile two. We first illustrate how the sign flip arises. Then, we present results that use nonlinear models in place of linear regression.
+
+\subsubsection{How does the sign flip arise?}
+\label{appendix:how-does-flip-arise}
+%Recall that the explained component is given by $\EHOB := \Delta\mu^T \beta_H$ when $H$ is the reference group, and $\EKOB := \Delta\mu^T \beta_K$ when $K$ is the reference group.
+To understand how the sign flip arises, it will help to introduce more notation for the linear regression case.
+We now restrict to real-valued covariates $X \in \mathbb{R}^d$, and we assume we fit a linear regression to each group $g$: $\alpha_g + X^\top \beta_g$
+with intercept $\alpha_g \in \mathbb{R}$ and slope $\beta_g \in \mathbb{R}^d$. We let
+$\mu_g := \E_g[X],
+\Delta \mu := \mu_H - \mu_K,
+\Delta \beta := \beta_H - \beta_K,
+\Delta \alpha := \alpha_H - \alpha_K,
+$
+and use a hat to denote estimators of these quantities (cf.\ \cref{sec:ob_real}).
+
+With these choices, the OBD
+(\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}) becomes
+\begin{equation}
+    \Delta_Y = \underbrace{\Delta \mu^\top \beta_H}_{E^{(H)}} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{U^{(H)}} = \underbrace{\Delta \mu^\top \beta_K}_{E^{(K)}} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{U^{(K)}}.
+\end{equation}
+The first equality is the OBD with reference group $H$, and the second with reference group $K$.
+
+With this notation in hand, we observe that $\Delta\hat{\mu}$ is fixed between $\hat{E}^{(H)}$ and $\hat{E}^{(K)}$. So it must be that some components of $\hat{\beta}_H$ and $\hat{\beta}_K$ are changing sign to give $\hat{E}^{(H)} := \Delta\hat{\mu}^T \hat{\beta}_H$ and $\hat{E}^{(K)} := \Delta\hat{\mu}^T \hat{\beta}_K$ opposite signs.
+In \cref{fig:sign_flip_overview} (left), we show the fitted linear models of in-hospital mortality on admission heart rate, holding all other covariates fixed at their group means.
+We see that the signs of the slopes differ.
+In Appendix \cref{tab:delta_mu_betas}, we report values for all elements of each vector $\hat{\beta}_{g}$ in the full analysis. 
+We see that there are multiple covariates $c$ for which $\hat{\beta}_{\textrm{men},c} < 0 < \hat{\beta}_{\textrm{women},c}$.
+And as $\Delta\hat{\mu}_c$ has the same sign for all of these covariates, each one pushes towards a sign flip. %, and additionally, $\Delta\mu$ is positive for all of these covariates.
+In aggregate, these changes add enough to cause a sign flip in the explained component.
+%In \cref{sec:simulated_example}, we show that these phenomenon are not artifacts of finite-samples or model misspecification; in fact, we show that sign flips can occur for well-specified linear models with infinite data.
+
+\begin{table}[!ht]
+    \caption{Covariate mean differences and group-specific coefficients in HR quartile two. $\Delta\mu$ denotes the difference in covariate means between men and women within HR quartile two (men minus women). $\beta_{\text{Men}}$ and $\beta_{\text{Women}}$ are coefficients from group-specific linear probability models for in-hospital mortality.}
+    \label{tab:delta_mu_betas}
+    \centering
+    \small
+    \begin{tabular}{lrrr}
+    \toprule
+    Covariate 
+    & $\Delta\mu$ 
+    & $\beta_{\text{Men}}$ 
+    & $\beta_{\text{Women}}$ \\
+    \midrule
+    Intercept & $0.0000$   & $1.1813$  & $-0.8515$ \\
+    Age       & $3.8938$   & $-0.0000$ & $0.0039$ \\
+    ICU Type  & $0.0095$   & $0.0173$  & $0.0116$ \\
+    HR        & $0.4982$   & $-0.0026$ & $0.0056$ \\
+    MAP       & $-0.6669$  & $0.0004$  & $0.0010$ \\
+    Temp      & $0.3604$   & $-0.0230$ & $0.0028$ \\
+    Urine     & $-39.8976$ & $-0.0001$ & $-0.0001$ \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{Results Across Models}
+In \cref{tab:hrq2_bootstrap_models}, we report the corresponding decomposition under each of the five models in our model class. The linear, logistic, neural-network, and XGBoost results are obtained from the bootstrap procedure described above with $B = 1{,}000$ replications.
 
 %%% MOVED here from \cref{sec:real_example} (main text).
 \begin{table}[!ht]
@@ -309,29 +364,6 @@ The linear and logistic OBD exhibit a consistent explained-component sign flip t
     \caption{Mortality outcome histogram for HR quartile two data subset.}
     \label{fig:hr_quartile2_hist}
 \end{figure}
-
-\begin{table}[!ht]
-    \caption{Covariate mean differences and group-specific coefficients in HR quartile two. $\Delta\mu$ denotes the difference in covariate means between men and women within HR quartile two (men minus women). $\beta_{\text{Men}}$ and $\beta_{\text{Women}}$ are coefficients from group-specific linear probability models for in-hospital mortality.}
-    \label{tab:delta_mu_betas}
-    \centering
-    \small
-    \begin{tabular}{lrrr}
-    \toprule
-    Covariate 
-    & $\Delta\mu$ 
-    & $\beta_{\text{Men}}$ 
-    & $\beta_{\text{Women}}$ \\
-    \midrule
-    Intercept & $0.0000$   & $1.1813$  & $-0.8515$ \\
-    Age       & $3.8938$   & $-0.0000$ & $0.0039$ \\
-    ICU Type  & $0.0095$   & $0.0173$  & $0.0116$ \\
-    HR        & $0.4982$   & $-0.0026$ & $0.0056$ \\
-    MAP       & $-0.6669$  & $0.0004$  & $0.0010$ \\
-    Temp      & $0.3604$   & $-0.0230$ & $0.0028$ \\
-    Urine     & $-39.8976$ & $-0.0001$ & $-0.0001$ \\
-    \bottomrule
-    \end{tabular}
-\end{table}
     
 \subsection{U.S.\ Labor Force Example}
 \label{appendix:us_labor_force}

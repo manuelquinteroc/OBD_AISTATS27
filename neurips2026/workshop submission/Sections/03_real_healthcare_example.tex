@@ -1,7 +1,7 @@
 \section{Real-data example: Gender gap in ICU data}
 \label{sec:real_example}
 The index number problem reflects that the two reference choices for the (N)OBD could yield two different sets of values for the explained and unexplained components. We are not aware of an illustration in the literature that the two directions (for either the OBD or NOBD) can lead to \emph{substantively} different conclusions. 
-\textcolor{red}{We now supply such an illustration with real healthcare data.}
+We now supply such an illustration with real healthcare data.
 %We supply such an illustration next for a real-data analysis in healthcare.
 
 \textbf{Data.} To construct an example, we examine data from the PhysioNet cohort of intensive care unit (ICU) patients collected for a study of in-hospital mortality \citep{goldberger2000physiobank}, where the outcome $Y$ is a binary indicator for whether the patient died in the hospital. The dataset contains routine measurements, including heart rate (HR), mean arterial pressure, and temperature. These values are recorded for every patient at the time of entry into the ICU and provide a description of their initial physiological state. To simulate various real-data analyses where practitioners might have access to only a subset of these patients, we construct $139$ versions of this dataset with various patient subsets; see \cref{appendix:icu_details}.
@@ -64,12 +64,12 @@ The particular data subset we consider covers patients with an elevated heart ra
 Medical practitioners often look at moderate elevations in heart rate as a first indication of stress, infection, or concerning changes in blood flow and circulation. In the present example, we consider patients whose admission heart rate lies between the $50$th and $75$th percentiles. This patient set, which we refer to as HR quartile two, reflects a clinical presentation in which the heart rate is elevated but not extreme.
 
 \textbf{Two different conclusions.} 
-We report the OBD for each reference group in \textcolor{red}{Appendix} \cref{tab:hr_q2_decomposition}. We next interpret the substantive conclusions
+We report the OBD for each reference group in Appendix \cref{tab:hr_q2_decomposition}. We next interpret the substantive conclusions
 we might draw from each reference group. First, consider women as the reference. The explained component is positive ($0.021$), with a statistically significant difference from zero.
 This result suggests that differences in admission covariates place men at higher mortality risk. A medical practitioner might therefore examine whether various factors before admission differ across gender; these factors include early differences in blood flow and circulation, underlying disease burden, or overall severity at admission.
 
 Second, consider men as the reference. The explained component is negative ($-0.007$), though the difference from zero is not statistically significant. In this case, the observed covariate differences seem to predict \emph{lower} (or equal) mortality for men relative to women rather than higher. In other words, the same covariates would now be interpreted as offering men a slight mortality advantage. This interpretation is substantively different than the interpretation that results from using women as the reference. 
-\textcolor{red}{In \cref{appendix:how-does-flip-arise} we show how differences in linear regression coefficients for men and women lead to this reversal.}
+In \cref{appendix:how-does-flip-arise} we show how differences in linear regression coefficients for men and women lead to this reversal.
 
 %\begin{table}[h]
 %\caption{Oaxaca--Blinder decompositions for HR quartile two. We compute standard errors (in parentheses) via bootstrap resampling with $1{,}000$ replications. 
@@ -149,7 +149,7 @@ Second, consider men as the reference. The explained component is negative ($-0.
 \end{figure}
 
 
-\textcolor{red}{One concern is that sign flips may be specific to this dataset; in \cref{appendix:real_data} we address this with a second illustration on U.S. Census data previously analyzed by \citet{bach2024heterogeneity}.}
+One concern is that sign flips may be specific to this dataset; in \cref{appendix:real_data} we address this with a second illustration on U.S. Census data previously analyzed by \citet{bach2024heterogeneity}.
 
 %%% MOVED to the head of Appendix B (Sections/09_icu_details.tex). To reverse: uncomment below, delete the red copy there.
 %REV \textbf{Limitations.}

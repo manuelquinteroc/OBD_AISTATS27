@@ -11,7 +11,7 @@ Then we describe how to proceed with real data.
 \subsection{Differences in means as a counterfactual exercise} 
 \label{sec:counterfactual_example}
 
-\textcolor{red}{As a first step toward describing the OBD, we illustrate the index number problem by framing it as a counterfactual exercise as in \citet{fortinLemieuxFirpo2011}.}
+As a first step toward describing the OBD, we illustrate the index number problem by framing it as a counterfactual exercise as in \citet{fortinLemieuxFirpo2011}.
 % Unlike \citet{fortinLemieuxFirpo2011}, we observe that this counterfactual exercise need not invoke a linear model, which we leave off until \ref{sec:ob} below.
 We consider an observed outcome $Y \in \mathbb{R}$ and covariates $X$ in some space $\mathcal{X}$. We take two groups, $H$ and $K$. We assume that the tuple $(X,Y)$ is independently and identically distributed within each group $g$ with corresponding expectation $\E_g$. Suppose we observe a gap in the mean outcomes, $\E_H[Y]$ and $\E_K[Y]$, and would like to understand to what extent the gap is due to differences in the distribution of $X$ versus differences in the distribution of $Y\mid X$ between the two groups. 
 For now, we assume we have access to population-level quantities, including all expectations.
@@ -69,8 +69,8 @@ that in general, $E^{(K)} \neq E^{(H)}$ and $U^{(K)} \neq U^{(H)}$.
 Before proceeding, we observe that there is not an immediate and general conceptual resolution of the index number problem.
 It is not clear to us in the hospital example above that one direction is more natural, or even that the two directions represent distinct policy questions.
 
-\textcolor{red}{Existing responses to the index number problem do not resolve it without relying on arbitrary choices or compromising the interpretation of results, and there seems to be no consensus response; see \cref{sec:existing_index_number} for a detailed discussion.
-These responses include defining a new reference group by aggregating $H$ and $K$ \citep{oaxacaRansom1998,neumark1988}, and averaging the two components as a Shapley value would \citep{Shapley1953}; we show that the choice of reference group can reverse the sign of either component, so such averages combine two questionable quantities.}
+Existing responses to the index number problem do not resolve it without relying on arbitrary choices or compromising the interpretation of results, and there seems to be no consensus response; see \cref{sec:existing_index_number} for a detailed discussion.
+These responses include defining a new reference group by aggregating $H$ and $K$ \citep{oaxacaRansom1998,neumark1988}, and averaging the two components as a Shapley value would \citep{Shapley1953}; we show that the choice of reference group can reverse the sign of either component, so such averages combine two questionable quantities.
 %\textcolor{red}{In practice, we also do not see a consensus approach, even within fields of study; we survey how published work chooses a reference group in \cref{sec:existing_index_number}.}
 
 %%% MOVED to \cref{sec:existing_index_number} (Appendix A.3): the survey below. The two responses above are
@@ -99,7 +99,7 @@ Then the following equation implements \cref{eq:OB_H_Counterfactual}:
     \hat{\Delta}_Y
     \label{eq:NOBD_H_estimated}
     &=\underbrace{ \frac{1}{N_H} \sum_{n=1}^{N_H} Y_n - \frac{1}{N_K} \sum_{n=1}^{N_K} \hat{M}_H(X_n)}_{\hat{E}^{(H)}} 
-     + \underbrace{\frac{1}{N_K} \sum_{n=1}^{N_K} \hat{M}_H(X_n) - \textcolor{red}{\frac{1}{N_K} \sum_{n=1}^{N_K} Y_n}}_{\hat{U}^{(H)} }.
+     + \underbrace{\frac{1}{N_K} \sum_{n=1}^{N_K} \hat{M}_H(X_n) - \frac{1}{N_K} \sum_{n=1}^{N_K} Y_n}_{\hat{U}^{(H)} }.
 \end{align}
 
 In the literature, the term \emph{OBD} historically refers to using \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with the further choice of linear regression to compute $\hat{M}_g(X)$.

@@ -43,10 +43,10 @@ That is, larger magnitudes of \( \Delta \beta \) create ``more room'' for sign f
 \textbf{Are sign flips an adversarial phenomenon?}
 After characterizing sign flips, we can ask whether they occur only for adversarially chosen parameters.
 One formalization of this question is to ask what proportion of the volume of parameter space corresponds to sign flips --- and in particular, whether that proportion is non-zero.
-\textcolor{red}{To avoid discrepancies in unit choices across covariates, we center and scale the covariates such that $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$, and we assume that, for some $M > 0$ and all groups $g$, the entries of $\beta_g$ and $\alpha_g$ lie in $[-M,M]$; the proportions we compute have no dependence on $M$ (\cref{sec:sign_flip_fraction}).}
-First, for the explained component, we find that, under our conditions, half of the parameter space $(\beta_H, \beta_K, \alpha_H, \alpha_K)$ corresponds to sign flips \textcolor{red}{(\cref{prop:explained_fraction})}.
-Second, for the unexplained component, we find that the proportion of parameter space corresponding to sign flips nears 1/2 as the dimension of the covariate vector grows \textcolor{red}{(\cref{prop:unexplained_fraction})}.
-For even modest dimension $d$, the fraction of parameter space leading to sign flips exceeds 40\%\textcolor{red}{;} see \cref{fig:sign_flip_overview} (right).
+\textcolor{red}{To avoid discrepancies in unit choices across covariates, we center and scale the covariates such that $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$, and we assume that the parameters are bounded (\cref{sec:sign_flip_fraction}).}
+For the explained component, we find that, under our conditions, half of the parameter space $(\beta_H, \beta_K, \alpha_H, \alpha_K)$ corresponds to sign flips \textcolor{red}{(\cref{prop:explained_fraction})}.
+For the unexplained component, we find that the proportion of parameter space corresponding to sign flips nears 1/2 as the dimension of the covariate vector grows \textcolor{red}{(\cref{prop:unexplained_fraction})}.
+Even in modest dimension $d$, the fraction of parameter space leading to sign flips exceeds 40\%\textcolor{red}{;} see \cref{fig:sign_flip_overview} (right).
 
 \textbf{Reconciling the theoretical and empirical prevalence of sign flips.}
 One limitation of this theory is that it assumes regression parameters are uniformly distributed, when in practice we may expect they follow non-uniform distributions.

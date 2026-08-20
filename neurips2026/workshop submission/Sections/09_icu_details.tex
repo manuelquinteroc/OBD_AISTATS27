@@ -2,14 +2,14 @@
 \label{appendix:real_data}
 
 %%% MOVED here from the end of \cref{sec:real_example} (main text).
-{\color{red}
+
 \textbf{Limitations.}
 Our analysis reveals sign flips in the explained and unexplained components of the (N)OBD in a real dataset.
 It is a priori possible that some of our choices may be unusual; these choices include the dataset itself, our choice of covariates, our choice of outcome, or our particular subset of data. And it is possible that sign flips may not occur in other settings.
 To address this possibility, we provide a second illustration analyzing differences in income as well as health insurance status using U.S.\ Census data in \cref{appendix:us_labor_force}.
 The latter data have previously been analyzed by \citet{bach2024heterogeneity}, reducing the concern that our empirical results are due to atypical choices on our part.
 We also give a theoretical account of sign flips in \cref{sec:signflips}, where we establish that they correspond to a nontrivial region of the parameter space.
-}
+
 \subsection{ICU Mortality Example}
 \label{appendix:icu_details}
 
@@ -103,7 +103,6 @@ We observed that empirically, the count of data subsets exhibiting a sign flip g
 \end{table}
 
 A substantial number of these sign reversals are significant at conventional thresholds, indicating that the instability documented in \cref{sec:real_example} is an inherent behavior of the OBD in this clinical dataset.
-
 
 % \begin{table}[!t]
 %     \centering
@@ -255,7 +254,6 @@ In \cref{tab:hrq2_bootstrap_models}, we report the corresponding decomposition u
 
 %%% MOVED here from \cref{sec:real_example} (main text).
 \begin{table}[!ht]
-  \color{red}
   \caption{Oaxaca--Blinder decompositions for HR quartile two. The total gap is men's mean minus women's mean. We compute standard errors (in parentheses) via bootstrap resampling with $1{,}000$ replications. 
     We calculate p-values using a normal approximation (Wald test), where the test statistic is the coefficient divided by its bootstrap standard error. 
     Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$.}

@@ -1,10 +1,10 @@
 \section{Theory}
 \label{app:theory}
 
-In this section, we \textcolor{red}{state the results discussed in \cref{sec:signflips}, together with} the proof of \cref{thm:unexplained_ordering_sensitivity} and an example showing that the difference between the two decompositions can be made arbitrarily large even when the mean gap is fixed.
+In this section, we state the results discussed in \cref{sec:signflips}, together with the proof of \cref{thm:unexplained_ordering_sensitivity} and an example showing that the difference between the two decompositions can be made arbitrarily large even when the mean gap is fixed.
 
 %%% MOVED here from \cref{sec:signflips} (main text).
-{\color{red}
+
 \subsection{Characterizing sign flips}
 \label{sec:sign_flip_characterizations}
 
@@ -12,7 +12,6 @@ In this section, we \textcolor{red}{state the results discussed in \cref{sec:sig
 % We start by concretizing the type of decision we will focus on. 
 % In particular, we will consider a conclusion based on the sign of either the explained or unexplained component of the OBD.
 % We will assume we are working with full population information so that a sign flip alone is enough to change conclusions.
-
 
 % Typically the OBD represents the special case of \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} 
 % where the conditional expectation of the outcome given the covariate is linear, as we describe next.
@@ -120,7 +119,6 @@ That is, larger magnitudes of \( \Delta \beta \) create ``more room'' for sign f
 %
 %
 %It may be tempting to wonder whether this sensitivity is somehow bounded by the observed outcome gap \(\Delta_Y\). \Cref{cor:unbounded_sensitivity} in the Appendix addresses this question directly: even when \(\Delta_Y\) is held fixed, the ordering-induced swing in the structural component can be made arbitrarily large. That is, no a priori bound ties the magnitude of ordering sensitivity to the magnitude of the empirical gap itself.
-
 
 \subsection{Are sign flips an adversarial phenomenon?}
 \label{sec:sign_flip_fraction}
@@ -285,8 +283,6 @@ In \cref{appendix:ovb}, we explore how the presence of omitted covariates can ge
 % On the other hand, sign flips remain plausible for the unexplained component. 
 % Consider the SBP--BMI example in \cref{sec:simulated_example}, \cref{ass:no_sign_flip} would correspond to a case where the higher-resource group exhibits both a higher baseline SBP and a stronger SBP--BMI relationship than the lower-resource group. However, in the simulated data, the lower-resource group shows a steeper SBP--BMI slope while having a lower baseline; that is, the SBP--BMI example violates \cref{ass:no_sign_flip}, and indeed we see a sign flip in the unexplained component.
 
-}
-
 \subsection{Proof of \cref{thm:unexplained_ordering_sensitivity}}
 \label{sec:sign_flip_proof}
 \begin{proof}
@@ -305,7 +301,6 @@ Using \cref{def:unexplained_sign_flip}, we want to show that
 \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
 \end{aligned}
 \]
-
 
 $\Rightarrow$: Suppose that $\sign\left( \mu_K^T \Delta\beta + \Delta\alpha \right) \neq \sign\left( \mu_H^T \Delta\beta + \Delta\alpha \right)$. If $\mu_H^T \Delta\beta = \mu_K^T \Delta\beta$, then both $\mu_g^T \Delta\beta + \Delta\alpha$ would have the same sign, which contradicts our assumption of opposite signs. Thus, we must have $\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$.
 
@@ -387,7 +382,6 @@ If the first one holds, then $\mu_H^T \Delta\beta + \Delta\alpha <0$ and $\mu_K^
 
 % }
 
-
 \subsection{Unbounded sensitivity at fixed mean gap}
  \label{ex:unbounded}
 In this section we present a toy example where we can have arbitrarily large flip magnitudes. Consider the following example in dimension \( 1 \), where we assume we have a parameter \( L > 0 \) which controls the magnitude of the covariate shift, and \( \varepsilon > 0 \) which controls the deviation in slope coefficients. We assume the mean vector is given by \( (\mu_K, \mu_H) = (0, L) \), and the slope parameters deviate symmetrically from \( \frac{1}{L} \), so that \( \beta_H = \frac{1}{L} + \frac{\varepsilon}{2} \), \( \beta_K = \frac{1}{L} - \frac{\varepsilon}{2} \). Then, the explained and unexplained components under both reference groups are:
@@ -455,7 +449,6 @@ Even though \cref{thm:unexplained_ordering_sensitivity} does not restrict the ma
     \end{algorithmic}
 \end{algorithm}
 
-
 \subsection{Relationship Between Unexplained Component Sign Flips and Omitted Variables}
 \label{appendix:ovb}
 Here, we assume the same standardization of covariates as in \cref{sec:sign_flip_fraction}; that is, we assume $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$.
@@ -510,7 +503,6 @@ These equations show that \( \Delta \alpha \) and \( \Delta \beta \) depend on t
 Crucially, they provide a mechanism to produce \( | \Delta \alpha | \) and \( | \mathbf{1}^\top \Delta \beta | \) that are jointly large:
 if both the Z-X and Z-Y relationships change in complementary ways, then both \( \Delta \zeta^\top \Delta \gamma \) and \( \mathbf{1}^\top \Delta \Psi^\top \Delta \gamma \) will be large. 
 If these terms are not counterbalanced by \( \Delta \omega \) and \( \Delta \theta \), the result will be large \( | \Delta \alpha | \) and \( | \mathbf{1}^\top \Delta \beta | \).
-
 
 \subsection{Volume of the Sign-Flip Parameter Region}
 We first show how to choose units for the covariates conveniently, so that \( \Delta \mu = \mathbf{1} \).
@@ -625,7 +617,6 @@ Together, these findings suggest that the conclusions from \cref{proof:explained
 \end{figure}
 
 \subsection{Proofs from \cref{sec:reconciling_theory_empirics}}
-
 
 \subsubsection{Proof of \cref{prop:no_sign_flip}}
 \label{proof:no_sign_flip}

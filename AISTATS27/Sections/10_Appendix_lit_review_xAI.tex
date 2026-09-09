@@ -1,0 +1,52 @@
+\section{Extended literature review}
+\label{appendix:lit_review_xAI}
+
+In this appendix, we expand on the discussion in \cref{sec:intro} of why standard explainability methods do not address the hospital data scientist's question from \cref{sec:intro}, and of how the (N)OBD differs from these methods.
+We then discuss how common modifications to the (N)OBD that might seem to remove the index number problem either do not or introduce new questions of arbitrariness similar to the index number problem.
+
+\subsection{Explainability methods for attributing outcome behavior to covariates}
+\label{appendix:xAI}
+
+A common feature of modern explainability methods, including Shapley values \citep{Shapley1953, Lundberg2017, chen2025shapley}, Functional ANOVA \citep{stone1994, hooker2004discovering, hookerGeneralizedFunctionalANOVA2007, lengerich2020purifying, fumagalli2025fanova}, Accumulated Local Effects \citep{apley2020}, and partial dependence plots \citep{friedman2001greedy, liu2025trees}, is that they take as their input a fitted outcome model, or more generally a conditional mean function $x \mapsto \E[Y \mid X=x]$.
+They ask how this function changes as one or more covariates change, or how much variation in the function can be attributed to particular (groups of) covariates.
+This type of decomposition is well-suited to many tasks in machine learning explainability, but does not, by itself, separate differences between two populations into differences in the distribution of $X$ versus differences in the distribution of $Y \mid X$.
+We elaborate on this distinction below for three common decomposition methods.
+
+Functional ANOVA measures the importance of features in determining the output of a function $f$ and identifies underlying additive interactions between subsets of covariates \citep{hooker2004discovering, hookerGeneralizedFunctionalANOVA2007}.
+It represents $f$ as a sum of an overall mean, main effects of individual covariates, pairwise interactions, tertiary interactions, etc. The definitions of these terms depends on a reference measure over the covariates that pins down the orthogonality and centering (mean zero) restrictions.
+Accumulated Local Effects \citep[ALE;][]{apley2020} and partial dependence plots \citep[PDP;][]{friedman2001greedy} summarize how a fitted function changes with one covariate or a subset of covariates; for instance, how predicted mortality varies with admission heart rate, but they do not define a decomposition of the gap between two groups and at least it is not clear how to use them to do so; one can similarly define an additive decomposition of a function $f$ using PDP or ALE.
+But Functional ANOVA, ALE, and PDP are tools for decomposing a \emph{single} function $f$, not for studying differences between two functions, which is the problem addressed by the (N)OBD.
+We are aware of only one work applying ALE and Functional ANOVA to generalize the NOBD \citep{quintero2025}; however, \citet{quintero2025} shows this leads to serious issues beyond just the index number problem studied here.
+% But the role this single reference measure plays in Functional ANOVA is not the role played by the covariate distribution in the (N)OBD.
+% Functional ANOVA uses one reference measure to decompose one function $f$, whereas the (N)OBD uses two distinct covariate distributions and two distinct conditional means to attribute the gap $\E_H[Y] - \E_K[Y]$ to changes in $X$ versus changes in $Y \mid X$.
+% Applying Functional ANOVA separately to $f_H(x) = \E_H[Y \mid X=x]$ and $f_K(x) = \E_K[Y \mid X=x]$ would yield two decompositions of two functions, not the counterfactual means $\E_K[f_H(X)]$ and $\E_H[f_K(X)]$ needed to separate differences in $X$ from differences in $Y \mid X$.
+
+% Accumulated Local Effects \citep[ALE;][]{apley2020} and partial dependence plots \citep[PDP;][]{friedman2001greedy} summarize how a fitted function changes with one covariate or a subset of covariates; for instance, how predicted mortality varies with admission heart rate, but they do not define a decomposition of the gap between two groups and at least it is not clear how to use them to do so.
+% An ALE curve or partial dependence plot for $f_H$ cannot say what Hospital $H$'s mortality rate would be if its patients had the risk factor distribution of Hospital $K$, and the corresponding curve for $f_K$ cannot answer the reverse counterfactual.
+
+Shapley-value-based methods are feature attribution tools that assign each covariate a portion of a prediction, or of the variation in predictions, by treating the covariates as players in a cooperative game whose payoff is the model's output \citep{Shapley1953, Lundberg2017, chen2025shapley}.
+Again, though, Shapley values are useful for attributing the output of a single fitted model to features, not a situation in which there are two populations.
+In \cref{sec:existing_index_number} we detail one way in which Shapley values could be used to produce a decomposition for differences between populations like the one produced by the (N)OBD, and this decomposition does not have an index number problem. However, we discuss in \cref{sec:existing_index_number} why such a possible solution actually introduces other issues.
+
+\subsection{Adaptations of the Oaxaca--Blinder decomposition beyond linear models}
+\label{appendix:obd_generalized}
+
+% The OBD addresses precisely the shortcoming above by comparing observed means to counterfactual means of the form $\E_{g'}[\E_g[Y \mid X]]$, where the conditional distribution $Y \mid X$ is taken from one group and the covariate distribution from the other; see \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} in \cref{sec:counterfactual_OBD}.
+The OBD was developed for linear models \citep{oaxaca1973, blinder1973} and remains widely used in this form across applied health, labor, and policy research \citep{paradaContzen2025, barhaim2023, cartwright2021}.
+Still, recent work has paired the OBD with flexible ML estimators to relax the linearity assumption while retaining the between-population counterfactual structure of \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}.
+We review these efforts here.
+\citet{bach2024heterogeneity} use double-lasso to fit a high-dimensional wage equation and quantify how the US gender wage gap varies with characteristics such as marital status, race, occupation, and education.
+\citet{mao2025double} apply the double machine learning framework to the Oaxaca--Blinder decomposition, deriving $\sqrt{n}$-consistent estimators of the composition (i.e., explained) and structure (i.e., unexplained) effects under high-dimensional mixed covariates via Neyman orthogonal scores.
+\citet{quintas2024multiply} introduce a multiply-robust estimator for causal change attribution that combines regression and reweighting, remains consistent under partial misspecification of the nuisance ML models, and is asymptotically normal.
+\citet{flachaire2025decomposing} reformulate the decomposition in terms of potential outcomes and pair the weighted reference outcome of \citet{neumark1988} with double machine learning to avoid the common-support and trimming requirements that arise when the reference is taken to be one of the two groups.
+Closer to our setting, \citet{quintero2025} examine what happens when off-the-shelf functional decompositions, specifically Functional ANOVA and ALE, are plugged into the OBD framework, and show that they can misattribute differences in $X$ to differences in $Y \mid X$.
+
+In all of these methods, $\E_H[Y \mid X]$ and $\E_K[Y \mid X]$ are estimated by flexible $\hat{M}_H(X)$ and $\hat{M}_K(X)$, and counterfactual means are constructed as in \cref{eq:NOBD_H_estimated}.
+Such methods retain the between-population target of the OBD and so address the limitation of the explainability methods above.
+However, with the exception of \citet{flachaire2025decomposing}, who fix a single Neumark-style weighted reference \citep{neumark1988}, this line of work does not engage with the issue we study.
+That is, even once linearity is relaxed, the (N)OBD still requires choosing one of the two groups as a reference, and this choice can affect the numerical result; more importantly, as we show, it can reverse substantive conclusions.
+%Even if the conditional mean functions were estimated without error, the explained components $E^{(H)}$ and $E^{(K)}$ (and analogously $U^{(H)}$ and $U^{(K)}$) need not have the same sign.
+Improving the flexibility of $\hat{M}_g$ thus does not remove the index number problem; if anything, richer models may make the issue worse, as \cref{tab:flip_summary_main} shows for our main empirical exercise.
+
+In short, adaptations of the OBD and explainability methods address different parts of the overall problem: explainability methods describe how a single fitted function depends on covariates, while the NOBD improves the estimation of the conditional mean functions used to form counterfactual means.
+Our paper studies distinct questions --- whether the two natural (N)OBD references can yield substantively different conclusions, and how common this sensitivity is.

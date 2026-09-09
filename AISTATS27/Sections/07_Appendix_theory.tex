@@ -1,0 +1,362 @@
+\section{Theory}
+\label{app:theory}
+
+In this section, we present the proof of \cref{thm:unexplained_ordering_sensitivity} and an example showing that the difference between the two decompositions can be made arbitrarily large even when the mean gap is fixed.
+
+\subsection{Proof of \cref{thm:unexplained_ordering_sensitivity}}
+\label{sec:sign_flip_proof}
+\begin{proof}
+Using \cref{def:unexplained_sign_flip}, we want to show that 
+\[
+\sign\!\left( \mu_K^T \Delta\beta + \Delta\alpha \right)
+\neq
+\sign\!\left( \mu_H^T \Delta\beta + \Delta\alpha \right)
+\iff
+\begin{aligned}
+&\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta, \\
+&\min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}
+<
+-\Delta\alpha
+<
+\max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
+\end{aligned}
+\]
+
+
+$\Rightarrow$: Suppose that $\sign\left( \mu_K^T \Delta\beta + \Delta\alpha \right) \neq \sign\left( \mu_H^T \Delta\beta + \Delta\alpha \right)$. If $\mu_H^T \Delta\beta = \mu_K^T \Delta\beta$, then both $\mu_g^T \Delta\beta + \Delta\alpha$ would have the same sign, which contradicts our assumption of opposite signs. Thus, we must have $\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$.
+
+Next, suppose that $\mu_K^T \Delta\beta + \Delta\alpha >0$ and $\mu_H^T \Delta\beta + \Delta\alpha <0$. Then, 
+\[
+\mu_K^T \Delta\beta > -\Delta\alpha \quad \text{and} \quad \mu_H^T \Delta\beta < -\Delta\alpha.
+\]
+Combining these two inequalities, we have 
+\begin{equation}
+  \label{eq:intermediate_ineq1}
+  \mu_H^T \Delta\beta < -\Delta\alpha < \mu_K^T \Delta\beta.
+\end{equation}
+Similarly, if $\mu_K^T \Delta\beta + \Delta\alpha <0$ and $\mu_H^T \Delta\beta + \Delta\alpha >0$, then
+\begin{equation}
+  \label{eq:intermediate_ineq2}
+  \mu_K^T \Delta\beta < -\Delta\alpha < \mu_H^T \Delta\beta.
+\end{equation}
+Combining \cref{eq:intermediate_ineq1,eq:intermediate_ineq2}, we conclude that
+\[
+  \min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\} < -\Delta\alpha < \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
+\]
+
+$\Leftarrow$; We now show the converse direction. Suppose that:
+
+$(1)$ $\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$ and 
+
+$(2)$ $\min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\} < -\Delta\alpha < \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}$. 
+
+We want to show that $\sign\left( \mu_K^T \Delta\beta + \Delta\alpha \right) \neq \sign\left( \mu_H^T \Delta\beta + \Delta\alpha \right)$.
+$(2)$ implies that one of the following must be true:
+\[
+  \mu_H^T \Delta\beta < -\Delta\alpha < \mu_K^T \Delta\beta, \quad \text{or} \quad \mu_K^T \Delta\beta < -\Delta\alpha < \mu_H^T \Delta\beta.
+\]
+If the first one holds, then $\mu_H^T \Delta\beta + \Delta\alpha <0$ and $\mu_K^T \Delta\beta + \Delta\alpha >0$, that is, the unexplained components have opposite signs. If the second holds, a symmetric argument yields the same conclusion as desired. 
+
+% First, consider the case where $\sign \mu_K^T \Delta\beta = \sign \mu_H^T \Delta\beta$.
+% In this case, the addition of $\Delta\alpha$ must be small enough to flip one of the signs of the $\mu_g^T \Delta\beta$ but so large that it flips the other.
+% As we have assumed $\mu_K^T \Delta\beta \neq \mu_H^T \Delta\beta$, one of the $\mu_g^T \Delta\beta$ will be lesser in magnitude; without loss of generality, suppose this is $g = H$.
+% That is, $\abs{\mu_H^T \Delta\beta} < \abs{\mu_K^T \Delta\beta}$.
+% Now, we have also assumed that $\sign \Delta\alpha \neq \sign \mu_K^T \Delta\beta$ and $\abs{\mu_H^T \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K^T \Delta\beta}$.
+% We conclude that $\sign( \mu_H^T \Delta\beta + \Delta\alpha) \neq \sign( \mu_K^T \Delta\beta + \Delta\alpha)$.
+
+% Next, consider the case where $\sign \mu_K^T \Delta\beta \neq \sign \mu_H^T \Delta\beta$.
+% In this case, the addition of $\Delta\alpha$ to the $\mu_g^T \Delta\beta$ must be small enough such that it does not change the sign of either one.
+% Without loss of generality, suppose that $\sign \Delta\alpha \neq \sign \mu_H^T \Delta\beta$.
+% Then the assumed condition $\abs{\mu_H^T \Delta\beta} > \abs{\Delta\alpha}$ is enough to ensure that $\sign(\mu_H^T \Delta\beta) = \sign(\mu_H^T \Delta\beta + \Delta\alpha) \neq \sign(\mu_K^T \Delta\beta + \Delta\alpha)$.
+\end{proof}
+
+% ---------------------------------------------------------
+% \mqedit{
+% \subsection{Decision tree for sign flips}
+% \label{sec:decision_tree}
+
+% To shed more light on \cref{thm:ordering_sensitivity}, we disentangle the condition in \cref{eq:sign_flip_condition} into a decision tree of when a sign flip can occur: 
+
+% \begin{algorithm}[H]
+%     \caption{Unexplained component sign-flip}
+%     \label{alg:decision_tree}
+% \begin{algorithmic}  
+%     \If{$\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$}
+%         \If{$\sign(\mu_H^T \Delta\beta) = \sign(\mu_K^T \Delta\beta)$}
+%             \If{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$}
+%                 \If{$|\mu_H^T \Delta\beta| < |\Delta\alpha| < |\mu_K^T \Delta\beta|$ \textbf{or} $|\mu_K^T \Delta\beta| < |\Delta\alpha| < |\mu_H^T \Delta\beta|$}
+%                     \State A sign flip occurs.
+%                 \EndIf
+%             \EndIf
+%         \ElsIf{$\sign(\mu_H^T \Delta\beta) \neq \sign(\mu_K^T \Delta\beta)$}
+%             \If{$\sign(\Delta\alpha) = \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_K^T \Delta\beta| > |\Delta\alpha|$}
+%                 \State A sign flip occurs.
+%             \ElsIf{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_H^T \Delta\beta| > |\Delta\alpha|$}
+%                 \State A sign flip occurs.
+%             \EndIf
+%         \EndIf
+%     \Else
+%         \State There is no sign flip.
+%     \EndIf
+% \end{algorithmic}
+% \end{algorithm}
+
+% }
+
+
+\subsection{Unbounded sensitivity at fixed mean gap}
+ \label{ex:unbounded}
+In this section we present a toy example where we can have arbitrarily large flip magnitudes. Consider the following example in dimension \( 1 \), where we assume we have a parameter \( L > 0 \) which controls the magnitude of the covariate shift, and \( \varepsilon > 0 \) which controls the deviation in slope coefficients. We assume the mean vector is given by \( (\mu_K, \mu_H) = (0, L) \), and the slope parameters deviate symmetrically from \( \frac{1}{L} \), so that \( \beta_H = \frac{1}{L} + \frac{\varepsilon}{2} \), \( \beta_K = \frac{1}{L} - \frac{\varepsilon}{2} \). Then, the explained and unexplained components under both reference groups are:
+\begin{align*}
+    E^{(H)} &= \Delta\mu \cdot \beta_H = L\left(\frac{1}{L} + \frac{\varepsilon}{2}\right) = 1 + \frac{L\varepsilon}{2}, \quad U^{(H)} = \mu_K \cdot \Delta\beta = -\frac{L\varepsilon}{2}, \\
+    E^{(K)} &= \Delta\mu \cdot \beta_K = L\left(\frac{1}{L} - \frac{\varepsilon}{2}\right) = 1 - \frac{L\varepsilon}{2}, \quad U^{(K)} = \mu_H \cdot \Delta\beta = +\frac{L\varepsilon}{2}.
+\end{align*}
+
+Hence, the difference between the two decompositions is \( E^{(H)} - E^{(K)} = L\varepsilon \), which can be made arbitrarily large as \( L \to \infty \), even though the total mean gap is always fixed at \( \Delta_Y = 1 \). Similarly, the unexplained components differ by \( U^{(K)} - U^{(H)} = L\varepsilon \).
+
+\begin{center}
+\begin{tabular}{ccccccc}
+\toprule
+\(L\) & \(\varepsilon\) 
+& \(E^{(H)}\) & \(E^{(K)}\) 
+& \(U^{(H)}\) & \(U^{(K)}\) 
+& Flip? \\
+\midrule
+20    & 0.1  & \(2\)     & \(0\)      & \(-1\)    & \(1\)     & \checkmark \\
+200   & 0.1  & \(11\)    & \(-9\)     & \(-10\)   & \(10\)    & \checkmark \\
+1000  & 0.1  & \(51\)    & \(-49\)    & \(-50\)   & \(50\)    & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Note that the sign flip is symmetric by construction, but the magnitude of the discrepancy grows linearly in \( L \), highlighting that the attribution gap between reference groups can be stretched arbitrarily far.
+
+\subsection{Decision Tree Representation of \cref{eq:sign_flip_condition}}
+
+To illustrate \cref{thm:unexplained_ordering_sensitivity}, we represent the condition in \cref{eq:sign_flip_condition} as a decision tree in \cref{alg:decision_tree} and use it to scrutinize the healthcare example in \cref{sec:simulated_example}.
+In this example, $\mu_H$ and $\mu_K$ denote mean BMIs, both of which are positive by definition and thus $\sign{(\mu_H \Delta\beta)} = \sign{(\mu_K \Delta\beta)} = \sign{(\Delta\alpha)}$. 
+Therefore, following \Cref{alg:decision_tree}, a sign flip will occur only if $\sign{(\Delta\alpha)} \neq \sign{(\mu_H \Delta\beta)} = \sign{(\Delta\beta)}$; equivalently, it must hold that one group has a larger $\beta_g$ (more sensitive to higher BMI) but lower $\alpha_g$ (lower SBP on average).
+This might occur if one group has better access to treatment but worse genetic factors, as in \cref{sec:simulated_example}.
+Furthermore, a sign flip will occur if either $\abs{\mu_H \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K \Delta\beta}$ or $\abs{\mu_K \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_H \Delta\beta}$. This condition implies a range of values over which sign flips will occur; that is, there will be at least one choice of reference group under which improved healthcare appears to help in lowering mean SBP and another ordering under which improved healthcare appears to \emph{hurt} mean SBP.
+
+Even though \cref{thm:unexplained_ordering_sensitivity} does not restrict the magnitude of the parts of the unexplained components, in \cref{ex:unbounded} we provide an example to illustrate that these sign flips are not relegated to settings in which $\mu_g^T\Delta\beta$ are small in magnitude; in fact, we show that they can be arbitrarily large in magnitude.
+
+  \begin{algorithm}
+    \caption{Unexplained component sign flip}
+    \label{alg:decision_tree}
+    \begin{algorithmic}  
+        \If{$\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$}
+            \If{$\sign(\mu_H^T \Delta\beta) = \sign(\mu_K^T \Delta\beta)$}
+                \If{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$}
+                    \If{$|\mu_H^T \Delta\beta| < |\Delta\alpha| < |\mu_K^T \Delta\beta|$ \textbf{or} $|\mu_K^T \Delta\beta| < |\Delta\alpha| < |\mu_H^T \Delta\beta|$}
+                        \State A sign flip occurs.
+                    \Else
+                    	\State There is no sign flip.
+                    \EndIf
+                \Else
+                	\State There is no sign flip.
+                \EndIf
+            \ElsIf{$\sign(\mu_H^T \Delta\beta) \neq \sign(\mu_K^T \Delta\beta)$}
+                \If{$\sign(\Delta\alpha) = \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_K^T \Delta\beta| > |\Delta\alpha|$}
+                    \State A sign flip occurs.
+                \ElsIf{$\sign(\Delta\alpha) \neq \sign(\mu_H^T \Delta\beta)$ \textbf{and} $|\mu_H^T \Delta\beta| > |\Delta\alpha|$}
+                    \State A sign flip occurs.
+                \Else
+                    \State There is no sign flip.
+                \EndIf
+            \EndIf
+        \Else
+            \State There is no sign flip.
+        \EndIf
+    \end{algorithmic}
+\end{algorithm}
+
+
+\subsection{Relationship Between Unexplained Component Sign Flips and Omitted Variables}
+\label{appendix:ovb}
+Here, we assume the same standardization of covariates as in \cref{sec:sign_flip_fraction}; that is, we assume $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$.
+Under this normalization, unexplained component sign flips require \( | \mathbf{1}^T \Delta \beta | > | \Delta \alpha | \), so any data-generating processes that jointly produces large \( | \mathbf{1}^T \Delta \beta | \) and \( | \Delta \alpha | \) would make sign flips less likely than \cref{prop:unexplained_fraction} suggests.
+In this section, we present a mechanism that can jointly produce large \( | \mathbf{1}^T \Delta \beta | \) and \( | \Delta \alpha | \) without invoking \cref{ass:no_sign_flip}.
+
+The mechanism involves the researcher's dataset omitting covariates that are related to both \( X \) and \( Y \).
+For example, hospital records only contain measurements that doctors have ordered, not the results of important tests a doctor may have skipped.
+Similarly, census data used for studying wage gaps typically lack detailed information about skills and experience from a worker's resume and work history.
+Finally, in practice, nonlinear transformations of the covariates are also effectively omitted from analysis, like when a researcher does not include appropriate polynomial terms in a regression specification.
+Let \( Z \in \mathbb{R}^{d'} \) be a vector of such \textit{omitted covariates}.
+We will establish that both \( \Delta \beta \) and \( \Delta \alpha \) can depend on the relationship between \( Z, X, \) and \( Y \).
+
+Our argument requires us to specify the conditional expectations \( \E_g[Y \mid X, Z] \) and \( \E_g[Z \mid X] \).
+To establish a simple example, we will assume that both are linear and satisfy
+\begin{align}
+  \label{eq:y_on_x_z}
+  \E_g[Y \mid X, Z] &= \omega_g + X^\top \theta_g + Z^\top \gamma_g, \\
+  \label{eq:z_on_x}
+  \E_g[Z \mid X] &= \zeta_g + \Psi_g X,
+\end{align}
+where $\omega_g \in \R$, $\theta_g \in \R^d$, $\gamma_g \in \R^{d'}$, $\zeta_g \in \R^{d'}$, and $\Psi_g \in \R^{d' \times d}$.
+Relaxing these assumptions may lead to other non-uniform relationships between \( \Delta \beta \) and \( \Delta \alpha \).
+
+Recall that the OBD is based on regressing the outcome against the observed covariates for each group \(g \in \{H, K\}\) via
+\begin{align}
+    \label{eq:y_on_x}    
+    \E_g[Y \mid X] = \alpha_g + X^\top \beta_g.
+\end{align}
+We will start by showing that \( \alpha_g \) and \( \beta_g \) depend on \( \gamma_g, \zeta_g, \), and \( \Psi_g \). 
+To do so, apply the law of iterated expectations to \cref{eq:y_on_x}, plug in \cref{eq:y_on_x_z,eq:z_on_x}, and then rearrange terms:
+\begin{align}    
+    \E_g[Y \mid X] 
+    &= \E_g[ \E_g[Y \mid X, Z] \mid X ] \nonumber \\
+    &= \E_g[ \omega_g + X^\top \theta_g + Z^\top \gamma_g \mid X ] \nonumber  \\
+    &= \omega_g + X^\top \theta_g + \E_g[Z \mid X]^\top \gamma_g \nonumber \\
+    &= \omega_g + X^\top \theta_g + (\zeta_g + \Psi_g X)^\top \gamma_g \nonumber \\ 
+    \label{eq:ovb}
+    &= \underbrace{\omega_g + \zeta_g^\top \gamma_g}_{=\alpha_g} + \E_g[X]^\top \underbrace{(\theta_g + \Psi_g^\top \gamma_g)}_{=\beta_g}.
+\end{align}
+\cref{eq:ovb} is the well-known \textit{omitted variables bias} formula.
+It describes how the slope and intercept of a regression equation depend on variables that are not included in the equation.
+We can use this formula to express the difference in slopes and intercepts across the two populations as 
+\begin{align}  
+  \label{eq:delta_alpha_gamma}
+  \Delta \alpha &= \Delta \omega + \Delta \zeta^\top \Delta \gamma,  \\
+  \label{eq:delta_beta_gamma}
+  \Delta \beta  &= \Delta \theta + \Delta \Psi^\top \Delta \gamma,
+\end{align}
+where \( \Delta \) takes the $H-K$ difference in the quantity that follows; for example, \( \Delta \omega := \omega_H - \omega_K \).
+These equations show that \( \Delta \alpha \) and \( \Delta \beta \) depend on the role of omitted covariates in the data-generating process.
+Crucially, they provide a mechanism to produce \( | \Delta \alpha | \) and \( | \mathbf{1}^\top \Delta \beta | \) that are jointly large:
+if both the Z-X and Z-Y relationships change in complementary ways, then both \( \Delta \zeta^\top \Delta \gamma \) and \( \mathbf{1}^\top \Delta \Psi^\top \Delta \gamma \) will be large. 
+If these terms are not counterbalanced by \( \Delta \omega \) and \( \Delta \theta \), the result will be large \( | \Delta \alpha | \) and \( | \mathbf{1}^\top \Delta \beta | \).
+
+
+\subsection{Volume of the Sign-Flip Parameter Region}
+We first show how to choose units for the covariates conveniently, so that \( \Delta \mu = \mathbf{1} \).
+This will simplify volume calculations for the regions of parameter space that flip the explained and unexplained components of the OBD.
+\begin{lemma}
+  \label{lemma:units}
+  If \( \mu_H \neq \mu_K \) elementwise, we can choose units for \( X \) such that \( \mu_K := \E_K[X] = \mathbf{0} \) and \( \mu_H := \E_H[X] = \mathbf{1} \).
+  \begin{proof}  
+  Consider the transformation \( \tilde{X} = (X - \mu_K) / (\mu_H - \mu_K) \), where the division is elementwise.
+  This is well-defined as long as \( \mu_H \neq \mu_K \) elementwise.
+  Since \( \tilde{X} \) is a linear transformation of \( X \), it corresponds to a change in units.
+  Under these new units, \( \E_K[\tilde{X}] = \mathbf{0} \) and \( \E_H[\tilde{X}] = \mathbf{1} \).  
+  \end{proof}
+\end{lemma}
+
+\subsubsection{Proof of \cref{prop:explained_fraction}}
+\label{proof:explained_fraction}
+Apply \cref{lemma:units} so that \( \E_K[X] = \mathbf{0} \), \( \E_H[X] = \mathbf{1} \), and therefore \( \Delta \mu = \mathbf{1} \).
+\cref{eq:sign_flip_condition_explained_neq} now simplifies to 
+\[ \sign\!\left(\mathbf{1}^\top \beta_{H}\right) \neq \sign\!\left(\mathbf{1}^\top \beta_{K}\right). \]
+A Uniform$(-M, M)$ distribution on \( \beta_H \) and \( \beta_K \) corresponds to distributions on \( \mathbf{1}^\top \beta_{H} \) and \( \mathbf{1}^\top \beta_{K} \) that are identical and symmetric around zero.
+As such, the signs of \( \mathbf{1}^\top \beta_{H} \) and \( \mathbf{1}^\top \beta_{K} \) will disagree in 50\% of the parameter space.
+
+\subsubsection{Proof of \cref{prop:unexplained_fraction}}
+\label{proof:unexplained_fraction}
+Apply \cref{lemma:units} so that \( \E_K[X] = \mathbf{0} \), \( \E_H[X] = \mathbf{1} \), and therefore \( \Delta \mu = \mathbf{1} \).
+For the rescaled covariates, the conditions in \cref{thm:unexplained_ordering_sensitivity} simplify.
+In particular, the unexplained component flips sign if and only if \( \mathbf{1}^\top \Delta \beta \neq 0 \), \( \sign (\Delta \alpha) \neq \sign (\mathbf{1}^\top \Delta \beta) \), and \( | \mathbf{1}^\top \Delta \beta | > |\Delta \alpha| \).
+
+To compute the fraction of $C_M$ for which there are sign flips, we equivalently compute the probability of a sign flip under an independent $\mathrm{Uniform}(-M,M)$ measure on each element of the vector $(\beta_H, \beta_K, \alpha_H, \alpha_K) \in \R^{2d+2}$.
+The condition \( \mathbf{1}^\top \Delta \beta \neq 0 \) holds almost surely under the assumed Uniform$(-M,M)$ measure, since \( \mathbf{1}^\top \Delta \beta \) is a non-degenerate linear combination of continuously distributed random variables, so we can focus on the latter two conditions.
+To do so, we will determine the distributions of  \( \Delta \alpha \) and \( \mathbf{1}^\top \Delta \beta \).
+
+The sum of \( n \) Uniform$(0,1)$ random variables is sometimes called the Irwin-Hall(\(n\)) distribution.%
+\footnote{For \(n = 2\) this is a familiar triangular distribution.}
+When we place a Uniform$(-M, M)$ measure on the \( \alpha \)'s and \( \beta \)'s, there is a straightforward relationship between \( \Delta \alpha \), \( \mathbf{1}^\top \Delta \beta \), and appropriately defined Irwin-Hall random variables.
+The difference \( \Delta \alpha \) is the sum of two Uniform$(-M, M)$ variables, which is equivalent to an Irwin-Hall($2$) distribution, rescaled from $[0,2]$ to $[-2M, 2M]$.
+Similarly, \( \mathbf{1}^\top \Delta \beta \) is the sum of \( 2 d \) Uniform$(-M, M)$ variables, and its distribution is an Irwin-Hall($2 d$) distribution, rescaled from $[0,2d]$ to \( [-2dM, 2dM] \).
+
+That is, let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent.
+We can represent
+\begin{align*}
+    &\mathbf{1}^\top\Delta \alpha = 2M (I_2 - 1) 
+    &\mathbf{1}^\top\Delta \beta  = 2M (J_{2d} - d)
+\end{align*}
+
+We can use this correspondence to translate the event 
+\[
+\{ |\mathbf{1}^\top \Delta \beta| > |\Delta \alpha| \}
+\cap
+\{ \sign(\Delta \alpha) \neq \sign(\mathbf{1}^\top \Delta \beta) \}.
+\]
+into an equivalent event in terms independent Irwin-Hall random variables:
+\begin{align*}
+    Pr& \left( \{ |\mathbf{1}^\top \Delta \beta| > |\Delta \alpha| \}
+    \cap
+    \{ \sign(\Delta \alpha) \neq \sign(\mathbf{1}^\top \Delta \beta) \} \right) \\
+    =& 
+    Pr \left( \{ \Delta \alpha > 0 \} \cap \{ \mathbf{1}^\top \Delta \beta < - \Delta \alpha \} \right)
+    +
+    Pr \left(
+    \{ \Delta \alpha < 0 \} \cap \{ \mathbf{1}^\top\Delta \beta > - \Delta \alpha \} \right) \\
+    =& 
+    Pr \left( \{ 2M (I_2 - 1)  > 0 \} \cap \{ 2M (J_{2d} - d) < - 2M (I_2 - 1)  \} \right)  \\
+    &+
+    Pr \left( \{ 2M (I_2 - 1)  < 0 \} \cap \{ 2M (J_{2d} - d) > - 2M (I_2 - 1)  \} \right) \\
+    =& 
+    Pr \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d + 1 - I_2 \}  \right) +
+    Pr \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d + 1 - I_2 \} \right).
+\end{align*}
+
+That is, unexplained component sign flips have the same volume as the region where \( I_2 \) falls above its median and \( J_{2d} \) falls sufficiently far in its left tail, or vice versa.
+
+Finally, as \( d \to \infty \), sign flips have a volume equal to
+\begin{equation}
+\label{eq:irwin_hall_pr}
+ Pr \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d \}  \right) +
+    Pr \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d \} \right).
+\end{equation}
+Since the median of \( I_2 \) is $1$ and the median of \( J_{2d} \) is $d$, and the two random variables are independent, each probability equals \( 0.25 \).
+The corresponding fraction of $C_M$ leading to sign flips is therefore \( 0.5 \) as claimed.
+
+\begin{remark} \label{remark:computing_irwin_hall}
+We can calculate the probabilities in \cref{eq:irwin_hall_pr} exactly for small \( d \) by using the Irwin-Hall$(n)$ cumulative distribution function (CDF),
+\begin{equation}
+F(x) = \frac{1}{n!} \sum_{k=0}^{\lfloor x \rfloor} (-1)^k \binom{n}{k} (x - k)^n. \label{eq:exact_irwin_hall}
+\end{equation}
+However, for larger \( d \), the combinatorial terms in the CDF become difficult to evaluate numerically.
+In those cases the central limit theorem allows us to approximate an Irwin-Hall$(2d)$ distribution with a \( N(d, \frac{d}{6})\) distribution.
+We compute the probabilities in \cref{sec:sign_flip_fraction} for $d \leq 40$ using the exact CDF in \cref{eq:exact_irwin_hall}, and we use the normal approximation for $d > 40$.
+\end{remark}
+
+\subsubsection{Volume of Sign Flip Region Without Covariate Standardization}
+\label{appendix:sign_flip_simulation}
+The preceding analysis calculates the volume of the sign-flip region when covariates are standardized via \cref{lemma:units}.
+Here, we repeat the exercise without standardizing any of the covariates.
+Let each of \( \alpha_H, \alpha_K, \beta_H, \beta_K, \mu_H \) and \( \mu_K \) lie inside a cube of appropriate dimension, with side length \( 2M > 0 \) and center at the origin.
+Deriving a closed form expression for the volume of the sign flip region is challenging, so we estimate this volume by simulation.
+For each \( d \in \{1, \dots, 100 \} \) and \( 2M \in \{2, 20, 200\} \), we draw each regression parameter independently from an appropriate Uniform distribution, and then determine whether the unexplained component flips signs.
+We simulate 1,000 draws for each combination of \( d \) and \( M \), and plot the proportion of unexplained component sign flips for each combination in \cref{fig:prob_unexplained_simulated}.
+
+For the explained component, the percentage of the parameter space with sign flips appears constant at 50 \%, regardless of \( d \) or \( M \). 
+This is consistent with the result for covariates standardized via \cref{lemma:units}.
+For the unexplained component, the percentage of the parameter space with sign flips is nonzero for even small \( d \) and \( M \), and appears to approach \( 50\% \) as each of \( d \) and \( M \) grow.
+This behavior is similar to the result for standardized covariates.
+Together, these findings suggest that the conclusions from \cref{proof:explained_fraction,prop:unexplained_fraction} are not simply a result of our choice of units.
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=0.5\linewidth]{Sections/Figures/prob_flip_simulated.pdf}}
+    \caption{Percentage of parameter space leading to unexplained component sign flips, without covariate standardization.}
+    \label{fig:prob_unexplained_simulated}
+\end{figure}
+
+\subsection{Proofs from \cref{sec:reconciling_theory_empirics}}
+
+
+\subsubsection{Proof of \cref{prop:no_sign_flip}}
+\label{proof:no_sign_flip}
+Recall that by definition
+$$
+	U^{(K)} := \mu_H^T \Delta\beta + \Delta\alpha, \quad \quad U^{(H)} := \mu_K^T \Delta\beta + \Delta\alpha.
+$$
+By assumption, $\sign(\Delta\alpha) = \sign(\mu_H^T\Delta\beta) = \sign(\mu_K^T\Delta\beta)$, and thus $\sign(U^{(H)}) = \sign(U^{(K)})$.
+
+% WTS 1-16-2026: removed this section as it's obvious (leading us to downgrade the proposition to a remark)
+%\subsubsection{Proof of \cref{prop:no_explained_sign_flip}}
+%\label{proof:no_explained_sign_flip}
+%As $\mu_K \neq \mu_H$ by assumption, \cref{lemma:units} applies to imply that we can fix units such that $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$. Then $\Delta\mu = \mathbf{1}$, and the condition for the explained component to not sign flip, $\sign(\Delta\mu^T\beta_K) \neq \sign(\Delta\mu^T \beta_H)$ reduces to:
+%\begin{equation}
+%	\sign\left( \sum_{i=1}^d \beta_{K,i} \right) \neq \sign\left( \sum_{i=1}^d \beta_{H,i} \right),
+%\end{equation}
+%as claimed.
+

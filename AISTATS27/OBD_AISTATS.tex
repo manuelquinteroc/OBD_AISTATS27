@@ -1,0 +1,105 @@
+% ===========================================================================
+% AISTATS submission -- built on the OFFICIAL AISTATS 2026 author kit
+%   aistats2026.sty  (2026/08/29), fancyhdr.sty, sample_paper.tex
+%   The AISTATS 2027 site (aistats.org/aistats2027) is not live yet; swap in
+%   aistats2027.sty and update \usepackage below when it is published.
+%
+% Content: the full NeurIPS 2026 submission (neurips2026/), not the trimmed
+% workshop version.
+%
+% Default = anonymous submission. For camera-ready use
+%   \usepackage[accepted]{aistats2026}
+% and for a non-anonymous preprint
+%   \usepackage[preprint]{aistats2026}
+% ===========================================================================
+\documentclass[twoside]{article}
+
+\usepackage{aistats2026}
+%\usepackage[accepted]{aistats2026}   % camera-ready
+%\usepackage[preprint]{aistats2026}   % non-anonymous preprint
+
+\usepackage[round]{natbib}
+\renewcommand{\bibname}{References}
+\renewcommand{\bibsection}{\subsubsection*{\bibname}}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{thmtools}
+\usepackage[capitalise]{cleveref}
+\input{mathnotation}
+
+\usepackage{float}          % tables and figures
+\usepackage{subcaption}     % side-by-side subfigures
+\usepackage{thm-restate}
+\usepackage{algorithm}
+\floatname{algorithm}{Decision tree}
+\usepackage{algpseudocode}
+
+\usepackage{enumitem}   % for nested and customized enumerate labels
+\usepackage{makecell}
+\usepackage{multirow}
+
+% Cleveref for cross-references
+\crefname{equation}{Equation}{Equations}
+\crefformat{equation}{Equation~#2#1#3}   % Only the number is hyperlinked
+\Crefformat{equation}{Equation~#2#1#3}   % Only the number is hyperlinked (capitalized)
+\crefname{figure}{Figure}{Figures}
+\Crefname{figure}{Figure}{Figures}
+\crefname{table}{Table}{Tables}
+\Crefname{table}{Table}{Tables}
+
+% Theorem styles
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}[section]
+\crefname{assumption}{Assumption}{Assumptions}
+\Crefname{assumption}{Assumption}{Assumptions}
+
+% Shorter forms used in the running heads once the paper is accepted:
+%\runningtitle{Do covariates explain why these groups differ?}
+%\runningauthor{Quintero, Shreekumar, Stephenson, Broderick}
+
+\begin{document}
+
+\twocolumn[
+
+\aistatstitle{Do covariates explain why these groups differ? The choice of reference group can reverse conclusions in the Oaxaca-Blinder decomposition}
+
+\aistatsauthor{ Author 1 \And Author 2 \And Author 3 \And Author 4 }
+
+\aistatsaddress{ Institution 1 \And Institution 2 \And Institution 3 \And Institution 4 } ]
+
+\begin{abstract}
+Scientists often want to explain why an outcome is different in two groups. For instance, differences in patient mortality rates across two hospitals could be due to differences in the patients themselves (covariates) or differences in medical care (outcomes given covariates). The Oaxaca–Blinder decomposition (OBD) is a standard tool to tease apart these factors. It is well known that the OBD requires choosing one of the groups as a reference, and the numerical answer can vary with the reference. To the best of our knowledge, there has been no systematic investigation into whether the choice of OBD reference can yield different substantive conclusions and how common this issue is. In the present paper, we give existence proofs in real and simulated data that the OBD references can in fact yield substantively different conclusions. Our empirical exercises find that this sensitivity is more common when the OBD is extended to more complex regression models, including a pretrained transformer. Our theoretical and empirical results together establish that these conclusion reversals are not entirely driven by model misspecification, small data, or adversarial parameter choices. Our results suggest that practitioners should always report both directions of the OBD; that modern machine learning and large datasets do not automatically resolve the conclusion reversal problem; and that further work on this problem is needed.
+\end{abstract}
+
+% Main sections
+\input{Sections/01_introduction}
+\input{Sections/02_pooled_OBD.tex}
+\input{Sections/03_real_healthcare_example}
+\input{Sections/05_sign_reversal}
+\input{Sections/06_conclusion}
+
+\bibliographystyle{plainnat}
+\bibliography{OBD_signflip}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\appendix
+\thispagestyle{empty}
+\input{Sections/10_Appendix_lit_review_xAI.tex}
+\input{Sections/11_Appendix_lit_review_index_number_problem.tex}
+\input{Sections/09_icu_details}
+\input{Sections/08_Appendix_example}
+\input{Sections/07_Appendix_theory}
+\input{Sections/12_licenses.tex}
+
+\end{document}

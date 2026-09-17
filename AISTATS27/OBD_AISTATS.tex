@@ -1,22 +1,27 @@
 % ===========================================================================
-% AISTATS submission -- built on the OFFICIAL AISTATS 2026 author kit
-%   aistats2026.sty  (2026/08/29), fancyhdr.sty, sample_paper.tex
-%   The AISTATS 2027 site (aistats.org/aistats2027) is not live yet; swap in
-%   aistats2027.sty and update \usepackage below when it is published.
+% AISTATS 2027 submission -- built on the OFFICIAL AISTATS 2027 author kit
+%   aistats2027.sty (2026/09/02), fancyhdr.sty, sample_paper.tex
+%   (template_reference/ holds the kit's sample paper for comparison).
 %
 % Content: the full NeurIPS 2026 submission (neurips2026/), not the trimmed
 % workshop version.
 %
+% 2027 kit notes: US-letter page size is enforced by the style; first-level
+% section headings are set in ALL CAPS automatically; camera-ready papers must
+% use author-year citations (we already load natbib[round] + plainnat); an
+% "AI use statement" is REQUIRED (does not count toward the page limit) -- see
+% the placeholder before the references.
+%
 % Default = anonymous submission. For camera-ready use
-%   \usepackage[accepted]{aistats2026}
+%   \usepackage[accepted]{aistats2027}
 % and for a non-anonymous preprint
-%   \usepackage[preprint]{aistats2026}
+%   \usepackage[preprint]{aistats2027}
 % ===========================================================================
 \documentclass[twoside]{article}
 
-\usepackage{aistats2026}
-%\usepackage[accepted]{aistats2026}   % camera-ready
-%\usepackage[preprint]{aistats2026}   % non-anonymous preprint
+\usepackage{aistats2027}
+%\usepackage[accepted]{aistats2027}   % camera-ready
+%\usepackage[preprint]{aistats2027}   % non-anonymous preprint
 
 \usepackage[round]{natbib}
 \renewcommand{\bibname}{References}
@@ -87,6 +92,15 @@ Scientists often want to explain why an outcome is different in two groups. For 
 \input{Sections/03_real_healthcare_example}
 \input{Sections/05_sign_reversal}
 \input{Sections/06_conclusion}
+
+% Required by the AISTATS 2027 kit (does not count toward the page limit).
+% TODO: fill in the bracketed parts per the AISTATS 2027 AI Policy for Authors.
+\subsection*{AI use statement}
+In this work, we used generative AI tools for [tasks with required disclosure].
+We have not used generative AI tools for [other tasks with required disclosure], and [the rest of the required disclosure tasks] are not applicable to this work.
+Additionally, we used generative AI tools for [tasks with recommended disclosure].
+We have reviewed all AI-assisted work.
+We take responsibility for the final content of this work, including text, claims, or artifacts produced with the aid of generative AI.
 
 \bibliographystyle{plainnat}
 \bibliography{OBD_signflip}

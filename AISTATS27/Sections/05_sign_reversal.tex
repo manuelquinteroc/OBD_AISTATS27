@@ -5,292 +5,102 @@ Our examples above serve as an existence proof that reference group choice can r
 However, a few major questions remain.
 First, do these conclusion reversals occur in the absence of finite-sample noise; i.e., do practitioners with large-scale datasets still need to worry about them?
 Second, even if conclusion reversals can occur, do they occur outside of mathematically adversarial examples (i.e., ``measure zero'' in some sense)?
+Third, when should we expect sign flips to be more or less frequent?
 
-In this section, we mathematically prove the answer to both questions is yes.
+In this section, we mathematically prove the answer to the first two questions is yes, and derive closed-form equations for the probability of sign flips that give us intuition about our third question.
 \cref{sec:simulated_example} complements our argument with an example where a sign flip occurs even without sampling noise.
 
 In what follows, we study conclusion reversals that involve the explained or unexplained component changing signs from positive to negative, or vice versa.
-For mathematical tractability and applicability to practical usage, we continue our focus on the OBD (vs.\ NOBD). % (i.e., using linear models in \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}).
-To show that sign flipping is not an artifact of finite samples, we work in the population limit; since we work in the population limit, significance is no longer a concern.
-And to show that sign flipping is not a ``measure zero'' phenomenon, we show that sign flips of both components represent a large proportion of the parameter space, in a sense we make precise below.
+To balance mathematical tractability and generality of our theory, we will focus on the NOBD under a fairly general class of functions $f^H, f^K$ -- those drawn from a Gaussian process.
+%For mathematical tractability and applicability to practical usage, we continue our focus on the OBD (vs.\ NOBD). % (i.e., using linear models in \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}).
+To show that sign flipping is not an artifact of finite samples, we work in the population limit; since we work in the population limit, statistical significance is no longer a concern.
+And to show that sign flipping is not a ``measure zero'' phenomenon, we show that sign flips in general occur with non-zero probability.
 % We use our analysis of the parameter space to interpret our empirical exercises and discuss frontier work on the OBD that enriches the covariate space using machine learning models \citep{bach2024heterogeneity,quintero2025,flachaire2025decomposing}.
 
-\subsection{Characterizing sign flips}
-\label{sec:sign_flip_characterizations}
-
-%%% AS: the sentences below felt redundant with the intro to this section
-% We start by concretizing the type of decision we will focus on. 
-% In particular, we will consider a conclusion based on the sign of either the explained or unexplained component of the OBD.
-% We will assume we are working with full population information so that a sign flip alone is enough to change conclusions.
-
-
-% Typically the OBD represents the special case of \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} 
-% where the conditional expectation of the outcome given the covariate is linear, as we describe next.
-% We maintain focus on linear models for the following reasons:
-% (1) The linear model version of the OBD remains the one widely used in practice in the present day.
-% (2) Extensions involving penalized regression (e.g., lasso) maintain the same linear-in-features structure.
-% (3) Linearity gives us a tractable way of measuring model complexity in terms of the number of included features.
-% As we identify substantive problems with correctly specified linear models; we expect practical issues only compound beyond this relatively simple case.
-
-%Our goal is to study conditions on population-level quantities that produce sign flips in the explained and unexplained components.
-%For tractability, we begin by assuming finite-dimensional covariates, $X \in \mathbb{R}^d$, and a linear model for $\mathbb{E}_g[Y \mid X]$: $\alpha_g + X^\top \beta_g$
-%for some intercept $\alpha_g \in \mathbb{R}$ and slope $\beta_g \in \mathbb{R}^d$.
-%\textcolor{red}{Throughout, we will assume an infinite data limit}, where $\alpha_g, \beta_g$ are the parameters of the population-level best linear fit to $\mathbb{E}_g[Y\mid X]$.
-%\textcolor{red}{In addition to being theoretically tractable, the linearity assumption is practically relevant, as the OBD is often estimated using OLS to model $\mathbb{E}_g[Y\mid X]$, and OLS coefficients converge to $\alpha_g, \beta_g$ if an appropriate law of large numbers applies.}
-%Then, for groups $g,g'$, we observe $\E_{g'} [ \E_g  [ Y | X ] ] = \alpha_g + \E_{g'}[X]^\top \beta_g$.
-
-%We introduce the notation
-%$\mu_g := \mathbb{E}_g[X],
-%\Delta \mu := \mu_H - \mu_K,
-%\Delta \beta := \beta_H - \beta_K,
-%\Delta \alpha := \alpha_H - \alpha_K.
-%$
-%With these choices, the OBD
-%(\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}) becomes
-%\begin{equation}
-%    \Delta_Y = \underbrace{\Delta \mu^\top \beta_H}_{E^{(H)}} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{U^{(H)}} = \underbrace{\Delta \mu^\top \beta_K}_{E^{(K)}} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{U^{(K)}}.
-%\end{equation}
-%The first equality is the OBD with reference group $H$, and the second with reference group $K$.
-
-We start by characterizing sign flips in the explained and unexplained components, respectively; these characterizations will help us later establish
-that sign flips of either component are common in parameter space.
-
-\textbf{Explained component.} Explained component sign flips are relatively straightforward to characterize.
-%We now study when each of the explained component can flip sign.
-\begin{definition}
-	\label{defn:sign_flip_explained}
-	We say the OBD \emph{explained component flips signs} if the sign of the explained term, $\Delta\mu^T \beta_g$, depends on the reference group. That is,
-	\begin{equation}
-        \label{eq:sign_flip_condition_explained_neq}
-		\sign\!\left(\Delta\mu^T \beta_H\right) \neq \sign\!\left(\Delta\mu^T \beta_K\right).
-	\end{equation}
-\end{definition}
-
-From the definition, we can immediately see the following alternative characterization.
+\subsection{A general computation of sign flip probabilities}
+\label{sec:general_flip_probabilities}
+We wish to understand, in general, the probability of the OBD flipping signs under the choice of the reference group.
+To discuss such probabilities, we choose to treat the functions $f^H$ and $f^K$ as random and the covariate distributions $h$ and $k$ as fixed.
+This models the situations considered throughout our paper, where the populations are fixed (e.g., men and women or hospital $H$ and hospital $K$) and potentially well-known to the data scientist, but the response functions are unknown and thus may be considered random.
+\textcolor{red}{curious what people think of this justification for why $f$ is random.}
+We let $\nu$ be a distribution over functions $f$ and make the following two assumptions.
 %
-\begin{remark}
-    \label{rmk:explained_ordering_sensitivity}
-    The OBD explained component flips signs if and only if the following two conditions hold:
-    \begin{equation}
-    \label{eq:sign_flip_condition_explained}
-        \Delta\mu^T \beta_H \neq \Delta\mu^T \beta_K, \quad \min\{\Delta\mu^T \beta_H,\ \Delta\mu^T \beta_K\} < 0 < \max\{\Delta\mu^T \beta_H,\ \Delta\mu^T \beta_K\}.
-    \end{equation}
-\end{remark}
-Since $\Delta\mu$ is constant across analyses, sign flips in the explained component are straightforwardly driven
-by differences in sign in the slope between groups.
+\begin{assumption} \label{assum:iid}
+Assume that $f^K, f^H$ are drawn i.i.d.\ from $\nu$
+\end{assumption}
+\begin{assumption} \label{assum:atomless}
+	Under \cref{assum:iid}, there is zero probability that any explained or unexplained component is equal to zero.
+\end{assumption}
+\cref{assum:atomless} is likely satisfied by any continuous distribution $\nu$, and we assume it only to make the resulting probabilities more readable.
+Finally, some extra notation will be useful in stating our theoretical results.
+\begin{equation}
+	V(f) := \int f(x)h(x) dx, \quad W(f) := \int f(x)k(x)dx
+\end{equation}
+Then the explained component is $V(f^g) - W(f^g)$ for reference group $g$, and the unexplained component with reference group $H$ is $W(f^H) - W(f^K)$, and likewise for reference group $K$.
+Now we can prove a basic fact about explained component sign flips
+\begin{proposition} \label{prop:generic_flip_probs}
+	Assume $\nu$ is a distribution over models such that \cref{assum:atomless,assum:iid} hold.
+	Then the probability of a sign flip in the explained component is given by
+	\begin{equation}
+		Pr_\nu(\mathrm{explained\ sign\ flip}) = 2p(1-p), \label{eq:explained_flip_pr}
+	\end{equation}
+	where $p := \nu(V-W > 0)$.
+	For the unexplained component, let $(V,W)$ and $(V', W')$ be i.i.d.\ copies of the pair $(V(f), W(f))$. Then:
+	\begin{align}
+		Pr_\nu(& \mathrm{unexplained\ sign\ flip}) \nonumber \\
+		& = Pr_\nu \left( (V - V')(W - W') < 0 \right) \label{eq:unexplained_flip_pr}
+	\end{align}
+\end{proposition}
+See \textcolor{red}{Appendix todo} for a proof.
+\cref{prop:generic_flip_probs} is highly generic, but it is not immediately useful.
+In particular, it does not answer the questions of whether sign flips are adversarial events, and, if not, when we should expect them to occur more or less frequently.
+To answer such qualitative questions, we need to compute \cref{eq:explained_flip_pr,eq:unexplained_flip_pr}; we undertake this task in the next section.
 
-% A large region of the parameter space satisfies \cref{eq:sign_flip_condition_explained_neq}.
-% We compute the volume of this region by integrating the region that satsfies \cref{eq:sign_flip_condition_explained_neq} against a Uniform(-M, M) measure on \( \beta_H \) and \( \beta_K \), where \( M \) is large.
-% The computations, which appear in \cref{app:sign_flip_volume}, show that 50\% of the parameter space satisfies \cref{eq:sign_flip_condition_explained_neq}.
+\subsection{Sign flip probabilities under a GP prior}
+\label{sec:gp_sign_flips}
+We will specify a particular model for $\nu$ to enable computation of the probabilities in \cref{prop:generic_flip_probs}.
+We choose a Gaussian process (GP) for mathematical tractability; however, we note this is not a particularly constraining choice, as the choice of kernel and mean function allows for a rich class of distributions that $f^H$ and $f^K$ might be drawn from.
+\begin{assumption} \label{assum:gp}
+	$\nu$ is a Gaussian process (GP) with mean function $\mu$ and kernel function $C$. Under this model, define:
+	\begin{align*}
+		 \langle h, k \rangle_C &:= \int\int C(x,x') h(x) k(x') dx dx' \\
+		& \| h \|_C^2 := \langle h, h \rangle_C \quad \| k \|_C^2 := \langle k, k \rangle_C.
+	\end{align*}
+\end{assumption}
+Finally, we will make some regularity assumptions on the kernel and mean function of the GP.
+\begin{assumption} \label{assum:fubini}
+	The following hold with $m = k$ and $m = h$:
+	\begin{equation}
+		\int \sqrt{C(x,x)} m(x) dx < \infty, \;\; \int | \mu(x) | m(x) dx < \infty
+	\end{equation}
+\end{assumption}
+\textcolor{red}{Say something intelligent about how broad these conditions are here.}
+Under these assumptions, we can derive closed forms for the explained and unexplained sign flip probabilities.
 
-%To see how this characterization applies in practice, we return to the ICU mortality and heart rate example presented in \cref{sec:real_example}. In that example, we observed a sign flip in the explained component of the OBD when using men or women as the reference group. Within HR quartile two, the covariate mean difference $\Delta\mu$ between men and women is fixed by the sample, but the coefficients governing how mortality loads on these covariate differences differ in sign across groups. In particular, the opposite directions of the heart rate coefficients for men and women shown in \cref{fig:hr_quartile2} suggest that a sign flip can occur. As a result, $\Delta\mu^T\beta_{\text{women}}$ and $\Delta\mu^T\beta_{\text{men}}$ have opposite signs, leading to a sign reversal in the explained component. A numerical breakdown of $\Delta\mu$ and the group-specific coefficients is reported in Appendix~\cref{tab:delta_mu_betas}.
+For notation, we let $\Phi$ be the CDF of the standard normal function.
+\begin{proposition} \label{prop:sign_flip_gp}
+	Take \cref{assum:iid,assum:atomless,assum:gp,assum:fubini}. Then we have that:
+	\begin{align}
+		&Pr_\nu[\mathrm{unexplained\ flip}] = \frac{1}{\pi} \arccos\left(\frac{\langle h, k \rangle_C}{\| h \|_C \| k \|_C} \right) \label{eq:unexplained_flip_pr_gp} \\
+		&Pr_\nu[\mathrm{explained\ flip}] = 2 \Phi (\lambda) \Phi(-\lambda), \label{eq:explained_flip_pr_gp}
+	\end{align}
+	where we have used $\lambda := \langle \mu, h-k \rangle / \|h -k\|_C$.
+\end{proposition}	
+We can use \cref{prop:sign_flip_gp} to answer our qualitative questions.
+First, we can see that the probabilities of sign flips are not zero, even in the infinite sample limit where we have perfect knowledge of $f^H$ and $f^K$.
+Second, we see that for general $h,k, C,\mu$, neither the explained nor unexplained sign flip probability is zero; only in highly specific cases such as $h = k$ do we get zero probabilities.
+As our model for $\nu$ is fairly generic, we conclude that sign flips are not an ``adversarial'' or ``measure zero'' phenomenon, and we should expect to encounter them in practice.
+Finally, when should we expect sign flips to be more or less frequent?
+We consider this question for the explained and unexplained component separately.
+
+\textbf{Explained component.} We see that the explained component is likely to flip if $| \lambda |$ is small and unlikely to flip if $|\lambda|$ is large.
+The numerator of $\lambda$ is large if $h$ and $k$ mainly differ on covariates with large means.
+The denominator is small if $h$ and $k$ vary on covariates that, under $C$, have low variance.
+Overall, to reduce the probability of explained sign flips, it must be that $h$ and $k$ vary primarily on covariates that have a non-zero mean \emph{and} a small variance -- i.e., covariates with a high signal-to-noise ratio under $f \sim GP(\mu, C)$.
 
 \textbf{Unexplained component.}
-Unlike the explained component, sign reversals in the unexplained component arise from the interaction between slope and intercept differences.
-\begin{definition}
-    \label{def:unexplained_sign_flip}
-	Recall $\Delta\beta := \beta_H - \beta_K$ and $\Delta\alpha := \alpha_H - \alpha_K$. The OBD \emph{unexplained component flips signs} if the sign of the unexplained term, $\mu_{g'}^T \Delta\beta + \Delta\alpha$, depends on the reference group. That is
-	\begin{equation}
-		\sign\left( \mu_K^T \Delta\beta + \Delta\alpha \right) \neq \sign\left( \mu_H^T \Delta\beta + \Delta\alpha \right).
-	\end{equation}
-\end{definition}
-
-The following alternative characterization for sign flips of the unexplained component is analogous to \cref{rmk:explained_ordering_sensitivity}.
-%
-\begin{restatable}[OBD unexplained sign flips]{proposition}{OBSignFlips}
-    \label{thm:unexplained_ordering_sensitivity}
-    The OBD unexplained component flips signs if and only if the following two conditions hold:
-    \begin{equation}
-    \label{eq:sign_flip_condition}
-        \mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta, \quad \min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\} < -\Delta\alpha < \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
-    \end{equation}
-\end{restatable}    
-See \cref{sec:sign_flip_proof} for the proof.
-From \cref{thm:unexplained_ordering_sensitivity}, we see that group-specific slopes serve a different role in sign flips in the unexplained case relative to the explained case.
-Suppose we hold fixed the covariate means $\mu_H$ and $\mu_K$. Then scaling up the magnitude of the vector change-in-slopes ($\Delta \beta$) induces sign flips for a greater range of values 
-of the scalar change-in-intercepts ($\Delta \alpha$).
-That is, larger magnitudes of \( \Delta \beta \) create ``more room'' for sign flips in the unexplained component.
-
-%    \Cref{thm:ordering_sensitivity} shows that sign reversals in the unexplained component are not edge cases. Equation \(U^{(K)} - U^{(H)} = -B\) implies that switching the reference group shifts the unexplained term by exactly \(B\), and the explained part by \(-B\). When \(B \neq 0\), this shift can flip the diagnosis—from structural underpayment to overpayment—even with a correctly specified model. The disagreement region \(S \in (-B, 0)\) for \(B > 0\) (and its mirror for \(B < 0\)) is tight: outside this interval, both orderings agree in sign; inside it, they disagree (see \cref{imageTODO}). This window has width \(|B|\), which grows with larger covariate shifts or slope differences—both common in practice. So sign flips are not rare or pathological; they’re a general sensitivity that arises whenever \(B\) is materially different from zero. This motivates the next result.
-%
-%    The next corollary formalizes that the explained parts across orderings move in perfect opposition to the unexplained parts. Hence, any instability in the structural attribution is mirrored one-for-one by instability in the endowment attribution. This zero-sum coupling is central: it shows that ``credit” assigned to covariate differences depends on the arbitrary choice of reference.
-%    
-%
-%    \begin{restatable}[]{corollary}{explainablepart}
-%        \label{cor:explained_flip}
-%        With \(B\) as above,
-%        \(
-%        E^{(K)} = E^{(H)} - B
-%        \).
-%        Thus the explained components flip sign iff \(E^{(H)}(E^{(H)}-B)<0\); any flip window has width \(|B|\), and
-%        \(
-%        (E^{(K)}-E^{(H)}) = -(U^{(K)}-U^{(H)})
-%        \).
-%    \end{restatable}
-%
-%
-%It may be tempting to wonder whether this sensitivity is somehow bounded by the observed outcome gap \(\Delta_Y\). \Cref{cor:unbounded_sensitivity} in the Appendix addresses this question directly: even when \(\Delta_Y\) is held fixed, the ordering-induced swing in the structural component can be made arbitrarily large. That is, no a priori bound ties the magnitude of ordering sensitivity to the magnitude of the empirical gap itself.
-
-
-\subsection{Are sign flips an adversarial phenomenon?}
-\label{sec:sign_flip_fraction}
-
-After characterizing sign flips in \cref{sec:sign_flip_characterizations}, we can ask whether they occur only for adversarially chosen parameters.
-One formalization of this question is to ask what proportion of the volume of parameter space corresponds to sign flips --- and in particular, whether that proportion is non-zero.
-
-An immediate challenge with talking about volume within a parameter space is that the parameter space inherits
-its units from the covariates and response; in particular, any individual unit choice is somewhat
-arbitrary (e.g., centimeters vs.\ millimeters), but also different covariates need not be 
-comparable (e.g., temperature vs.\ weight). 
-The usual way to alleviate this incompatibility in one group is to center the covariates and set their scale (e.g., standard deviation) to be 1. 
-We can use similar normalization to center the covariates such that $\mu_K = \mathbf{0} \in \R^d$ and scale the covariates such that $\Delta\mu = \mathbf{1} \in \R^d$ (i.e., $\mu_H = \mathbf{1}$).
-%To alleviate this potential incompatibility between dimensions,
-%we first make a common standardization choice in one population: we transform the covariate means to be zero, $\mu_K = \mathbf{0}$, where \( \mathbf{0} \) is a vector of zeros with appropriate length. How to standardize population spread and how to handle the second group are less obvious,
-%but we address both of these challenges by choosing $\mu_H = \mathbf{1}$, where \( \mathbf{1} \) is a vector of ones with appropriate length.
-Our standardization choice ($\mu_K= \mathbf{0},\mu_H=\mathbf{1}$) is
-possible as long as $\mu_K \neq \mu_H$ elementwise (see \cref{lemma:units}).
-
-In the theory that follows, we will find it convenient to restrict our focus to a bounded range of parameters. Namely, we
-assume that, for some $M > 0$ and all groups $g$, the entries of $\beta_g$ and $\alpha_g$ lie in $[-M,M]$.
-Note, however, that we do not restrict the choice of $M$, and the proportions we compute in all
-cases end up having no dependence on $M$.
-
-%To do so, we must choose a region of parameter space we are interested in and then compute the volume of this region that leads to sign flips.
-%What region of parameter space should we pick?
-%In absence of any specific applied problem, we first standardize units of $X$ such that $\mu_K = 0$ and $\mu_H = 1$ (this is always possible as long as $\mu_K \neq \mu_H$; see \cref{lemma:units}) and then let all entries of $\beta_g$ and $\alpha_g$ lie in $[-M,M]$ for $M > 0$, $g \in \{H,K\}$.
-%The fact that each $\mu_g$ has constant entries and that each entry of each $\beta_g$ lies in the same range means that we are making no assumption on the magnitude of each covariate's constribution to the response $Y$ (i.e., $\mu_{g,i}\beta_{g,i}$ sits in the same range for all $i=1,\dots,d$).
-As the next two results demonstrate, under these choices, the fraction of parameters leading to sign flips is fairly large.
-%
-First, for the explained component, we find that, under our conditions, half of the parameter space $(\beta_H, \beta_K, \alpha_H, \alpha_K)$ corresponds to sign flips.
-\begin{proposition} \label{prop:explained_fraction}
-	Suppose $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$.
-	Choose any $M > 0$.
-	Let $C_M \subset \R^{2d}$ be a cube with side length $2M > 0$ centered at the origin, and suppose $(\beta_H, \beta_K)$ jointly lie in this cube. Let $C_{flip} \subset C_M$ be the settings of $(\beta_H, \beta_K)$ that lead to a sign flip in the explained component.
-	Then
-	\begin{equation}
-		\frac{\mathrm{Volume}(C_{flip})}{\mathrm{Volume}(C_M)} = \frac{1}{2}.
-	\end{equation}
-\end{proposition}
-See \cref{proof:explained_fraction} for the proof.
-
-Second, for the unexplained component, we find that the proportion of parameter space corresponding to sign flips nears 1/2 as the dimension of the covariate vector grows.
-\begin{proposition} 
-\label{prop:unexplained_fraction}
-	Suppose $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$.
-	Let $C_M \subset \R^{2d+2}$ be a cube with side length $2M > 0$ centered at the origin, and suppose $(\beta_K, \beta_H, \alpha_K, \alpha_H)$ jointly lie in this cube.
-	Let \( I_2 \sim \text{Irwin-Hall}(2) \) and \( J_{2d} \sim \text{Irwin-Hall}(2d) \) be independent random variables.
-	The fraction of $C_M$ for which a sign flip occurs in the unexplained component is given by:
-\begin{align} \label{eq:unexplained_fraction}
-    P_d := \mathrm{Pr} \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d + 1 - I_2 \}  \right) + \mathrm{Pr} \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d + 1 - I_2 \} \right),
-\end{align}
-where the probability $\mathrm{Pr}$ is over the independent random variables $I_2, J_{2d}$.
-Moreover, $P_d \underset{d \to \infty}{\longrightarrow} 1/2$.
-\end{proposition}
-See \cref{proof:unexplained_fraction} for the proof.
-The joint Irwin-Hall probability in \cref{eq:unexplained_fraction} is hard to evaluate analytically, so we evaluate it numerically for various values of $d$; see \cref{fig:sign_flip_overview} (right).
-For even modest dimension $d$, the fraction of parameter space leading to sign flips exceeds 40\%.
-% Figure moved to \cref{fig:sign_flip_overview} (right) in \cref{sec:real_example}.
-% \begin{figure}
-%     \centerline{\includegraphics[width=0.75\linewidth]{Sections/Figures/prob_unexplained.pdf}}
-%     \caption{Percentage of parameter space leading to sign flips. See \cref{remark:computing_irwin_hall} for how we compute the percentage for the unexplained component.}
-%     \label{fig:prob_unexplained}
-% \end{figure}
-
-While our results above assume the standardization $\mu_K=\mathbf{0}, \mu_H=\mathbf{1}$, 
-we confirm by simulations that we expect similar results when we take each coordinate of $\mu_g$ uniform
-in the range $[-M,M]$ as well. See \cref{appendix:sign_flip_simulation} for details.
-
-\subsection{Reconciling the theoretical and empirical prevalence of sign flips}
-\label{sec:reconciling_theory_empirics}
-
-Our main focus in \cref{sec:sign_flip_fraction} was establishing that a non-zero proportion of parameter
-space yielded sign flips.
-% In fact, our theoretical results suggest a large fraction of parameter space produces sign flips in both OBD components.
-One limitation of this theory is that it assumes regression parameters are uniformly distributed, when in practice we may expect they follow non-uniform distributions.
-Indeed, our earlier empirical exercise from \cref{tab:flip_summary_main}, finds that sign flips are less common than a direct application of theory would suggest. 
-Even if we count total flips and ignore statistical significance, we see sign flips in 19\% of (i.e., 27 of 139) tested subsets for the OBD.
-We now describe and interpret constraints on the parameter space that may produce fewer sign flips than implied by our theoretical results.
-
-% An exhaustive search of the literature using the OBD is beyond the scope of the present paper;
-% a paper corresponding to a Stata implementation of the OBD has thousands of citations alone \citep{jann2008}, and there are implementations
-% in other languages as well \citep{Hlavac2022oaxaca}.
-% Without trying to form a representative sample, we examined a selection of papers performing the OBD. 
-% Of the papers we examined, many did not report both directions of the OBD.
-% Of the papers that reported both directions \citep{ONeill2006, fortinLemieuxFirpo2011, sharafRashad2016, rahimiNazari2021}, none exhibited a sign flip.
-
-%% AS: this is now introduced (briefly) in Sec 3
-% Publication or other biases could affect the published literature. To avoid these concerns and also offer a more systematic investigation,
-% we examined collections
-% of OBD analyses one might potentially run on two publicly available datasets. 
-% In each case, our systematic search for sign flips turned up few examples.
-% First, we examined the PhysioNet ICU cohort collected for the study of in-hospital mortality \citep{goldberger2000physiobank}.
-% We started by evaluating the OBD across nine predefined data subsets: the full cohort, each ICU type category, two age groups (patients younger than $65$ and patients aged $65$ or older), and two groups defined by a median split of the SAPS--I score. For each of these subsets, we fit gender-specific linear models and computed the OBD. 
-% We found no sign flips.
-% We then expanded our analysis to a larger and more heterogeneous collection of subpopulations.
-% Across all $139$ data subsets, we found that $27$ exhibited at least one sign reversal --- a far cry from the number predicted by \cref{prop:explained_fraction,prop:unexplained_fraction}.
-% The HR quartile two example in \cref{sec:real_example} was one such example. We describe the data and our search procedure fully in 
-% \cref{appendix:icu_details}.
-
-% We ran a similar search on U.S.\ labor force data; in particular,
-% the raw data come from the 2016 American Community Survey 1-Year Public Use Microdata Sample \cite{uscensus_acs_pums_2016}.
-% We again purposely constructed a large set of data analyses to search for sign flips in different subsets of the data, comprising all combinations of the factors in Appendix \cref{tab:us_census_design}.
-% Out of the 355 comparisons we examined, we found zero cases where the explained component flipped sign and one case where the unexplained component flipped sign.
-% See \cref{appendix:us_labor_force} for details of this data set and our search procedure.
-% Again, these numbers are substantially lower than those predicted by \cref{prop:explained_fraction,prop:unexplained_fraction}.
-
-% We conclude from these two searches that we do not expect sign flips to be more than empirically rare, but
-% their existence is still possible.
-
-% How can it be that sign flips appear to be rare in practice (\cref{sec:sign_flips_practice}) but common in terms of parameter-space volume (\cref{sec:sign_flip_fraction})?
-
-\textbf{Explained component.} First, consider the explained component. Under the standardization from \cref{sec:sign_flip_fraction},
-we can simplify the characterization of when a sign flip happens.
-%
-\begin{remark} \label{rmk:no_explained_sign_flip}
-	Suppose $\mu_K = \mathbf{0}$ and $\mu_H = \mathbf{1}$.
-	Then there is a sign flip if and only if $\sign (\mathbf{1}^\top \beta_{H}) \neq \sign( \mathbf{1}^\top \beta_{K})$.
-\end{remark}
-%
-This observation follows immediately from \cref{defn:sign_flip_explained}.
-In some contexts, we may expect the elements of $\beta_g$ to be of the same sign in both groups.
-Consider the ICU mortality example from \cref{sec:real_example}.
-While we may expect risk factors to have different effect sizes for men and women a priori, there is little reason to think that many factors that increase men's mortality would decrease women's (or vice versa).
-\cref{rmk:no_explained_sign_flip} could then explain why we observe explained component sign flips in only 11 out of the 139 subgroups we test (\cref{tab:flip_summary_explained}).
-% AS: the flips could also reflect noise — the subgroups we test might be small, so that they _don't_ present much evidence about population-level differences (in line with few statistically significant flips)
-% Indeed, this observation makes the explained component sign flip in \cref{sec:real_example} more surprising, as it implies substantive differences in mortality risk in this subpopulation of men and women.
-
-\textbf{Unexplained component.} Next, consider the unexplained component. In this case, a sign flip intuitively requires the intercept and slope effects to pull in opposite directions across groups. When both move in the same direction, so that the group with higher baseline outcomes also exhibits higher returns to covariates, the unexplained component preserves its sign regardless of the chosen reference group.
-We now formalize these ideas.
-\begin{assumption}[Aligned intercept--slope effects]
-\label{ass:no_sign_flip}
-%\[
-%    (\mu_H^T \Delta\beta)(\mu_K^T \Delta\beta) > 0 
-%\quad \text{and}  
-%\]
-$
-    \sign(\Delta\alpha) = \sign(\mu_H^T \Delta\beta) = \sign(\mu_K^T \Delta\beta)
-$
-\end{assumption}
-
-\begin{proposition}
-    \label{prop:no_sign_flip}
-    Under \cref{ass:no_sign_flip}, the unexplained components 
-    \( U^{(H)}\) and  \(U^{(K)}\) share the same sign.
-\end{proposition}
-See \cref{proof:no_sign_flip} for the proof.
-In some domains, intercept and slope advantages might often move in the same direction; 
-\cref{prop:no_sign_flip} rules out sign flips in such cases.
-To illustrate, consider an analysis of the gender wage gap that attributes the difference in average earnings between men and women to covariates (e.g., work experience) and to outcomes given covariates (e.g., how experience is remunerated).
-\cref{ass:no_sign_flip} corresponds to the group with higher baseline wages ($\alpha_g$) also having higher returns to experience ($\beta_g$). 
-\cref{prop:no_sign_flip} is one explanation for why sign flips are rare in our analysis of U.S. labor force data (\cref{appendix:us_labor_force}): \cref{ass:no_sign_flip} holds in 182 out of 400 comparisons we search (45.5\%), ruling out unexplained component sign flips in those cases.
-
-However, \cref{ass:no_sign_flip} is not plausible in all domains.
-In the ICU setting from \cref{sec:real_example}, the assumption requires the higher mortality population to also be more sensitive to observed covariates.
-This relationship may fail to hold when important factors --- such as environmental exposure, chronic conditions, or family history of disease --- are not recorded in a researcher's dataset.
-If such \textit{omitted covariates} are strong predictors of mortality, a population may have a high mortality rate that is less sensitive to \textit{observed covariates}.
-Consistent with this intuition, \cref{ass:no_sign_flip} never holds across the 139 comparisons in the ICU data exercise.
-In \cref{appendix:ovb}, we explore how the presence of omitted covariates can generate parameter differences $\Delta\beta$ and $\Delta\alpha$ that do preclude sign flips, without invoking \cref{ass:no_sign_flip}.
-%We develop this argument with more rigor in \cref{appendix:ovb}, explicitly showing how the regression parameters \( \alpha \) and \( \beta \) are jointly influenced by unobserved covariates.
-
-% On the other hand, sign flips remain plausible for the unexplained component. 
-% Consider the SBP--BMI example in \cref{sec:simulated_example}, \cref{ass:no_sign_flip} would correspond to a case where the higher-resource group exhibits both a higher baseline SBP and a stronger SBP--BMI relationship than the lower-resource group. However, in the simulated data, the lower-resource group shows a steeper SBP--BMI slope while having a lower baseline; that is, the SBP--BMI example violates \cref{ass:no_sign_flip}, and indeed we see a sign flip in the unexplained component.
+The unexplained sign flip probability is driven to zero when $\langle h,k\rangle_C$ is equal to $\| h\|_C \| k \|_C$. 
+For intuition about when this will happen, suppose $C$ is a distance-based kernel, like the radial basis function (RBF) kernel. 
+Then $\langle h,k\rangle_C$ is large precisely when h puts significant mass in regions of space that are ``close'' to regions of space where $k$ puts significant mass; here, ``close'' is as defined by the length scale of the kernel, and ``large'' is measured with respect to the product $\|h\|_C \|k\|_C$. 
+Put differently, if there are many nearby regions of space where $h$ and $k$ are large \emph{and} we expect a randomly drawn $f$ to be relatively constant (because $C$ is high over for pairs of points drawn from across the region), then the probability of an unexpected sign flip is driven down.
+Alternatively, if regions where $h$ is high and regions where $k$ is high are sufficiently far apart that we expect $f$ to significantly vary between them, then the probability of an unexplained sign flip is driven up.

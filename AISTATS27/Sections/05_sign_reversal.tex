@@ -7,7 +7,7 @@ First, do these conclusion reversals occur in the absence of finite-sample noise
 Second, even if conclusion reversals can occur, do they occur outside of mathematically adversarial examples (i.e., ``measure zero'' in some sense)?
 Third, when should we expect sign flips to be more or less frequent?
 
-In this section, we mathematically prove the answer to the first two questions is yes, and derive closed-form equations for the probability of sign flips that give us intuition about our third question.
+In this section, we mathematically prove the answer to the first two questions is yes and derive closed-form equations for the probability of sign flips that allow an intuitive answer to the third question.
 \cref{sec:simulated_example} complements our argument with an example where a sign flip occurs even without sampling noise.
 
 In what follows, we study conclusion reversals that involve the explained or unexplained component changing signs from positive to negative, or vice versa.
@@ -19,7 +19,7 @@ And to show that sign flipping is not a ``measure zero'' phenomenon, we show tha
 
 \subsection{A general computation of sign flip probabilities}
 \label{sec:general_flip_probabilities}
-We wish to understand, in general, the probability of the OBD flipping signs under the choice of the reference group.
+We wish to understand, in general, the probability of the NOBD flipping signs under the choice of the reference group.
 To discuss such probabilities, we choose to treat the functions $f^H$ and $f^K$ as random and the covariate distributions $h$ and $k$ as fixed.
 This models the situations considered throughout our paper, where the populations are fixed (e.g., men and women or hospital $H$ and hospital $K$) and potentially well-known to the data scientist, but the response functions are unknown and thus may be considered random.
 \textcolor{red}{curious what people think of this justification for why $f$ is random.}
@@ -37,15 +37,15 @@ Finally, some extra notation will be useful in stating our theoretical results.
 	V(f) := \int f(x)h(x) dx, \quad W(f) := \int f(x)k(x)dx
 \end{equation}
 Then the explained component is $V(f^g) - W(f^g)$ for reference group $g$, and the unexplained component with reference group $H$ is $W(f^H) - W(f^K)$, and likewise for reference group $K$.
-Now we can prove a basic fact about explained component sign flips
+Now we can prove a basic fact about the probability of sign flips.
 \begin{proposition} \label{prop:generic_flip_probs}
-	Assume $\nu$ is a distribution over models such that \cref{assum:atomless,assum:iid} hold.
+	Take \cref{assum:atomless,assum:iid}.
 	Then the probability of a sign flip in the explained component is given by
 	\begin{equation}
 		Pr_\nu(\mathrm{explained\ sign\ flip}) = 2p(1-p), \label{eq:explained_flip_pr}
 	\end{equation}
 	where $p := \nu(V-W > 0)$.
-	For the unexplained component, let $(V,W)$ and $(V', W')$ be i.i.d.\ copies of the pair $(V(f), W(f))$. Then:
+	For the unexplained component, let $(V,W)$ and $(V', W')$ be i.i.d.\ copies of the pair $(V(f), W(f))$ with $f \sim \nu$. Then:
 	\begin{align}
 		Pr_\nu(& \mathrm{unexplained\ sign\ flip}) \nonumber \\
 		& = Pr_\nu \left( (V - V')(W - W') < 0 \right) \label{eq:unexplained_flip_pr}
@@ -74,6 +74,8 @@ Finally, we will make some regularity assumptions on the kernel and mean functio
 		\int \sqrt{C(x,x)} m(x) dx < \infty, \;\; \int | \mu(x) | m(x) dx < \infty
 	\end{equation}
 \end{assumption}
+These regularity conditions are extremely broad.
+E.g., any kernel with $C(x,x)$ equal to a constant (any stationary kernel) satisfies the first, and the second merely states that $\mu$ is integrable with respect to $h$ and $k$.
 \textcolor{red}{Say something intelligent about how broad these conditions are here.}
 Under these assumptions, we can derive closed forms for the explained and unexplained sign flip probabilities.
 

@@ -15,9 +15,15 @@ A researcher may wish to distinguish between these scenarios, but the Shapley pr
 
 \textbf{Pooled approaches.}
 Another approach to eliminate the index number problem is to define some ``pooled'' group and then measure deviations from this group in a three-term decomposition. For example, in the case of the (linear) OBD, one defines a pooled $\beta^*$ and then computes:
-\begin{equation}
-  \E_H[Y] - \E_K[Y] = (\mu_H - \mu_K)^T \beta^* + \mu_H^T (\beta_H - \beta^*) + \mu_K^T(\beta^* - \beta_K).
-\end{equation}
+% two-column layout: split over two lines (no symbols changed). Original kept below.
+{\color{red}
+\begin{align}
+  \E_H[Y] - \E_K[Y] &= (\mu_H - \mu_K)^T \beta^* \nonumber \\
+  &\quad + \mu_H^T (\beta_H - \beta^*) + \mu_K^T(\beta^* - \beta_K).
+\end{align}}
+%REV \begin{equation}
+%REV   \E_H[Y] - \E_K[Y] = (\mu_H - \mu_K)^T \beta^* + \mu_H^T (\beta_H - \beta^*) + \mu_K^T(\beta^* - \beta_K).
+%REV \end{equation}
 The first term is interpreted as differences due differences in covariates, the second differences due to differences in $H$'s $Y \mid X$ from the baseline, and the third differences due to differences in $K$'s $Y \mid X$ from the baseline.
 
 The question that remains, then is how to define $\beta^*$.

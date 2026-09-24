@@ -106,10 +106,13 @@ If the first one holds, then $\mu_H^T \Delta\beta + \Delta\alpha <0$ and $\mu_K^
 
 \subsection{Unbounded sensitivity at fixed mean gap}
  \label{ex:unbounded}
-In this section we present a toy example where we can have arbitrarily large flip magnitudes. Consider the following example in dimension \( 1 \), where we assume we have a parameter \( L > 0 \) which controls the magnitude of the covariate shift, and \( \varepsilon > 0 \) which controls the deviation in slope coefficients. We assume the mean vector is given by \( (\mu_K, \mu_H) = (0, L) \), and the slope parameters deviate symmetrically from \( \frac{1}{L} \), so that \( \beta_H = \frac{1}{L} + \frac{\varepsilon}{2} \), \( \beta_K = \frac{1}{L} - \frac{\varepsilon}{2} \). Then, the explained and unexplained components under both reference groups are:
+In this section we present a toy example where we can have arbitrarily large flip magnitudes. Consider the following example in dimension \( 1 \), where we assume we have a parameter \( L > 0 \) which controls the magnitude of the covariate shift, and \( \varepsilon > 0 \) which controls the deviation in slope coefficients. We assume the mean vector is given by \( (\mu_K, \mu_H) = (0, L) \), and the slope parameters deviate symmetrically from \( \frac{1}{L} \), so that \( \beta_H = \frac{1}{L} + \frac{\varepsilon}{2} \), \( \beta_K = \frac{1}{L} - \frac{\varepsilon}{2} \)\textcolor{red}{, and the intercepts satisfy \( \Delta\alpha = \alpha_H - \alpha_K = -\frac{L\varepsilon}{2} \), so that \( \Delta_Y = 1 \)}. Then, the explained and unexplained components under both reference groups are:
+% two-column layout: one component per line (layout only). %REV: originally E and U of each reference shared a line.
 \begin{align*}
-    E^{(H)} &= \Delta\mu \cdot \beta_H = L\left(\frac{1}{L} + \frac{\varepsilon}{2}\right) = 1 + \frac{L\varepsilon}{2}, \quad U^{(H)} = \mu_K \cdot \Delta\beta = -\frac{L\varepsilon}{2}, \\
-    E^{(K)} &= \Delta\mu \cdot \beta_K = L\left(\frac{1}{L} - \frac{\varepsilon}{2}\right) = 1 - \frac{L\varepsilon}{2}, \quad U^{(K)} = \mu_H \cdot \Delta\beta = +\frac{L\varepsilon}{2}.
+    E^{(H)} &= \Delta\mu \cdot \beta_H = L\left(\frac{1}{L} + \frac{\varepsilon}{2}\right) = 1 + \frac{L\varepsilon}{2}, \\
+    U^{(H)} &= \textcolor{red}{\Delta\alpha + {}} \mu_K \cdot \Delta\beta = -\frac{L\varepsilon}{2}, \\
+    E^{(K)} &= \Delta\mu \cdot \beta_K = L\left(\frac{1}{L} - \frac{\varepsilon}{2}\right) = 1 - \frac{L\varepsilon}{2}, \\
+    U^{(K)} &= \textcolor{red}{\Delta\alpha + {}} \mu_H \cdot \Delta\beta = +\frac{L\varepsilon}{2}.
 \end{align*}
 
 Hence, the difference between the two decompositions is \( E^{(H)} - E^{(K)} = L\varepsilon \), which can be made arbitrarily large as \( L \to \infty \), even though the total mean gap is always fixed at \( \Delta_Y = 1 \). Similarly, the unexplained components differ by \( U^{(K)} - U^{(H)} = L\varepsilon \).
@@ -134,7 +137,8 @@ Note that the sign flip is symmetric by construction, but the magnitude of the d
 \subsection{Decision Tree Representation of \cref{eq:sign_flip_condition}}
 
 To illustrate \cref{thm:unexplained_ordering_sensitivity}, we represent the condition in \cref{eq:sign_flip_condition} as a decision tree in \cref{alg:decision_tree} and use it to scrutinize the healthcare example in \cref{sec:simulated_example}.
-In this example, $\mu_H$ and $\mu_K$ denote mean BMIs, both of which are positive by definition and thus $\sign{(\mu_H \Delta\beta)} = \sign{(\mu_K \Delta\beta)} = \sign{(\Delta\alpha)}$. 
+In this example, $\mu_H$ and $\mu_K$ denote mean BMIs, both of which are positive by definition and thus $\sign{(\mu_H \Delta\beta)} = \sign{(\mu_K \Delta\beta)} = \sign{(\textcolor{red}{\Delta\beta})}$. %REV was \Delta\alpha
+
 Therefore, following \Cref{alg:decision_tree}, a sign flip will occur only if $\sign{(\Delta\alpha)} \neq \sign{(\mu_H \Delta\beta)} = \sign{(\Delta\beta)}$; equivalently, it must hold that one group has a larger $\beta_g$ (more sensitive to higher BMI) but lower $\alpha_g$ (lower SBP on average).
 This might occur if one group has better access to treatment but worse genetic factors, as in \cref{sec:simulated_example}.
 Furthermore, a sign flip will occur if either $\abs{\mu_H \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_K \Delta\beta}$ or $\abs{\mu_K \Delta\beta} < \abs{\Delta\alpha} < \abs{\mu_H \Delta\beta}$. This condition implies a range of values over which sign flips will occur; that is, there will be at least one choice of reference group under which improved healthcare appears to help in lowering mean SBP and another ordering under which improved healthcare appears to \emph{hurt} mean SBP.
@@ -210,21 +214,22 @@ To do so, apply the law of iterated expectations to \cref{eq:y_on_x}, plug in \c
     &= \omega_g + X^\top \theta_g + \E_g[Z \mid X]^\top \gamma_g \nonumber \\
     &= \omega_g + X^\top \theta_g + (\zeta_g + \Psi_g X)^\top \gamma_g \nonumber \\ 
     \label{eq:ovb}
-    &= \underbrace{\omega_g + \zeta_g^\top \gamma_g}_{=\alpha_g} + \E_g[X]^\top \underbrace{(\theta_g + \Psi_g^\top \gamma_g)}_{=\beta_g}.
+    &= \underbrace{\omega_g + \zeta_g^\top \gamma_g}_{=\alpha_g} + \textcolor{red}{X^\top} \underbrace{(\theta_g + \Psi_g^\top \gamma_g)}_{=\beta_g}.  %REV was \E_g[X]^\top
 \end{align}
 \cref{eq:ovb} is the well-known \textit{omitted variables bias} formula.
 It describes how the slope and intercept of a regression equation depend on variables that are not included in the equation.
 We can use this formula to express the difference in slopes and intercepts across the two populations as 
 \begin{align}  
   \label{eq:delta_alpha_gamma}
-  \Delta \alpha &= \Delta \omega + \Delta \zeta^\top \Delta \gamma,  \\
+  \Delta \alpha &= \Delta \omega + \textcolor{red}{\zeta_H^\top \gamma_H - \zeta_K^\top \gamma_K},  \\  %REV was \Delta \zeta^\top \Delta \gamma
   \label{eq:delta_beta_gamma}
-  \Delta \beta  &= \Delta \theta + \Delta \Psi^\top \Delta \gamma,
+  \Delta \beta  &= \Delta \theta + \textcolor{red}{\Psi_H^\top \gamma_H - \Psi_K^\top \gamma_K},  %REV was \Delta \Psi^\top \Delta \gamma
 \end{align}
 where \( \Delta \) takes the $H-K$ difference in the quantity that follows; for example, \( \Delta \omega := \omega_H - \omega_K \).
 These equations show that \( \Delta \alpha \) and \( \Delta \beta \) depend on the role of omitted covariates in the data-generating process.
 Crucially, they provide a mechanism to produce \( | \Delta \alpha | \) and \( | \mathbf{1}^\top \Delta \beta | \) that are jointly large:
-if both the Z-X and Z-Y relationships change in complementary ways, then both \( \Delta \zeta^\top \Delta \gamma \) and \( \mathbf{1}^\top \Delta \Psi^\top \Delta \gamma \) will be large. 
+if both the Z-X and Z-Y relationships change in complementary ways, then both \( \textcolor{red}{\zeta_H^\top \gamma_H - \zeta_K^\top \gamma_K} \) and \( \mathbf{1}^\top \textcolor{red}{(\Psi_H^\top \gamma_H - \Psi_K^\top \gamma_K)} \) will be large. %REV was \Delta \zeta^\top \Delta \gamma and \mathbf{1}^\top \Delta \Psi^\top \Delta \gamma
+
 If these terms are not counterbalanced by \( \Delta \omega \) and \( \Delta \theta \), the result will be large \( | \Delta \alpha | \) and \( | \mathbf{1}^\top \Delta \beta | \).
 
 

@@ -1,5 +1,26 @@
 \section{Real-data example: Gender gap in ICU data}
 \label{sec:real_example}
+
+% Extended to the two Census outcomes (new cells in red). Original ICU-only table kept below as %REV.
+\begin{table*}[t]
+    \caption{Number of data subsets exhibiting at least one sign flip (in either the explained or unexplained component), by model\rc{, for the ICU data (out of $139$ subsets) and for the two outcomes of the U.S.\ Census data (out of $217$ and $183$ subgroups; \cref{appendix:us_labor_force})}. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped subsets that are significant at the corresponding level. \rc{Dashes: logistic regression does not apply to the continuous log-income outcome.}}
+    \label{tab:flip_summary_main}
+    \centering
+    \small
+    \begin{tabular}{l cccc cccc cccc}
+    \toprule
+     & \multicolumn{4}{c}{ICU mortality} & \multicolumn{4}{c}{\rc{Census, log income}} & \multicolumn{4}{c}{\rc{Census, health insurance}} \\
+    \cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
+    Model & Total flips & $10\%$ & $5\%$ & $1\%$ & \rc{Total flips} & \rc{$10\%$} & \rc{$5\%$} & \rc{$1\%$} & \rc{Total flips} & \rc{$10\%$} & \rc{$5\%$} & \rc{$1\%$} \\
+    \midrule
+    Linear      & 27 &  2 &  2 &  2 & \rc{33} & \rc{16} & \rc{13} & \rc{8}  & \rc{65} & \rc{38} & \rc{32} & \rc{23} \\
+    Logistic    & 29 &  2 &  2 &  1 & \rc{--} & \rc{--} & \rc{--} & \rc{--} & \rc{62} & \rc{31} & \rc{25} & \rc{14} \\
+    Neural net  & 62 & 29 & 17 &  6 & \rc{87} & \rc{--} & \rc{--} & \rc{--} & \rc{65} & \rc{--} & \rc{--} & \rc{--} \\
+    XGBoost     & 62 & 17 & 10 &  3 & \rc{34} & \rc{18} & \rc{16} & \rc{12} & \rc{54} & \rc{34} & \rc{26} & \rc{16} \\
+    TabPFN      & 76 & 22 & 19 &  5 & \rc{--} & \rc{--} & \rc{--} & \rc{--} & \rc{--} & \rc{--} & \rc{--} & \rc{--} \\
+    \bottomrule
+    \end{tabular}
+\end{table*}
 The index number problem reflects that the two reference choices for the (N)OBD could yield two different sets of values for the explained and unexplained components. We are not aware of an illustration in the literature that the two directions (for either the OBD or NOBD) can lead to \emph{substantively} different conclusions. We supply such an illustration next for a real-data analysis in healthcare.
 
 \textbf{Data.} To construct an example, we examine data from the PhysioNet cohort of intensive care unit (ICU) patients collected for a study of in-hospital mortality \citep{goldberger2000physiobank}, where the outcome $Y$ is binary, indicating whether the patient died in the hospital or not. The dataset contains routine measurements taken at admission, including heart rate (HR), mean arterial pressure, temperature, and urine output. These values are recorded for every patient at the time of entry into the ICU and provide a description of their initial physiological state. To simulate various real-data analyses where practitioners might have access to only a subset of these patients, we construct $139$ versions of this dataset with various patient subsets; see \cref{appendix:icu_details}.
@@ -23,23 +44,23 @@ Concerningly, we see that \emph{every} model contains at least one sign flip, an
 % To that end, let $Y$ be a binary indicator for in-hospital mortality, and let $X$ be the vector of admission covariates comprising heart rate, mean arterial pressure, temperature, urine output, age, and ICU type.
 % Despite the binary outcome $Y$, it is common practice in applied health and policy research to fit separate linear models (via OLS) for the relationship between a binary outcome and covariates in each group, and then apply the OBD \citep{jann2008, edokaChangesCatastrophicHealth2017, sujin_LPM_OB, mweembaGapSelfRatedHealth2023}.\footnote{In fact, this use of the linear model for a binary outcome is so common that it has a name, the ``linear probability model.''} We provide a detailed description of our data analysis --- and our search procedure for a data analysis exhibiting a substantive conclusion change --- in \cref{appendix:icu_details}. 
 
-\begin{table}[!ht]
-    \caption{Number of data subsets (out of $139$) exhibiting at least one sign flip (in either the explained or unexplained component), by model. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped subsets that are significant at the corresponding level.}
-    \label{tab:flip_summary_main}
-    \centering
-    \small
-    \begin{tabular}{lcccc}
-    \toprule
-    Model & Total flips & $10\%$ & $5\%$ & $1\%$ \\
-    \midrule
-    Linear      & 27 &  2 &  2 &  2 \\
-    Logistic    & 29 &  2 &  2 &  1 \\
-    Neural net  & 62 & 29 & 17 &  6 \\
-    XGBoost     & 62 & 17 & 10 & 3 \\
-    TabPFN     & 76 & 22 & 19 & 5 \\
-    \bottomrule
-    \end{tabular}
-\end{table}
+%REV \begin{table}[!ht]
+%REV     \caption{Number of data subsets (out of $139$) exhibiting at least one sign flip (in either the explained or unexplained component), by model. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped subsets that are significant at the corresponding level.}
+%REV     \label{tab:flip_summary_main}
+%REV     \centering
+%REV     \small
+%REV     \begin{tabular}{lcccc}
+%REV     \toprule
+%REV     Model & Total flips & $10\%$ & $5\%$ & $1\%$ \\
+%REV     \midrule
+%REV     Linear      & 27 &  2 &  2 &  2 \\
+%REV     Logistic    & 29 &  2 &  2 &  1 \\
+%REV     Neural net  & 62 & 29 & 17 &  6 \\
+%REV     XGBoost     & 62 & 17 & 10 & 3 \\
+%REV     TabPFN     & 76 & 22 & 19 & 5 \\
+%REV     \bottomrule
+%REV     \end{tabular}
+%REV \end{table}
 
 \subsection{A deeper dive on one data subset}
 

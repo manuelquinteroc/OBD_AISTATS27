@@ -7,20 +7,38 @@ In this section, we present the proof of \cref{thm:unexplained_ordering_sensitiv
 \label{sec:sign_flip_proof}
 \begin{proof}
 Using \cref{def:unexplained_sign_flip}, we want to show that 
+% two-column layout: the "if and only if" display split in two (no symbols changed). Original kept below.
+{\color{red}
 \[
 \sign\!\left( \mu_K^T \Delta\beta + \Delta\alpha \right)
 \neq
 \sign\!\left( \mu_H^T \Delta\beta + \Delta\alpha \right)
-\iff
+\]
+if and only if
+\[
 \begin{aligned}
-&\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta, \\
+&\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta \quad \text{and} \\
 &\min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}
 <
 -\Delta\alpha
 <
 \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
 \end{aligned}
-\]
+\]}
+%REV \[
+%REV \sign\!\left( \mu_K^T \Delta\beta + \Delta\alpha \right)
+%REV \neq
+%REV \sign\!\left( \mu_H^T \Delta\beta + \Delta\alpha \right)
+%REV \iff
+%REV \begin{aligned}
+%REV &\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta, \\
+%REV &\min\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}
+%REV <
+%REV -\Delta\alpha
+%REV <
+%REV \max\{\mu_H^T \Delta\beta, \mu_K^T \Delta\beta\}.
+%REV \end{aligned}
+%REV \]
 
 
 $\Rightarrow$: Suppose that $\sign\left( \mu_K^T \Delta\beta + \Delta\alpha \right) \neq \sign\left( \mu_H^T \Delta\beta + \Delta\alpha \right)$. If $\mu_H^T \Delta\beta = \mu_K^T \Delta\beta$, then both $\mu_g^T \Delta\beta + \Delta\alpha$ would have the same sign, which contradicts our assumption of opposite signs. Thus, we must have $\mu_H^T \Delta\beta \neq \mu_K^T \Delta\beta$.
@@ -285,23 +303,38 @@ We can use this correspondence to translate the event
 \{ \sign(\Delta \alpha) \neq \sign(\mathbf{1}^\top \Delta \beta) \}.
 \]
 into an equivalent event in terms independent Irwin-Hall random variables:
+% two-column layout: one probability per line (no symbols changed). Original kept below.
+{\color{red}
 \begin{align*}
-    Pr& \left( \{ |\mathbf{1}^\top \Delta \beta| > |\Delta \alpha| \}
+    &Pr \left( \{ |\mathbf{1}^\top \Delta \beta| > |\Delta \alpha| \}
     \cap
     \{ \sign(\Delta \alpha) \neq \sign(\mathbf{1}^\top \Delta \beta) \} \right) \\
-    =& 
-    Pr \left( \{ \Delta \alpha > 0 \} \cap \{ \mathbf{1}^\top \Delta \beta < - \Delta \alpha \} \right)
-    +
-    Pr \left(
-    \{ \Delta \alpha < 0 \} \cap \{ \mathbf{1}^\top\Delta \beta > - \Delta \alpha \} \right) \\
-    =& 
-    Pr \left( \{ 2M (I_2 - 1)  > 0 \} \cap \{ 2M (J_{2d} - d) < - 2M (I_2 - 1)  \} \right)  \\
-    &+
-    Pr \left( \{ 2M (I_2 - 1)  < 0 \} \cap \{ 2M (J_{2d} - d) > - 2M (I_2 - 1)  \} \right) \\
-    =& 
-    Pr \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d + 1 - I_2 \}  \right) +
-    Pr \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d + 1 - I_2 \} \right).
-\end{align*}
+    &= Pr \left( \{ \Delta \alpha > 0 \} \cap \{ \mathbf{1}^\top \Delta \beta < - \Delta \alpha \} \right) \\
+    &\quad + Pr \left( \{ \Delta \alpha < 0 \} \cap \{ \mathbf{1}^\top\Delta \beta > - \Delta \alpha \} \right) \\
+    &= Pr \big( \{ 2M (I_2 - 1)  > 0 \} \\
+    &\qquad\quad \cap \{ 2M (J_{2d} - d) < - 2M (I_2 - 1)  \} \big) \\
+    &\quad + Pr \big( \{ 2M (I_2 - 1)  < 0 \} \\
+    &\qquad\quad \cap \{ 2M (J_{2d} - d) > - 2M (I_2 - 1)  \} \big) \\
+    &= Pr \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d + 1 - I_2 \}  \right) \\
+    &\quad + Pr \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d + 1 - I_2 \} \right).
+\end{align*}}
+%REV \begin{align*}
+%REV     Pr& \left( \{ |\mathbf{1}^\top \Delta \beta| > |\Delta \alpha| \}
+%REV     \cap
+%REV     \{ \sign(\Delta \alpha) \neq \sign(\mathbf{1}^\top \Delta \beta) \} \right) \\
+%REV     =& 
+%REV     Pr \left( \{ \Delta \alpha > 0 \} \cap \{ \mathbf{1}^\top \Delta \beta < - \Delta \alpha \} \right)
+%REV     +
+%REV     Pr \left(
+%REV     \{ \Delta \alpha < 0 \} \cap \{ \mathbf{1}^\top\Delta \beta > - \Delta \alpha \} \right) \\
+%REV     =& 
+%REV     Pr \left( \{ 2M (I_2 - 1)  > 0 \} \cap \{ 2M (J_{2d} - d) < - 2M (I_2 - 1)  \} \right)  \\
+%REV     &+
+%REV     Pr \left( \{ 2M (I_2 - 1)  < 0 \} \cap \{ 2M (J_{2d} - d) > - 2M (I_2 - 1)  \} \right) \\
+%REV     =& 
+%REV     Pr \left( \{ I_2 > 1 \} \cap \{ J_{2d} < d + 1 - I_2 \}  \right) +
+%REV     Pr \left( \{ I_2 < 1 \} \cap \{ J_{2d} > d + 1 - I_2 \} \right).
+%REV \end{align*}
 
 That is, unexplained component sign flips have the same volume as the region where \( I_2 \) falls above its median and \( J_{2d} \) falls sufficiently far in its left tail, or vice versa.
 

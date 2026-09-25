@@ -76,6 +76,12 @@ We might interpret $E$ and $U$ as the respective contributions of the covariates
 difference in outcome means between groups $H$ and $K$. \textcolor{red}{This interpretation is descriptive; the OBD does not carry a causal interpretation without further assumptions. We refer readers to Section 2.3 of \citet{fortinLemieuxFirpo2011} for a formal treatment of causal identification for the OBD, and to \citet{quintas2024multiply,flachaire2025decomposing} for recent work.} The \textbf{index number problem}, then, represents the observation
 that in general, $E^{(K)} \neq E^{(H)}$ and $U^{(K)} \neq U^{(H)}$.
 
+\textcolor{red}{
+We emphasize that although the OBD involves counterfactual quantities, the index number problem is not an issue of causal identification.
+To be fair, estimating $\E_H[\E_K[Y \mid X]]$ and $\E_K[\E_H[Y \mid X]]$ and choosing a causal versus descriptive interpretation can involve tools from causal inference.
+However, the index number problem arises because $\E_H[\E_K[Y \mid X]]$ and $\E_K[\E_H[Y \mid X]]$ are usually not equivalent; the issue is choosing an \textit{estimand}, not choosing an \textit{estimator} or interpreting an \textit{estimate}.
+}
+
 \textbf{A conceptual resolution?}
 Before proceeding, we observe that there is not an immediate and general conceptual resolution of the index number problem.
 It is not clear to us in the hospital example above that one direction is more natural, or even that the two directions represent distinct policy questions.
@@ -116,11 +122,12 @@ Then the following equation implements \cref{eq:OB_H_Counterfactual}:
 %REV     &=\underbrace{ \frac{1}{N_H} \sum_{n=1}^{N_H} Y_n - \frac{1}{N_K} \sum_{n=1}^{N_K} \hat{M}_H(X_n)}_{\hat{E}^{(H)}} 
 %REV      + \underbrace{\frac{1}{N_K} \sum_{n=1}^{N_K} \hat{M}_H(X_n) - \frac{1}{N_H} \sum_{n=1}^{N_H} Y_n}_{\hat{U}^{(H)} }.
 %REV \end{align}
-
 In the literature, the term \emph{OBD} historically refers to using \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with the further choice of linear regression to compute $\hat{M}_g(X)$.
+\textcolor{red}{AS: could combine next two sentences.}
 We emphasize that the use of linear regression is a modeling choice, and that it is possible to choose nonlinear estimators for $\E_g  [ Y | X ]$.
 For instance, \citet{quintas2024multiply,flachaire2025decomposing,mao2025double} explore generalizations of the OBD that use machine learning methods to estimate $\E_g  [ Y | X ]$, and derive asymptotic properties for such procedures.
 To distinguish from the standard OBD, we will refer to the case where $\hat{M}_g(X)$ is a nonlinear estimator as the \emph{nonlinear Oaxaca-Blinder decomposition} (NOBD).
+\textcolor{red}{AS: not sure we need to introduce ``NOBD'' as a term.}
 
 \textbf{Drawing conclusions from the (N)OBD.}
 It is common to draw substantive conclusions based on the signs (and statistical significance) of the empirical explained and unexplained components \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. Returning to the hospital example from above, suppose Hospital $H$ has lower mortality ($\Delta_Y < 0$), and serves as the reference group. 

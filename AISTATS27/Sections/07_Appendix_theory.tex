@@ -1,6 +1,134 @@
 \section{Theory}
 \label{app:theory}
 
+\subsection{Proof of \cref{prop:generic_flip_probs}}
+
+\begin{proof}
+	For ease of notation, define $\E(f) := V(f) - W(f)$. We have that the probability of an explained flip is equal to:
+	\begin{equation*}
+		Pr\bigg( \{\E(f^H) < 0, \E(f^K) > 0 \} \cup \{ \E(f^H) > 0, \E(f^K) < 0\} \bigg).
+	\end{equation*}
+	The two events in the union are disjoint, and, because $f^H, f^K$ are i.i.d.\, the events have equal probability. So we have:
+	\begin{align*}
+		&= 2 Pr\bigg( \{\E(f^H) < 0, \E(f^K) > 0 \} \bigg) \\
+		&= 2 Pr\bigg( \E(f^H) > 0 \bigg) Pr\bigg( \E(f^K) < 0 \bigg) \\
+		&= 2 p (1-p),
+	\end{align*}
+	where we have used that $f^H, f^K$ are i.i.d.\ and that $\nu(\E = 0) = 0$.
+	
+	For the unexplained component, we have that there is a sign flip if and only if the product of the two unexplained components is negative. By definition, this is equivalent to $(V - V')(W - W') < 0$.
+\end{proof}
+
+\subsection{Lemmas for the proof of \cref{prop:sign_flip_gp}}
+
+We need a few lemmas before proving \cref{prop:sign_flip_gp}.
+
+\begin{lemma} \label{lem:bivariate_product}
+Assume that for random variables $A, B$, we have that $(A,B)$ is a bivariate normal with:
+\begin{equation}
+\begin{pmatrix} A \\ B \end{pmatrix} \sim
+N \left( 
+		\begin{pmatrix} \mu_A \\ \mu_B \end{pmatrix},
+		\begin{pmatrix} \sigma_A^2, & \rho \sigma_A \sigma_B \\ \rho \sigma_A \sigma_B & \sigma_B^2 \end{pmatrix}
+\right).
+\end{equation}
+Then it holds
+\begin{equation}
+	Pr(AB < 0) = \Phi(\mu_A / \sigma_A) + \Phi(\mu_B / \sigma_B) - 2 \Phi_{biv}(\mu_A / \sigma_A, \mu_B / \sigma_B, \rho),
+\end{equation}
+where $\Phi$ is the CDF of a standard normal distribution, and $\Phi_{biv}$ is the CDF for a standard bivariate normal distribution.\footnote{For a bivariate Gaussian $(A,B)$ with unit standard deviations and correlation coefficient $\rho$, we have $\Phi_{biv}(a,b,\rho) := \int_{-\infty}^a \int_{-\infty}^b \phi_{biv}(x, y; \rho) dx dy$, where $\phi_{biv}(\cdot, \cdot;\rho)$ is the pdf of a standard bivariate normal.}
+\end{lemma}
+\begin{proof}
+	We have that:
+	\begin{align*}
+		& Pr(A > 0) = Pr(A > 0, B < 0) + Pr(A > 0, B > 0) \\
+		& Pr(B > 0) = Pr(A < 0, B > 0) + Pr(A > 0, B > 0).
+	\end{align*}
+	Now, noting that $Pr(AB < 0) = Pr(A > 0, B < 0) + Pr(A < 0, B > 0)$ and adding the above two equations together, we have that:
+	\begin{equation*}
+		Pr(A > 0) + Pr(B > 0) = Pr(AB < 0) + 2Pr(A > 0, B > 0).
+	\end{equation*}
+	Now, if $Z$ is a standard normal, then we have that $Pr(A > 0) = Pr(\mu_A + \sigma_A Z > 0) = \Phi(\mu_A / \sigma_A)$. Similar logic applied to the other probabilities in the above equation completes the proof.
+\end{proof}
+
+\begin{lemma} \label{lem:vw_bivariate}
+	Take \cref{assum:iid,assum:atomless,assum:gp,assum:fubini}. Then $(V(f), W(f))$ is a bivariate normal with:
+	\begin{align}
+		& \mu_V = \int \mu(x) h(x) dx, \quad \mu_W = \int \mu(x) k(x) dx \\
+		& \sigma_V = \| h \|_C, \quad \sigma_W = \| k \|_C, \quad \rho = \frac{<h,k>_C}{\| h \|_C \| k \|_C}.
+	\end{align}
+\end{lemma}
+\begin{proof}
+For the means, \emph{if} we are able to exchange the order of integrals, then we can compute $E_f[V(f)] = E_f [ \int f(x) h(x) dx] = \int \mu(x) h(x) dx$, and likewise for $W$.
+We now show that we can exchange the order of integrals.
+First, note that for $f \sim GP(\mu, C)$, we have that for any $x$, $E_f [|f(x)|] = E_Z [| \mu(x) + \sqrt{C(x,x)} Z|]$, where $Z \sim N(0,1)$. Then $E_f [|f(x)|] \leq |\mu(x)| + \sqrt{C(x,x)} \sqrt{2/\pi}$.
+Therefore,
+\begin{equation}
+	E_f \left[ \int |f(x)| h(x) dx \right] \leq E_f \left[ \int | \mu(x) | h(x) dx + \int \sqrt{C(x,x)} \sqrt{\frac{2}{\pi}} h(x) dx \right],
+\end{equation}	
+which is finite by \cref{assum:fubini}. Thus by Fubini's theorem, we have $E_f [ \int f(x) h(x) dx] = \int \mu(x) h(x) dx$ as claimed.
+For the variances, it is easier to work with $\bar f := f - \mu$.
+We will again first assume that the order of integrals can be exchanged and then prove that this is allowable.
+\begin{align*}
+	Var[V(f)] &= Var[V(\bar f)] = E \left[ \left( \int \bar f(x) h(x) dx \right)^2 \right] \\
+	&= E \left[ \left(\int \bar f(x') h(x') dx' \right) \left( \int \bar f(x) h(x) dx \right) \right] \\
+	&= \int\int E[ \bar f(x') \bar f(x)] h(x) h(x') dx' dx \\
+	&= \int\int C(x,x') h(x) h(x') dx' dx = \| h \|_C^2.
+\end{align*}
+To see that the above exchange of integrals is allowed, note that, by Cauchy-Schwarz applied to $E_f[ \bar f(x') \bar f(x)]$, we have:
+\begin{align*}
+	\int\int E_f[ \bar f(x') \bar f(x)] h(x) h(x') dx' dx &\leq \int\int \sqrt{E_f[ f(x)^2] E_f[f(x')^2]} h(x) h(x') dx dx' \\
+	&= \int\int \sqrt{C(x,x) C(x',x')} h(x) h(x') dx dx.
+\end{align*}
+By \cref{assum:fubini}, this last integral is finite.
+Thus, as claimed, $E \left[ \left(\int \bar f(x') h(x') dx' \right) \left( \int \bar f(x) h(x) dx \right) \right] = \int\int E[ \bar f(x') \bar f(x)] h(x) h(x') dx' dx$.
+
+Finally, to compute the correlation coefficient, note that the covariance of $V$ and $W$ is given by:
+\begin{align*}
+	Cov[ V( \bar f), W(\bar f) ] = \int\int C(x,x') h(x) k(x') dx' dx = \langle h, k \rangle_C.
+\end{align*}
+This also requires an exchange of integrals which likewise holds by Fubini's theorem and \cref{assum:fubini}. Noting that the correlation coefficient of a bivariate normal is given by its covariance divided by each standard deviation completes the proof.
+\end{proof}
+
+\subsection{Proof of \cref{prop:sign_flip_gp}}
+
+Now we can prove \cref{prop:sign_flip_gp}.
+\begin{proof}
+We prove the unexplained and explained components separately.
+
+	\paragraph{Unexplained component.} We first show the probability of an unexplained sign flip. 
+	Let $(V_1, W_1)$ and $(V_2, W_2)$ be i.i.d.\ copies of the pair $V,W$; by \cref{lem:vw_bivariate}, these are i.i.d.\ draws from a bivariate normal.
+	Now, the two unexplained components are equal in distribution to $(V_1 - V_2, W_1 - W_2)$.
+	This tuple is also a bivariate normal, and has mean zero, $Var[V_1 - V_2] = 2 \| h \|^2_C$, $Var[W_1 - W_2] = 2 \| k \|_C^2$, and $Cov[V_1  - V_2, W_1 - W_2] = 2 \langle h, k \rangle_C$.
+	We can then apply \cref{lem:bivariate_product} to get:
+	\begin{align}
+		Pr[\mathrm{unexplained\ sign\ flip}] &= Pr[ (V_1 - V_2) (W_1 - W_2) < 0] \\
+		&= \Phi(0) + \Phi(0) - 2\Phi_{biv}(0,0,\rho),
+	\end{align}
+	where $\rho = 2\langle h,k \rangle_C / (2 \|h\|_C \|k\|_C$).
+	First, we have that $\Phi(0) = 1/2$.
+	Next, we have that $\Phi_{biv}(0,0,\rho) = 1/4 + \arcsin(\rho) / (2\pi) = 1/2 - \arccos(\rho) / (2\pi)$ \citep[Eq.\ (69)]{weisstein2026bivariate}.
+	So:
+	\begin{equation}
+		Pr[\mathrm{unexplained\ sign\ flip}] = \frac{1}{\pi} \arccos(\rho) = \frac{1}{\pi} \arccos\left(\frac{\langle h, k \rangle_C}{\| h \|_C \| k \|_C} \right).
+	\end{equation}
+	
+	\paragraph{Explained component.} The explained component is equal to $V(f) - W(f)$, which is normally distributed with mean $\mu_V - \mu_W$ and variance $\sigma_E^2 := \| h \|_C^2 + \| k \|_C^2 - 2\rho \| h \|_C \| k \|_C$. 
+	By \cref{prop:generic_flip_probs}, we just need to compute the probability $p := Pr[V(f) - W(f) > 0]$, and then the probability of a sign flip is $2 p (1-p)$.
+	We have that $p = \Phi((\mu_V - \mu_W) / \sigma_E)$. 
+	Noting that $\sigma_E = \| h - k \|_C$ and that $\mu_V - \mu_W = \int \mu(x) h(x) dx - \int \mu(x) k(x) dx = \langle h-k, \mu \rangle$, we have that $p = \Phi(\lambda)$ for $\lambda := \langle h-k, \mu \rangle / \| h - k \|_C$.
+	Using $1-p = \Phi(-\lambda)$ gives:
+	\begin{equation}
+		Pr[\mathrm{explained\ sign\ flip}] = 2 \Phi(\lambda) \Phi(-\lambda).
+	\end{equation}
+	
+	
+
+\end{proof}
+
+\section{OLD Theory}
+\label{app:linear_theory}
+
 In this section, we present the proof of \cref{thm:unexplained_ordering_sensitivity} and an example showing that the difference between the two decompositions can be made arbitrarily large even when the mean gap is fixed.
 
 \subsection{Proof of \cref{thm:unexplained_ordering_sensitivity}}

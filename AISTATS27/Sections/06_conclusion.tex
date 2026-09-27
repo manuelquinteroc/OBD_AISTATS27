@@ -7,9 +7,16 @@ We present examples from real datasets as existence proofs.
 We show that sign reversals can occur in either the explained or unexplained component and are not solely products of model misspecification, small sample size, or an adversarial data generating process. 
 As a practical conclusion, we recommend that data analysts using the (N)OBD always report results using both reference groups to accurately convey the degree of support behind substantive conclusions arising from the (N)OBD.
 
-Our theoretical results show that the fraction of parameter space representing sign reversals is large for linear models and grows with the dimension of the feature space.
-However, our empirical exercises reveal fewer sign reversals than our theoretical results suggest, implying that fitted linear regression parameters in real data analyses may not be well modeled by a uniform distribution over the parameter space. 
-Future work can determine to what extent our theoretical findings hold for non-uniform parameter distributions, other measures of model complexity, and nonlinear models. 
+Our work leaves an important open question: whether there exists alternatives to the OBD that do not suffer from problems of non-robustness to arbitrary choices.
+E.g., in the OBD, our work has shown that the reference group is arbitrary and that the OBD is not robust to its choice.
+As discussed in \cref{sec:existing_index_number}, there are a number of decomposition methods that do not have the index number problem but require other arbitrary choices.
+Future work should examine if any existing decomposition method can reduce or eliminate the non-robustness of the OBD, and, if not, whether any such decomposition method is possible.
+If no such robust decomposition exists, then practitioners will be forced to always conduct robustness checks of their results.
+
+%Our theoretical results model only the case where the two populations' response functions are drawn i.i.d.\ from $\nu$.
+%Our theoretical results show that the fraction of parameter space representing sign reversals is large for linear models and grows with the dimension of the feature space.
+%However, our empirical exercises reveal fewer sign reversals than our theoretical results suggest, implying that fitted linear regression parameters in real data analyses may not be well modeled by a uniform distribution over the parameter space. 
+%Future work can determine to what extent our theoretical findings hold for non-uniform parameter distributions, other measures of model complexity, and nonlinear models. 
 
 \textbf{Broader impacts.}
 The (N)OBD is widely used to draw conclusions and influence policy.

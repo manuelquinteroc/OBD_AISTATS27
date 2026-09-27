@@ -10,7 +10,7 @@ Second, even if conclusion reversals can occur, do they occur outside of mathema
 Third, when should we expect sign flips to be more or less frequent?
 
 In this section, we mathematically prove the answer to the first two questions is yes and derive closed-form equations for the probability of sign flips that allow an intuitive answer to the third question.
-\cref{sec:simulated_example} complements our argument with an example where a sign flip occurs even without sampling noise.
+\cref{sec:simulated_example} complements our argument with an empirical example where a sign flip occurs even without sampling noise.
 
 In what follows, we study conclusion reversals that involve the explained or unexplained component changing signs from positive to negative, or vice versa.
 To balance mathematical tractability and generality of our theory, we will focus on the NOBD under a fairly general class of functions $f^H, f^K$ -- those drawn from a Gaussian process.
@@ -28,10 +28,10 @@ This models the situations considered throughout our paper, where the population
 We let $\nu$ be a distribution over functions $f$ and make the following two assumptions.
 %
 \begin{assumption} \label{assum:iid}
-Assume that $f^K, f^H$ are drawn i.i.d.\ from $\nu$
+Assume that $f^K, f^H$ are drawn i.i.d.\ from $\nu$.
 \end{assumption}
 \begin{assumption} \label{assum:atomless}
-	Under \cref{assum:iid}, there is zero probability that any explained or unexplained component is equal to zero.
+	Under \cref{assum:iid}, assume that $\nu$ is such that there is zero probability that any explained or unexplained component is equal to zero.
 \end{assumption}
 \cref{assum:atomless} is likely satisfied by any continuous distribution $\nu$, and we assume it only to make the resulting probabilities more readable.
 Finally, some extra notation will be useful in stating our theoretical results.
@@ -44,12 +44,12 @@ Now we can prove a basic fact about the probability of sign flips.
 	Take \cref{assum:atomless,assum:iid}.
 	Then the probability of a sign flip in the explained component is given by
 	\begin{equation}
-		Pr_\nu(\mathrm{explained\ sign\ flip}) = 2p(1-p), \label{eq:explained_flip_pr}
+		Pr_\nu(\mathrm{explained\ flip}) = 2p(1-p), \label{eq:explained_flip_pr}
 	\end{equation}
 	where $p := \nu(V-W > 0)$.
 	For the unexplained component, let $(V,W)$ and $(V', W')$ be i.i.d.\ copies of the pair $(V(f), W(f))$ with $f \sim \nu$. Then:
 	\begin{align}
-		Pr_\nu(& \mathrm{unexplained\ sign\ flip}) \nonumber \\
+		Pr_\nu(& \mathrm{unexplained\ flip}) \nonumber \\
 		& = Pr_\nu \left( (V - V')(W - W') < 0 \right) \label{eq:unexplained_flip_pr}
 	\end{align}
 \end{proposition}
@@ -79,7 +79,6 @@ Finally, we will make some regularity assumptions on the kernel and mean functio
 These regularity conditions are extremely broad.
 E.g., any kernel with $C(x,x)$ equal to a constant (any stationary kernel) satisfies the first, and the second merely states that $\mu$ is integrable with respect to $h$ and $k$.
 Under these assumptions, we can derive closed forms for the explained and unexplained sign flip probabilities.
-
 For notation, we let $\Phi$ be the CDF of the standard normal function.
 \begin{proposition} \label{prop:sign_flip_gp}
 	Take \cref{assum:iid,assum:atomless,assum:gp,assum:fubini}. Then we have that:
@@ -91,11 +90,11 @@ For notation, we let $\Phi$ be the CDF of the standard normal function.
 \end{proposition}	
 See \cref{app:theory} for a proof.
 We can use \cref{prop:sign_flip_gp} to answer our qualitative questions.
-First, we can see that the probabilities of sign flips are not zero, even in the infinite sample limit where we have perfect knowledge of $f^H$ and $f^K$.
+First, we can see that the probabilities of sign flips are not zero, even in the infinite sample limit where we have exact access to $f^H$ and $f^K$.
 Second, we see that for general $h,k, C,\mu$, neither the explained nor unexplained sign flip probability is zero; only in highly specific cases such as $h = k$ do we get zero probabilities.
 As our model for $\nu$ is fairly generic, we conclude that sign flips are not an ``adversarial'' or ``measure zero'' phenomenon, and we should expect to encounter them in practice.
 Finally, when should we expect sign flips to be more or less frequent?
-We consider this question for the explained and unexplained component separately.
+We next consider this question for the explained and unexplained component separately.
 
 \textbf{Explained component.} We see that the explained component is likely to flip if $| \lambda |$ is small and unlikely to flip if $|\lambda|$ is large.
 The numerator of $\lambda$ is large if $h$ and $k$ mainly differ on covariates with large means.
@@ -105,6 +104,8 @@ Overall, to reduce the probability of explained sign flips, it must be that $h$ 
 \textbf{Unexplained component.}
 The unexplained sign flip probability is driven to zero when $\langle h,k\rangle_C$ is equal to $\| h\|_C \| k \|_C$. 
 For intuition about when this will happen, suppose $C$ is a distance-based kernel, like the radial basis function (RBF) kernel. 
-Then $\langle h,k\rangle_C$ is large precisely when h puts significant mass in regions of space that are ``close'' to regions of space where $k$ puts significant mass; here, ``close'' is as defined by the length scale of the kernel, and ``large'' is measured with respect to the product $\|h\|_C \|k\|_C$. 
+Then $\langle h,k\rangle_C$ is large precisely when $h$ puts significant mass in regions of space that are ``close'' to regions of space where $k$ puts significant mass; here, ``close'' is as defined by the length scale of the kernel, and ``large'' is measured with respect to the product $\|h\|_C \|k\|_C$. 
 Put differently, if there are many nearby regions of space where $h$ and $k$ are large \emph{and} we expect a randomly drawn $f$ to be relatively constant (because $C$ is high over for pairs of points drawn from across the region), then the probability of an unexpected sign flip is driven down.
 Alternatively, if regions where $h$ is high and regions where $k$ is high are sufficiently far apart that we expect $f$ to significantly vary between them, then the probability of an unexplained sign flip is driven up.
+
+\textcolor{red}{\textbf{Can the explained and unexplained probabilities be simultaneously small?} WTS: putting this here b/c I just think this would be interesting to think and comment on. But we can easily just not put this in the paper.}

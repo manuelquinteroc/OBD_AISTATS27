@@ -23,7 +23,7 @@
     \end{tabular}
 \end{table*}
 
-The index number problem reflects that the two reference choices for the (N)OBD could yield two different sets of values for the explained and unexplained components. We are not aware of an illustration in the literature that the two directions (for either the OBD or NOBD) can lead to \emph{substantively} different conclusions. We supply such \textcolor{red}{illustrations} next for \textcolor{red}{real-data analyses in healthcare and in the U.S.\ labor force}. %REV We supply such an illustration next for a real-data analysis in healthcare.
+The index number problem reflects that the two reference choices for the (N)OBD could yield two different sets of values for the explained and unexplained components. We are not aware of an illustration in the literature that the two reference groups (for either the OBD or NOBD) can lead to \emph{substantively} different conclusions. We supply such \textcolor{red}{illustrations} next for \textcolor{red}{real-data analyses in healthcare and in the U.S.\ labor force}. %REV We supply such an illustration next for a real-data analysis in healthcare.
 
 \textbf{Data.} \textcolor{red}{We consider two sources of data. The first is} the PhysioNet cohort %REV To construct an example, we examine data from the PhysioNet cohort
  of intensive care unit (ICU) patients collected for a study of in-hospital mortality \citep{goldberger2000physiobank}, where the outcome $Y$ is binary, indicating whether the patient died in the hospital or not. The dataset contains routine measurements taken at admission, including heart rate (HR), mean arterial pressure, temperature, and urine output. These values are recorded for every patient at the time of entry into the ICU and provide a description of their initial physiological state. To simulate various real-data analyses where practitioners might have access to only a subset of these patients, we construct $139$ versions of this dataset with various patient subsets; see \cref{appendix:icu_details}.
@@ -42,11 +42,13 @@ We assess statistical significance using $1{,}000$ bootstrap replications.
 \cref{tab:flip_summary_main} counts the number of sign flips across these models \textcolor{red}{and datasets} at various levels of statistical significance.
 \textcolor{red}{In every dataset and for every model, we observe sign flips.}
 \textcolor{red}{Within each dataset, the data subsets overlap and are not independent analyses. Our aim is an existence proof that sign flips arise in plausible analyses of real data, not an estimate of how frequently they arise in practice; for this reason, we do not apply a multiple testing correction to these counts.}
-Concerningly, more complex models \textcolor{red}{can} have even more flips; %REV tend to
+Concerningly, more complex models can show flips in more subsets; %REV tend to
  for TabPFN \textcolor{red}{on the ICU data}, we see that more than half of the \textcolor{red}{subsets} show opposite signs %REV Concerningly, we see that \emph{every} model contains at least one sign flip, and more complex models tend to have even more flips; for TabPFN, we see that more than  half of the datasets show opposite signs
  for at least one of the explained or unexplained components, and $13.7\%$ show significant sign flips at the $5\%$ level.
 
-\textcolor{red}{One might hope that a sufficiently flexible model would make the sign flips disappear. It does not. In \cref{appendix:complexity}, we vary the complexity of XGBoost (tree depth and number of trees) and of the neural network (width and depth) while holding every other setting fixed. On the ICU data, each increase in complexity raises the number of data subsets with a sign flip, until nearly all $139$ subsets flip. On the U.S.\ Census data of \cref{appendix:us_labor_force}, the number of flips barely changes with complexity, and for one outcome deeper networks flip fewer data subsets. We therefore do not claim a single relationship between model complexity and sign flips; the pattern appears to depend on the data. But in neither dataset does increasing complexity make sign flips go away.}
+\textcolor{red}{One might hope that a sufficiently flexible model would make the sign flips disappear. It does not. In \cref{appendix:complexity}, we vary the complexity of XGBoost (tree depth and number of trees) and of the neural network (width and depth) while holding every other setting fixed. On the ICU data, each increase in complexity raises the number of data subsets with a sign flip, until nearly all $139$ subsets flip. On the U.S.\ Census data of \cref{appendix:us_labor_force}, the number of flips barely changes with complexity, and for one outcome deeper networks flip fewer data subsets. 
+We conclude that sufficiently complex models are not a solution to the sign flip problem.}
+%We therefore do not claim a single relationship between model complexity and sign flips; the pattern appears to depend on the data. But in neither dataset does increasing complexity make sign flips go away.}
 \textcolor{red}{In the remainder of this section, we focus on the ICU data, which lets us examine a single analysis in detail; the Census results are in \cref{appendix:us_labor_force}.}
 
 % Within the data set described above, we will compare two patient groups across hospitals (rather than hospital-specific patient groups as in our introductory example). In particular, we let the groups be $g \in \{\text{men}, \text{women}\}$. 
@@ -80,7 +82,7 @@ But what do these flips really mean in practice?
 And are they merely an artifact of noise or instead a structural phenomenon?
 As is often the case in studying complex machine learning models, studying linear regression provides a tractable proxy problem.
 In the present study, linear regression is also of direct interest since the OBD (with linear regression) is widely used in practice.
-So, for the rest of the paper, we focus on \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with linear regression (i.e., the OBD instead of NOBD).
+So in this section, we focus on \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with linear regression (i.e., the OBD instead of NOBD).
 To start answering our questions, we examine one particular data subset leading to a significant sign flip for linear regression in \cref{tab:flip_summary_main}.
 We will see what it means for sign flips to change meaningful conclusions and also see that flips have a natural structural interpretation.
 
@@ -168,9 +170,9 @@ and use a hat to denote estimators of these quantities (cf.\ \cref{sec:ob_real})
 
 With these choices, the OBD
 (\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}) becomes
-\begin{equation}
+\begin{equation*}
     \Delta_Y = \underbrace{\Delta \mu^\top \beta_H}_{E^{(H)}} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{U^{(H)}} = \underbrace{\Delta \mu^\top \beta_K}_{E^{(K)}} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{U^{(K)}}.
-\end{equation}
+\end{equation*}
 The first equality is the OBD with reference group $H$, and the second with reference group $K$.
 
 With this notation in hand, we observe that $\Delta\hat{\mu}$ is fixed between $\hat{E}^{(H)}$ and $\hat{E}^{(K)}$. So it must be that some components of $\hat{\beta}_H$ and $\hat{\beta}_K$ are changing sign to give $\hat{E}^{(H)} := \Delta\hat{\mu}^T \hat{\beta}_H$ and $\hat{E}^{(K)} := \Delta\hat{\mu}^T \hat{\beta}_K$ opposite signs.

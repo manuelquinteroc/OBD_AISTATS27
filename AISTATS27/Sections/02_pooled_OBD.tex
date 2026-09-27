@@ -73,7 +73,8 @@ covariates. The remaining term, corresponding to changing the conditional $Y \mi
 is called the ``unexplained component'' since it is not explained by the observed covariates. We denote these components as $E$ and $U$, respectively, with superscript denoting the reference group choice.
 
 We might interpret $E$ and $U$ as the respective contributions of the covariates and outcome--covariate relationship to the 
-difference in outcome means between groups $H$ and $K$. \textcolor{red}{This interpretation is descriptive; the OBD does not carry a causal interpretation without further assumptions. We refer readers to Section 2.3 of \citet{fortinLemieuxFirpo2011} for a formal treatment of causal identification for the OBD, and to \citet{quintas2024multiply,flachaire2025decomposing} for recent work.} The \textbf{index number problem}, then, represents the observation
+difference in outcome means between groups $H$ and $K$. 
+\textcolor{red}{Despite the use of the term ``counterfactual,'' this interpretation is descriptive; the OBD does not carry a causal interpretation without further assumptions. We refer readers to Section 2.3 of \citet{fortinLemieuxFirpo2011} for a formal treatment of causal identification for the OBD, and to \citet{quintas2024multiply,flachaire2025decomposing} for recent work.} The \textbf{index number problem}, then, represents the observation
 that in general, $E^{(K)} \neq E^{(H)}$ and $U^{(K)} \neq U^{(H)}$.
 
 \textcolor{red}{
@@ -127,7 +128,7 @@ In the literature, the term \emph{OBD} historically refers to using \cref{eq:OB_
 We emphasize that the use of linear regression is a modeling choice, and that it is possible to choose nonlinear estimators for $\E_g  [ Y | X ]$.
 For instance, \citet{quintas2024multiply,flachaire2025decomposing,mao2025double} explore generalizations of the OBD that use machine learning methods to estimate $\E_g  [ Y | X ]$, and derive asymptotic properties for such procedures.
 To distinguish from the standard OBD, we will refer to the case where $\hat{M}_g(X)$ is a nonlinear estimator as the \emph{nonlinear Oaxaca-Blinder decomposition} (NOBD).
-\textcolor{red}{AS: not sure we need to introduce ``NOBD'' as a term.}
+\textcolor{red}{AS: not sure we need to introduce ``NOBD'' as a term. WS: I'm kind of }
 
 \textbf{Drawing conclusions from the (N)OBD.}
 It is common to draw substantive conclusions based on the signs (and statistical significance) of the empirical explained and unexplained components \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. Returning to the hospital example from above, suppose Hospital $H$ has lower mortality ($\Delta_Y < 0$), and serves as the reference group. 

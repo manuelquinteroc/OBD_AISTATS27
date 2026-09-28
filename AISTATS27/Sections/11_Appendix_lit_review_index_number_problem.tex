@@ -1,6 +1,6 @@
 \subsection{Existing solutions to the index number problem}
 \label{sec:existing_index_number}
-A few proposed methods exist that compute decompositions similar to the (N)OBD, and yet do not have the index number problem.
+A few proposed methods exist that compute decompositions similar to the OBD, and yet do not have the index number problem.
 We describe the approach of these options here and discuss how they do not resolve the issue of arbitrariness discussed in this paper.
 
 \textbf{Shapley Values.} Shapley values \citep{Shapley1953} are widely used in the machine learning literature to understand a models' predictions.
@@ -39,7 +39,7 @@ For example, in analyses of the labor market, $\beta^*$ is sometimes intended to
 There may be no corresponding concept to serve as a reference point in other research contexts; or, there may be no feasible approach for estimating such a reference point.
 
 \textbf{Intermediate covariate distributions.}
-\citet{dinardoFortinLemieux1996} propose a variant of the OBD with a more fine-grained decomposition of the explained component, and \citet{quintero2025} propose a NOBD with a similarly fine-grained explained decomposition (\citet{quintero2025} also decomposes the unexplained component).
+\citet{dinardoFortinLemieux1996} propose a variant of the OBD with a more fine-grained decomposition of the explained component, and \citet{quintero2025} propose a OBD with a similarly fine-grained explained decomposition (\citet{quintero2025} also decomposes the unexplained component).
 Both cases define a number of intermediate distributions over covariates $P_1, \dots, P_I$, where $P_1 = K_X$ and $P_I = H_X$. E.g., in the case of \citet{quintero2025}, $P_2$ is equal to $K$, except that the marginal of the first covariate is equal to the marginal of $H_X$.
 In either case, for each $i = 2, \dots, I$, intermediate explained components are defined as one of:
 \begin{align}

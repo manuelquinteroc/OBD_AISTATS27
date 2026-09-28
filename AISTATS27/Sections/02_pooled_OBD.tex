@@ -17,7 +17,7 @@ We consider an observed outcome $Y \in \mathbb{R}$ and covariates $X$ in some sp
 For the moment, we assume we have access to population-level quantities, including all expectations.
 
 To analyze the gap between $\E_H[Y]$ and $\E_K[Y]$, we might construct a counterfactual driven only by differences in covariates.
-Again taking our example, where $Y$ represents mortality and $X$ represents risk factors, we might ask:
+In our example, where $Y$ represents mortality and $X$ represents risk factors, we might ask:
 (A) \emph{How would Hospital $H$'s mortality rate change if its patients had the risk factor distribution of patients at Hospital $K$?}
 But, this question starts from the patient group at Hospital $H$ as a reference. We could instead start from group $K$ and ask:
 (B) \emph{How would Hospital $K$'s mortality rate change if its patients had the risk factor distribution of patients at Hospital $H$?}
@@ -28,19 +28,19 @@ But, this question starts from the patient group at Hospital $H$ as a reference.
 % (B) \emph{How much would men's ($K$) mean wages change if men kept their current remuneration relationship with education but had the educational distribution of women ($H$)?}
 
 More generally, we might ask:
-(A) \emph{How much would Group $H$'s mean outcome ($Y$) change if Group $H$ kept its outcome--covariate relationship ($Y \mid X$) but had the covariate ($X$) distribution of Group $K$?}
+(A) \emph{How much would Group $H$'s mean outcome $(Y)$ change if Group $H$ kept its outcome--covariate relationship $(Y | X)$ but had the covariate $(X)$ distribution of Group $K$?}
 or 
-(B) \emph{How much would Group $K$'s mean outcome ($Y$) change if Group $K$ kept its outcome--covariate relationship ($Y \mid X$) but had the covariate ($X$) distribution of Group $H$?}
+(B) \emph{How much would Group $K$'s mean outcome $(Y)$ change if Group $K$ kept its outcome--covariate relationship $(Y | X)$ but had the covariate $(X)$ distribution of Group $H$?}
 
 To address the general questions, it will be useful to compute the mean of a counterfactual $Y$ that has the outcome--covariate relationship ($Y \mid X$) of group $g$ and the covariate ($X$) distribution of group $g'$. By the law of total expectation, this mean equals
 $\E_{g'}[\E_g[Y \mid X]]$.
-Then the difference in mean outcomes between the two groups can be decomposed into differences between each group's mean
-and the chosen counterfactual mean. The decompositions corresponding to questions (A) and (B) above are, respectively, 
-\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} below.
-%
+Then the difference in mean outcomes between the two groups can be decomposed corresponding to questions (A) and (B) above with the following
+\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}, respectively: 
+
 % AISTATS two-column: reflowed so each decomposition sits on its own line (no words changed). Original kept below.
-{\color{red}\small
+{\color{red}
 \begin{align}
+\small
 \Delta_Y &:= \E_H[Y] - \E_K[Y] \nonumber \\
     \label{eq:OB_H_Counterfactual}
     &=\underbrace{\E_H[Y] - \E_K[\E_H[Y \mid X]] }_{E^{(H)}} 
@@ -66,26 +66,29 @@ and the chosen counterfactual mean. The decompositions corresponding to question
 %     + \underbrace{\Big(M_{H,K} - \E_K[Y]\Big)}_{E^{(K)}}.
 %\end{align}
 %
+
 We follow the traditional naming and notation for these terms \citep{fortinLemieuxFirpo2011}.
 The term corresponding to changing the covariates is called the
 ``explained component'' since this part of the difference is explained by the observed
 covariates. The remaining term, corresponding to changing the conditional $Y \mid X$ distribution,
 is called the ``unexplained component'' since it is not explained by the observed covariates. We denote these components as $E$ and $U$, respectively, with superscript denoting the reference group choice.
-
 We might interpret $E$ and $U$ as the respective contributions of the covariates and outcome--covariate relationship to the 
 difference in outcome means between groups $H$ and $K$. 
-\textcolor{red}{Despite the use of the term ``counterfactual,'' this interpretation is descriptive; the OBD does not carry a causal interpretation without further assumptions. We refer readers to Section 2.3 of \citet{fortinLemieuxFirpo2011} for a formal treatment of causal identification for the OBD, and to \citet{quintas2024multiply,flachaire2025decomposing} for recent work.} The \textbf{index number problem}, then, represents the observation
-that in general, $E^{(K)} \neq E^{(H)}$ and $U^{(K)} \neq U^{(H)}$.
+The \textbf{index number problem}, then, represents the observation that in general, 
+$E^{(K)} \neq E^{(H)}$ and $U^{(K)} \neq U^{(H)}$.
 
-\textcolor{red}{
-We emphasize that although the OBD involves counterfactual quantities, the index number problem is not an issue of causal identification.
-To be fair, estimating $\E_H[\E_K[Y \mid X]]$ and $\E_K[\E_H[Y \mid X]]$ and choosing a causal versus descriptive interpretation can involve tools from causal inference.
-However, the index number problem arises because $\E_H[\E_K[Y \mid X]]$ and $\E_K[\E_H[Y \mid X]]$ are usually not equivalent; the issue is choosing an \textit{estimand}, not choosing an \textit{estimator} or interpreting an \textit{estimate}.
+\textcolor{red}{ 
+    We emphasize that the index number problem is not an issue of causal identification.
+    The OBD is a descriptive decomposition, and its components do not carry causal interpretations without further assumptions.
+    We refer readers to Section 2.3 of \citet{fortinLemieuxFirpo2011} for a formal treatment of causal identification for the OBD, and to \citet{quintas2024multiply,flachaire2025decomposing} for recent work.
+    The index number problem arises specifically from the choice between \cref{eq:OB_H_Counterfactual} and \cref{eq:OB_K_Counterfactual}, regardless of the descriptive or causal tools a researcher chooses to estimate the target quantities.
+    Put another way, the index number problem relates to the choice and interpretation of \textit{estimands}, while causal inference guides the choice and interpretation of \textit{estimators}.
 }
 
 \textbf{A conceptual resolution?}
-Before proceeding, we observe that there is not an immediate and general conceptual resolution of the index number problem.
-It is not clear to us in the hospital example above that one direction is more natural, or even that the two directions represent distinct policy questions.
+\textcolor{red}{
+There has been no immediate and general conceptual resolution of the index number problem.}
+In the case of our leading hospital example above, it is not clear that one direction is more natural, or even that the two directions represent distinct policy questions.
 
 Generic responses to the index number problem do not resolve it without relying on arbitrary choices or compromising the interpretation of results; see \cref{sec:existing_index_number} for detailed discussion, which we summarize here.
 First, approaches like those of \citet{oaxacaRansom1998,neumark1988} define a new reference group by aggregating $H$ and $K$. However, there are many ways to perform this aggregation, introducing a new, still-arbitrary choice.
@@ -107,34 +110,33 @@ Still others report results for just one reference, with no argument for excludi
 In practice, researchers do not have access to population quantities and must instead draw conclusions from finite-data estimates.
 In particular, implementing \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} requires estimating $\E_g[Y]$, typically with the sample mean, and the counterfactual mean $\E_{g'}[\E_g[Y \mid X]]$, which requires more thought. 
 Practitioners typically estimate counterfactual means by (1) using data from $g$ to compute an estimator of $\E_g[Y \mid X]$ (essentially a regression), and (2) using data from $g'$ to take the sample average across the estimator from the first step.
-Concretely, for each $g \in {\{H, K\}}$, suppose we have $N_g$ observations of $\{X_n, Y_n\}$. Let $\hat{M}_g(X)$ be an estimator for $\E_g[Y \mid X]$.
+Concretely, for each $g \in {\{H, K\}}$, suppose we have $N_g$ observations of $\{X_n, Y_n\}$. Let $\hat{f}_g(X)$ be an estimator for $\E_g[Y \mid X]$.
 Then the following equation implements \cref{eq:OB_H_Counterfactual}:
 % AISTATS two-column: split over two lines; last term corrected to N_K (typo fixed in the workshop version). Original kept below.
 {\color{red}
 \begin{align}	
     \hat{\Delta}_Y
-    \label{eq:NOBD_H_estimated}
-    &=\underbrace{ \frac{1}{N_H} \sum_{n=1}^{N_H} Y_n - \frac{1}{N_K} \sum_{n=1}^{N_K} \hat{M}_H(X_n)}_{\hat{E}^{(H)}} \nonumber \\
-    &\quad + \underbrace{\frac{1}{N_K} \sum_{n=1}^{N_K} \hat{M}_H(X_n) - \frac{1}{N_K} \sum_{n=1}^{N_K} Y_n}_{\hat{U}^{(H)} }.
+    \label{eq:OBD_H_estimated}
+    &=\underbrace{ \frac{1}{N_H} \sum_{n=1}^{N_H} Y_n - \frac{1}{N_K} \sum_{n=1}^{N_K} \hat{f}_H(X_n)}_{\hat{E}^{(H)}} \nonumber \\
+    &\quad + \underbrace{\frac{1}{N_K} \sum_{n=1}^{N_K} \hat{f}_H(X_n) - \frac{1}{N_K} \sum_{n=1}^{N_K} Y_n}_{\hat{U}^{(H)} }.
 \end{align}}
 %REV \begin{align}	
 %REV     \hat{\Delta}_Y
-%REV     \label{eq:NOBD_H_estimated}
-%REV     &=\underbrace{ \frac{1}{N_H} \sum_{n=1}^{N_H} Y_n - \frac{1}{N_K} \sum_{n=1}^{N_K} \hat{M}_H(X_n)}_{\hat{E}^{(H)}} 
-%REV      + \underbrace{\frac{1}{N_K} \sum_{n=1}^{N_K} \hat{M}_H(X_n) - \frac{1}{N_H} \sum_{n=1}^{N_H} Y_n}_{\hat{U}^{(H)} }.
+%REV     \label{eq:OBD_H_estimated}
+%REV     &=\underbrace{ \frac{1}{N_H} \sum_{n=1}^{N_H} Y_n - \frac{1}{N_K} \sum_{n=1}^{N_K} \hat{f}_H(X_n)}_{\hat{E}^{(H)}} 
+%REV      + \underbrace{\frac{1}{N_K} \sum_{n=1}^{N_K} \hat{f}_H(X_n) - \frac{1}{N_H} \sum_{n=1}^{N_H} Y_n}_{\hat{U}^{(H)} }.
 %REV \end{align}
-In the literature, the term \emph{OBD} historically refers to using \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with the further choice of linear regression to compute $\hat{M}_g(X)$.
+In the literature, the term \emph{OBD} historically refers to using \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with the further choice of linear regression to compute $\hat{f}_g(X)$.
 \textcolor{red}{AS: could combine next two sentences.}
 We emphasize that the use of linear regression is a modeling choice, and that it is possible to choose nonlinear estimators for $\E_g  [ Y | X ]$.
 For instance, \citet{quintas2024multiply,flachaire2025decomposing,mao2025double} explore generalizations of the OBD that use machine learning methods to estimate $\E_g  [ Y | X ]$, and derive asymptotic properties for such procedures.
-To distinguish from the standard OBD, we will refer to the case where $\hat{M}_g(X)$ is a nonlinear estimator as the \emph{nonlinear Oaxaca-Blinder decomposition} (NOBD).
-\textcolor{red}{AS: not sure we need to introduce ``NOBD'' as a term. WS: I'm kind of }
+To distinguish from the standard OBD, we will refer to the case where $\hat{f}_g(X)$ is a nonlinear estimator as the \emph{nonlinear Oaxaca-Blinder decomposition} (OBD).
 
-\textbf{Drawing conclusions from the (N)OBD.}
+\textbf{Drawing conclusions from the OBD.}
 It is common to draw substantive conclusions based on the signs (and statistical significance) of the empirical explained and unexplained components \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. Returning to the hospital example from above, suppose Hospital $H$ has lower mortality ($\Delta_Y < 0$), and serves as the reference group. 
-If the (N)OBD explained component has a negative sign, we might conclude that $H$ can attribute
+If the OBD explained component has a negative sign, we might conclude that $H$ can attribute
 its lower mortality rate in part to patient characteristics, such as healthier blood pressure. 
-Analogously, if the (N)OBD unexplained component has a significant negative sign, we might attribute group $H$'s lower
+Analogously, if the OBD unexplained component has a significant negative sign, we might attribute group $H$'s lower
 mortality in part to the quality of hospital care.
 In either case, we might also require that the observed components be statistically distinguishable from zero to form a conclusion; without significance, we might hesitate to attribute differences in mortality to covariates or care quality. 
 For the rest of the paper, we will consider a practitioner drawing their conclusions based on the (statistically significant) sign of the explained or unexplained component.

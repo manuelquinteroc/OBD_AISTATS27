@@ -38,7 +38,6 @@ Then the difference in mean outcomes between the two groups can be decomposed co
 \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}, respectively: 
 
 % AISTATS two-column: reflowed so each decomposition sits on its own line (no words changed). Original kept below.
-{\color{red}
 \begin{align}
 \small
 \Delta_Y &:= \E_H[Y] - \E_K[Y] \nonumber \\
@@ -48,7 +47,7 @@ Then the difference in mean outcomes between the two groups can be decomposed co
      \label{eq:OB_K_Counterfactual}
      &=\underbrace{\E_H[Y] - \E_H[\E_K[Y \mid X]] }_{U^{(K)}} 
      + \underbrace{\E_H[\E_K[Y \mid X]] - \E_K[Y] }_{E^{(K)}}.
-\end{align}}
+\end{align}
 %REV \begin{align}
 %REV \Delta_Y := \E_H[Y] - \E_K[Y] 
 %REV     \label{eq:OB_H_Counterfactual}
@@ -77,17 +76,14 @@ difference in outcome means between groups $H$ and $K$.
 The \textbf{index number problem}, then, represents the observation that in general, 
 $E^{(K)} \neq E^{(H)}$ and $U^{(K)} \neq U^{(H)}$.
 
-\textcolor{red}{ 
-    We emphasize that the index number problem is not an issue of causal identification.
+We emphasize that the index number problem is not an issue of causal identification.
     The OBD is a descriptive decomposition, and its components do not carry causal interpretations without further assumptions.
     We refer readers to Section 2.3 of \citet{fortinLemieuxFirpo2011} for a formal treatment of causal identification for the OBD, and to \citet{quintas2024multiply,flachaire2025decomposing} for recent work.
     The index number problem arises specifically from the choice between \cref{eq:OB_H_Counterfactual} and \cref{eq:OB_K_Counterfactual}, regardless of the descriptive or causal tools a researcher chooses to estimate the target quantities.
     Put another way, the index number problem relates to the choice and interpretation of \textit{estimands}, while causal inference guides the choice and interpretation of \textit{estimators}.
-}
 
 \textbf{A conceptual resolution?}
-\textcolor{red}{
-There has been no immediate and general conceptual resolution of the index number problem.}
+There has been no immediate and general conceptual resolution of the index number problem.
 In the case of our leading hospital example above, it is not clear that one direction is more natural, or even that the two directions represent distinct policy questions.
 
 Generic responses to the index number problem do not resolve it without relying on arbitrary choices or compromising the interpretation of results; see \cref{sec:existing_index_number} for detailed discussion, which we summarize here.
@@ -113,13 +109,12 @@ Practitioners typically estimate counterfactual means by (1) using data from $g$
 Concretely, for each $g \in {\{H, K\}}$, suppose we have $N_g$ observations of $\{X_n, Y_n\}$. Let $\hat{f}_g(X)$ be an estimator for $\E_g[Y \mid X]$.
 Then the following equation implements \cref{eq:OB_H_Counterfactual}:
 % AISTATS two-column: split over two lines; last term corrected to N_K (typo fixed in the workshop version). Original kept below.
-{\color{red}
 \begin{align}	
     \hat{\Delta}_Y
     \label{eq:OBD_H_estimated}
     &=\underbrace{ \frac{1}{N_H} \sum_{n=1}^{N_H} Y_n - \frac{1}{N_K} \sum_{n=1}^{N_K} \hat{f}_H(X_n)}_{\hat{E}^{(H)}} \nonumber \\
     &\quad + \underbrace{\frac{1}{N_K} \sum_{n=1}^{N_K} \hat{f}_H(X_n) - \frac{1}{N_K} \sum_{n=1}^{N_K} Y_n}_{\hat{U}^{(H)} }.
-\end{align}}
+\end{align}
 %REV \begin{align}	
 %REV     \hat{\Delta}_Y
 %REV     \label{eq:OBD_H_estimated}
@@ -128,10 +123,10 @@ Then the following equation implements \cref{eq:OB_H_Counterfactual}:
 %REV \end{align}
 
 In the literature, the term \emph{OBD} historically refers to using \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with the further choice of linear regression to compute $\hat{f}_g(X)$.
-\textcolor{red}{AS: could combine next two sentences.}
 We emphasize that the use of linear regression is a modeling choice, and that it is possible to choose nonlinear estimators for $\E_g  [ Y | X ]$.
 For instance, \citet{quintas2024multiply,flachaire2025decomposing,mao2025double} explore generalizations of the OBD that use machine learning methods to estimate $\E_g  [ Y | X ]$, and derive asymptotic properties for such procedures.
-To distinguish from the standard OBD, we will refer to the case where $\hat{f}_g(X)$ is a nonlinear estimator as the \emph{nonlinear Oaxaca-Blinder decomposition} (OBD).
+\textcolor{red}{For the sake of generality, we will refer to the use of any models in \cref{eq:OBD_H_estimated} as ``the'' OBD, rather than restricting our focus to purely linear models.}
+%To distinguish from the standard OBD, we will refer to the case where $\hat{f}_g(X)$ is a nonlinear estimator as the \emph{nonlinear Oaxaca-Blinder decomposition} (OBD).
 
 \textbf{Drawing conclusions from the OBD.}
 It is common to draw substantive conclusions based on the sign and statistical significance of the empirical explained and unexplained components \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. 

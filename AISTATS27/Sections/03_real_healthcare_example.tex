@@ -3,7 +3,7 @@
 
 % Extended to the two Census outcomes (new cells in red). Original ICU-only table kept below as %REV.
 \begin{table*}[t]
-    \caption{Number of data subsets exhibiting at least one sign flip (in either the explained or unexplained component), by model, for the ICU data (out of $139$ subsets) and for the two outcomes of the U.S.\ Census data (out of $217$ and $183$ data subsets; \cref{appendix:us_labor_force}). Columns $10\%$, $5\%$, and $1\%$ report the number of flipped subsets that are significant at the corresponding level. Dashes: logistic regression does not apply to the continuous log-income outcome.}
+    \caption{Number of data subsets exhibiting at least one sign flip (in either the explained or unexplained component), by model\rc{, for the ICU data (out of $139$ subsets) and for the two outcomes of the U.S.\ Census data (out of $217$ and $183$ data subsets; \cref{appendix:us_labor_force})}. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped subsets that are significant at the corresponding level. \rc{Dashes: logistic regression does not apply to the continuous log-income outcome. Significance for TabPFN on the Census data uses $B = 200$ bootstrap replications; all other entries use $B = 1{,}000$.}}
     \label{tab:flip_summary_main}
     \centering
     \small
@@ -17,7 +17,7 @@
     Logistic    & 29 &  2 &  2 &  1 & \rc{--} & \rc{--} & \rc{--} & \rc{--} & \rc{62} & \rc{31} & \rc{25} & \rc{14} \\
     Neural net  & 62 & 29 & 17 &  6 & \rc{87} & \rc{73} & \rc{66} & \rc{52} & \rc{65} & \rc{26} & \rc{20} & \rc{10} \\
     XGBoost     & 62 & 17 & 10 &  3 & \rc{34} & \rc{18} & \rc{16} & \rc{12} & \rc{54} & \rc{34} & \rc{26} & \rc{16} \\
-    TabPFN      & 76 & 22 & 19 &  5 & \rc{28} & \rc{--} & \rc{--} & \rc{--} & \rc{62} & \rc{--} & \rc{--} & \rc{--} \\
+    TabPFN      & 76 & 22 & 19 &  5 & \rc{28} & \rc{14} & \rc{12} & \rc{7} & \rc{62} & \rc{30} & \rc{24} & \rc{15} \\
     \bottomrule
     \end{tabular}
 \end{table*}

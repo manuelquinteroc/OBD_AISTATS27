@@ -3,7 +3,7 @@
 
 % Extended to the two Census outcomes (new cells in red). Original ICU-only table kept below as %REV.
 \begin{table*}[t]
-    \caption{Number of data subsets exhibiting at least one sign flip (in either the explained or unexplained component), by model\rc{, for the ICU data (out of $139$ subsets) and for the two outcomes of the U.S.\ Census data (out of $217$ and $183$ data subsets; \cref{appendix:us_labor_force})}. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped subsets that are significant at the corresponding level. \rc{Dashes: logistic regression does not apply to the continuous log-income outcome. Significance for TabPFN on the Census data uses $B = 200$ bootstrap replications; all other entries use $B = 1{,}000$.}}
+    \caption{Number of data subsets exhibiting conflicting conclusions (``index ambiguity'') in either the explained or unexplained component, by model\rc{, for the ICU data (out of $139$ subsets) and for the two outcomes of the U.S.\ Census data (out of $217$ and $183$ data subsets; \cref{appendix:us_labor_force})}. Columns $10\%$, $5\%$, and $1\%$ report the number of changed decisions for a researcher using the corresponding significance level. \rc{Dashes: logistic regression does not apply to the continuous log-income outcome. Significance for TabPFN on the Census data uses $B = 200$ bootstrap replications; all other entries use $B = 1{,}000$.}}
     \label{tab:flip_summary_main}
     \centering
     \small
@@ -11,12 +11,12 @@
     \toprule
      & \multicolumn{4}{c}{ICU mortality} & \multicolumn{4}{c}{\rc{Census, log income}} & \multicolumn{4}{c}{\rc{Census, health insurance}} \\
     \cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
-    Model & Total flips & $10\%$ & $5\%$ & $1\%$ & \rc{Total flips} & \rc{$10\%$} & \rc{$5\%$} & \rc{$1\%$} & \rc{Total flips} & \rc{$10\%$} & \rc{$5\%$} & \rc{$1\%$} \\
+    Model & \# Ambiguous & $10\%$ & $5\%$ & $1\%$ & \rc{\# Ambiguous} & \rc{$10\%$} & \rc{$5\%$} & \rc{$1\%$} & \rc{\# Ambiguous} & \rc{$10\%$} & \rc{$5\%$} & \rc{$1\%$} \\
     \midrule
     Linear      & 27 &  2 &  2 &  2 & \rc{33} & \rc{16} & \rc{13} & \rc{8}  & \rc{65} & \rc{38} & \rc{32} & \rc{23} \\
     Logistic    & 29 &  2 &  2 &  1 & \rc{--} & \rc{--} & \rc{--} & \rc{--} & \rc{62} & \rc{31} & \rc{25} & \rc{14} \\
-    Neural net  & 62 & 29 & 17 &  6 & \rc{87} & \rc{73} & \rc{66} & \rc{52} & \rc{65} & \rc{26} & \rc{20} & \rc{10} \\
     XGBoost     & 62 & 17 & 10 &  3 & \rc{34} & \rc{18} & \rc{16} & \rc{12} & \rc{54} & \rc{34} & \rc{26} & \rc{16} \\
+    Neural net  & 62 & 29 & 17 &  6 & \rc{87} & \rc{73} & \rc{66} & \rc{52} & \rc{65} & \rc{26} & \rc{20} & \rc{10} \\
     TabPFN      & 76 & 22 & 19 &  5 & \rc{28} & \rc{14} & \rc{12} & \rc{7} & \rc{62} & \rc{30} & \rc{24} & \rc{15} \\
     \bottomrule
     \end{tabular}
@@ -28,13 +28,13 @@ The index number problem reflects that the two reference choices for the OBD cou
 \textcolor{red}{
 Ideally, we would take a representative sample of OBD applications, and record whether both reference groups support the same conclusions.
 However, many published papers do not release replication materials, and even if they did, drawing a statistically representative sample would be challenging.
-Instead, we take two datasets from published OBD applications and systematically construct a set of OBD analyses.
-Each analysis represents an applied question that a researcher might plausibly ask, such as whether risk factors explain male-female mortality differences  among older hospital patients, or whether individual characteristics explain racial wage gaps in the U.S. state of Michigan.}
+Instead, we take two datasets from published research and systematically construct a set of OBD analyses for them.
+Each analysis represents an applied question that a researcher might plausibly ask, such as whether risk factors explain male-female mortality differences among older hospital patients, or whether individual characteristics explain racial wage gaps in the U.S. state of Michigan.}
 
 \textcolor{red}{
 This design allows us to provide an existence proof for index ambiguity in real data.
 We choose two datasets from different domains and construct analyses systematically to mitigate concerns about cherry-picking our experimental setting.
-However, a limitation of this design is that it does not allow us to estimate the population prevalence of index ambiguity in applied work.
+One limitation of this design is that it does not allow us to estimate the population prevalence of index ambiguity in applied work.
 }
 
 
@@ -47,24 +47,32 @@ For reference groups, we consider males and females.
 
 \textbf{Analysis.}
 As discussed in \cref{sec:ob_real}, practitioners often draw conclusions based on the sign and statistical significance of the OBD explained and unexplained components.
-To explore whether these conclusions can be robust to the choice of reference group, we compute the explained and unexplained components for each data subset across one foundation model %REV for each of our $139$ data subsets
- and four classic models. The foundation model is TabPFN, a $25$ million parameter, transformer-based model, pre-trained to map training datasets to predictive distributions $Y|X$ \citep{hollmann2023tabpfn}. The other four models are linear regression,\footnote{Despite the binary outcome $Y$, it is common practice in applied health and policy research to fit separate linear models (via ordinary least squares) for the relationship between a binary outcome and covariates in each group, and then apply the OBD \citep{jann2008, edokaChangesCatastrophicHealth2017, sujin_LPM_OB, mweembaGapSelfRatedHealth2023}. In fact, this use of the linear model for a binary outcome is so common that it has a name, the ``linear probability model.''} logistic regression, XGBoost \citep{chen2016xgboost}, and a two-layer fully-connected neural network.
+To explore whether these conclusions can change based on the choice of reference group, we compute the explained and unexplained components for each data subset across one foundation model %REV for each of our $139$ data subsets
+ and four classic models. The foundation model is TabPFN, a $25$ million parameter, transformer-based model, pre-trained to map training datasets to predictive distributions $Y|X$ \citep{hollmann2023tabpfn}. The other four models are linear regression,\footnote{Despite the binary outcome $Y$, it is common practice in applied health and policy research to fit separate linear models (via ordinary least squares) for the relationship between a binary outcome and covariates in each group, and then apply the OBD \citep{jann2008, edokaChangesCatastrophicHealth2017, sujin_LPM_OB, mweembaGapSelfRatedHealth2023}. In fact, this use of the linear model for a binary outcome is so common that it is called the ``linear probability model.''} logistic regression, XGBoost \citep{chen2016xgboost}, and a two-layer fully-connected neural network.
 % \textcolor{red}{All models are trained and evaluated in-sample. We detail hyperparameter choices in \cref{appendix:icu_details}.}
 %To examine a more modern, transformer-based model, we also consider TabPFN, a $25$ million parameter, pre-trained model trained to map training datasets to predictive distributions $Y|X$ \citep{hollmann2023tabpfn}.
 We assess statistical significance using $1{,}000$ bootstrap replications.
-\cref{tab:flip_summary_main} counts the number of sign flips across these models and datasets at various levels of statistical significance.
-In every dataset and for every model, we observe sign flips.
-Interestingly, we can see a trend in the flip frequencies.\footnote{We claim only that these are estimates of the frequency of sign flips \emph{conditional on the chosen data subsets}. We have chosen the subsets to be somewhat representative of data subsets a practitioner might encounter but assume this is not a perfect copy of the distribution of all possible datasets encountered in practice.}
-In particular, more complex models can show flips in more subsets; %REV tend to
- for TabPFN on the ICU data, we see that more than half of the subsets show opposite signs %REV Concerningly, we see that \emph{every} model contains at least one sign flip, and more complex models tend to have even more flips; for TabPFN, we see that more than  half of the datasets show opposite signs
- for at least one of the explained or unexplained components, and $13.7\%$ show significant sign flips at the $5\%$ level.
+\cref{tab:flip_summary_main} counts how often the choice of reference group produces conflicting conclusions, across models and datasets, for hypothetical researchers who use various levels of statistical significance.
 
-One might hope that a sufficiently flexible model would make the sign flips disappear. It does not. In \cref{appendix:complexity}, we vary the complexity of XGBoost (tree depth and number of trees) and of the neural network (width and depth) while holding every other setting fixed. On the ICU data, each increase in complexity raises the number of data subsets with a sign flip, until nearly all $139$ subsets flip. On the U.S.\ Census data of \cref{appendix:us_labor_force}, the number of flips barely changes with complexity, and for one outcome deeper networks flip fewer data subsets. 
-We conclude that sufficiently complex models are not a solution to the sign flip problem.
-One might also hope that sign flips would be restricted to changes that are small in absolute magnitude, and therefore are less concerning.
-In \cref{ex:unbounded}, we show that sign flips can, in fact, be arbitrarily large in magnitude.
+\textcolor{red}{
+Index ambiguity exists for every dataset and every model, at rates ranging from 15.2\% of analyses (linear regression, Census log income) to 54.7\% (TabPFN, ICU mortality).
+Even a hypothetical researcher using the relatively strict 1\% level may generate conflicting conclusions by changing the reference group.
+To clarify the interpretation of these frequencies, our design estimates the rate of index ambiguity \emph{conditional on the chosen data analyses}. 
+A practitioner in another setting would likely encounter different rates.
+That said, our analyses are based on published data and constructed to reflect a range of plausible research questions.
+}
+
+One might hope that a sufficiently flexible model would make index ambiguity disappear. 
+It does not; index ambiguity occur for each of XGBoost, a neural network, and TabPFN. 
+For the ICU mortality data, these models return conflicting conclusions more often than linear regression.
+\cref{appendix:complexity} further studies the role of model flexibility, by varying the complexity of XGBoost (tree depth and number of trees) and of the neural network (width and depth) while holding every other setting fixed. 
+On the ICU data, each increase in complexity raises the number of data subsets with index ambiguity, until nearly all $139$ subsets show conflicting conclusions. 
+On the U.S.\ Census data of \cref{appendix:us_labor_force}, the number of flips barely changes with complexity, and for one outcome deeper networks flip fewer data subsets. 
+We conclude that sufficiently complex models are not a solution to index ambiguity.
+
+One might also hope that index ambiguity would be restricted to changes that are small in absolute magnitude, and therefore are less concerning.
+In \cref{ex:unbounded}, we use linear models as a test case to show that conflicting conclusions can, in fact, be arbitrarily large in magnitude.
 %We therefore do not claim a single relationship between model complexity and sign flips; the pattern appears to depend on the data. But in neither dataset does increasing complexity make sign flips go away.}
-In the remainder of this section, we focus on the ICU data, which lets us examine a single analysis in detail; the Census results are in \cref{appendix:us_labor_force}.
 
 % Within the data set described above, we will compare two patient groups across hospitals (rather than hospital-specific patient groups as in our introductory example). In particular, we let the groups be $g \in \{\text{men}, \text{women}\}$. 
 % The mortality rate for men exceeds the mortality rate for women by about $3.5$ percentage points; see \cref{tab:hr_q2_decomposition}.
@@ -79,7 +87,7 @@ In the remainder of this section, we focus on the ICU data, which lets us examin
 %REV     \small
 %REV     \begin{tabular}{lcccc}
 %REV     \toprule
-%REV     Model & Total flips & $10\%$ & $5\%$ & $1\%$ \\
+%REV     Model & \# Ambiguous & $10\%$ & $5\%$ & $1\%$ \\
 %REV     \midrule
 %REV     Linear      & 27 &  2 &  2 &  2 \\
 %REV     Logistic    & 29 &  2 &  2 &  1 \\
@@ -92,14 +100,15 @@ In the remainder of this section, we focus on the ICU data, which lets us examin
 
 \subsection{A deeper dive on one data subset}
 
-\cref{tab:flip_summary_main} shows that sign flips are common.
-But what do these flips really mean in practice?
+\cref{tab:flip_summary_main} shows that index ambiguity is common.
+But what do these conflicting conclusions really mean in practice?
+In the remainder of this section, we focus on the ICU data, which lets us examine a single analysis in detail; the Census results are in \cref{appendix:us_labor_force}.
 And are they merely an artifact of noise or instead a structural phenomenon?
 As is often the case in studying complex machine learning models, studying linear regression provides a tractable proxy problem.
 In the present study, linear regression is also of direct interest since the OBD (with linear regression) is widely used in practice.
 So in this section, we focus on \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with linear regression (i.e., the OBD instead of OBD).
-To start answering our questions, we examine one particular data subset leading to a significant sign flip for linear regression in \cref{tab:flip_summary_main}.
-We will see what it means for sign flips to change meaningful conclusions and also see that flips have a natural structural interpretation.
+To start answering our questions, we examine one particular data subset leading to a conflicting conclusions for linear regression in \cref{tab:flip_summary_main}.
+We will see what it means for the index number problem to change conclusions and also see that the conflict has a natural structural interpretation.
 
 The particular data subset we consider covers patients with an elevated heart rate.
 Medical practitioners often look at moderate elevations in heart rate as a first indication of stress, infection, or concerning changes in blood flow and circulation. In the present example, we consider patients whose admission heart rate lies between the $50$th and $75$th percentiles. This patient set, which we refer to as HR quartile two, reflects a clinical presentation in which the heart rate is elevated but not extreme.
@@ -171,9 +180,9 @@ Second, consider men as the reference. The explained component is negative ($-0.
 \end{table}
 
 
-\textbf{How does the sign flip arise?}
+\textbf{How do conflicting conclusions arise?}
 %Recall that the explained component is given by $\EHOB := \Delta\mu^T \beta_H$ when $H$ is the reference group, and $\EKOB := \Delta\mu^T \beta_K$ when $K$ is the reference group.
-To understand how the sign flip arises, it will help to introduce more notation for the linear regression case.
+To understand how conflicting conclusions arise, it will help to introduce more notation for the linear regression case.
 We now restrict to real-valued covariates $X \in \mathbb{R}^p$, and we assume we fit a linear regression to each group $g$: $\alpha_g + X^\top \beta_g$
 with intercept $\alpha_g \in \mathbb{R}$ and slope $\beta_g \in \mathbb{R}^p$. We let
 $\mu_g := \E_g[X],
@@ -195,8 +204,8 @@ In \cref{fig:sign_flip_overview} (left), we show the fitted linear models of in-
 We see that the signs of the slopes differ.
 In Appendix \cref{tab:delta_mu_betas}, we report values for all elements of each vector $\hat{\beta}_{g}$ in the full analysis. 
 We see that there are multiple covariates $c$ for which $\hat{\beta}_{\textrm{men},c} < 0 < \hat{\beta}_{\textrm{women},c}$.
-And as $\Delta\hat{\mu}_c$ has the same sign for all of these covariates, each one pushes towards a sign flip. %, and additionally, $\Delta\mu$ is positive for all of these covariates.
-In aggregate, these changes add enough to cause a sign flip in the explained component.
+And as $\Delta\hat{\mu}_c$ has the same sign for all of these covariates, each one pushes towards a sign reversal. %, and additionally, $\Delta\mu$ is positive for all of these covariates.
+In aggregate, these changes add enough to produce conflicting conclusions for the explained component.
 %In \cref{sec:simulated_example}, we show that these phenomenon are not artifacts of finite-samples or model misspecification; in fact, we show that sign flips can occur for well-specified linear models with infinite data.
 
 \begin{figure}[!ht]
@@ -218,8 +227,8 @@ In aggregate, these changes add enough to cause a sign flip in the explained com
 
 
 \textbf{Limitations.}
-Our analysis reveals sign flips in the explained and unexplained components of the OBD in a real dataset.
-It is a priori possible that some of our choices may be unusual; these choices include the dataset itself, our choice of covariates, our choice of outcome, or our particular subset of data. And it is possible that sign flips may not occur in other settings.
+Our analysis reveals index ambiguity in the explained and unexplained components of the OBD in a real dataset.
+It is a priori possible that some of our choices may be unusual; these choices include the dataset itself, our choice of covariates, our choice of outcome, or our particular subset of data. And it is possible that index ambiguity may not occur in other settings.
 To address this possibility, we provide a second illustration analyzing differences in income as well as health insurance status using U.S.\ Census data in \cref{appendix:us_labor_force}.
 The latter data have previously been analyzed by \citet{bach2024heterogeneity}, reducing the concern that our empirical results are due to atypical choices on our part.
-We also give a theoretical account of sign flips in \cref{sec:signflips}, where we establish that they correspond to a nontrivial region of the parameter space.
+We also give a theoretical account of index ambiguity in \cref{sec:signflips}, where we establish that it corresponds to a nontrivial region of the parameter space.

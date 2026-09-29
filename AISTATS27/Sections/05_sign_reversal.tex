@@ -1,23 +1,24 @@
-\section{How common are sign flips?} 
+\section{How common are conflicting conclusions?} 
 \label{sec:signflips}
 
 Our examples above serve as an existence proof that reference group choice can reverse the OBD's substantive conclusions by flipping signs of the explained or unexplained components.
 However, a few major questions remain.
 First, do these conclusion reversals occur in the absence of finite-sample noise; i.e., do practitioners with large-scale datasets still need to worry about them?
 Second, even if conclusion reversals can occur, do they occur outside of mathematically adversarial examples (i.e., ``measure zero'' in some sense)?
-Third, when should we expect sign flips to be more or less frequent?
+Third, when should we expect conflicting conclusions to be more or less frequent?
 
-In this section, we mathematically prove the answer to the first two questions is yes and derive closed-form equations for the probability of sign flips that allow an intuitive answer to the third question.
-\cref{sec:simulated_example} complements our argument with an empirical example where a sign flip occurs even without sampling noise.
+In this section, we mathematically prove the answer to the first two questions is yes and derive closed-form equations for the probability of conflicting conclusions that allow an intuitive answer to the third question.
+\cref{sec:simulated_example} complements our argument with an empirical example where index ambiguity occurs even without sampling noise.
 
 In what follows, we study conclusion reversals that involve the explained or unexplained component changing signs from positive to negative, or vice versa.
 To balance mathematical tractability and generality of our theory, we will focus on the OBD under a fairly general class of functions $f^H, f^K$ -- those drawn from a Gaussian process.
 %For mathematical tractability and applicability to practical usage, we continue our focus on the OBD (vs.\ OBD). % (i.e., using linear models in \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}).
-To show that sign flipping is not an artifact of finite samples, we work in the population limit; since we work in the population limit, statistical significance is no longer a concern.
-And to show that sign flipping is not a ``measure zero'' phenomenon, we show that sign flips in general occur with non-zero probability.
+To show that index ambiguity is not an artifact of finite samples, we work in the population limit; since we work in the population limit, statistical significance is no longer a concern.
+\textcolor{red}{Put another way, the a researcher making a decision based on a population-level statistic would answer either ``positive'' or ``negative'', not ``inconclusive''.}
+And to show that index ambiguity is not a ``measure zero'' phenomenon, we show that conflicting conclusions in general occur with non-zero probability.
 % We use our analysis of the parameter space to interpret our empirical exercises and discuss frontier work on the OBD that enriches the covariate space using machine learning models \citep{bach2024heterogeneity,quintero2025,flachaire2025decomposing}.
 
-\subsection{A general computation of sign flip probabilities}
+\subsection{A general computation of index ambiguity probabilities}
 \label{sec:general_flip_probabilities}
 We wish to understand, in general, the probability of the OBD flipping signs under the choice of the reference group.
 To discuss such probabilities, we choose to treat the functions $f^H$ and $f^K$ as random and the covariate distributions $h$ and $k$ as fixed.
@@ -37,26 +38,26 @@ Finally, some extra notation will be useful in stating our theoretical results.
 	V(f) := \int f(x)h(x) dx, \quad W(f) := \int f(x)k(x)dx
 \end{equation}
 Then the explained component is $V(f^g) - W(f^g)$ for reference group $g$, and the unexplained component with reference group $H$ is $W(f^H) - W(f^K)$, and likewise for reference group $K$.
-Now we can prove a basic fact about the probability of sign flips.
+Now we can prove a basic fact about the probability of index ambiguity.
 \begin{proposition} \label{prop:generic_flip_probs}
 	Take \cref{assum:atomless,assum:iid}.
-	Then the probability of a sign flip in the explained component is given by
+	Then the probability of a index ambiguity in the explained component is given by
 	\begin{equation}
-		Pr_\nu(\mathrm{explained\ flip}) = 2 \pi (1-\pi), \label{eq:explained_flip_pr}
+		Pr_\nu(\mathrm{explained\ ambiguity}) = 2 q (1-q), \label{eq:explained_flip_pr}
 	\end{equation}
-	where $\pi := \nu(V-W > 0)$.
+	where $q := \nu(V-W > 0)$.
 	For the unexplained component, let $(V,W)$ and $(V', W')$ be i.i.d.\ copies of the pair $(V(f), W(f))$ with $f \sim \nu$. Then:
 	\begin{align}
-		Pr_\nu(& \mathrm{unexplained\ flip}) \nonumber \\
+		Pr_\nu(& \mathrm{unexplained\ ambiguity}) \nonumber \\
 		& = Pr_\nu \left( (V - V')(W - W') < 0 \right) \label{eq:unexplained_flip_pr}
 	\end{align}
 \end{proposition}
 See \cref{app:theory} for a proof.
 \cref{prop:generic_flip_probs} is highly generic, but it is not immediately useful.
-In particular, it does not answer the questions of whether sign flips are adversarial events, and, if not, when we should expect them to occur more or less frequently.
+In particular, it does not answer the questions of whether conflicting conclusions are adversarial events, and, if not, when we should expect them to occur more or less frequently.
 To answer such qualitative questions, we need to compute \cref{eq:explained_flip_pr,eq:unexplained_flip_pr}; we undertake this task in the next section.
 
-\subsection{Sign flip probabilities under a GP prior}
+\subsection{Index ambiguity probabilities under a GP prior}
 \label{sec:gp_sign_flips}
 We will specify a particular model for $\nu$ to enable computation of the probabilities in \cref{prop:generic_flip_probs}.
 We choose a Gaussian process (GP) for mathematical tractability; however, we note this is not a particularly constraining choice, as the choice of kernel and mean function allows for a rich class of distributions that $f^H$ and $f^K$ might be drawn from.
@@ -76,34 +77,34 @@ Finally, we will make some regularity assumptions on the kernel and mean functio
 \end{assumption}
 These regularity conditions are extremely broad.
 E.g., any kernel with $C(x,x)$ equal to a constant (any stationary kernel) satisfies the first, and the second merely states that $\mu$ is integrable with respect to $h$ and $k$.
-Under these assumptions, we can derive closed forms for the explained and unexplained sign flip probabilities.
+Under these assumptions, we can derive closed forms for the explained and unexplained index ambiguity.
 For notation, we let $\Phi$ be the CDF of the standard normal function.
 \begin{proposition} \label{prop:sign_flip_gp}
 	Take \cref{assum:iid,assum:atomless,assum:gp,assum:fubini}. Then we have that:
 	\begin{align}
-		&Pr_\nu[\mathrm{unexplained\ flip}] = \frac{1}{\pi} \arccos\left(\frac{\langle h, k \rangle_C}{\| h \|_C \| k \|_C} \right) \label{eq:unexplained_flip_pr_gp} \\
-		&Pr_\nu[\mathrm{explained\ flip}] = 2 \Phi (\lambda) \Phi(-\lambda), \label{eq:explained_flip_pr_gp}
+		&Pr_\nu[\mathrm{unexplained\ ambiguity}] = \frac{1}{\pi} \arccos\left(\frac{\langle h, k \rangle_C}{\| h \|_C \| k \|_C} \right) \label{eq:unexplained_flip_pr_gp} \\
+		&Pr_\nu[\mathrm{explained\ ambiguity}] = 2 \Phi (\lambda) \Phi(-\lambda), \label{eq:explained_flip_pr_gp}
 	\end{align}
 	where we have used $\lambda := \langle \mu, h-k \rangle / \|h -k\|_C$.
 \end{proposition}	
 See \cref{app:theory} for a proof.
 We can use \cref{prop:sign_flip_gp} to answer our qualitative questions.
-First, we can see that the probabilities of sign flips are not zero, even in the infinite sample limit where we have exact access to $f^H$ and $f^K$.
-Second, we see that for general $h,k, C,\mu$, neither the explained nor unexplained sign flip probability is zero; only in highly specific cases such as $h = k$ do we get zero probabilities.
-As our model for $\nu$ is fairly generic, we conclude that sign flips are not an ``adversarial'' or ``measure zero'' phenomenon, and we should expect to encounter them in practice.
-Finally, when should we expect sign flips to be more or less frequent?
+First, we can see that the probabilities of index ambiguity are not zero, even in the infinite sample limit where we have exact access to $f^H$ and $f^K$.
+Second, we see that for general $h,k, C,\mu$, neither the explained nor unexplained index ambiguity probability is zero; only in highly specific cases such as $h = k$ do we get zero probabilities.
+As our model for $\nu$ is fairly generic, we conclude that conflicting conclusions are not an ``adversarial'' or ``measure zero'' phenomenon, and we should expect to encounter them in practice.
+Finally, when should we expect index ambiguity to be more or less frequent?
 We next consider this question for the explained and unexplained component separately.
 
 \textbf{Explained component.} We see that the explained component is likely to flip if $| \lambda |$ is small and unlikely to flip if $|\lambda|$ is large.
 The numerator of $\lambda$ is large if $h$ and $k$ mainly differ on covariates with large means.
 The denominator is small if $h$ and $k$ vary on covariates that, under $C$, have low variance.
-Overall, to reduce the probability of explained sign flips, it must be that $h$ and $k$ vary primarily on covariates that have a non-zero mean \emph{and} a small variance -- i.e., covariates with a high signal-to-noise ratio under $f \sim GP(\mu, C)$.
+Overall, to reduce the probability of explained component index ambiguity, it must be that $h$ and $k$ vary primarily on covariates that have a non-zero mean \emph{and} a small variance -- i.e., covariates with a high signal-to-noise ratio under $f \sim GP(\mu, C)$.
 
 \textbf{Unexplained component.}
-The unexplained sign flip probability is driven to zero when $\langle h,k\rangle_C$ is equal to $\| h\|_C \| k \|_C$. 
+The unexplained index ambiguity probability is driven to zero when $\langle h,k\rangle_C$ is equal to $\| h\|_C \| k \|_C$. 
 For intuition about when this will happen, suppose $C$ is a distance-based kernel, like the radial basis function (RBF) kernel. 
 Then $\langle h,k\rangle_C$ is large precisely when $h$ puts significant mass in regions of space that are ``close'' to regions of space where $k$ puts significant mass; here, ``close'' is as defined by the length scale of the kernel, and ``large'' is measured with respect to the product $\|h\|_C \|k\|_C$. 
-Put differently, if there are many nearby regions of space where $h$ and $k$ are large \emph{and} we expect a randomly drawn $f$ to be relatively constant (because $C$ is high over for pairs of points drawn from across the region), then the probability of an unexpected sign flip is driven down.
-Alternatively, if regions where $h$ is high and regions where $k$ is high are sufficiently far apart that we expect $f$ to significantly vary between them, then the probability of an unexplained sign flip is driven up.
+Put differently, if there are many nearby regions of space where $h$ and $k$ are large \emph{and} we expect a randomly drawn $f$ to be relatively constant (because $C$ is high over for pairs of points drawn from across the region), then the probability of unexpected  component index ambiguity is driven down.
+Alternatively, if regions where $h$ is high and regions where $k$ is high are sufficiently far apart that we expect $f$ to significantly vary between them, then the probability of an unexplained component index ambiguity is driven up.
 
 \textcolor{red}{\textbf{Can the explained and unexplained probabilities be simultaneously small?} WTS: putting this here b/c I just think this would be interesting to think and comment on. But we can easily just not put this in the paper.}

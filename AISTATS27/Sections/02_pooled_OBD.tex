@@ -126,6 +126,7 @@ Then the following equation implements \cref{eq:OB_H_Counterfactual}:
 %REV     &=\underbrace{ \frac{1}{N_H} \sum_{n=1}^{N_H} Y_n - \frac{1}{N_K} \sum_{n=1}^{N_K} \hat{f}_H(X_n)}_{\hat{E}^{(H)}} 
 %REV      + \underbrace{\frac{1}{N_K} \sum_{n=1}^{N_K} \hat{f}_H(X_n) - \frac{1}{N_H} \sum_{n=1}^{N_H} Y_n}_{\hat{U}^{(H)} }.
 %REV \end{align}
+
 In the literature, the term \emph{OBD} historically refers to using \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} with the further choice of linear regression to compute $\hat{f}_g(X)$.
 \textcolor{red}{AS: could combine next two sentences.}
 We emphasize that the use of linear regression is a modeling choice, and that it is possible to choose nonlinear estimators for $\E_g  [ Y | X ]$.
@@ -133,10 +134,19 @@ For instance, \citet{quintas2024multiply,flachaire2025decomposing,mao2025double}
 To distinguish from the standard OBD, we will refer to the case where $\hat{f}_g(X)$ is a nonlinear estimator as the \emph{nonlinear Oaxaca-Blinder decomposition} (OBD).
 
 \textbf{Drawing conclusions from the OBD.}
-It is common to draw substantive conclusions based on the signs (and statistical significance) of the empirical explained and unexplained components \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. Returning to the hospital example from above, suppose Hospital $H$ has lower mortality ($\Delta_Y < 0$), and serves as the reference group. 
+It is common to draw substantive conclusions based on the sign and statistical significance of the empirical explained and unexplained components \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. 
+
+Returning to the hospital example from above, suppose Hospital $H$ has lower mortality ($\Delta_Y < 0$), and serves as the reference group. 
 If the OBD explained component has a negative sign, we might conclude that $H$ can attribute
 its lower mortality rate in part to patient characteristics, such as healthier blood pressure. 
 Analogously, if the OBD unexplained component has a significant negative sign, we might attribute group $H$'s lower
 mortality in part to the quality of hospital care.
 In either case, we might also require that the observed components be statistically distinguishable from zero to form a conclusion; without significance, we might hesitate to attribute differences in mortality to covariates or care quality. 
-For the rest of the paper, we will consider a practitioner drawing their conclusions based on the (statistically significant) sign of the explained or unexplained component.
+
+\textcolor{red}{
+To formalize this argument, consider a researcher who interprets a univariate statistic according to a decision function $d: \mathbb{R} \to \{ D_1, \dots, D_n \}$ where each $D_i$ is a distinct choice.
+We model a researcher who cares about the sign of a target quantity, so that the choice set is $\{ \text{positive, negative, inconclusive} \}$.
+If the researcher applies null hypothesis significance testing with conventional thresholds, then $d$ is a step function that moves from "negative" to "inconclusive" at -1.96 and then to "positive" at 1.96. 
+Of course there are other ways to model researchers (e.g., as also caring about magnitude, or caring about a multivariate statistic).}
+
+\textcolor{red}{We say an OBD analysis is \textbf{index ambiguous} if either $d( E_H ) \neq d( E_K )$ or $d( U_H ) \neq d( U_K )$; that is, when the index number problem is severe enough that the choice of reference groups changes a researcher's conclusion.}

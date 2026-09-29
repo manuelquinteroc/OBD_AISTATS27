@@ -27,12 +27,20 @@ The index number problem reflects that the two reference choices for the OBD cou
 
 %TODO
 \textcolor{red}{
-Our analysis is meant to probe the stability of the explained and unexplained components across research domains.
-In an ideal world, we would randomly sample and replicate existing OBD analyses, and record whether the explained and unexplained components are in agreement for both of reference group.}
+Ideally, we would take a representative sample of OBD applications, and record whether both reference groups support the same conclusions.
+However, many published papers do not release replication materials, and even if they did, drawing a statistically representative sample would be challenging.
+Instead, we take two datasets from published OBD applications and systematically construct a set of OBD analyses.
+Each analysis represents an applied question that a researcher might plausibly ask, such as whether risk factors explain male-female mortality differences  among older hospital patients, or whether individual characteristics explain racial wage gaps in the U.S. state of Michigan.}
+
+\textcolor{red}{
+This design allows us to provide an existence proof for index ambiguity in real data.
+We choose two datasets from different domains and construct analyses systematically to mitigate concerns about cherry-picking our experimental setting.
+However, a limitation of this design is that it does not allow us to estimate the population prevalence of index ambiguity in applied work.
+}
 
 
-\textbf{Data.} \textcolor{red}{We consider two sources of data. The first is} the PhysioNet cohort %REV To construct an example, we examine data from the PhysioNet cohort
- of intensive care unit (ICU) patients collected for a study of in-hospital mortality \citep{goldberger2000physiobank}, where the outcome $Y$ is binary, indicating whether the patient died in the hospital or not. The dataset contains routine measurements taken at admission, including heart rate (HR), mean arterial pressure, temperature, and urine output. These values are recorded for every patient at the time of entry into the ICU and provide a description of their initial physiological state. To simulate various real-data analyses where practitioners might have access to only a subset of these patients, we construct $139$ versions of this dataset with various patient subsets; see \cref{appendix:icu_details}.
+\textbf{Data.} \textcolor{red}{We employ two sources of data. The first is} the PhysioNet cohort %REV To construct an example, we examine data from the PhysioNet cohort
+ of intensive care unit (ICU) patients collected for a study of in-hospital mortality \citep{goldberger2000physiobank}, where the outcome $Y$ is binary, indicating whether the patient died in the hospital or not. The dataset contains routine measurements taken at admission, including heart rate (HR), mean arterial pressure, and temperature. These values are recorded for every patient at the time of entry into the ICU and provide a description of their initial physiological state. To simulate various real-data analyses where practitioners might have access to only a subset of these patients, we construct $139$ versions of this dataset with various patient subsets; see \cref{appendix:icu_details}.
 For reference groups, we consider males and females.
 \textcolor{red}{The second is U.S.\ Census data: following \citet{bach2024heterogeneity}, we take the 2016 American Community Survey and consider two outcomes, the natural logarithm of income and a binary indicator for having health insurance, across $217$ and $183$ data subsets of workers defined by state and industry; see \cref{appendix:us_labor_force}.}
 

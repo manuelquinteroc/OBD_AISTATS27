@@ -341,7 +341,7 @@ The models are:
 %REV     \item lightgbm (gradient-boosted trees). We set a learning rate of 0.25, number of leaves to 7, and select the number of trees by 3-fold cross-validation with early stopping at 10 rounds. All other parameters are set to default values.
 \end{itemize}
 %REV We attempted to implement neural networks for regression (both outcomes) and classification (health insurance status only), but faced repeated software errors while optimizing model weights.
-We use the same bootstrap inference procedure as in \cref{appendix:icu_details}\textcolor{red}{, with $1{,}000$ replications}. %REV for ordinary least squares and logistic regression. 
+We use the same bootstrap inference procedure as in \cref{appendix:icu_details}\textcolor{red}{, with $1{,}000$ replications ($200$ for TabPFN, whose bootstrap is run on a GPU)}. %REV for ordinary least squares and logistic regression. 
 %REV We do not perform inference for lightgbm due to computational costs of bootstrapping; future work can assess the statistical significance of the results with appropriate resources.
 All computation was performed on an Apple M2 Max chip with 32GB ram.
 
@@ -350,7 +350,7 @@ Sign flips occur in both the explained and unexplained components for all tested
 
 % Log income. table* because the appendix is set in two columns. Values: census/out_py/flip_counts.csv (Python pipeline, B = 1000).
 \begin{table*}[!ht]
-    \caption{Number of \rc{data subsets} (out of $217$) exhibiting a sign flip in the explained and unexplained component, for the earnings outcome. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped data subsets that are significant at the corresponding level.} %REV No significance testing was performed for lightgbm due to computational costs of bootstrap inference.
+    \caption{Number of \rc{data subsets} (out of $217$) exhibiting a sign flip in the explained and unexplained component, for the earnings outcome. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped data subsets that are significant at the corresponding level. \rc{Significance for TabPFN uses $B = 200$ bootstrap replications; all other rows use $B = 1{,}000$.}} %REV No significance testing was performed for lightgbm due to computational costs of bootstrap inference.
     \label{tab:flips_census_income}
     \centering
     \small
@@ -363,7 +363,7 @@ Sign flips occur in both the explained and unexplained components for all tested
     Linear      & \rc{33} & \rc{16} & \rc{13} & \rc{8} & \rc{21} & \rc{11} & \rc{9} & \rc{6} & \rc{13} & \rc{5} & \rc{4} & \rc{2} \\
     \rc{Neural net} & \rc{87} & \rc{73} & \rc{66} & \rc{52} & \rc{83} & \rc{72} & \rc{66} & \rc{52} & \rc{12} & \rc{6} & \rc{5} & \rc{5} \\
     \rc{XGBoost}    & \rc{34} & \rc{18} & \rc{16} & \rc{12} & \rc{31} & \rc{15} & \rc{14} & \rc{11} & \rc{5} & \rc{4} & \rc{3} & \rc{2} \\
-    \rc{TabPFN}     & \rc{28} & \rc{--} & \rc{--} & \rc{--} & \rc{23} & \rc{--} & \rc{--} & \rc{--} & \rc{6} & \rc{--} & \rc{--} & \rc{--} \\
+    \rc{TabPFN}     & \rc{28} & \rc{14} & \rc{12} & \rc{7} & \rc{23} & \rc{11} & \rc{9} & \rc{6} & \rc{6} & \rc{3} & \rc{3} & \rc{1} \\
 %REV Linear      & 35 & 14 & 11 & 7 & 24 & 10 & 8 & 5 & 11 & 4 & 3 & 2 \\
 %REV lightgbm    & 29 & -  & -  & - & 23 & -  & - & - & 6  & - & - & - \\
     \bottomrule
@@ -372,7 +372,7 @@ Sign flips occur in both the explained and unexplained components for all tested
 
 % Health insurance. table* because the appendix is set in two columns. Values: census/out_py/flip_counts.csv (Python pipeline, B = 1000; logistic = L2, the ICU specification).
 \begin{table*}[!ht]
-    \caption{Number of \rc{data subsets} (out of $183$) exhibiting a sign flip in the explained and unexplained component, for the (binary) health insurance status outcome. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped data subsets that are significant at the corresponding level.} %REV No significance testing was performed for lightgbm due to computational costs of bootstrap inference.
+    \caption{Number of \rc{data subsets} (out of $183$) exhibiting a sign flip in the explained and unexplained component, for the (binary) health insurance status outcome. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped data subsets that are significant at the corresponding level. \rc{Significance for TabPFN uses $B = 200$ bootstrap replications; all other rows use $B = 1{,}000$.}} %REV No significance testing was performed for lightgbm due to computational costs of bootstrap inference.
     \label{tab:flips_census_insurance}
     \centering
     \small
@@ -386,7 +386,7 @@ Sign flips occur in both the explained and unexplained components for all tested
     Logistic    & \rc{62} & \rc{31} & \rc{25} & \rc{14} & \rc{45} & \rc{28} & \rc{23} & \rc{14} & \rc{18} & \rc{3} & \rc{2} & \rc{0} \\
     \rc{Neural net} & \rc{65} & \rc{26} & \rc{20} & \rc{10} & \rc{51} & \rc{26} & \rc{20} & \rc{10} & \rc{21} & \rc{4} & \rc{4} & \rc{4} \\
     \rc{XGBoost}    & \rc{54} & \rc{34} & \rc{26} & \rc{16} & \rc{45} & \rc{33} & \rc{25} & \rc{16} & \rc{10} & \rc{1} & \rc{1} & \rc{0} \\
-    \rc{TabPFN}     & \rc{62} & \rc{--} & \rc{--} & \rc{--} & \rc{48} & \rc{--} & \rc{--} & \rc{--} & \rc{16} & \rc{--} & \rc{--} & \rc{--} \\
+    \rc{TabPFN}     & \rc{62} & \rc{30} & \rc{24} & \rc{15} & \rc{48} & \rc{27} & \rc{22} & \rc{15} & \rc{16} & \rc{3} & \rc{2} & \rc{0} \\
 %REV Linear      & 60 & 35 & 33 & 24 & 44 & 33 & 31 & 23 & 17 & 2 & 2 & 1 \\
 %REV Logistic    & 77 & 23 & 16 & 10 & 60 & 23 & 16 & 10 & 25 & 1 & 0 & 0 \\
 %REV lightgbm    & 97 & -  & -  & -  & 23 & -  & - & - & 6  & - & - & - \\

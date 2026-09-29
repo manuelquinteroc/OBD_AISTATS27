@@ -14,14 +14,14 @@ In what follows, we study conclusion reversals that involve the explained or une
 To balance mathematical tractability and generality of our theory, we will focus on the OBD under a fairly general class of functions $f^H, f^K$ -- those drawn from a Gaussian process.
 %For mathematical tractability and applicability to practical usage, we continue our focus on the OBD (vs.\ OBD). % (i.e., using linear models in \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}).
 To show that index ambiguity is not an artifact of finite samples, we work in the population limit; since we work in the population limit, statistical significance is no longer a concern.
-\textcolor{red}{Put another way, the a researcher making a decision based on a population-level statistic would answer either ``positive'' or ``negative'', not ``inconclusive''.}
+Put another way, the only decisions available are `positive' or `negative', not `inconclusive.'
 And to show that index ambiguity is not a ``measure zero'' phenomenon, we show that conflicting conclusions in general occur with non-zero probability.
 % We use our analysis of the parameter space to interpret our empirical exercises and discuss frontier work on the OBD that enriches the covariate space using machine learning models \citep{bach2024heterogeneity,quintero2025,flachaire2025decomposing}.
 
 \subsection{A general computation of index ambiguity probabilities}
 \label{sec:general_flip_probabilities}
-We wish to understand, in general, the probability of the OBD flipping signs under the choice of the reference group.
-To discuss such probabilities, we choose to treat the functions $f^H$ and $f^K$ as random and the covariate distributions $h$ and $k$ as fixed.
+We wish to understand, in general, how frequently OBD sign flips occur under the choice of the reference group.
+To discuss such frequencies, we choose to treat the functions $f^H$ and $f^K$ as random and the covariate distributions $h$ and $k$ as fixed.
 This models the situations considered throughout our paper, where the populations are fixed (e.g., men and women or hospital $H$ and hospital $K$) and potentially well-known to the data scientist, but the response functions are unknown and thus may be considered random.
 \textcolor{red}{curious what people think of this justification for why $f$ is random.}
 We let $\nu$ be a distribution over functions $f$ and make the following two assumptions.

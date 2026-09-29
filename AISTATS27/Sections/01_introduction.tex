@@ -5,7 +5,7 @@ As a motivating example, suppose a data scientist notices that mortality rates a
 She knows the medical literature links many risk factors ($X$), such as high blood pressure, to mortality ($Y$).
 The observed differences in mortality could be due to differences in these risk factors between the two groups of patients (distribution of $X$) or to differences in how well each hospital manages these risk factors (distribution of $Y \mid X$).
 If she can figure out how much each of these components contributes to the difference in mortality rates, Hospital H may be able to improve patient outcomes.
-How can she use the available information to form hypotheses about what drives the difference in mortality? \textcolor{red}{TODO: once we have appendix on how we're not doing causal stuff, put footnote here referring to it}
+How can she use the available information to form hypotheses about what drives the difference in mortality?
 
 % Para 2: Connect to ML / AI and reject existing explainability tools
 The modern explainability literature in machine learning boasts a bevy of methods for attributing outcome behavior to covariates \citep{Dwivedi2023}.
@@ -46,13 +46,13 @@ The index number problem would be less concerning if both references always yiel
 in our example, if both indicate that differences in the distribution of risk factors widen the mortality gap between the two hospitals.
 But if one reference choice finds that risk factors widens the gap while the other finds that they narrow it, the choice of reference \emph{would} matter for qualitative conclusions and subsequent decision making.
 
-We are not aware of an investigation into whether the choice of reference groups can yield \textcolor{red}{contradictory} conclusions, either
+We are not aware of an investigation into whether the choice of reference groups can yield conflicting conclusions, either
 for the original OBD with linear regression or for recent extensions to more complex, nonlinear regression models.
 In the present work, after reviewing the OBD and the index number problem (\cref{sec:counterfactual_OBD}), we 
-give an existence proof (with real data) that the OBD \emph{can} yield contradictory conclusions (\cref{sec:real_example}).\footnote{We release all of our code to replicate the experiments at the following repository, \textcolor{red}{\url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}}.} %REV camera-ready link: \url{https://github.com/manuelquinteroc/ReferenceOaxacaBlinder}
+give an existence proof (with real data) that the OBD \emph{can} yield contradictory conclusions (\cref{sec:real_example}).\footnote{We release all of our code to replicate the experiments at the following repository, \url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}.} %REV camera-ready link: \url{https://github.com/manuelquinteroc/ReferenceOaxacaBlinder}
 
 We analyze a range of data (from healthcare and the U.S.\ Census), and we show that the problem persists for complex, nonlinear extensions of the OBD.
-In fact, we show that these extensions, including one with a recent foundation model, \textcolor{red}{can} suffer much more frequently from the issue than
+In fact, we show that these extensions, including one with a recent foundation model, can suffer much more frequently from the issue than
 a simple linear model.
 In \cref{sec:signflips}, we further demonstrate theoretically that this phenomenon is not an artifact of 
 model misspecification, small data size, or adversarial parameter choices, and we use our theory to provide intuition about when conflicting conclusions are more or less likely.

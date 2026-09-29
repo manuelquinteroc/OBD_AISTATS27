@@ -341,7 +341,7 @@ The models are:
 %REV     \item lightgbm (gradient-boosted trees). We set a learning rate of 0.25, number of leaves to 7, and select the number of trees by 3-fold cross-validation with early stopping at 10 rounds. All other parameters are set to default values.
 \end{itemize}
 %REV We attempted to implement neural networks for regression (both outcomes) and classification (health insurance status only), but faced repeated software errors while optimizing model weights.
-We use the same bootstrap inference procedure as in \cref{appendix:icu_details}\textcolor{red}{, with $1{,}000$ replications ($200$ for TabPFN, whose bootstrap is run on a GPU)}. %REV for ordinary least squares and logistic regression. 
+We use the same bootstrap inference procedure as in \cref{appendix:icu_details}\textcolor{red}{, with $1{,}000$ replications ($200$ for TabPFN)}. %REV for ordinary least squares and logistic regression. 
 %REV We do not perform inference for lightgbm due to computational costs of bootstrapping; future work can assess the statistical significance of the results with appropriate resources.
 All computation was performed on an Apple M2 Max chip with 32GB ram.
 

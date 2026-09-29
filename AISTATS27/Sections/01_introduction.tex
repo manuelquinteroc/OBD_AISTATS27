@@ -4,15 +4,15 @@
 As a motivating example, suppose a data scientist notices that mortality rates are noticeably higher at Hospital $H$ than at Hospital $K$.
 She knows the medical literature links many risk factors ($X$), such as high blood pressure, to mortality ($Y$).
 The observed differences in mortality could be due to differences in these risk factors between the two groups of patients (distribution of $X$) or to differences in how well each hospital manages these risk factors (distribution of $Y \mid X$).
-If she can figure out how much each of these components is driving the difference in mortality rates, her hospital may be able to change its policy to improve patient care.
+If she can figure out how much each of these components contributes to the difference in mortality rates, Hospital H may be able to improve patient outcomes.
 How can she use the available information to form hypotheses about what drives the difference in mortality? \textcolor{red}{TODO: once we have appendix on how we're not doing causal stuff, put footnote here referring to it}
 
 % Para 2: Connect to ML / AI and reject existing explainability tools
 The modern explainability literature in machine learning boasts a bevy of methods for attributing outcome behavior to covariates \citep{Dwivedi2023}.
 These include Shapley values \citep{Shapley1953, Lundberg2017, chen2025shapley}, Functional ANOVA \citep{stone1994, hooker2004discovering, hookerGeneralizedFunctionalANOVA2007, lengerich2020purifying, fumagalli2025fanova}, Accumulated Local Effects \citep{apley2020}, and partial dependence plots \citep{friedman2001greedy, liu2025trees}.
 However, such methods are not designed to answer this data scientist's question.
-They attribute variation in outcomes within a single population to the covariates, holding the conditional distribution $Y \mid X$ fixed.
-But, the data scientist is interested in why an outcome varies between two populations, where the $Y \mid X$ may vary.
+They attribute variation in outcomes within a single population to the covariates, holding the conditional distribution $Y | X$ fixed.
+But, the data scientist is interested in why an outcome varies between two populations, where the $Y | X$ may vary.
 See \cref{appendix:xAI} for more discussion on why these methods do not solve the data scientist's question.
 % For example, a Shapley value analysis of $Y \mid X$ might suggest that that patients with severe chronic conditions have higher mortality in each of hospital $H$ and $K$. 
 % But if hospitals $H$ and $K$ both treat similar patient populations, chronic health conditions cannot explain why mortality rates differ between them.
@@ -42,7 +42,7 @@ Since the original paper \citep{oaxaca1973}, it has been well known that the OBD
 This dependence on the reference choice is known as the ``index number problem.''
 %And generalizations of the OBD to non-linear models of $Y \mid X$ do not seem to escape this issue -- e.g., \textcolor{red}{TODO: cite our workshop paper} consider one fixed reference group.
 %Or in other cases, authors construct their own new reference group by pooling across the original two groups \citep{neumark1988,oaxacaRansom1994}.
-The index number problem would be less concerning if both references always yield the same substantive conclusions;
+The index number problem would be less concerning if both references always yielded the same substantive conclusions;
 in our example, if both indicate that differences in the distribution of risk factors widen the mortality gap between the two hospitals.
 But if one reference choice finds that risk factors widens the gap while the other finds that they narrow it, the choice of reference \emph{would} matter for qualitative conclusions and subsequent decision making.
 
@@ -51,7 +51,7 @@ for the original OBD with linear regression or for recent extensions to more com
 In the present work, after reviewing the OBD and the index number problem (\cref{sec:counterfactual_OBD}), we 
 give an existence proof (with real data) that the OBD \emph{can} yield contradictory conclusions (\cref{sec:real_example}).\footnote{We release all of our code to replicate the experiments at the following repository, \textcolor{red}{\url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}}.} %REV camera-ready link: \url{https://github.com/manuelquinteroc/ReferenceOaxacaBlinder}
 
-We analyze a range of data (from healthcare and the U.S.\ Census), and we show that the problem persists for the more complex, nonlinear extensions of the OBD.
+We analyze a range of data (from healthcare and the U.S.\ Census), and we show that the problem persists for complex, nonlinear extensions of the OBD.
 In fact, we show that these extensions, including one with a recent foundation model, \textcolor{red}{can} suffer much more frequently from the issue than
 a simple linear model.
 In \cref{sec:signflips}, we further demonstrate theoretically that this phenomenon is not an artifact of 

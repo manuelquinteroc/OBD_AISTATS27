@@ -12,7 +12,7 @@
 	\begin{align*}
 		&= 2 Pr\bigg( \{\E(f^H) < 0, \E(f^K) > 0 \} \bigg) \\
 		&= 2 Pr\bigg( \E(f^H) > 0 \bigg) Pr\bigg( \E(f^K) < 0 \bigg) \\
-		&= 2 p (1-p),
+		&= 2 \pi (1 - \pi),
 	\end{align*}
 	where we have used that $f^H, f^K$ are i.i.d.\ and that $\nu(\E = 0) = 0$.
 	
@@ -114,10 +114,10 @@ We prove the unexplained and explained components separately.
 	\end{equation}
 	
 	\paragraph{Explained component.} The explained component is equal to $V(f) - W(f)$, which is normally distributed with mean $\mu_V - \mu_W$ and variance $\sigma_E^2 := \| h \|_C^2 + \| k \|_C^2 - 2\rho \| h \|_C \| k \|_C$. 
-	By \cref{prop:generic_flip_probs}, we just need to compute the probability $p := Pr[V(f) - W(f) > 0]$, and then the probability of a sign flip is $2 p (1-p)$.
-	We have that $p = \Phi((\mu_V - \mu_W) / \sigma_E)$. 
-	Noting that $\sigma_E = \| h - k \|_C$ and that $\mu_V - \mu_W = \int \mu(x) h(x) dx - \int \mu(x) k(x) dx = \langle h-k, \mu \rangle$, we have that $p = \Phi(\lambda)$ for $\lambda := \langle h-k, \mu \rangle / \| h - k \|_C$.
-	Using $1-p = \Phi(-\lambda)$ gives:
+	By \cref{prop:generic_flip_probs}, we just need to compute the probability $\pi := Pr[V(f) - W(f) > 0]$, and then the probability of a sign flip is $2 \pi (1-\pi)$.
+	We have that $\pi = \Phi((\mu_V - \mu_W) / \sigma_E)$. 
+	Noting that $\sigma_E = \| h - k \|_C$ and that $\mu_V - \mu_W = \int \mu(x) h(x) dx - \int \mu(x) k(x) dx = \langle h-k, \mu \rangle$, we have that $\pi = \Phi(\lambda)$ for $\lambda := \langle h-k, \mu \rangle / \| h - k \|_C$.
+	Using $1-\pi = \Phi(-\lambda)$ gives:
 	\begin{equation}
 		Pr[\mathrm{explained\ sign\ flip}] = 2 \Phi(\lambda) \Phi(-\lambda).
 	\end{equation}

@@ -4,8 +4,8 @@
 Typically the OBD represents the special case of \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual} 
 where the conditional expectation of the outcome given the covariate is linear, as we describe next.
 
-We now restrict to $X \in \mathbb{R}^d$. For each group $g$, we assume that $\mathbb{E}_g[Y \mid X] = \alpha_g + X^\top \beta_g$
-for some intercept $\alpha_g \in \mathbb{R}$ and slope $\beta_g \in \mathbb{R}^d$.
+We now restrict to $X \in \mathbb{R}^p$. For each group $g$, we assume that $\mathbb{E}_g[Y \mid X] = \alpha_g + X^\top \beta_g$
+for some intercept $\alpha_g \in \mathbb{R}$ and slope $\beta_g \in \mathbb{R}^p$.
 Then, for groups $g,g'$, we observe $\E_{g'} [ \E_g  [ Y | X ] ] = \alpha_g + \E_{g'}[X]^\top \beta_g$.
 We also introduce the notation
 $\mu_g := \mathbb{E}_g[X],

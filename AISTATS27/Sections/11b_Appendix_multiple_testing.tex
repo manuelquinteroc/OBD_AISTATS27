@@ -1,0 +1,54 @@
+\section{Multiple Testing Corrections}
+\label{app:multiple_testing}
+
+Our object of interest is, essentially, a failure rate: how often does a Oaxaca-Blinder decomposition, performed at typical significance thresholds, return contradictory conclusions depending on the reference group? Each analysis in the ICU mortality, Census log income, and Census insurance examples is one trial of that procedure, and we report the number of trials that ``fail'' (i.e., return conflicting conclusions, making them index ambiguous). A multiple testing correction is not necessary for this argument.
+
+A useful analogy is reliability testing for mechanical parts. An industrial statistician who tests a machine part in 500 different environments and observes 50 failures would report a 10\% failure rate. We would not ask this statistician to apply a multiple testing correction for having conducted 500 tests. In fact, doing so would dilute the estimated failure rate towards zero as the testing program grows more comprehensive.
+This is because multiple testing corrections, like the Bonferroni or Holm procedures, control false rejection rates across a family of tests. 
+However, measuring a failure rate is a \textit{single test} with \textit{many trials}; there is no ``family'' of tests to correct for.
+
+\textbf{Illustrative Example.}
+To be more precise, consider the following stylized example. Suppose we have a population of data analyses where, by construction:
+\begin{itemize}
+\item The OBD with linear regression always gives an unexplained component of exactly 0 for both reference groups.
+\item The OBD with TabPFN always gives $-1$ under one reference group and $+1$ for the other, with a standard error of 0.4.
+\end{itemize}
+Then, TabPFN will produce index ambiguity at the 5\% level in every analysis, and linear regression never does.
+These rates are ground truth for this hypothetical population.
+
+Now, suppose we sampled $N$ analyses from this population and wanted to estimate the rate of index ambiguity at the 5\% level.
+
+First, we could count how many sign flips were significant at the 5\% level. 
+TabPFN would report index ambiguity $N/N$ cases versus $0/N$ for linear regression.
+So, raw counts (which we report in the paper) reflect ground truth.
+
+Second, we could count how many sign flips were significant at a level adjusted for multiple testing.
+For example, under a Bonferroni correction, we would report the number of analyses significant at the $\alpha / N$ level.
+With even $N = 10$ analyses this threshold would be $0.005$, and no TabPFN sign flip would survive this test.
+We would then report $0/N$ flips for both methods, which is the wrong conclusion.
+
+\textbf{What's Going On.}
+The main issue is that we're asking a different question in this paper than the question a multiple testing correction answers. To help see this, we next match questions of potential interest with appropriate methodologies for answering them.
+
+Question A: Would using, say, TabPFN instead of linear regression eliminate index ambiguity at level $\alpha$?
+
+Answer A: If we surface any index ambiguity using TabPFN, we're done. We answer this question at various points in our paper, such as \cref{tab:flip_summary_main}.
+
+Question B: Suppose a practitioner will run a single OBD comparing two populations, with a fixed set of covariates. Among a particular population of data analyses, would linear regression produce less index ambiguity than, say, TabPFN?
+
+Answer B: If we can access a Monte Carlo sample of data analyses from this population, we can record, for each sample, whether a sign flip occurred for linear regression and for TabPFN. 
+% AS: we haven't implemented the binomial test.
+% Then we can use a binomial test to compare rates. 
+This is essentially the methodology we use, where we treat the data analyses we have access to as samples from a population of plausible analyses. 
+%(We’d be happy to be more explicit about the binomial testing aspect.) 
+This population should not be confused with the population of all practical analyses; see next question.
+
+Question C: Among all practical analyses that practitioners would perform with the OBD, is index ambiguity more common for TabPFN than linear regression?
+
+Answer C: This is essentially question B, but now the population is all practical analyses. It seems hard to draw samples from all practical analyses, so we do not attempt this answer.
+
+Question D: Suppose a practitioner will run a single OBD comparing two populations, with a fixed set of covariates, but now with infinite data. We could ask: among a particular population of data analyses, will linear regression produce a sign flip (now with no level because we have infinite data) less often than TabPFN?
+
+Answer D: The models change as data increases (e.g. gradient-boosted trees might have more branches with more data). So answering this question would be difficult. Nonetheless, we can be confident that a multiple testing correction won't give the answer (since it won't handle the change in models).
+
+Where do multiple testing corrections fit above? Since such corrections effectively chooses a different $\alpha$ value in the significance test, we can view this correction as answering Question B but with a different $\alpha$ value to the original. Ultimately the $\alpha$ value of interest is the one that practitioners will choose in practice for their single data analysis; that is the one we want to use in our own methodology (cf. the example above).

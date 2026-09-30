@@ -3,7 +3,7 @@
 
 % Extended to the two Census outcomes (new cells in red). Original ICU-only table kept below as %REV.
 \begin{table*}[t]
-    \caption{Number of data subsets exhibiting conflicting conclusions (``index ambiguity'') in either the explained or unexplained component, by model, for the ICU data (out of $139$ subsets) and for the two outcomes of the U.S.\ Census data (out of $217$ and $183$ data subsets; \cref{appendix:us_labor_force}). Columns $10\%$, $5\%$, and $1\%$ report the number of changed decisions for a researcher using the corresponding significance level. Dashes: logistic regression does not apply to the continuous log-income outcome. Significance for TabPFN on the Census data uses $B = 200$ bootstrap replications; all other entries use $B = 1{,}000$.}
+    \caption{Number of data subsets exhibiting conflicting conclusions (``index ambiguity'') in either the explained or unexplained component, by model, for the ICU data (out of $139$ subsets) and for the two outcomes of the U.S.\ Census data (out of $217$ and $183$ data subsets; \cref{appendix:us_labor_force}). Column \# Flips counts analyses where either component changes sign; columns $10\%$, $5\%$, and $1\%$ counts the number where, in addition, at least one flipped estimates was statistically significant at the corresponding level. Dashes: logistic regression does not apply to the continuous log-income outcome. Significance for TabPFN on the Census data uses $B = 200$ bootstrap replications; all other entries use $B = 1{,}000$.}
     \label{tab:flip_summary_main}
     \centering
     \small
@@ -11,7 +11,7 @@
     \toprule
      & \multicolumn{4}{c}{ICU mortality} & \multicolumn{4}{c}{Census, log income} & \multicolumn{4}{c}{Census, health insurance} \\
     \cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
-    Model & \# Ambiguous & $10\%$ & $5\%$ & $1\%$ &\ \# Ambiguous & $10\%$ & $5\%$ & $1\%$ & \# Ambiguous & $10\%$ & $5\%$ & $1\%$ \\
+    Model & \# Flips & $10\%$ & $5\%$ & $1\%$ &\ \# Flips & $10\%$ & $5\%$ & $1\%$ & \# Flips & $10\%$ & $5\%$ & $1\%$ \\
     \midrule
     Linear      & 27 &  2 &  2 &  2 & 33 & 16 & 13 & 8  & 65 & 38 & 32 & 23 \\
     Logistic    & 29 &  2 &  2 &  1 & -- & -- & -- & -- & 62 & 31 & 25 & 14 \\
@@ -60,6 +60,7 @@ To explore whether these conclusions can change based on the choice of reference
 %To examine a more modern, transformer-based model, we also consider TabPFN, a $25$ million parameter, pre-trained model trained to map training datasets to predictive distributions $Y|X$ \citep{hollmann2023tabpfn}.
 We assess statistical significance using $1{,}000$ bootstrap replications in all models except for TabPFN, for which, due to computational constraints, we use $200$ replications.
 \cref{tab:flip_summary_main} counts how often the choice of reference group produces conflicting conclusions, across models and datasets, for hypothetical researchers who use various levels of statistical significance.
+\footnote{We do not apply a multiple testing correction, which would distort our measurement of index ambiguity; see \cref{app:multiple_testing} for details.}
 
 \textbf{Results.} 
 Index ambiguity exists for every dataset and every model, at rates ranging from 15.2\% of analyses (linear regression, Census log income) to 54.7\% (TabPFN, ICU mortality).

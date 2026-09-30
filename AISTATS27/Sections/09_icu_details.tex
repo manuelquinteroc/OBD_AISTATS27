@@ -6,7 +6,7 @@ This appendix provides full details on how we constructed the ICU data subsets, 
 
 \subsection*{Model specification}
 
-For each data subset, we fit separate group-specific models of in-hospital mortality for men and for women. Let $g \in \{\text{men}, \text{women}\}$, let $Y$ be the indicator for in-hospital mortality, and let $X$ be the vector of admission covariates (heart rate, mean arterial pressure, temperature, urine output, age, and ICU type). For each group $g$, we fit an estimator $\hat{f}_g(X)$ of the conditional expectation $\E[Y \mid X, g]$ and use \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}; see \cref{sec:ob_real}. We consider five model classes, specified as follows.
+For each data subset, we fit separate group-specific models of in-hospital mortality for men and for women. Let $g \in \{\text{men}, \text{women}\}$, let $Y$ be the indicator for in-hospital mortality, and let $X$ be the vector of admission covariates (heart rate, mean arterial pressure, temperature, urine output, age, and ICU type). For each group $g$, we fit an estimator $\hat{f}^g(X)$ of the conditional expectation $\E[Y \mid X, g]$ and use \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}; see \cref{sec:ob_real}. We consider five model classes, specified as follows.
 
 \textbf{Linear regression.} We take
 \[
@@ -22,7 +22,7 @@ with the group-specific intercept $\alpha_{g}$ and slope $\beta_{g}$ estimated b
 
 \textbf{TabPFN.} We use a modern transformer-based tabular model, TabPFN \citep{hollmann2023tabpfn}\footnote{TabPFN uses a custom license: \url{https://huggingface.co/Prior-Labs/tabpfn_2_6/blob/main/LICENSE}}, a pre-trained in-context classifier that maps a training set directly to a predictive distribution for $Y \mid X$. We use the publicly released v2.6 weights and use the v7.1.1 TabPFN code for inference. We run the model locally on a single NVIDIA A100 GPU with $80$~GB of vRAM.
 
-For all five models, we take the predicted probability of in-hospital death as $\hat{f}_g(X)$ and estimate each OBD counterfactual mean $\E_{g'}[\E_g[Y \mid X]]$ by the within-sample average $\frac{1}{|g'|}\sum_{i \in g'} \hat{f}_g(X_i)$.
+For all five models, we take the predicted probability of in-hospital death as $\hat{f}^g(X)$ and estimate each OBD counterfactual mean $\E_{g'}[\E_g[Y \mid X]]$ by the within-sample average $\frac{1}{|g'|}\sum_{i \in g'} \hat{f}^g(X_i)$.
 
 \subsection*{Data subset construction}
 The goal of this analysis was not to target any particular physiological pattern, but rather to explore systematically whether sign reversals arise in realistic data partitions that a practitioner might naturally encounter.
@@ -322,7 +322,7 @@ We purposely construct a large set of analyses to search for sign flips in diffe
 There are \( 77 \times 3 = 231 \) combinations of subsets and groups, each corresponding to a particular data subset an analyst could perform the OBD within. %REV subgroup
 
 We consider two outcomes: the natural logarithm of income (the outcome from \citet{bach2024heterogeneity}), and a binary indicator for having health insurance.
-We exclude 11 cases where there are fewer than 50 observations in either $H$ or $K$ (), or $|\Delta Y| < 50$; this intended to focus more on analyses where the data may be informative and differences in outcomes may be practically meaningful.
+We exclude cases where there are fewer than 50 observations in either $H$ or $K$, or $|\Delta Y| < 0.01$; this intended to focus more on analyses where the data may be informative and differences in outcomes may be more practically meaningful.
 The result is 217 data subsets for log-income, and 183 data subsets for health insurance status. %REV subgroups ... subgroups
 
 For each analysis, we assemble a candidate feature set from state of residence, industry of occupation (NAICS 2 code), sex, race (black, white, or other), nativity, completion of a Bachelor's degree, and marital status.

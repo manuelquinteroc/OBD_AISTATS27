@@ -59,10 +59,9 @@ The \textbf{index number problem}, then, represents the observation that in gene
 $E^{(K)} \neq E^{(H)}$ and $U^{(K)} \neq U^{(H)}$.
 
 We emphasize that the index number problem is not an issue of causal identification.
-    The OBD is a descriptive decomposition, and its components do not carry causal interpretations without further assumptions.
-    We refer readers to Section 2.3 of \citet{fortinLemieuxFirpo2011} for a formal treatment of causal identification for the OBD, and to \citet{quintas2024multiply,flachaire2025decomposing} for recent work.
-    The index number problem arises specifically from the choice between \cref{eq:OB_H_Counterfactual} and \cref{eq:OB_K_Counterfactual}, regardless of the descriptive or causal tools a researcher chooses to estimate the target quantities.
-    Put another way, the index number problem relates to the choice and interpretation of \textit{estimands}, while causal inference typically guides the choice and interpretation of \textit{estimators}.
+The OBD is a descriptive decomposition, and its components do not carry causal interpretations without further assumptions.
+We refer readers to Section 2.3 of \citet{fortinLemieuxFirpo2011} for a formal treatment of causal identification for the OBD, and to \citet{quintas2024multiply,flachaire2025decomposing} for recent work.
+The index number problem arises specifically from the choice between \cref{eq:OB_H_Counterfactual} and \cref{eq:OB_K_Counterfactual}, regardless of the descriptive or causal tools a researcher chooses to estimate the target quantities.    
 
 \textbf{A conceptual resolution?}
 There has been no immediate and general conceptual resolution of the index number problem.
@@ -121,10 +120,19 @@ mortality in part to the quality of hospital care.
 In either case, we might also require that the observed components be statistically distinguishable from zero to form a conclusion; without significance, we might hesitate to attribute differences in mortality to covariates or care quality. 
 
 To formalize this argument, consider a researcher who interprets a statistic according to a decision function $d: \mathbb{R}^L \to \{ D_1, \dots, D_n \}$ where each $D_i$ is a distinct choice.
-In this paper, we focus on a researcher who cares about the statistically significant sign of a target quantity, so that the choice set is $\{ \text{`positive', `negative', `inconclusive'} \}$.
-For instance, the input to $d$ would be, e.g., a tuple $T_{E,g}$ consisting of an estimate of the explained component for reference group $g$ and its standard error.
-If the researcher applies null hypothesis significance testing, then $d$ returns `positive' if the sign of the component is statistically significantly positive, and so on.
+In this paper, we focus on a researcher who cares about the sign and statistical significance of a target quantity, so that the choice set is \{`positive significant', `positive insignificant', `negative insignificant', `negative significant'\}.
+For instance, inputs to $d$ could be a tuple $T_{E,g}$ consisting of an estimate of the explained component for reference group $g$ and its standard error.
+If the researcher applies null hypothesis significance testing, then $d$ returns `positive significant' if the sign of the component is positive and the standard error sufficiently small, and so on.
 An analogous setup holds for the unexplained component and $T_{U,g}$.
 Of course there are other ways for researchers to make decisions, for example caring about the magnitude of the effect.
 
-We say an OBD analysis is \textbf{index ambiguous} if either $d(T_{E,H}) \neq d( T_{E,K})$ or $d( T_{U,H}) \neq d( T_{U,K} )$; that is, when the index number problem is severe enough that the choice of reference groups changes a researcher's conclusion.
+We say that the OBD explained component is \textbf{index ambiguous} if it takes opposite signs for the two reference groups, and is statistically significantly different from zero for at least one reference group.
+That is, the pair $\{ d(T_{E,H}), d(T_{E,K}) \}$ is one of: \{`positive significant', `negative significant'\}, \{`positive significant', `negative insignificant'\}, or \{`positive insignificant', `negative significant'\}.
+An analogous definition holds for the unexplained component.
+
+We say an entire OBD analysis is \textbf{index ambiguous} if its explained component, its unexplained component, or both are index ambiguous; that is, when the index number problem is severe enough that the choice of reference group produces conflicting conclusions.
+
+Our definitions exclude cases where reference choice changes an estimate's statistical significance but not its sign, such as by inflating an estimate so that its $p$-value just crosses $0.05$.
+Such changes can be arbitrarily small, and may not meaningfully change a researcher's reading of the results.
+Including these cases would only raise the prevalence of index ambiguity. 
+Our empirical analyses are based on the stricter definition, and as such, are conservative.

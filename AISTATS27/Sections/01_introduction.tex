@@ -49,7 +49,7 @@ But if one reference choice finds that removing the differences widens the gap w
 We are not aware of an investigation into whether the choice of reference groups can yield conflicting conclusions, either
 for the original OBD with linear regression or for recent extensions to more complex, nonlinear regression models.
 In the present work, after reviewing the OBD and the index number problem (\cref{sec:counterfactual_OBD}), we 
-give an existence proof (with real data) that the OBD \emph{can} yield contradictory conclusions (\cref{sec:real_example}).\footnote{We release all of our code to replicate the experiments at the following repository, \url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}.} %REV camera-ready link: \url{https://github.com/manuelquinteroc/ReferenceOaxacaBlinder}
+give an existence proof (with real data) that the OBD \emph{can} yield conflicting conclusions (\cref{sec:real_example}).\footnote{We release all of our code to replicate the experiments at the following repository, \url{https://anonymous.4open.science/r/ReferenceOaxacaBlinder-8579}.} %REV camera-ready link: \url{https://github.com/manuelquinteroc/ReferenceOaxacaBlinder}
 
 We analyze a range of data (from healthcare and the U.S.\ Census), and we show that the problem persists for complex, nonlinear extensions of the OBD.
 In fact, we show that these extensions, including one with a recent foundation model, can suffer much more frequently from the issue than
@@ -108,7 +108,7 @@ We suggest best practices for data analysts in \cref{sec:conclusion}.
 %Our major contribution is to demonstrate that the choice of reference group is not a mere technical detail; it can flip the substantive conclusion and thus failing to account for such sensitivity can lead to misleading interpretations.
 %We show that there are realistic scenarios in which different choices of reference groups yield substantively different conclusions.
 %As an extreme example, the sign of the unexplained ($Y \mid X$) ---or explained--- component can flip from negative to positive depending on the reference population.
-%Taking a weighted average in such scenarios can return contradictory conclusions based on the arbitrary choice of weights in the average.
+%Taking a weighted average in such scenarios can return conflicting conclusions based on the arbitrary choice of weights in the average.
 % \textcolor{red}{TB: I think the argument about weighted averages not being meaningful can be made more clear}. \textcolor{blue}{AS: Gave it a shot!}
 %We illustrate these findings with a synthetic healthcare example inspired by real data analyses and with a real clinical case study, and provide a complete set of interpretable conditions under which such sign flipping --- and subsequent ambiguity of the OBD --- will occur.
 %We demonstrate that these conditions are not unusual in that they are met by a large fraction of possible population parameters.

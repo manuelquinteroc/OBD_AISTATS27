@@ -59,8 +59,7 @@ To explore whether these conclusions can change based on the choice of reference
 % \textcolor{red}{All models are trained and evaluated in-sample. We detail hyperparameter choices in \cref{appendix:icu_details}.}
 %To examine a more modern, transformer-based model, we also consider TabPFN, a $25$ million parameter, pre-trained model trained to map training datasets to predictive distributions $Y|X$ \citep{hollmann2023tabpfn}.
 We assess statistical significance using $1{,}000$ bootstrap replications in all models except for TabPFN, for which, due to computational constraints, we use $200$ replications.
-\cref{tab:flip_summary_main} counts how often the choice of reference group produces conflicting conclusions, across models and datasets, for hypothetical researchers who use various levels of statistical significance.
-\footnote{We do not apply a multiple testing correction, which would distort our measurement of index ambiguity; see \cref{app:multiple_testing} for details.}
+\cref{tab:flip_summary_main} counts how often the choice of reference group produces conflicting conclusions, across models and datasets, for hypothetical researchers who use various levels of statistical significance.\footnote{We do not apply a multiple testing correction, which would distort our measurement of index ambiguity; see \cref{app:multiple_testing} for details.}
 
 \textbf{Results.} 
 Index ambiguity exists for every dataset and every model, at rates ranging from 15.2\% of analyses (linear regression, Census log income) to 54.7\% (TabPFN, ICU mortality).

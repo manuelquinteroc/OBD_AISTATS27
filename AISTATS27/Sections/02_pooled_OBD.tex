@@ -36,36 +36,18 @@ To address the general questions, it will be useful to compute the mean of a cou
 $\E_{g'}[\E_g[Y \mid X]]$.
 Then the difference in mean outcomes between the two groups can be decomposed corresponding to questions (A) and (B) above with the following
 \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}, respectively: 
-
-% AISTATS two-column: reflowed so each decomposition sits on its own line (no words changed). Original kept below.
+%
 \begin{align}
 \small
-\Delta_Y &:= \E_H[Y] - \E_K[Y] \nonumber \\
+& \Delta_Y := \E_H[Y] - \E_K[Y] \nonumber \\
     \label{eq:OB_H_Counterfactual}
-    &=\underbrace{\E_H[Y] - \E_K[\E_H[Y \mid X]] }_{E^{(H)}} 
-     + \underbrace{\E_K[\E_H[Y \mid X]] - \E_K[Y]}_{U^{(H)} } \\
+    &=\underbrace{\E_H[Y] - \E_K[\E_H[Y | X]] }_{E^{(H)}} 
+     + \underbrace{\E_K[\E_H[Y | X]] - \E_K[Y]}_{U^{(H)} } \\
      \label{eq:OB_K_Counterfactual}
-     &=\underbrace{\E_H[Y] - \E_H[\E_K[Y \mid X]] }_{U^{(K)}} 
-     + \underbrace{\E_H[\E_K[Y \mid X]] - \E_K[Y] }_{E^{(K)}}.
+     &=\underbrace{\E_H[Y] - \E_H[\E_K[Y | X]] }_{U^{(K)}} 
+     + \underbrace{\E_H[\E_K[Y | X]] - \E_K[Y] }_{E^{(K)}}.
 \end{align}
-%REV \begin{align}
-%REV \Delta_Y := \E_H[Y] - \E_K[Y] 
-%REV     \label{eq:OB_H_Counterfactual}
-%REV     &=\underbrace{\E_H[Y] - \E_K[\E_H[Y \mid X]] }_{E^{(H)}} 
-%REV      + \underbrace{\E_K[\E_H[Y \mid X]] - \E_K[Y]}_{U^{(H)} } \\
-%REV      \label{eq:OB_K_Counterfactual}
-%REV      &=\underbrace{\E_H[Y] - \E_H[\E_K[Y \mid X]] }_{U^{(K)}} 
-%REV      + \underbrace{\E_H[\E_K[Y \mid X]] - \E_K[Y] }_{E^{(K)}}.
-%REV \end{align} 
-%Alternatively, the decomposition corresponding to question (B) above is:
-%\begin{align}
-%    \label{eq:OB_K_Counterfactual}
-%    &\E_H[Y] - \E_K[Y]= \\
-%    &\underbrace{\Big(\E_H[Y] - M_{H,K} \Big)}_{U^{(K)}} \nonumber 
-%     + \underbrace{\Big(M_{H,K} - \E_K[Y]\Big)}_{E^{(K)}}.
-%\end{align}
 %
-
 We follow the traditional naming and notation for these terms \citep{fortinLemieuxFirpo2011}.
 The term corresponding to changing the covariates is called the
 ``explained component'' since this part of the difference is explained by the observed
@@ -132,7 +114,7 @@ For the sake of generality, we will refer to the use of any model for $\E_g[Y|X]
 It is common to draw substantive conclusions based on the sign and statistical significance of the empirical explained and unexplained components \citep{oaxacaRansom1998, jann2008,fortinLemieuxFirpo2011}. 
 
 Returning to the hospital example from above, suppose Hospital $H$ has lower mortality ($\Delta_Y < 0$), and serves as the reference group. 
-If the OBD explained component has a negative sign, we might conclude that $H$ can attribute
+If the OBD explained component has a statistically significant negative sign, we might conclude that $H$ can attribute
 its lower mortality rate in part to patient characteristics, such as healthier blood pressure. 
 Analogously, if the OBD unexplained component has a significant negative sign, we might attribute group $H$'s lower
 mortality in part to the quality of hospital care.
@@ -140,9 +122,9 @@ In either case, we might also require that the observed components be statistica
 
 To formalize this argument, consider a researcher who interprets a statistic according to a decision function $d: \mathbb{R}^L \to \{ D_1, \dots, D_n \}$ where each $D_i$ is a distinct choice.
 In this paper, we focus on a researcher who cares about the statistically significant sign of a target quantity, so that the choice set is $\{ \text{`positive', `negative', `inconclusive'} \}$.
-For instance, the input to $d$ would be, e.g., a tuple $T_{E,g}$ consisting of an estimate of the explained component for reference group $g$ and its standard error .
-If the researcher applies null hypothesis significance testing with conventional thresholds, then $d$ returns `positive' if the sign of the component is statistically significantly positive, etc.
+For instance, the input to $d$ would be, e.g., a tuple $T_{E,g}$ consisting of an estimate of the explained component for reference group $g$ and its standard error.
+If the researcher applies null hypothesis significance testing, then $d$ returns `positive' if the sign of the component is statistically significantly positive, and so on.
 An analogous setup holds for the unexplained component and $T_{U,g}$.
-Of course there are other ways to model researchers (for example, caring about the magnitude of the effect).
+Of course there are other ways for researchers to make decisions, for example caring about the magnitude of the effect.
 
 We say an OBD analysis is \textbf{index ambiguous} if either $d(T_{E,H}) \neq d( T_{E,K})$ or $d( T_{U,H}) \neq d( T_{U,K} )$; that is, when the index number problem is severe enough that the choice of reference groups changes a researcher's conclusion.

@@ -4,7 +4,7 @@
 As a motivating example, suppose a data scientist notices that mortality rates are noticeably higher at Hospital $H$ than at Hospital $K$.
 She knows the medical literature links many risk factors ($X$), such as high blood pressure, to mortality ($Y$).
 The observed differences in mortality could be due to differences in these risk factors between the two groups of patients (distribution of $X$) or to differences in how well each hospital manages these risk factors (distribution of $Y \mid X$).
-If she can figure out how much each of these components contributes to the difference in mortality rates, Hospital H may be able to improve patient outcomes.
+If she can figure out how much each of these components contributes to the difference in mortality rates, Hospital $H$ may be able to improve patient outcomes.
 How can she use the available information to form hypotheses about what drives the difference in mortality?
 
 % Para 2: Connect to ML / AI and reject existing explainability tools
@@ -43,8 +43,8 @@ This dependence on the reference choice is known as the ``index number problem.'
 %And generalizations of the OBD to non-linear models of $Y \mid X$ do not seem to escape this issue -- e.g., \textcolor{red}{TODO: cite our workshop paper} consider one fixed reference group.
 %Or in other cases, authors construct their own new reference group by pooling across the original two groups \citep{neumark1988,oaxacaRansom1994}.
 The index number problem would be less concerning if both references always yielded the same substantive conclusions;
-in our example, if both indicate that differences in the distribution of risk factors widen the mortality gap between the two hospitals.
-But if one reference choice finds that risk factors widens the gap while the other finds that they narrow it, the choice of reference \emph{would} matter for qualitative conclusions and subsequent decision making.
+in our example, if both indicate that removing the differences in the distribution of risk factors shrinks the mortality gap between the two hospitals.
+But if one reference choice finds that removing the differences widens the gap while the other finds that it narrows the gap, the choice of reference \emph{would} matter for qualitative conclusions and subsequent decision making.
 
 We are not aware of an investigation into whether the choice of reference groups can yield conflicting conclusions, either
 for the original OBD with linear regression or for recent extensions to more complex, nonlinear regression models.

@@ -1,14 +1,17 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-It is well known that the OBD depends on the choice of reference group. 
-We here demonstrate that this asymmetry can result in substantively different conclusions between the two reference choices.
+It is well known that the OBD depends on the choice of reference group; however, past work did not establish that the two references could yield conflicting conclusions. 
+We here demonstrate that this asymmetry can result in conflicting conclusions between the two reference choices.
 We present examples from real datasets as existence proofs. 
-We show that sign reversals can occur in either the explained or unexplained component and are not solely products of model misspecification, small sample size, or an adversarial data generating process. 
-As a practical conclusion, we recommend that data analysts using the OBD always report results using both reference groups to accurately convey the degree of support behind substantive conclusions arising from the OBD.
+We show that sign reversals can occur in either the explained or unexplained component and are not solely products of model misspecification, small sample size, or an adversarial data generating process.
 
-Our work leaves an important open question: whether there exists alternatives to the OBD that do not suffer from problems of non-robustness to arbitrary choices.
-E.g., in the OBD, our work has shown that the reference group is arbitrary and that the OBD is not robust to its choice.
+We think it is plausible that many practitioners do not report both references \citep{zhang_2019, ayubiShahbaziKhazaei2024,paradaContzen2025,singleton2016,lamJamiesonMittinty2021,leythienne2021paygapeu,alHanawiNjagi2022,tao2024gender}, and a widely-cited handbook on the OBD does not suggest reporting both references \citep{fortinLemieuxFirpo2011}, because they were not aware that reference choice could be so consequential.
+We hope that our work illustrates the importance of reporting both reference groups and convinces practitioners to do so.
+%As a practical conclusion, we recommend that data analysts using the OBD always report results using both reference groups to accurately convey the degree of support behind substantive conclusions arising from the OBD.
+
+Our work leaves an important open question: whether there exist alternatives to the OBD that do not suffer from problems of non-robustness to arbitrary choices.
+For example, our work has shown that the OBD is not robust to the choice of reference group, and we have noted that the choice of reference group is often arbitrary.
 As discussed in \cref{sec:existing_index_number}, there are a number of decomposition methods that do not have the index number problem but require other arbitrary choices.
 Future work should examine if any existing decomposition method can reduce or eliminate the non-robustness of the OBD, and, if not, whether any such decomposition method is possible.
 If no such robust decomposition exists, then practitioners will be forced to always conduct robustness checks of their results.
@@ -18,16 +21,16 @@ If no such robust decomposition exists, then practitioners will be forced to alw
 %However, our empirical exercises reveal fewer sign reversals than our theoretical results suggest, implying that fitted linear regression parameters in real data analyses may not be well modeled by a uniform distribution over the parameter space. 
 %Future work can determine to what extent our theoretical findings hold for non-uniform parameter distributions, other measures of model complexity, and nonlinear models. 
 
-\textbf{Broader impacts.}
-The OBD is widely used to draw conclusions and influence policy.
-Our work shows that the choice of reference group in the OBD can reverse substantive conclusions and characterizes conditions under which such reversals can occur.
-We highlight the importance of reporting results for both references, even though this step is currently sometimes omitted in published papers
-and government reports.
-Thus, our work has the potential to improve decisions that arise from using the OBD.
-Our work does have one potential negative societal impact: that researchers learn they may be able to cherry-pick results through the choice of OBD reference group.
-However, a researcher with an agenda can also influence results through sample selection, feature engineering, and model choice; we think it unlikely that reference group choice is the only means to their end.
-If one wishes to cherry-pick, there are already more than enough trees to harvest from, so to speak.
-Further, we suspect (or, hope) that the majority of mis-use of the OBD is from researchers unaware of its problems, and so hope that the net impact from our paper will be positive. 
+%\textbf{Broader impacts.}
+%The OBD is widely used to draw conclusions and influence policy.
+%Our work shows that the choice of reference group in the OBD can reverse substantive conclusions and characterizes conditions under which such reversals can occur.
+%We highlight the importance of reporting results for both references, even though this step is currently sometimes omitted in published papers
+%and government reports.
+%Thus, our work has the potential to improve decisions that arise from using the OBD.
+%Our work does have one potential negative societal impact: that researchers learn they may be able to cherry-pick results through the choice of OBD reference group.
+%However, a researcher with an agenda can also influence results through sample selection, feature engineering, and model choice; we think it unlikely that reference group choice is the only means to their end.
+%If one wishes to cherry-pick, there are already more than enough trees to harvest from, so to speak.
+%Further, we suspect (or, hope) that the majority of mis-use of the OBD is from researchers unaware of its problems, and so hope that the net impact from our paper will be positive. 
 
 
 %Even though it is well-known that the OBD depends on the choice of reference group, we show that this dependence can be highly consequential, leading to sign reversals in both the explained and unexplained components.

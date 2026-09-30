@@ -1,7 +1,7 @@
 \section{How common are conflicting conclusions?} 
 \label{sec:signflips}
 
-Our examples above serve as an existence proof that reference group choice can reverse the OBD's substantive conclusions by flipping signs of the explained or unexplained components.
+Our examples above serve as an existence proof that reference group choice can reverse the OBD's substantive conclusions.
 However, a few major questions remain.
 First, do these conclusion reversals occur in the absence of finite-sample noise; i.e., do practitioners with large-scale datasets still need to worry about them?
 Second, even if conclusion reversals can occur, do they occur outside of mathematically adversarial examples (i.e., ``measure zero'' in some sense)?
@@ -11,7 +11,7 @@ In this section, we mathematically prove the answer to the first two questions i
 \cref{sec:simulated_example} complements our argument with an empirical example where index ambiguity occurs even without sampling noise.
 
 In what follows, we study conclusion reversals that involve the explained or unexplained component changing signs from positive to negative, or vice versa.
-To balance mathematical tractability and generality of our theory, we will focus on the OBD under a fairly general class of functions $f^H, f^K$ -- those drawn from a Gaussian process.
+To balance mathematical tractability and generality of our theory, we will focus on the OBD under a fairly general class of functions $f^H, f^K$: those drawn from a Gaussian process.
 %For mathematical tractability and applicability to practical usage, we continue our focus on the OBD (vs.\ OBD). % (i.e., using linear models in \cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}).
 To show that index ambiguity is not an artifact of finite samples, we work in the population limit; since we work in the population limit, statistical significance is no longer a concern.
 Put another way, the only decisions available are `positive' or `negative', not `inconclusive.'
@@ -20,10 +20,9 @@ And to show that index ambiguity is not a ``measure zero'' phenomenon, we show t
 
 \subsection{A general computation of index ambiguity probabilities}
 \label{sec:general_flip_probabilities}
-We wish to understand, in general, how frequently OBD sign flips occur under the choice of the reference group.
-To discuss such frequencies, we choose to treat the functions $f^H$ and $f^K$ as random and the covariate distributions $h$ and $k$ as fixed.
-This models the situations considered throughout our paper, where the populations are fixed (e.g., men and women or hospital $H$ and hospital $K$) and potentially well-known to the data scientist, but the response functions are unknown and thus may be considered random.
-\textcolor{red}{curious what people think of this justification for why $f$ is random.}
+To answer our three questions, it will be useful to express the frequency of index ambiguity under a given data generating process.
+To do so, we treat the functions $f^H$ and $f^K$ as random and the covariate distributions $h$ and $k$ as fixed.
+This setup reflects the situations considered throughout our paper, where the populations are fixed (e.g., men and women or Hospital $H$ and Hospital $K$) and potentially well-known to the data scientist, but the response functions are unknown and thus may be considered random.
 We let $\nu$ be a distribution over functions $f$ and make the following two assumptions.
 %
 \begin{assumption} \label{assum:iid}
@@ -37,11 +36,11 @@ Finally, some extra notation will be useful in stating our theoretical results.
 \begin{equation}
 	V(f) := \int f(x)h(x) dx, \quad W(f) := \int f(x)k(x)dx
 \end{equation}
-Then the explained component is $V(f^g) - W(f^g)$ for reference group $g$, and the unexplained component with reference group $H$ is $W(f^H) - W(f^K)$, and likewise for reference group $K$.
+Then the explained component is $V(f^g) - W(f^g)$ for reference group $g$, and the unexplained component with reference group $H$ is $W(f^H) - W(f^K)$, and analogously for reference group $K$.
 Now we can prove a basic fact about the probability of index ambiguity.
 \begin{proposition} \label{prop:generic_flip_probs}
 	Take \cref{assum:atomless,assum:iid}.
-	Then the probability of a index ambiguity in the explained component is given by
+	Then the probability of index ambiguity in the explained component is given by
 	\begin{equation}
 		Pr_\nu(\mathrm{explained\ ambiguity}) = 2 q (1-q), \label{eq:explained_flip_pr}
 	\end{equation}
@@ -95,10 +94,10 @@ As our model for $\nu$ is fairly generic, we conclude that conflicting conclusio
 Finally, when should we expect index ambiguity to be more or less frequent?
 We next consider this question for the explained and unexplained component separately.
 
-\textbf{Explained component.} We see that the explained component is likely to flip if $| \lambda |$ is small and unlikely to flip if $|\lambda|$ is large.
+\textbf{Explained component.} We see that index ambiguity is likely in the explained component if $| \lambda |$ is small and unlikely if $|\lambda|$ is large.
 The numerator of $\lambda$ is large if $h$ and $k$ mainly differ on covariates with large means.
 The denominator is small if $h$ and $k$ vary on covariates that, under $C$, have low variance.
-Overall, to reduce the probability of explained component index ambiguity, it must be that $h$ and $k$ vary primarily on covariates that have a non-zero mean \emph{and} a small variance -- i.e., covariates with a high signal-to-noise ratio under $f \sim GP(\mu, C)$.
+Overall, to have a small probability of explained component index ambiguity, it must be that $h$ and $k$ vary primarily on covariates that have a non-zero mean \emph{and} a small variance, i.e., covariates with a high signal-to-noise ratio under $f \sim GP(\mu, C)$.
 
 \textbf{Unexplained component.}
 The unexplained index ambiguity probability is driven to zero when $\langle h,k\rangle_C$ is equal to $\| h\|_C \| k \|_C$. 
@@ -107,4 +106,4 @@ Then $\langle h,k\rangle_C$ is large precisely when $h$ puts significant mass in
 Put differently, if there are many nearby regions of space where $h$ and $k$ are large \emph{and} we expect a randomly drawn $f$ to be relatively constant (because $C$ is high over for pairs of points drawn from across the region), then the probability of unexpected  component index ambiguity is driven down.
 Alternatively, if regions where $h$ is high and regions where $k$ is high are sufficiently far apart that we expect $f$ to significantly vary between them, then the probability of an unexplained component index ambiguity is driven up.
 
-\textcolor{red}{\textbf{Can the explained and unexplained probabilities be simultaneously small?} WTS: putting this here b/c I just think this would be interesting to think and comment on. But we can easily just not put this in the paper.}
+%\textcolor{red}{\textbf{Can the explained and unexplained probabilities be simultaneously small?} WTS: putting this here b/c I just think this would be interesting to think and comment on. But we can easily just not put this in the paper.}

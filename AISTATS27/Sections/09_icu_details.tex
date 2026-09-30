@@ -293,7 +293,7 @@ The linear and logistic OBD exhibit a consistent explained-component sign flip t
     
 \subsection{U.S.\ Labor Force Example}
 \label{appendix:us_labor_force}
-This appendix provides full details on how we constructed the U.S.\ labor force \textcolor{red}{data subsets}, prepared the analytic dataset, estimated the OBD, and identified sign reversals for all \textcolor{red}{data subsets}. %REV subgroups ... subgroups
+This appendix provides full details on how we constructed the U.S.\ labor force data subsets, prepared the analytic dataset, estimated the OBD, and identified sign reversals for all data subsets. %REV subgroups ... subgroups
  
 The raw data come from the 2016 American Community Survey 1-Year Public Use Microdata Sample, which contains 1,625,282 observations.
 We apply the same sample construction as \citet{bach2024heterogeneity}, who study the gender wage gap.
@@ -319,11 +319,11 @@ We purposely construct a large set of analyses to search for sign flips in diffe
     \end{tabular}
 \end{table}
 
-There are \( 77 \times 3 = 231 \) combinations of subsets and groups, each corresponding to a particular \textcolor{red}{data subset} an analyst could perform the OBD within. %REV subgroup
+There are \( 77 \times 3 = 231 \) combinations of subsets and groups, each corresponding to a particular data subset an analyst could perform the OBD within. %REV subgroup
 
 We consider two outcomes: the natural logarithm of income (the outcome from \citet{bach2024heterogeneity}), and a binary indicator for having health insurance.
 We exclude 11 cases where there are fewer than 50 observations in either $H$ or $K$ (), or $|\Delta Y| < 50$; this intended to focus more on analyses where the data may be informative and differences in outcomes may be practically meaningful.
-The result is 217 \textcolor{red}{data subsets} for log-income, and 183 \textcolor{red}{data subsets} for health insurance status. %REV subgroups ... subgroups
+The result is 217 data subsets for log-income, and 183 data subsets for health insurance status. %REV subgroups ... subgroups
 
 For each analysis, we assemble a candidate feature set from state of residence, industry of occupation (NAICS 2 code), sex, race (black, white, or other), nativity, completion of a Bachelor's degree, and marital status.
 We exclude features that define the particular subset and group at hand, to produce a feature set for model fitting.
@@ -336,12 +336,12 @@ and \( s \) indicates a subset of the data (i.e., the state of Utah).
 The models are:
 \begin{itemize}
     \item Ordinary least squares regression.
-    \item Logistic regression (when $Y$ is binary), \textcolor{red}{with the default $L_2$ penalty as in \cref{appendix:icu_details}}. %REV unpenalized.
-    \item \textcolor{red}{XGBoost, the neural network, and TabPFN, with the specifications of \cref{appendix:icu_details}; for the continuous log-income outcome, we use the corresponding regressors with the same hyperparameters.}
+    \item Logistic regression (when $Y$ is binary), with the default $L_2$ penalty as in \cref{appendix:icu_details}. %REV unpenalized.
+    \item XGBoost, the neural network, and TabPFN, with the specifications of \cref{appendix:icu_details}; for the continuous log-income outcome, we use the corresponding regressors with the same hyperparameters.
 %REV     \item lightgbm (gradient-boosted trees). We set a learning rate of 0.25, number of leaves to 7, and select the number of trees by 3-fold cross-validation with early stopping at 10 rounds. All other parameters are set to default values.
 \end{itemize}
 %REV We attempted to implement neural networks for regression (both outcomes) and classification (health insurance status only), but faced repeated software errors while optimizing model weights.
-We use the same bootstrap inference procedure as in \cref{appendix:icu_details}\textcolor{red}{, with $1{,}000$ replications ($200$ for TabPFN)}. %REV for ordinary least squares and logistic regression. 
+We use the same bootstrap inference procedure as in \cref{appendix:icu_details}, with $1{,}000$ replications ($200$ for TabPFN). %REV for ordinary least squares and logistic regression. 
 %REV We do not perform inference for lightgbm due to computational costs of bootstrapping; future work can assess the statistical significance of the results with appropriate resources.
 All computation was performed on an Apple M2 Max chip with 32GB ram.
 
@@ -350,20 +350,20 @@ Sign flips occur in both the explained and unexplained components for all tested
 
 % Log income. table* because the appendix is set in two columns. Values: census/out_py/flip_counts.csv (Python pipeline, B = 1000).
 \begin{table*}[!ht]
-    \caption{Number of \rc{data subsets} (out of $217$) exhibiting a sign flip in the explained and unexplained component, for the earnings outcome. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped data subsets that are significant at the corresponding level. \rc{Significance for TabPFN uses $B = 200$ bootstrap replications; all other rows use $B = 1{,}000$.}} %REV No significance testing was performed for lightgbm due to computational costs of bootstrap inference.
+    \caption{Number of data subsets (out of $217$) exhibiting a sign flip in the explained and unexplained component, for the earnings outcome. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped data subsets that are significant at the corresponding level. Significance for TabPFN uses $B = 200$ bootstrap replications; all other rows use $B = 1{,}000$.} %REV No significance testing was performed for lightgbm due to computational costs of bootstrap inference.
     \label{tab:flips_census_income}
     \centering
     \small
     \begin{tabular}{l*{12}{c}}
     \toprule
-          & \multicolumn{4}{c}{Either Component} & \multicolumn{4}{c}{Explained Component} & \multicolumn{4}{c}{\rc{Unexplained} Component} \\
+          & \multicolumn{4}{c}{Either Component} & \multicolumn{4}{c}{Explained Component} & \multicolumn{4}{c}{Unexplained Component} \\
           \cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
     Model       & Total & $10\%$ & $5\%$ & $1\%$ & Total & $10\%$ & $5\%$ & $1\%$ & Total & $10\%$ & $5\%$ & $1\%$ \\
     \midrule
-    Linear      & \rc{33} & \rc{16} & \rc{13} & \rc{8} & \rc{21} & \rc{11} & \rc{9} & \rc{6} & \rc{13} & \rc{5} & \rc{4} & \rc{2} \\
-    \rc{Neural net} & \rc{87} & \rc{73} & \rc{66} & \rc{52} & \rc{83} & \rc{72} & \rc{66} & \rc{52} & \rc{12} & \rc{6} & \rc{5} & \rc{5} \\
-    \rc{XGBoost}    & \rc{34} & \rc{18} & \rc{16} & \rc{12} & \rc{31} & \rc{15} & \rc{14} & \rc{11} & \rc{5} & \rc{4} & \rc{3} & \rc{2} \\
-    \rc{TabPFN}     & \rc{28} & \rc{14} & \rc{12} & \rc{7} & \rc{23} & \rc{11} & \rc{9} & \rc{6} & \rc{6} & \rc{3} & \rc{3} & \rc{1} \\
+    Linear      & 33 & 16 & 13 & 8 & 21 & 11 & 9 & 6 & 13 & 5 & 4 & 2 \\
+    Neural net & 87 & 73 & 66 & 52 & 83 & 72 & 66 & 52 & 12 & 6 & 5 & 5 \\
+    XGBoost    & 34 & 18 & 16 & 12 & 31 & 15 & 14 & 11 & 5 & 4 & 3 & 2 \\
+    TabPFN     & 28 & 14 & 12 & 7 & 23 & 11 & 9 & 6 & 6 & 3 & 3 & 1 \\
 %REV Linear      & 35 & 14 & 11 & 7 & 24 & 10 & 8 & 5 & 11 & 4 & 3 & 2 \\
 %REV lightgbm    & 29 & -  & -  & - & 23 & -  & - & - & 6  & - & - & - \\
     \bottomrule
@@ -372,21 +372,21 @@ Sign flips occur in both the explained and unexplained components for all tested
 
 % Health insurance. table* because the appendix is set in two columns. Values: census/out_py/flip_counts.csv (Python pipeline, B = 1000; logistic = L2, the ICU specification).
 \begin{table*}[!ht]
-    \caption{Number of \rc{data subsets} (out of $183$) exhibiting a sign flip in the explained and unexplained component, for the (binary) health insurance status outcome. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped data subsets that are significant at the corresponding level. \rc{Significance for TabPFN uses $B = 200$ bootstrap replications; all other rows use $B = 1{,}000$.}} %REV No significance testing was performed for lightgbm due to computational costs of bootstrap inference.
+    \caption{Number of data subsets (out of $183$) exhibiting a sign flip in the explained and unexplained component, for the (binary) health insurance status outcome. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped data subsets that are significant at the corresponding level. Significance for TabPFN uses $B = 200$ bootstrap replications; all other rows use $B = 1{,}000$.} %REV No significance testing was performed for lightgbm due to computational costs of bootstrap inference.
     \label{tab:flips_census_insurance}
     \centering
     \small
     \begin{tabular}{l*{12}{c}}
     \toprule
-          & \multicolumn{4}{c}{Either Component} & \multicolumn{4}{c}{Explained Component} & \multicolumn{4}{c}{\rc{Unexplained} Component} \\
+          & \multicolumn{4}{c}{Either Component} & \multicolumn{4}{c}{Explained Component} & \multicolumn{4}{c}{Unexplained Component} \\
           \cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
     Model       & Total & $10\%$ & $5\%$ & $1\%$ & Total & $10\%$ & $5\%$ & $1\%$ & Total & $10\%$ & $5\%$ & $1\%$ \\
     \midrule
-    Linear      & \rc{65} & \rc{38} & \rc{32} & \rc{23} & \rc{52} & \rc{37} & \rc{31} & \rc{23} & \rc{15} & \rc{2} & \rc{1} & \rc{0} \\
-    Logistic    & \rc{62} & \rc{31} & \rc{25} & \rc{14} & \rc{45} & \rc{28} & \rc{23} & \rc{14} & \rc{18} & \rc{3} & \rc{2} & \rc{0} \\
-    \rc{Neural net} & \rc{65} & \rc{26} & \rc{20} & \rc{10} & \rc{51} & \rc{26} & \rc{20} & \rc{10} & \rc{21} & \rc{4} & \rc{4} & \rc{4} \\
-    \rc{XGBoost}    & \rc{54} & \rc{34} & \rc{26} & \rc{16} & \rc{45} & \rc{33} & \rc{25} & \rc{16} & \rc{10} & \rc{1} & \rc{1} & \rc{0} \\
-    \rc{TabPFN}     & \rc{62} & \rc{30} & \rc{24} & \rc{15} & \rc{48} & \rc{27} & \rc{22} & \rc{15} & \rc{16} & \rc{3} & \rc{2} & \rc{0} \\
+    Linear      & 65 & 38 & 32 & 23 & 52 & 37 & 31 & 23 & 15 & 2 & 1 & 0 \\
+    Logistic    & 62 & 31 & 25 & 14 & 45 & 28 & 23 & 14 & 18 & 3 & 2 & 0 \\
+    Neural net & 65 & 26 & 20 & 10 & 51 & 26 & 20 & 10 & 21 & 4 & 4 & 4 \\
+    XGBoost    & 54 & 34 & 26 & 16 & 45 & 33 & 25 & 16 & 10 & 1 & 1 & 0 \\
+    TabPFN     & 62 & 30 & 24 & 15 & 48 & 27 & 22 & 15 & 16 & 3 & 2 & 0 \\
 %REV Linear      & 60 & 35 & 33 & 24 & 44 & 33 & 31 & 23 & 17 & 2 & 2 & 1 \\
 %REV Logistic    & 77 & 23 & 16 & 10 & 60 & 23 & 16 & 10 & 25 & 1 & 0 & 0 \\
 %REV lightgbm    & 97 & -  & -  & -  & 23 & -  & - & - & 6  & - & - & - \\
@@ -397,7 +397,7 @@ Sign flips occur in both the explained and unexplained components for all tested
 
 \subsection{Sign Flips as a Function of Model Complexity}
 \label{appendix:complexity}
-{\color{red}
+
 \cref{tab:flip_summary_main} shows more sign flips for the more flexible models on the ICU data. A natural question a practitioner might ask is whether these sign flips are an artifact of model selection or of the hyperparameter choices of the machine learning models, and what happens as we increase the complexity of a given model. %REV Our empirical results above show more sign flips for the more flexible models. A natural question is what happens as we increase the complexity of a given model.
  To answer it, we take the XGBoost and neural network models of \cref{appendix:icu_details} and vary one hyperparameter at a time, holding every other setting at the value given in \cref{appendix:icu_details}. We use exactly the $139$ ICU data subsets of \cref{tab:flip_summary_main} and the $217$ log-income and $183$ health-insurance data subsets of \cref{tab:flips_census_income,tab:flips_census_insurance}. For each setting, we count the subsets in which the explained component, the unexplained component, or either component has opposite signs under the two reference groups. We count sign flips of the point estimates and do not perform bootstrap inference, so these counts correspond to the ``Total'' columns of \cref{tab:flip_summary_main,tab:flips_census_income,tab:flips_census_insurance}. Linear and logistic regression have no comparable complexity knob and are not varied.
 
@@ -412,11 +412,11 @@ Sign flips occur in both the explained and unexplained components for all tested
 \textbf{Census data.} The number of sign flips is nearly insensitive to complexity. For log income, XGBoost flips between $24$ and $40$ of $217$ data subsets across both sweeps, with a slight decrease at the most complex settings; wider networks flip between $67$ and $97$ data subsets, and deeper networks flip \emph{fewer} data subsets, from $96$ with one hidden layer to $43$ with sixteen. For health insurance, XGBoost flips between $47$ and $65$ of $183$ data subsets (except for very few trees, where it flips $21$--$34$), wider networks flip between $59$ and $73$, and deeper networks stay between $51$ and $62$.
 
 We draw two conclusions. First, we do not observe a single relationship between model complexity and sign flips: the ICU data show a clear increase, while the Census data show none. Second, in neither dataset does increasing complexity remove sign flips; at every setting we consider, a substantial number of subsets flip sign. We leave the source of the difference between the two datasets to future work. We note that the Census data subsets are one to two orders of magnitude larger than the ICU subsets and that their covariates are predominantly indicators (state and industry), both of which may limit how differently two group-specific models can extrapolate to each other's covariate distribution.
-}
+
 
 \begin{figure*}[p]
     \centering
-    {\color{red}
+    
     \setlength{\tabcolsep}{2pt}
     \begin{tabular}{@{}c@{}c@{}c@{}c@{}}
      & \small\makecell{ICU mortality \\ ($139$ data subsets)} & \small\makecell{Census, log income \\ ($217$ data subsets)} & \small\makecell{Census, health insurance \\ ($183$ data subsets)} \\[2pt]
@@ -437,7 +437,7 @@ We draw two conclusions. First, we do not observe a single relationship between 
     \raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{Sections/Figures/complexity/census_nn_depth_pincp_noylabel.pdf}} &
     \raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{Sections/Figures/complexity/census_nn_depth_hicov_noylabel.pdf}} \\[2pt]
     \end{tabular}
-    \caption{\textcolor{red}{Number of data subsets with a sign flip as a function of model complexity, for the ICU data (left), Census log income (center), and Census health insurance (right). Rows vary the XGBoost tree depth, the XGBoost number of trees, the neural network width (three hidden layers of equal width; horizontal axis is the number of trainable parameters), and the neural network depth (hidden layers of width $32$). Black: either component; purple: explained component; orange: unexplained component. The dashed line marks the setting reported in \cref{tab:flip_summary_main,tab:flips_census_income,tab:flips_census_insurance}. For the neural network, lines are means over three initialization seeds and the shaded band is the range across seeds.}}
+    \caption{Number of data subsets with a sign flip as a function of model complexity, for the ICU data (left), Census log income (center), and Census health insurance (right). Rows vary the XGBoost tree depth, the XGBoost number of trees, the neural network width (three hidden layers of equal width; horizontal axis is the number of trainable parameters), and the neural network depth (hidden layers of width $32$). Black: either component; purple: explained component; orange: unexplained component. The dashed line marks the setting reported in \cref{tab:flip_summary_main,tab:flips_census_income,tab:flips_census_insurance}. For the neural network, lines are means over three initialization seeds and the shaded band is the range across seeds.}
     \label{fig:complexity_sweeps}
-    }
+    
 \end{figure*}

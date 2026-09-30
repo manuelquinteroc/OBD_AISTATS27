@@ -129,13 +129,13 @@ We prove the unexplained and explained components separately.
 
 \section{Unbounded sensitivity at fixed mean gap}
  \label{ex:unbounded}
-In this section we present a toy example where we can have arbitrarily large flip magnitudes. Consider the following example. Assume we have a parameter \( L > 0 \) which controls the magnitude of the covariate shift, and \( \varepsilon > 0 \) which controls the deviation in slope coefficients. We assume the mean vector is given by \( (\mu_K, \mu_H) = (0, L) \), and the slope parameters deviate symmetrically from \( \frac{1}{L} \), so that \( \beta_H = \frac{1}{L} + \frac{\varepsilon}{2} \), \( \beta_K = \frac{1}{L} - \frac{\varepsilon}{2} \)\textcolor{red}{, and the intercepts satisfy \( \Delta\alpha = \alpha_H - \alpha_K = -\frac{L\varepsilon}{2} \), so that \( \Delta_Y = 1 \)}. Then, the explained and unexplained components under both reference groups are:
+In this section we present a toy example where we can have arbitrarily large flip magnitudes. Consider the following example. Assume we have a parameter \( L > 0 \) which controls the magnitude of the covariate shift, and \( \varepsilon > 0 \) which controls the deviation in slope coefficients. We assume the mean vector is given by \( (\mu_K, \mu_H) = (0, L) \), and the slope parameters deviate symmetrically from \( \frac{1}{L} \), so that \( \beta_H = \frac{1}{L} + \frac{\varepsilon}{2} \), \( \beta_K = \frac{1}{L} - \frac{\varepsilon}{2} \), and the intercepts satisfy \( \Delta\alpha = \alpha_H - \alpha_K = -\frac{L\varepsilon}{2} \), so that \( \Delta_Y = 1 \). Then, the explained and unexplained components under both reference groups are:
 % two-column layout: one component per line (layout only). %REV: originally E and U of each reference shared a line.
 \begin{align*}
     E^{(H)} &= \Delta\mu \cdot \beta_H = L\left(\frac{1}{L} + \frac{\varepsilon}{2}\right) = 1 + \frac{L\varepsilon}{2}, \\
-    U^{(H)} &= \textcolor{red}{\Delta\alpha + {}} \mu_K \cdot \Delta\beta = -\frac{L\varepsilon}{2}, \\
+    U^{(H)} &= \Delta\alpha + {} \mu_K \cdot \Delta\beta = -\frac{L\varepsilon}{2}, \\
     E^{(K)} &= \Delta\mu \cdot \beta_K = L\left(\frac{1}{L} - \frac{\varepsilon}{2}\right) = 1 - \frac{L\varepsilon}{2}, \\
-    U^{(K)} &= \textcolor{red}{\Delta\alpha + {}} \mu_H \cdot \Delta\beta = +\frac{L\varepsilon}{2}.
+    U^{(K)} &= \Delta\alpha + {} \mu_H \cdot \Delta\beta = +\frac{L\varepsilon}{2}.
 \end{align*}
 
 Hence, the difference between the two explained components is \( E^{(H)} - E^{(K)} = L\varepsilon \), which can be made arbitrarily large as \( L \to \infty \), even though the total mean gap is always fixed at \( \Delta_Y = 1 \). Similarly, the unexplained components differ by \( U^{(K)} - U^{(H)} = L\varepsilon \).

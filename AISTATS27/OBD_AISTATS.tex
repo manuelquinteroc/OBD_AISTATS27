@@ -112,12 +112,16 @@ We take responsibility for the final content of this work, including text, claim
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
 \appendix
+% cleveref 0.21.4 (2018) no longer detects \appendix under the 2025 LaTeX kernel, so tag appendix labels by hand.
+\crefalias{section}{appendix}
+\crefalias{subsection}{appendix}
+\crefalias{subsubsection}{appendix}
 \thispagestyle{empty}
 \onecolumn
 \input{Sections/10_Appendix_lit_review_xAI.tex}
 \input{Sections/11_Appendix_lit_review_index_number_problem.tex}
 \input{Sections/09_icu_details}
-\input{Sections/08_Appendix_example}1
+\input{Sections/08_Appendix_example}
 \input{Sections/07_Appendix_theory}
 \input{Sections/11b_Appendix_multiple_testing.tex}
 \input{Sections/12_licenses.tex}

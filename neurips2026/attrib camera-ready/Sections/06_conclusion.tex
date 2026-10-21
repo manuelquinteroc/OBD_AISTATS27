@@ -1,0 +1,41 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+It is well known that the OBD depends on the choice of reference group; however, past work did not establish that the two references could yield conflicting conclusions. 
+We here demonstrate that this asymmetry can result in conflicting conclusions between the two reference choices.
+We present examples from real datasets as existence proofs. 
+We show that sign reversals can occur in either the explained or unexplained component and are not solely products of model misspecification, small sample size, or an adversarial data generating process.
+
+We think it is plausible that many practitioners do not report both references \citep{zhang_2019, ayubiShahbaziKhazaei2024,paradaContzen2025,singleton2016,lamJamiesonMittinty2021,leythienne2021paygapeu,alHanawiNjagi2022,tao2024gender}, and a widely-cited handbook on the OBD does not suggest reporting both references \citep{fortinLemieuxFirpo2011}, because they were not aware that reference choice could be so consequential.
+We hope that our work illustrates the importance of reporting both reference groups and convinces practitioners to do so.
+%As a practical conclusion, we recommend that data analysts using the OBD always report results using both reference groups to accurately convey the degree of support behind substantive conclusions arising from the OBD.
+
+Our work leaves an important open question: whether there exist alternatives to the OBD that do not suffer from problems of non-robustness to arbitrary choices.
+For example, our work has shown that the OBD is not robust to the choice of reference group, and we have noted that the choice of reference group is often arbitrary.
+As discussed in \cref{sec:existing_index_number}, there are a number of decomposition methods that do not have the index number problem but require other arbitrary choices.
+Future work should examine if any existing decomposition method can reduce or eliminate the non-robustness of the OBD, and, if not, whether any such decomposition method is possible.
+If no such robust decomposition exists, then practitioners will be forced to always conduct robustness checks of their results.
+
+%Our theoretical results model only the case where the two populations' response functions are drawn i.i.d.\ from $\nu$.
+%Our theoretical results show that the fraction of parameter space representing sign reversals is large for linear models and grows with the dimension of the feature space.
+%However, our empirical exercises reveal fewer sign reversals than our theoretical results suggest, implying that fitted linear regression parameters in real data analyses may not be well modeled by a uniform distribution over the parameter space. 
+%Future work can determine to what extent our theoretical findings hold for non-uniform parameter distributions, other measures of model complexity, and nonlinear models. 
+
+%\textbf{Broader impacts.}
+%The OBD is widely used to draw conclusions and influence policy.
+%Our work shows that the choice of reference group in the OBD can reverse substantive conclusions and characterizes conditions under which such reversals can occur.
+%We highlight the importance of reporting results for both references, even though this step is currently sometimes omitted in published papers
+%and government reports.
+%Thus, our work has the potential to improve decisions that arise from using the OBD.
+%Our work does have one potential negative societal impact: that researchers learn they may be able to cherry-pick results through the choice of OBD reference group.
+%However, a researcher with an agenda can also influence results through sample selection, feature engineering, and model choice; we think it unlikely that reference group choice is the only means to their end.
+%If one wishes to cherry-pick, there are already more than enough trees to harvest from, so to speak.
+%Further, we suspect (or, hope) that the majority of mis-use of the OBD is from researchers unaware of its problems, and so hope that the net impact from our paper will be positive. 
+
+
+%Even though it is well-known that the OBD depends on the choice of reference group, we show that this dependence can be highly consequential, leading to sign reversals in both the explained and unexplained components.
+%We present real and simulated examples in which such a reversal occurs.%We present a simple healthcare example, inspired by real-world data, as well as a real clinical case study, in which one OBD direction suggests that quality of care improves patient outcomes, while the other suggests it worsens them. 
+%We further prove that such sign reversals are not isolated phenomena, but can occur in a wide variety of scenarios. 
+%However, we demonstrate that while the set of regression parameters $(\beta_g, \alpha_g, \mu_g), g \in \{K, H\}$ leading to sign flips is substrantial, there is reason to believe sign flips will be rare in practice.
+%We therefore believe that practitioners should be cautiously optimistic about use of the OBD: it is likely to provide robust and useful insights about differences between populations, but it is critical that practitioners compute and report its robustness to the choice of reference group, less they be mislead by an arbitrary choice of the reference group.
+%Practitioners should therefore be cautious optimistic when using the OBD, at least in settings where no reference group is clearly justified.

@@ -1,0 +1,35 @@
+% ---------------------------------------------------------------------------
+% Body of the ATTRIB camera-ready: the AISTATS 2027 submission, in full.
+% ---------------------------------------------------------------------------
+\maketitle
+
+% blank footnote (no mark); the pdfborder setting stops hyperref drawing an empty link box in the margin
+{\hypersetup{pdfborder={0 0 0}}\blfootnote{DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.}}
+
+\begin{abstract}
+Scientists often want to explain why an outcome is different in two groups. For instance, would two hospitals (the groups) with different mortality rates (the outcome) fare more similarly if they treated the same patients? What if they followed the same care protocols? The Oaxaca--Blinder decomposition (OBD) is a standard tool to answer these questions. It is well known that the OBD requires choosing one of the groups as a reference point, and the numerical answer can vary with the reference. To the best of our knowledge, we are the first to show that the choice of reference groups can produce contradictory conclusions; for example, choosing one reference might imply the two hospitals achieve more-similar mortality rates when they treat the same patients, and the other reference might imply less-similar rates. We show these reversals can happen in both real and simulated data. Our empirical exercises show that extending the OBD to more-complex regression models, including a pretrained transformer, does not eliminate these reversals, and can even worsen their prevalence. Our theoretical results further establish that these conclusion reversals are not entirely driven by model misspecification, finite-sample concerns, or knife-edge parameter choices.
+\end{abstract}
+
+% Main sections (same files and order as AISTATS27/OBD_AISTATS.tex)
+\input{Sections/01_introduction}
+\input{Sections/02_pooled_OBD.tex}
+\input{Sections/03_real_healthcare_example}
+\input{Sections/05_sign_reversal}
+\input{Sections/06_conclusion}
+
+\section*{Acknowledgements}
+DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited. This material is based upon work supported by the Combatant Commands under Air Force Contract No. FA8702-15-D-0001 or FA8702-25-D-B002. Any opinions, findings, conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the Combatant Commands.
+
+\bibliographystyle{icml2026}
+\bibliography{OBD_signflip}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\appendix
+\input{Sections/10_Appendix_lit_review_xAI.tex}
+\input{Sections/11_Appendix_lit_review_index_number_problem.tex}
+\input{Sections/09_icu_details}
+\input{Sections/08_Appendix_example}
+\input{Sections/07_Appendix_theory}
+\input{Sections/11b_Appendix_multiple_testing.tex}
+\input{Sections/12_licenses.tex}

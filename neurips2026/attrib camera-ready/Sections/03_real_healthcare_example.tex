@@ -1,0 +1,233 @@
+\section{Index ambiguity exists across models in real data}
+\label{sec:real_example}
+
+% Extended to the two Census outcomes (new cells in red). Original ICU-only table kept below as %REV.
+\begin{table*}[t]
+    \caption{Number of data subsets exhibiting conflicting conclusions (``index ambiguity'') in either the explained or unexplained component, by model, for the ICU data (out of $139$ subsets) and for the two outcomes of the U.S.\ Census data (out of $217$ and $183$ data subsets; \cref{appendix:us_labor_force}). Column \# Flips counts analyses where either component changes sign; columns $10\%$, $5\%$, and $1\%$ counts the number where, in addition, at least one flipped estimates was statistically significant at the corresponding level. Dashes: logistic regression does not apply to the continuous log-income outcome. Significance for TabPFN on the Census data uses $B = 200$ bootstrap replications; all other entries use $B = 1{,}000$.}
+    \label{tab:flip_summary_main}
+    \centering
+    \small
+    \begin{tabular}{l cccc cccc cccc}
+    \toprule
+     & \multicolumn{4}{c}{ICU mortality} & \multicolumn{4}{c}{Census, log income} & \multicolumn{4}{c}{Census, health insurance} \\
+    \cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
+    Model & \# Flips & $10\%$ & $5\%$ & $1\%$ &\ \# Flips & $10\%$ & $5\%$ & $1\%$ & \# Flips & $10\%$ & $5\%$ & $1\%$ \\
+    \midrule
+    Linear      & 27 &  2 &  2 &  2 & 33 & 16 & 13 & 8  & 65 & 38 & 32 & 23 \\
+    Logistic    & 29 &  2 &  2 &  1 & -- & -- & -- & -- & 62 & 31 & 25 & 14 \\
+    XGBoost     & 62 & 17 & 10 &  3 & 34 & 18 & 16 & 12 & 54 & 34 & 26 & 16 \\
+    Neural net  & 62 & 29 & 17 &  6 & 87 & 73 & 66 & 52 & 65 & 26 & 20 & 10 \\
+    TabPFN      & 76 & 22 & 19 &  5 & 28 & 14 & 12 & 7 & 62 & 30 & 24 & 15 \\
+    \bottomrule
+    \end{tabular}
+\end{table*}
+
+The index number problem reflects that the two reference choices for the OBD could yield two different sets of values for the explained and unexplained components. We are not aware of an illustration in the literature that the two reference groups can lead to \emph{conflicting} (i.e., index ambiguous) conclusions. We supply such illustrations now. %REV We supply such an illustration next for a real-data analysis in healthcare.
+
+We work with two datasets from published research and systematically construct a \textit{plausible} set of analyses by applying the OBD systematically to subsets of the data.
+We pursue three goals with these subsets.
+First, to demonstrate that the choice of reference group can lead to conflicting conclusions in real data analyses.
+Second, to assess whether using more flexible models resolves the problem.
+And third, to show that such issues arise systematically and not as a result of cherry picking analyses.
+
+%\textcolor{red}{
+%Ideally, we would take a representative sample of OBD applications, and record whether both reference groups support the same conclusions.
+%However, many published papers do not release replication materials. 
+%Even if they did, drawing a statistically representative sample would be challenging due to the difficulty of enumerating a population of OBD analyses.
+%}
+
+%\textcolor{red}{
+%Rather, we work with two datasets from published research and systematically construct a \textit{plausible} set of analyses by applying the OBD systematically to subsets of the data.
+%Each analysis represents a question that a researcher might plausibly ask, such as whether risk factors explain male-female mortality differences among older hospital patients, or whether individual characteristics explain racial wage gaps in the U.S. state of Michigan.
+%Our analysis is systematic in that we repeat the exercise for all U.S. states in the second example, and various demographic subgroups in the first.
+%This design allows us to provide an existence proof for index ambiguity in real data.
+%However, one limitation is that this design does not estimate the population prevalence of index ambiguity in applied work, as it is based on a reasonable but non-representative sample of analyses.
+%}
+
+
+\textbf{Data.} We employ two sources of data. The first is the PhysioNet cohort %REV To construct an example, we examine data from the PhysioNet cohort
+ of intensive care unit (ICU) patients collected for a study of in-hospital mortality \citep{goldberger2000physiobank}, where the outcome $Y$ is binary, indicating whether the patient died in the hospital or not. The dataset contains routine measurements taken at admission, including heart rate (HR), mean arterial pressure, and temperature. These values are recorded for every patient at the time of entry into the ICU and provide a description of their initial physiological state. To simulate various real-data analyses where practitioners might have access to only a subset of these patients, we construct $139$ versions of this dataset with various patient subsets; see \cref{appendix:icu_details}.
+For reference groups, we consider males and females.
+The second is U.S.\ Census data: following \citet{bach2024heterogeneity}, we take the 2016 American Community Survey and consider two outcomes, the natural logarithm of income and a binary indicator for having health insurance, across a total of $400$ data subsets of workers defined by state and industry across the two outcomes; see \cref{appendix:us_labor_force}.
+
+%Medical practitioners often look at moderate elevations in heart rate as a first indication of stress, infection, or concerning changes in blood flow and circulation. In the present example, we restrict our analysis to patients whose admission heart rate lies between the $50$th and $75$th percentiles. This patient set, which we refer to as HR quartile two, reflects a clinical presentation in which the heart rate is elevated but not extreme.
+
+\textbf{Analysis.}
+As discussed in \cref{sec:ob_real}, practitioners often draw conclusions based on the sign and statistical significance of the OBD explained and unexplained components.
+To explore whether these conclusions can change based on the choice of reference group, we compute the explained and unexplained components for each data subset across one foundation model %REV for each of our $139$ data subsets
+ and four classic models. The foundation model is TabPFN, a $25$ million parameter, transformer-based model, pre-trained to map training datasets to predictive distributions $Y|X$ \citep{hollmann2023tabpfn}. The other four models are linear regression,\footnote{Despite the binary outcome $Y$, it is common practice in applied health and policy research to fit separate linear models (via ordinary least squares) for the relationship between a binary outcome and covariates in each group, and then apply the OBD \citep{jann2008, edokaChangesCatastrophicHealth2017, sujin_LPM_OB, mweembaGapSelfRatedHealth2023}. In fact, this use of the linear model for a binary outcome is so common that it is called the ``linear probability model.''} logistic regression, XGBoost \citep{chen2016xgboost}, and a two-layer fully-connected neural network.
+% \textcolor{red}{All models are trained and evaluated in-sample. We detail hyperparameter choices in \cref{appendix:icu_details}.}
+%To examine a more modern, transformer-based model, we also consider TabPFN, a $25$ million parameter, pre-trained model trained to map training datasets to predictive distributions $Y|X$ \citep{hollmann2023tabpfn}.
+We assess statistical significance using $1{,}000$ bootstrap replications in all models except for TabPFN, for which, due to computational constraints, we use $200$ replications.
+\cref{tab:flip_summary_main} counts how often the choice of reference group produces conflicting conclusions, across models and datasets, for hypothetical researchers who use various levels of statistical significance.\footnote{We do not apply a multiple testing correction, which would distort our measurement of index ambiguity; see \cref{app:multiple_testing} for details.}
+
+\textbf{Results.} 
+Index ambiguity exists for every dataset and every model, at rates ranging from 15.2\% of analyses (linear regression, Census log income) to 54.7\% (TabPFN, ICU mortality).
+Even a researcher using the relatively strict 1\% level of significance would generate conflicting conclusions by changing the reference group.
+To clarify the interpretation of these frequencies, our design estimates the rate of index ambiguity \emph{conditional on the chosen data analyses}. 
+A practitioner in another setting would likely encounter different rates.
+That said, our analyses are based on published data and constructed to reflect a range of plausible research questions.
+So we do not expect the numbers reported here to be anomalous.
+
+One might hope that a sufficiently flexible model would make index ambiguity disappear. 
+It does not; index ambiguity occurs for each of XGBoost, a neural network, and TabPFN. 
+For the ICU mortality data, these models return conflicting conclusions more often than linear regression.
+\cref{appendix:complexity} further studies the role of model flexibility, by varying the complexity of XGBoost (tree depth and number of trees) and of the neural network (width and depth) while holding every other setting fixed. 
+On the ICU data, each increase in complexity raises the number of data subsets with index ambiguity, until nearly all $139$ subsets show conflicting conclusions. 
+On the U.S.\ Census data of \cref{appendix:us_labor_force}, the number of flips barely changes with complexity, and for one outcome deeper networks flip fewer data subsets. 
+We conclude that sufficiently complex models are not a solution to index ambiguity.
+
+One might also hope that index ambiguity would be restricted to changes that are small in absolute magnitude, and therefore are less concerning.
+In \cref{ex:unbounded}, we use linear models as a test case to show that conflicting conclusions can be arbitrarily large in magnitude.
+%We therefore do not claim a single relationship between model complexity and sign flips; the pattern appears to depend on the data. But in neither dataset does increasing complexity make sign flips go away.}
+
+% Within the data set described above, we will compare two patient groups across hospitals (rather than hospital-specific patient groups as in our introductory example). In particular, we let the groups be $g \in \{\text{men}, \text{women}\}$. 
+% The mortality rate for men exceeds the mortality rate for women by about $3.5$ percentage points; see \cref{tab:hr_q2_decomposition}.
+% We would like to understand to what extent the observed mortality difference between men and women in HR quartile two might be attributable to observed characteristics upon admission (covariates) vs.\ medical care (outcome given covariates). 
+% To that end, let $Y$ be a binary indicator for in-hospital mortality, and let $X$ be the vector of admission covariates comprising heart rate, mean arterial pressure, temperature, urine output, age, and ICU type.
+% Despite the binary outcome $Y$, it is common practice in applied health and policy research to fit separate linear models (via OLS) for the relationship between a binary outcome and covariates in each group, and then apply the OBD \citep{jann2008, edokaChangesCatastrophicHealth2017, sujin_LPM_OB, mweembaGapSelfRatedHealth2023}.\footnote{In fact, this use of the linear model for a binary outcome is so common that it has a name, the ``linear probability model.''} We provide a detailed description of our data analysis --- and our search procedure for a data analysis exhibiting a substantive conclusion change --- in \cref{appendix:icu_details}. 
+
+%REV \begin{table}[!ht]
+%REV     \caption{Number of data subsets (out of $139$) exhibiting at least one sign flip (in either the explained or unexplained component), by model. Columns $10\%$, $5\%$, and $1\%$ report the number of flipped subsets that are significant at the corresponding level.}
+%REV     \label{tab:flip_summary_main}
+%REV     \centering
+%REV     \small
+%REV     \begin{tabular}{lcccc}
+%REV     \toprule
+%REV     Model & \# Ambiguous & $10\%$ & $5\%$ & $1\%$ \\
+%REV     \midrule
+%REV     Linear      & 27 &  2 &  2 &  2 \\
+%REV     Logistic    & 29 &  2 &  2 &  1 \\
+%REV     Neural net  & 62 & 29 & 17 &  6 \\
+%REV     XGBoost     & 62 & 17 & 10 & 3 \\
+%REV     TabPFN     & 76 & 22 & 19 & 5 \\
+%REV     \bottomrule
+%REV     \end{tabular}
+%REV \end{table}
+
+\subsection{A deeper dive on one data subset}
+
+\cref{tab:flip_summary_main} shows that index ambiguity is common.
+But what do these conflicting conclusions mean in practice?
+And are they merely an artifact of noise or instead a structural phenomenon?
+In this section, we build intuition by highlighting one particular analysis that produces conflicting conclusions in \cref{tab:flip_summary_main}.
+We examine linear regression, as it is both more commonly used and more easily inspected than complex models.
+We will see what it means for the index number problem to change conclusions and also see that the conflict has a natural structural interpretation.
+
+The data subset we consider covers patients with an elevated heart rate.
+Medical practitioners often look at moderate elevations in heart rate as a first indication of stress, infection, or concerning changes in blood flow and circulation. In the present example, we consider patients whose admission heart rate lies between the $50$th and $75$th percentiles. This patient set, which we refer to as HR quartile two, reflects a clinical presentation in which the heart rate is elevated but not extreme.
+
+\textbf{Two different conclusions.} 
+We report the OBD for each reference group in \cref{tab:hr_q2_decomposition}. We next interpret the substantive conclusions
+we might draw from each reference group. 
+With women as the reference, the explained component is positive ($0.021$), with a statistically significant difference from zero.
+This result suggests that differences in admission covariates place men at higher mortality risk. 
+A medical practitioner might therefore examine whether various factors before admission differ across sex; these factors include early differences in blood flow and circulation, underlying disease burden, or overall severity at admission.
+
+With men as the reference, the explained component is negative ($-0.007$), though the difference from zero is not statistically significant. In this case, the observed covariate differences seem to predict \emph{lower} (or equal) mortality for men relative to women rather than higher. In other words, the same covariates would now be interpreted as offering men a slight mortality advantage. This interpretation is substantively different than the interpretation that results from using women as the reference.
+
+%\begin{table}[h]
+%\caption{Oaxaca--Blinder decompositions for HR quartile two. We compute standard errors (in parentheses) via bootstrap resampling with $1{,}000$ replications. 
+%    We calculate p-values using a normal approximation (Wald test), where the test statistic is the coefficient divided by its bootstrap standard error. 
+%    Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$.}
+%\label{tab:hr_q2_decomposition}
+%    \begin{center}
+%    \begin{small}
+%    \begin{sc}
+%    \begin{tabular}{lccc}
+%    \toprule
+%    \textbf{Reference} & \textbf{Explained} & \textbf{Unexplained} & \textbf{Total gap} \\
+%    \midrule
+%    %\hline \\[-6pt]
+%    Women 
+%    & \makecell{$0.021^{***}$ \\ $(0.007)$}
+%    & \makecell{$0.014$ \\ $(0.025)$}
+%    & \makecell{$0.035$ \\ $(0.023)$}
+%    \\
+%    Men 
+%    & \makecell{$-0.007$ \\ $(0.011)$}
+%    & \makecell{$0.042^{*}$ \\ $(0.025)$}
+%    & \makecell{$0.035$ \\ $(0.023)$}
+%    \bottomrule
+%    \end{tabular}
+%    \end{sc}
+%    \end{small}
+%    \end{center}
+%\end{table}
+
+\begin{table}[!ht]
+  \caption{Oaxaca--Blinder decompositions for HR quartile two. The total gap is men's mean minus women's mean. We compute standard errors (in parentheses) via bootstrap resampling with $1{,}000$ replications. 
+    We calculate p-values using a normal approximation (Wald test), where the test statistic is the coefficient divided by its bootstrap standard error. 
+    Significance levels: * $p<0.10$, ** $p<0.05$, *** $p<0.01$.}
+  \label{tab:hr_q2_decomposition}
+  \begin{center}
+    \begin{small}
+      %\begin{sc}
+        \begin{tabular}{lcccr}
+          \toprule
+          Reference & Explained & Unexplained & Total gap  \\
+          \midrule
+              Women 
+    & \makecell{$0.021^{***}$ \\ $(0.007)$}
+    & \makecell{$0.014$ \\ $(0.025)$}
+    & \makecell{$0.035$ \\ $(0.023)$}
+    \\
+    Men 
+    & \makecell{$-0.007$ \\ $(0.011)$}
+    & \makecell{$0.042^{*}$ \\ $(0.025)$}
+    & \makecell{$0.035$ \\ $(0.023)$}
+    \\
+          \bottomrule
+        \end{tabular}
+      %\end{sc}
+    \end{small}
+  \end{center}
+  \vskip -0.1in
+\end{table}
+
+
+\textbf{How do conflicting conclusions arise?}
+%Recall that the explained component is given by $\EHOB := \Delta\mu^T \beta_H$ when $H$ is the reference group, and $\EKOB := \Delta\mu^T \beta_K$ when $K$ is the reference group.
+To understand how conflicting conclusions arise, it will help to introduce more notation for the linear regression case.
+We now restrict to real-valued covariates $X \in \mathbb{R}^p$, and we assume we fit a linear regression to each group $g$: $\alpha_g + X^\top \beta_g$
+with intercept $\alpha_g \in \mathbb{R}$ and slope $\beta_g \in \mathbb{R}^p$. We let
+$\mu_g := \E_g[X],
+\Delta \mu := \mu_H - \mu_K,
+\Delta \beta := \beta_H - \beta_K,
+\Delta \alpha := \alpha_H - \alpha_K,
+$
+and use a hat to denote estimators of these quantities (cf.\ \cref{sec:ob_real}).
+
+With these choices, the OBD
+(\cref{eq:OB_H_Counterfactual,eq:OB_K_Counterfactual}) becomes
+\begin{equation*}
+    \Delta_Y = \underbrace{\Delta \mu^\top \beta_H}_{E^{(H)}} + \underbrace{\mu_K^\top \Delta \beta + \Delta \alpha}_{U^{(H)}} = \underbrace{\Delta \mu^\top \beta_K}_{E^{(K)}} + \underbrace{\mu_H^\top \Delta \beta + \Delta \alpha}_{U^{(K)}}.
+\end{equation*}
+The first equality is the OBD with reference group $H$, and the second with reference group $K$.
+
+With this notation in hand, we observe that $\Delta\hat{\mu}$ is fixed between $\hat{E}^{(H)}$ and $\hat{E}^{(K)}$. So it must be that some components of $\hat{\beta}_H$ and $\hat{\beta}_K$ are changing sign to give $\hat{E}^{(H)} := \Delta\hat{\mu}^T \hat{\beta}_H$ and $\hat{E}^{(K)} := \Delta\hat{\mu}^T \hat{\beta}_K$ opposite signs.
+In \cref{fig:sign_flip_overview} (left), we show the fitted linear models of in-hospital mortality on admission heart rate, holding all other covariates fixed at their group means.
+We see that the signs of the slopes differ.
+In Appendix \cref{tab:delta_mu_betas}, we report values for all elements of each vector $\hat{\beta}_{g}$ in the full analysis. 
+We see that there are multiple covariates $c$ for which $\hat{\beta}_{\textrm{men},c} < 0 < \hat{\beta}_{\textrm{women},c}$.
+And as $\Delta\hat{\mu}_c$ has the same sign for all of these covariates, each one pushes towards a sign reversal. %, and additionally, $\Delta\mu$ is positive for all of these covariates.
+In aggregate, these changes add enough to produce conflicting conclusions for the explained component.
+%In \cref{sec:simulated_example}, we show that these phenomenon are not artifacts of finite-samples or model misspecification; in fact, we show that sign flips can occur for well-specified linear models with infinite data.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[t]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Sections/Figures/hr_quartile2_mortality_lines.pdf}
+        \label{fig:hr_quartile2}
+    \end{subfigure}
+    %\hfill
+    %\begin{subfigure}[t]{0.48\linewidth}
+    %    \centering
+    %    \includegraphics[width=\linewidth]{Sections/Figures/prob_unexplained.pdf}
+    %    \label{fig:prob_unexplained}
+    %\end{subfigure}
+    \caption{Linear fit of mortality on admission heart rate for each group when holding all other covariates fixed at their group means.}
+    \label{fig:sign_flip_overview}
+\end{figure}
+
